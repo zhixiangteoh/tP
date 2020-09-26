@@ -1,8 +1,11 @@
-package seedu.duke;
+package seedu.ecardnomics;
+
+import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.deck.DeckList;
 
 import java.util.Scanner;
 
-public class Duke {
+public class Main {
     /**
      * Main entry-point for the java.duke.Duke application.
      */
@@ -17,5 +20,7 @@ public class Duke {
 
         Scanner in = new Scanner(System.in);
         System.out.println("Hello " + in.nextLine());
+
+        DeckList deckList = new DeckList();
     }
 }
