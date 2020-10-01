@@ -1,6 +1,5 @@
 package seedu.ecardnomics;
 
-import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 
 import java.util.Scanner;
