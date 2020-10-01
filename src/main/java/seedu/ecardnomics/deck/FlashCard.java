@@ -27,7 +27,7 @@ public class FlashCard {
 
     @Override
     public String toString() {
-        return "Question: " + question + "\n" +
-                "Answer: " + answer;
+        return "Question: " + question + "\n"
+                + "Answer: " + answer;
     }
 }
