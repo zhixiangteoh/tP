@@ -6,6 +6,7 @@ import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.DeleteCommand;
 import seedu.ecardnomics.command.DoneEditCommand;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.HelpCommand;
 import seedu.ecardnomics.command.ListCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
@@ -45,6 +46,11 @@ public class DeckParser extends Parser {
         // Delete a FlashCard
         if (commandWord.equals(Ui.DELETE)) {
             return new DeleteCommand(deck, arguments);
+        }
+
+        // Help
+        if (commandWord.equals(Ui.HELP)) {
+            return new HelpCommand();
         }
 
         return new VoidCommand();
