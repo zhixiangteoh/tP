@@ -1,6 +1,7 @@
 package seedu.ecardnomics;
 
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.deck.FlashCard;
 
 import java.util.Scanner;
 
@@ -17,6 +18,7 @@ public class Ui {
             "Bye. Hope to see you again soon!";
     public static final String NOT_RECOGNISED_LINE =
             "Command not recognised";
+    public static final String YN_LINE = "[y/n]";
     public static final String ADD_FLASHCARD_LINE =
             "You are now adding a FlashCard to: ";
     public static final String ENTER_QUESTION_LINE =
@@ -27,12 +29,17 @@ public class Ui {
             "FlashCard successfully added!";
     public static final String LIST_FLASHCARDS_LINE =
             "You are now viewing deck: ";
+    public static final String DELETE_FLASHCARD_LINE =
+            "Do you want to delete ";
+    public static final String FLASHCARD_DELETED_LINE =
+            " has been deleted.";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
     public static final String DONE = "done";
     public static final String ADD = "add";
     public static final String LIST = "list";
+    public static final String DELETE = "delete";
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
@@ -158,5 +165,13 @@ public class Ui {
         printMessage(LIST_FLASHCARDS_LINE + deck.getName());
         System.out.print(deck.toString(type));
         printDashLines();
+    }
+
+    public static void printDeleteFlashCardLine(FlashCard flashCard) {
+        System.out.print(DELETE_FLASHCARD_LINE + flashCard.getQuestion() + "? " + YN_LINE + " ");
+    }
+
+    public static void printFlashCardDeletedLine(FlashCard flashCard) {
+        System.out.println(flashCard.getQuestion() + FLASHCARD_DELETED_LINE);
     }
 }

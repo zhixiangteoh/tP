@@ -94,7 +94,9 @@ public class Main {
      */
     public static void main(String[] args) {
         // TEMP FOR TESTING
-        deckList.addDeck(new Deck("Pokemon"));
-        runNormalMode();
+        Deck pokemon = new Deck("Pokemon");
+        deckList.addDeck(pokemon);
+        // runNormalMode();
+        runDeckMode(pokemon);
     }
 }
