@@ -5,6 +5,7 @@ import seedu.ecardnomics.command.AddCommand;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.DoneEditCommand;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.ListCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 
@@ -33,6 +34,11 @@ public class DeckParser extends Parser {
         // Add a FlashCard
         if (commandWord.equals(Ui.ADD)) {
             return new AddCommand(deck);
+        }
+
+        // List all FlashCards
+        if (commandWord.equals(Ui.LIST)) {
+            return new ListCommand(deck, arguments);
         }
 
         return new VoidCommand();

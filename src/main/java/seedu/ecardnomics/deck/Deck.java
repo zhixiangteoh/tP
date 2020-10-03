@@ -27,9 +27,16 @@ public class Deck {
     public String toString() {
         String output = name + ":";
         for (int i = 0; i < deck.size(); i++) {
-            output += "\n" + i + ". " + deck.get(i).toString() + "\n";
+            output += "\n" + (i + 1) + ". " + deck.get(i).toString() + "\n";
         }
+        return output;
+    }
 
+    public String toString(String type) {
+        String output = "";
+        for (int i = 0; i < deck.size(); i++) {
+            output += (i + 1) + ". " + deck.get(i).toString(type) + "\n" + System.lineSeparator();
+        }
         return output;
     }
 }

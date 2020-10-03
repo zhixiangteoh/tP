@@ -25,11 +25,14 @@ public class Ui {
             "Enter answer:";
     public static final String FLASHCARD_ADDED_LINE =
             "FlashCard successfully added!";
+    public static final String LIST_FLASHCARDS_LINE =
+            "You are now viewing deck: ";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
     public static final String DONE = "done";
     public static final String ADD = "add";
+    public static final String LIST = "list";
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
@@ -149,5 +152,11 @@ public class Ui {
      */
     public static void printFlashCardAddedLine() {
         System.out.println(FLASHCARD_ADDED_LINE);
+    }
+
+    public static void printDeck(Deck deck, String type) {
+        printMessage(LIST_FLASHCARDS_LINE + deck.getName());
+        System.out.print(deck.toString(type));
+        printDashLines();
     }
 }

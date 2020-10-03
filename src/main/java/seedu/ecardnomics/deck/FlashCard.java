@@ -30,4 +30,16 @@ public class FlashCard {
         return "Question: " + question + "\n"
                 + "Answer: " + answer;
     }
+
+    public String toString(String type) {
+        switch (type) {
+        case "question":
+            return "Question: " + question;
+        case "answer":
+            return "Question: " + question + "\n"
+                    + "Answer : " + answer;
+        default:
+            return "";
+        }
+    }
 }
