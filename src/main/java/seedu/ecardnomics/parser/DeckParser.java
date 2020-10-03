@@ -1,6 +1,7 @@
 package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
+import seedu.ecardnomics.command.AddCommand;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.DoneEditCommand;
 import seedu.ecardnomics.command.ExitCommand;
@@ -28,6 +29,12 @@ public class DeckParser extends Parser {
         if (commandWord.equals(Ui.DONE)) {
             return new DoneEditCommand(deck);
         }
+
+        // Add a FlashCard
+        if (commandWord.equals(Ui.ADD)) {
+            return new AddCommand(deck);
+        }
+
         return new VoidCommand();
     }
 
