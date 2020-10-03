@@ -28,21 +28,21 @@ public class Ui {
     public static Scanner in = new Scanner(System.in);
 
     /**
-     * Reads user input from command line
+     * Reads user input from command line.
      *
      * @return String containing userInput
      */
-    public static String readUserInput(){
+    public static String readUserInput() {
         return in.nextLine();
     }
 
-    /** Displays dash line */
+    /** Displays dash line. */
     public static void printDashLines() {
         System.out.println("------------------------------------------------------------");
     }
 
     /**
-     * Displays the message given
+     * Displays the message given.
      *
      * @param message message to be displayed to user
      */
@@ -53,7 +53,7 @@ public class Ui {
     }
 
     /**
-     * Displays the prompt for user input in Normal Mode
+     * Displays the prompt for user input in Normal Mode.
      */
     public static void printNormalPrompt() {
         System.out.println("[Normal]");
@@ -61,7 +61,7 @@ public class Ui {
     }
 
     /**
-     * Displays the prompt for user input in Deck Mode
+     * Displays the prompt for user input in Deck Mode.
      */
     public static void printDeckPrompt(Deck deck) {
         System.out.println("[Deck - " + deck.getName() + "]");
@@ -69,35 +69,35 @@ public class Ui {
     }
 
     /**
-     * Displays the welcome message from Deck Mode to Normal Mode
+     * Displays the welcome message from Deck Mode to Normal Mode.
      */
     public static void printNormalWelcome() {
         printMessage(NORMAL_WELCOME_LINE);
     }
 
     /**
-     * Displays the welcome message from Normal Mode to Deck Mode
+     * Displays the welcome message from Normal Mode to Deck Mode.
      */
-    public static void printDeckWelcome (int index, Deck deck) {
+    public static void printDeckWelcome(int index, Deck deck) {
         printMessage(DECK_WELCOME_LINE + "[" + index + "] " + deck.getName());
     }
 
     /**
-     * Displays the greeting message
+     * Displays the greeting message.
      */
     public static void printGreeting() {
         printMessage(GREETING_LINES);
     }
 
     /**
-     * Displays the exit message
+     * Displays the exit message.
      */
     public static void printExitLine() {
         printMessage(BYE_LINE);
     }
 
     /**
-     * Displays the not recognised message
+     * Displays the not recognised message.
      */
     public static void printNotRecognisedLine() {
         printMessage(NOT_RECOGNISED_LINE);

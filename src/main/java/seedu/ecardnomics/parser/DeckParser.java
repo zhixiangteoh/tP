@@ -1,13 +1,16 @@
 package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.*;
+import seedu.ecardnomics.command.Command;
+import seedu.ecardnomics.command.DoneEditCommand;
+import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 
 public class DeckParser extends Parser {
     public Deck deck;
 
-    /** Constructor */
+    /** Constructor. */
     public DeckParser(Deck deck) {
         this.deck = deck;
     }
@@ -43,7 +46,7 @@ public class DeckParser extends Parser {
         try {
             return parseCommand(commandWord, arguments);
 
-        } catch(Exception e){
+        } catch (Exception e) {
             return new VoidCommand(e.getMessage());
         }
     }

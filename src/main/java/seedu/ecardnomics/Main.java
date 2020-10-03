@@ -1,41 +1,45 @@
 package seedu.ecardnomics;
 
-import seedu.ecardnomics.command.*;
+import seedu.ecardnomics.command.Command;
+import seedu.ecardnomics.command.DoneEditCommand;
+import seedu.ecardnomics.command.EditCommand;
+import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
-import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.parser.DeckParser;
 import seedu.ecardnomics.parser.NormalParser;
 
-import java.util.Scanner;
-
+/**
+ * Main Class for eCardnomics - Flash Card Manager Command Line Program.
+ */
 public class Main {
 
     public static DeckList deckList = new DeckList();
     public static NormalParser normalParser = new NormalParser(deckList);
 
     /**
-     * Executes the command
+     * Executes the command.
      *
      * @param command command from parser
      */
-    public static void executeCommand(Command command) {
+    private static void executeCommand(Command command) {
         command.execute();
     }
 
 
     /**
-     * Runs Deck Mode to edit a deck
+     * Runs Deck Mode to edit a deck.
+     *
      * @param deck Deck to edit
      * @return Command used to exit Deck Mode (either <code>done</code> or <code>exit</code>)
      */
-    public static Command runDeckMode(Deck deck){
+    public static Command runDeckMode(Deck deck) {
         DeckParser deckParser = new DeckParser(deck);
 
         String userInput;
         Command command;
 
-        do{
+        do {
             Ui.printDeckPrompt(deck);
             userInput = Ui.readUserInput();
 
@@ -43,23 +47,23 @@ public class Main {
 
             executeCommand(command);
 
-        } while (!DoneEditCommand.isDoneEdit(command) &&
-                !ExitCommand.isExit(command));
+        } while (!DoneEditCommand.isDoneEdit(command)
+                && !ExitCommand.isExit(command));
 
         return command;
     }
 
     /**
-     * Runs Normal Mode in a loop until <code>exit</code> in input
-     * Enters Deck Mode when <code>edit</code> is input
+     * Runs Normal Mode in a loop until <code>exit</code> in input.
+     * Enters Deck Mode when <code>edit</code> is input.
      */
-    public static void runNormalMode(){
+    public static void runNormalMode() {
         Ui.printGreeting();
 
         String userInput;
         Command command;
 
-        do{
+        do {
             Ui.printNormalPrompt();
             userInput = Ui.readUserInput();
 
@@ -68,7 +72,7 @@ public class Main {
 
             executeCommand(command);
 
-            if(EditCommand.isEdit(command)){
+            if (EditCommand.isEdit(command)) {
                 EditCommand editCommand = (EditCommand) command;
                 command = runDeckMode(editCommand.getDeck());
 
@@ -83,7 +87,11 @@ public class Main {
         Ui.printExitLine();
     }
 
-
+    /**
+     * Main method.
+     *
+     * @param args Arrguments from command line when user starts the program
+     */
     public static void main(String[] args) {
         // TEMP FOR TESTING
         deckList.addDeck(new Deck("Pokemon"));

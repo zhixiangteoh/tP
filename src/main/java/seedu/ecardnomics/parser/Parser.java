@@ -8,7 +8,8 @@ public abstract class Parser {
             throws Exception;
 
     /**
-     * Parse user input to determine which <code>Command</code> to output
+     * Parse user input to determine which <code>Command</code> to output.
+     *
      * @param userInput Input from user
      * @return Command representing command to be executed
      */

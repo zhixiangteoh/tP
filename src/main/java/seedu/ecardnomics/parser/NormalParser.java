@@ -1,6 +1,5 @@
 package seedu.ecardnomics.parser;
 
-import org.w3c.dom.ranges.RangeException;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.EditCommand;
@@ -11,20 +10,18 @@ import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 
-import java.security.PrivilegedExceptionAction;
-
 public class NormalParser extends Parser {
     DeckList deckList;
 
-    /** Constructor */
-    public NormalParser (DeckList deckList){
+    /** Constructor. */
+    public NormalParser(DeckList deckList) {
         this.deckList = deckList;
     }
 
     private Deck prepareDeck(String arguments)
-            throws IndexFormatException, DeckRangeException{
+            throws IndexFormatException, DeckRangeException {
 
-        if (!arguments.matches(Ui.DIGITS_REGEX)){
+        if (!arguments.matches(Ui.DIGITS_REGEX)) {
             throw new IndexFormatException();
         }
 

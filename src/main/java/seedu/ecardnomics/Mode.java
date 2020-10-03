@@ -5,12 +5,12 @@ public enum Mode {
 
     private String name;
 
-    private Mode(String name){
+    private Mode(String name) {
         this.name = name;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return name;
     }
 

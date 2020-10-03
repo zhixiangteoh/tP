@@ -14,30 +14,32 @@ public class DeckList {
     }
 
     /**
-     * @return size of deck of
+     * Returns size of current deck.
+     *
+     * @return size of deck
      */
-    public int size(){
+    public int size() {
         return deckList.size();
     }
 
     /**
-     * Returns a deck from deck list based on given index
+     * Returns a deck from deck list based on given index.
      *
      * @param index Index of deck to be found
      * @return Deck found at <code>index</code>
      */
-    public Deck getDeck(int index){
+    public Deck getDeck(int index) {
         return deckList.get(index);
     }
 
 
     /**
-     * Returns index of deck in deck list
+     * Returns index of deck in deck list.
      *
      * @param deck Deck which index is to be found
      * @return Index found of <code>deck</code>
      */
-    public int getIndexOf(Deck deck){
+    public int getIndexOf(Deck deck) {
         return deckList.indexOf(deck);
     }
 

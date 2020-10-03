@@ -2,17 +2,19 @@ package seedu.ecardnomics.command;
 
 import seedu.ecardnomics.deck.Deck;
 
-public class DoneEditCommand extends DeckCommand{
+public class DoneEditCommand extends DeckCommand {
 
-    public DoneEditCommand(Deck deck){
+    /** Constructor. */
+    public DoneEditCommand(Deck deck) {
         super(deck);
     }
 
     @Override
-    public void execute(){
+    public void execute() {
     }
 
-    public static boolean isDoneEdit(Command command){
+    /** Returns if command given is an of instance of <code>DoneEditCommand</code>.  */
+    public static boolean isDoneEdit(Command command) {
         return command instanceof DoneEditCommand;
     }
 }
