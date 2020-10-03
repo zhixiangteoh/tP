@@ -12,4 +12,6 @@ public abstract class DeckCommand extends Command {
     public DeckCommand(Deck currentDeck) {
         this.currentDeck = currentDeck;
     }
+
+    public abstract void execute();
 }

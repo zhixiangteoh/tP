@@ -1,11 +1,14 @@
 package seedu.ecardnomics.command;
 
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.deck.DeckList;
 
-public class NormalCommand extends Command {
-    protected Deck currentDeck;
+public abstract class NormalCommand extends Command {
+    protected DeckList deckList;
 
-    public NormalCommand(Deck currentDeck) {
-        this.currentDeck = currentDeck;
+    public NormalCommand(DeckList deckList) {
+        this.deckList = deckList;
     }
+
+    public abstract void execute();
 }
