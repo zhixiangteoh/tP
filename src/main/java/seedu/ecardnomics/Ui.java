@@ -40,6 +40,7 @@ public class Ui {
     public static final String ADD = "add";
     public static final String LIST = "list";
     public static final String DELETE = "delete";
+    public static final String HELP = "help";
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
@@ -173,5 +174,9 @@ public class Ui {
 
     public static void printFlashCardDeletedLine(FlashCard flashCard) {
         System.out.println(flashCard.getQuestion() + FLASHCARD_DELETED_LINE);
+    }
+
+    public static void printDeckHelp(String deckHelpDisplay) {
+        printMessage(deckHelpDisplay);
     }
 }
