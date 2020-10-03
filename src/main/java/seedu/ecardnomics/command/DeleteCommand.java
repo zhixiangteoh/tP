@@ -13,7 +13,7 @@ public class DeleteCommand extends DeckCommand {
         super(deck);
         this.arguments = arguments;
         deckParser = new DeckParser(deck);
-    };
+    }
 
     @Override
     public void execute() {
