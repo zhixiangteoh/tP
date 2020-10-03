@@ -23,7 +23,7 @@ public class EditCommand extends NormalCommand {
         return deck;
     }
 
-    /** Returns if command given is an of instance of <code>EditCommand</code>. */
+    /** Returns if command given is an instance of <code>EditCommand</code>. */
     public static boolean isEdit(Command command) {
         return command instanceof EditCommand;
     }

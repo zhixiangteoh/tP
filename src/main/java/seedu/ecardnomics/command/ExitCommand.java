@@ -8,7 +8,7 @@ public class ExitCommand extends Command {
     public void execute() {
     }
 
-    /** Returns if command given is an of instance of <code>ExitCommand</code>.  */
+    /** Returns if command given is an instance of <code>ExitCommand</code>.  */
     public static boolean isExit(Command command) {
         return command instanceof ExitCommand;
     }

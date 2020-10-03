@@ -13,7 +13,7 @@ public class DoneEditCommand extends DeckCommand {
     public void execute() {
     }
 
-    /** Returns if command given is an of instance of <code>DoneEditCommand</code>.  */
+    /** Returns if command given is an instance of <code>DoneEditCommand</code>.  */
     public static boolean isDoneEdit(Command command) {
         return command instanceof DoneEditCommand;
     }
