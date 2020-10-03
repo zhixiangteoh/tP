@@ -69,6 +69,14 @@ public class Ui {
     }
 
     /**
+     * Displays the prompt for user input without specifying current mode.
+     */
+    public static void printPrompt(Deck deck) {
+        System.out.println("[Deck - " + deck.getName() + "]");
+        System.out.print("  > ");
+    }
+
+    /**
      * Displays the welcome message from Deck Mode to Normal Mode.
      */
     public static void printNormalWelcome() {
