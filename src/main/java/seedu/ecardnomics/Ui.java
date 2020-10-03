@@ -17,10 +17,19 @@ public class Ui {
             "Bye. Hope to see you again soon!";
     public static final String NOT_RECOGNISED_LINE =
             "Command not recognised";
+    public static final String ADD_FLASHCARD_LINE =
+            "You are now adding a FlashCard to: ";
+    public static final String ENTER_QUESTION_LINE =
+            "Enter question:";
+    public static final String ENTER_ANSWER_LINE =
+            "Enter answer:";
+    public static final String FLASHCARD_ADDED_LINE =
+            "FlashCard successfully added!";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
     public static final String DONE = "done";
+    public static final String ADD = "add";
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
@@ -109,5 +118,36 @@ public class Ui {
      */
     public static void printNotRecognisedLine() {
         printMessage(NOT_RECOGNISED_LINE);
+    }
+
+    /**
+     * Displays the add FlashCard line.
+     * @param deck current deck
+     */
+    public static void printAddFlashCardLine(Deck deck) {
+        printMessage(ADD_FLASHCARD_LINE + deck.getName());
+    }
+
+    /**
+     * Displays the enter question line.
+     */
+    public static void printEnterQuestionLine() {
+        System.out.println(ENTER_QUESTION_LINE);
+        System.out.print("  > ");
+    }
+
+    /**
+     * Displays the enter answer line.
+     */
+    public static void printEnterAnswerLine() {
+        System.out.println(ENTER_ANSWER_LINE);
+        System.out.print("  > ");
+    }
+
+    /**
+     * Displays the FlashCard added line.
+     */
+    public static void printFlashCardAddedLine() {
+        System.out.println(FLASHCARD_ADDED_LINE);
     }
 }
