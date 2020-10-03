@@ -15,9 +15,9 @@ public class AddCommand extends DeckCommand {
     public void execute() {
         Ui.printAddFlashCardLine(currentDeck);
         Ui.printEnterQuestionLine();
-        String question = Ui.readUserInput();
+        final String question = Ui.readUserInput();
         Ui.printEnterAnswerLine();
-        String answer = Ui.readUserInput();
+        final String answer = Ui.readUserInput();
         Ui.printFlashCardAddedLine();
         Ui.printDashLines();
 

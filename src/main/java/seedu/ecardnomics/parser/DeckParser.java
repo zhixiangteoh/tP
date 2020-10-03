@@ -1,7 +1,11 @@
 package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.*;
+import seedu.ecardnomics.command.AddCommand;
+import seedu.ecardnomics.command.Command;
+import seedu.ecardnomics.command.DoneEditCommand;
+import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 
 public class DeckParser extends Parser {
