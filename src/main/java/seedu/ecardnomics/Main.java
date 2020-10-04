@@ -14,6 +14,7 @@ import seedu.ecardnomics.parser.NormalParser;
  */
 public class Main {
 
+    public static final double VERSION_NUMBER = 1.0;
     public static DeckList deckList = new DeckList();
     public static NormalParser normalParser = new NormalParser(deckList);
 
@@ -94,7 +95,9 @@ public class Main {
      */
     public static void main(String[] args) {
         // TEMP FOR TESTING
-        deckList.addDeck(new Deck("Pokemon"));
+        Deck pokemon = new Deck("Pokemon");
+        deckList.addDeck(pokemon);
         runNormalMode();
+        // runDeckMode(pokemon);
     }
 }

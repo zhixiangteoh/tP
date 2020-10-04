@@ -3,8 +3,10 @@ package seedu.ecardnomics.parser;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.AddCommand;
 import seedu.ecardnomics.command.Command;
+import seedu.ecardnomics.command.DeleteCommand;
 import seedu.ecardnomics.command.DoneEditCommand;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.HelpCommand;
 import seedu.ecardnomics.command.ListCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
@@ -41,6 +43,16 @@ public class DeckParser extends Parser {
             return new ListCommand(deck, arguments);
         }
 
+        // Delete a FlashCard
+        if (commandWord.equals(Ui.DELETE)) {
+            return new DeleteCommand(deck, arguments);
+        }
+
+        // Help
+        if (commandWord.equals(Ui.HELP)) {
+            return new HelpCommand();
+        }
+
         return new VoidCommand();
     }
 
@@ -62,5 +74,10 @@ public class DeckParser extends Parser {
         } catch (Exception e) {
             return new VoidCommand(e.getMessage());
         }
+    }
+
+    public boolean isValidDeckIndex(String arguments) {
+        int index = Integer.parseInt(arguments.trim());
+        return index > 0 && index <= deck.size();
     }
 }

@@ -19,8 +19,20 @@ public class Deck {
         this.name = name;
     }
 
+    public FlashCard get(int index) {
+        return deck.get(index);
+    }
+
     public void add(FlashCard flashCard) {
         deck.add(flashCard);
+    }
+
+    public int size() {
+        return deck.size();
+    }
+
+    public void delete(int index) {
+        deck.remove(index);
     }
 
     @Override
