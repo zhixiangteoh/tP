@@ -1,6 +1,7 @@
 package seedu.ecardnomics;
 
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 
 import java.util.Scanner;
@@ -33,17 +34,29 @@ public class Ui {
             "Do you want to delete ";
     public static final String FLASHCARD_DELETED_LINE =
             " has been deleted.";
+    public static final String NEW_DECK_CREATED_LINE =
+            "New deck created: ";
+    public static final String DECKS_AVAILABLE_LINE =
+            "The following decks are available: ";
+    public static final String DELETED_DECK_QUESTION_LINE =
+            "Do you want to delete %1$s deck? [y/n]";
+    public static final String DELETED_DECK_LINE =
+            "%1$s has been deleted.";
+
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
     public static final String DONE = "done";
     public static final String ADD = "add";
+    public static final String CREATE = "create";
     public static final String LIST = "list";
+    public static final String DECKS = "decks";
     public static final String DELETE = "delete";
     public static final String HELP = "help";
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
+    public static final int INDEX_OFFSET = 1;
 
     public static Scanner in = new Scanner(System.in);
 
@@ -178,5 +191,43 @@ public class Ui {
 
     public static void printHelp(String helpDisplay) {
         printMessage(helpDisplay);
+    }
+
+    /**
+     * prints new deck added in the Normal Mode
+     *
+     * @param deck
+     */
+    public static void printNewDeck(Deck deck) {
+        System.out.println(NEW_DECK_CREATED_LINE + deck.getName());
+    }
+
+    /**
+     * print all decks available in the Normal Mode
+     *
+     * @param decks
+     */
+    public static void printDeckList(DeckList decks) {
+        System.out.println(DECKS_AVAILABLE_LINE);
+        System.out.println(decks.toString());
+
+    }
+
+    /**
+     * confirms the deck the user wants to delete
+     *
+     * @param deletedDeckName
+     */
+    public static void printDeletedDeckQuestion(String deletedDeckName) {
+        System.out.println(String.format(DELETED_DECK_QUESTION_LINE, deletedDeckName));
+    }
+
+    /**
+     * prints the name of the deleted deck
+     *
+     * @param deletedDeckName
+     */
+    public static void printDeletedDeck(String deletedDeckName) {
+        System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
     }
 }
