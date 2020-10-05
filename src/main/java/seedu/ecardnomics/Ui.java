@@ -176,7 +176,7 @@ public class Ui {
         System.out.println(flashCard.getQuestion() + FLASHCARD_DELETED_LINE);
     }
 
-    public static void printDeckHelp(String deckHelpDisplay) {
-        printMessage(deckHelpDisplay);
+    public static void printHelp(String helpDisplay) {
+        printMessage(helpDisplay);
     }
 }
