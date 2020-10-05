@@ -19,17 +19,36 @@ public class Deck {
         this.name = name;
     }
 
+    public FlashCard get(int index) {
+        return deck.get(index);
+    }
+
     public void add(FlashCard flashCard) {
         deck.add(flashCard);
+    }
+
+    public int size() {
+        return deck.size();
+    }
+
+    public void delete(int index) {
+        deck.remove(index);
     }
 
     @Override
     public String toString() {
         String output = name + ":";
         for (int i = 0; i < deck.size(); i++) {
-            output += "\n" + i + ". " + deck.get(i).toString() + "\n";
+            output += "\n" + (i + 1) + ". " + deck.get(i).toString() + "\n";
         }
+        return output;
+    }
 
+    public String toString(String type) {
+        String output = "";
+        for (int i = 0; i < deck.size(); i++) {
+            output += (i + 1) + ". " + deck.get(i).toString(type) + "\n" + System.lineSeparator();
+        }
         return output;
     }
 }
