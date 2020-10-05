@@ -4,6 +4,7 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.EditCommand;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
@@ -42,6 +43,11 @@ public class NormalParser extends Parser {
         if (commandWord.equals(Ui.EDIT)) {
             Deck deck = prepareDeck(arguments);
             return new EditCommand(deckList, deck);
+        }
+
+        // Help
+        if (commandWord.equals(Ui.HELP)) {
+            return new HelpCommand(deckList);
         }
 
         // Exit
