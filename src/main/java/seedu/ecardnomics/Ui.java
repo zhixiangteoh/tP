@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Ui {
 
     public static final String GREETING_LINES =
-            "Hello! Welcome to eCardnomics, \n"
+            "Hello! Welcome to eCardnomics,\n"
                     + "your one stop Flash Cards solution";
     public static final String NORMAL_WELCOME_LINE =
             "You are back in Normal Mode";
