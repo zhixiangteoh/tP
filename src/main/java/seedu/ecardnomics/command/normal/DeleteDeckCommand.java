@@ -15,9 +15,10 @@ public class DeleteDeckCommand extends NormalCommand {
 
     @Override
     public void execute() {
-        String nameDeletedDeck = deckList.getDeck(deckID -Ui.INDEX_OFFSET).getName();
+        String nameDeletedDeck = deckList.getDeck(deckID - Ui.INDEX_OFFSET).getName();
         Ui.printDeletedDeckQuestion(nameDeletedDeck);
         String answer = Ui.readUserInput();
+
         switch (answer) {
         case "y":
             deckList.removeDeck(deckID - Ui.INDEX_OFFSET);

@@ -9,6 +9,7 @@ public class DecksCommand extends NormalCommand {
     public DecksCommand(DeckList deckList) {
         super(deckList);
     }
+
     @Override
     public void execute() {
         Ui.printDeckList(deckList);

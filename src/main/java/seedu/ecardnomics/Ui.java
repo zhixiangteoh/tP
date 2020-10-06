@@ -194,7 +194,7 @@ public class Ui {
     }
 
     /**
-     * prints new deck added in the Normal Mode
+     * Prints new deck added in the Normal Mode.
      *
      * @param deck
      */
@@ -203,7 +203,7 @@ public class Ui {
     }
 
     /**
-     * print all decks available in the Normal Mode
+     * Prints all decks available in the Normal Mode.
      *
      * @param decks
      */
@@ -214,7 +214,7 @@ public class Ui {
     }
 
     /**
-     * confirms the deck the user wants to delete
+     * Confirms the deck the user wants to delete.
      *
      * @param deletedDeckName
      */
@@ -223,7 +223,7 @@ public class Ui {
     }
 
     /**
-     * prints the name of the deleted deck
+     * Prints the name of the deleted deck.
      *
      * @param deletedDeckName
      */
