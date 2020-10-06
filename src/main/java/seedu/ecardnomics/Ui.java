@@ -194,18 +194,18 @@ public class Ui {
     }
 
     /**
-     * prints new deck added in the Normal Mode
+     * Prints new deck added in the Normal Mode.
      *
-     * @param deck
+     * @param deck in new Deck added
      */
     public static void printNewDeck(Deck deck) {
         System.out.println(NEW_DECK_CREATED_LINE + deck.getName());
     }
 
     /**
-     * print all decks available in the Normal Mode
+     * Prints all decks available in the Normal Mode.
      *
-     * @param decks
+     * @param decks all decks in the list
      */
     public static void printDeckList(DeckList decks) {
         System.out.println(DECKS_AVAILABLE_LINE);
@@ -214,18 +214,18 @@ public class Ui {
     }
 
     /**
-     * confirms the deck the user wants to delete
+     * Confirms the deck the user wants to delete.
      *
-     * @param deletedDeckName
+     * @param deletedDeckName name of the deleted deck
      */
     public static void printDeletedDeckQuestion(String deletedDeckName) {
         System.out.println(String.format(DELETED_DECK_QUESTION_LINE, deletedDeckName));
     }
 
     /**
-     * prints the name of the deleted deck
+     * Prints the name of the deleted deck.
      *
-     * @param deletedDeckName
+     * @param deletedDeckName name of the deleted deck
      */
     public static void printDeletedDeck(String deletedDeckName) {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
