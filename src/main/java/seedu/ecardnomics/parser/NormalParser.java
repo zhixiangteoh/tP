@@ -38,7 +38,7 @@ public class NormalParser extends Parser {
         return deckList.getDeck(index);
     }
 
-    private int prepareDeletedDeck(String arguments) throws IndexFormatException, DeckRangeException{
+    private int prepareDeletedDeck(String arguments) throws IndexFormatException, DeckRangeException {
 
         if (!arguments.matches(Ui.DIGITS_REGEX)) {
             throw new IndexFormatException();
@@ -57,40 +57,37 @@ public class NormalParser extends Parser {
     protected Command parseCommand(String commandWord, String arguments)
             throws Exception {
 
+        switch (commandWord) {
         // Edit
-        if (commandWord.equals(Ui.EDIT)) {
+        case Ui.EDIT:
             Deck deck = prepareDeck(arguments);
             return new EditCommand(deckList, deck);
-        }
 
         // Help
-        if (commandWord.equals(Ui.HELP)) {
+        case Ui.HELP:
             return new HelpCommand(deckList);
-        }
 
         // Exit
-        if (commandWord.equals(Ui.EXIT)) {
+        case Ui.EXIT:
             return new ExitCommand();
-        }
 
         // Create
-        if (commandWord.equals(Ui.CREATE)) {
-            Deck deck = new Deck(arguments);
-            return new CreateCommand(deckList, deck);
-        }
+        case Ui.CREATE:
+            Deck newDeck = new Deck(arguments);
+            return new CreateCommand(deckList, newDeck);
 
         // Decks
-        if (commandWord.equals((Ui.DECKS))) {
+        case Ui.DECKS:
             return new DecksCommand(deckList);
-        }
 
         // Delete
-        if (commandWord.equals(Ui.DELETE)) {
+        case Ui.DELETE:
             int deckID = prepareDeletedDeck(arguments);
             return new DeleteDeckCommand(deckList, deckID);
-        }
 
-        return new VoidCommand();
+        default:
+            return new VoidCommand();
+        }
     }
 
 
