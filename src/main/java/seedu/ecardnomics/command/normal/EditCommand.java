@@ -15,7 +15,7 @@ public class EditCommand extends NormalCommand {
     }
 
     @Override
-    public void execute() throws Exception {
+    public void execute() {
         Ui.printDeckWelcome(deckList.getIndexOf(deck) + 1, deck);
     }
 

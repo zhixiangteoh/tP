@@ -13,11 +13,7 @@ class CreateCommandTest {
         DeckList deckList = new DeckList();
         assertEquals(0, deckList.size());
         CreateCommand cmd = new CreateCommand(deckList, new Deck("Test"));
-        try {
-            cmd.execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        cmd.execute();
         assertEquals(1, deckList.size());
     }
 }

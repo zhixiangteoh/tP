@@ -1,7 +1,6 @@
 package seedu.ecardnomics.command.normal;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.NormalCommand;
 import seedu.ecardnomics.deck.DeckList;
 
 public class DecksCommand extends NormalCommand {

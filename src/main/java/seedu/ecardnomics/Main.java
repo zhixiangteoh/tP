@@ -2,7 +2,7 @@ package seedu.ecardnomics;
 
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.DoneEditCommand;
-import seedu.ecardnomics.command.EditCommand;
+import seedu.ecardnomics.command.normal.EditCommand;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
