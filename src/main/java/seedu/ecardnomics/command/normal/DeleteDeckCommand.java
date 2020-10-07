@@ -2,7 +2,6 @@ package seedu.ecardnomics.command.normal;
 
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.NormalCommand;
 import seedu.ecardnomics.deck.DeckList;
 
 public class DeleteDeckCommand extends NormalCommand {
@@ -14,7 +13,7 @@ public class DeleteDeckCommand extends NormalCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws Exception{
         String nameDeletedDeck = deckList.getDeck(deckID - Ui.INDEX_OFFSET).getName();
         Ui.printDeletedDeckQuestion(nameDeletedDeck);
         String answer = Ui.readUserInput();

@@ -1,7 +1,6 @@
 package seedu.ecardnomics.command.normal;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.NormalCommand;
 import seedu.ecardnomics.deck.DeckList;
 
 public class DecksCommand extends NormalCommand {
@@ -11,7 +10,7 @@ public class DecksCommand extends NormalCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         Ui.printDeckList(deckList);
     }
 }
