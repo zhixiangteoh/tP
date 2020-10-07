@@ -1,6 +1,7 @@
-package seedu.ecardnomics.command;
+package seedu.ecardnomics.command.normal;
 
 import seedu.ecardnomics.Ui;
+import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 
@@ -14,7 +15,7 @@ public class EditCommand extends NormalCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         Ui.printDeckWelcome(deckList.getIndexOf(deck) + 1, deck);
     }
 
