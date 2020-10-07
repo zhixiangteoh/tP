@@ -4,8 +4,11 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.EditCommand;
 import seedu.ecardnomics.command.ExitCommand;
-import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.command.VoidCommand;
+import seedu.ecardnomics.command.normal.CreateCommand;
+import seedu.ecardnomics.command.normal.DecksCommand;
+import seedu.ecardnomics.command.normal.DeleteDeckCommand;
+import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
@@ -35,27 +38,56 @@ public class NormalParser extends Parser {
         return deckList.getDeck(index);
     }
 
+    private int prepareDeletedDeck(String arguments) throws IndexFormatException, DeckRangeException {
+
+        if (!arguments.matches(Ui.DIGITS_REGEX)) {
+            throw new IndexFormatException();
+        }
+
+        int deckID = Integer.parseInt(arguments);
+
+        if (deckID > deckList.size()) {
+            throw new DeckRangeException();
+        }
+
+        return deckID;
+    }
+
     @Override
     protected Command parseCommand(String commandWord, String arguments)
             throws Exception {
 
+        switch (commandWord) {
         // Edit
-        if (commandWord.equals(Ui.EDIT)) {
+        case Ui.EDIT:
             Deck deck = prepareDeck(arguments);
             return new EditCommand(deckList, deck);
-        }
 
         // Help
-        if (commandWord.equals(Ui.HELP)) {
+        case Ui.HELP:
             return new HelpCommand(deckList);
-        }
 
         // Exit
-        if (commandWord.equals(Ui.EXIT)) {
+        case Ui.EXIT:
             return new ExitCommand();
-        }
 
-        return new VoidCommand();
+        // Create
+        case Ui.CREATE:
+            Deck newDeck = new Deck(arguments);
+            return new CreateCommand(deckList, newDeck);
+
+        // Decks
+        case Ui.DECKS:
+            return new DecksCommand(deckList);
+
+        // Delete
+        case Ui.DELETE:
+            int deckID = prepareDeletedDeck(arguments);
+            return new DeleteDeckCommand(deckList, deckID);
+
+        default:
+            return new VoidCommand();
+        }
     }
 
 
@@ -77,4 +109,5 @@ public class NormalParser extends Parser {
             return new VoidCommand(e.getMessage());
         }
     }
+
 }

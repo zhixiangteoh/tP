@@ -1,5 +1,7 @@
 package seedu.ecardnomics.deck;
 
+import seedu.ecardnomics.Ui;
+
 import java.util.ArrayList;
 
 public class DeckList {
@@ -11,6 +13,10 @@ public class DeckList {
 
     public void addDeck(Deck deck) {
         deckList.add(deck);
+    }
+
+    public void removeDeck(int index) {
+        deckList.remove(index);
     }
 
     /**
@@ -47,7 +53,7 @@ public class DeckList {
     public String toString() {
         String output = "Decks:";
         for (int i = 0; i < deckList.size(); i++) {
-            output += "\n" + i + ". " + deckList.get(i).getName();
+            output += "\n" + (i + 1) + ". " + deckList.get(i).getName();
         }
 
         return output;
