@@ -1,13 +1,13 @@
 package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.AddCommand;
+import seedu.ecardnomics.command.deck.AddCommand;
 import seedu.ecardnomics.command.Command;
-import seedu.ecardnomics.command.DeleteCommand;
+import seedu.ecardnomics.command.deck.DeleteCommand;
 import seedu.ecardnomics.command.DoneEditCommand;
-import seedu.ecardnomics.command.ExitCommand;
-import seedu.ecardnomics.command.HelpCommand;
-import seedu.ecardnomics.command.ListCommand;
+import seedu.ecardnomics.command.deck.ExitCommand;
+import seedu.ecardnomics.command.deck.HelpCommand;
+import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 

@@ -1,6 +1,8 @@
-package seedu.ecardnomics.command;
+package seedu.ecardnomics.command.deck;
 
 import seedu.ecardnomics.Ui;
+import seedu.ecardnomics.command.Command;
+import seedu.ecardnomics.command.NormalCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 
