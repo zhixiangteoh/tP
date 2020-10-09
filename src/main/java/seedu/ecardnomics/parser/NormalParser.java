@@ -2,7 +2,7 @@ package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
-import seedu.ecardnomics.command.deck.EditCommand;
+import seedu.ecardnomics.command.normal.EditCommand;
 import seedu.ecardnomics.command.deck.ExitCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.normal.CreateCommand;
@@ -58,38 +58,31 @@ public class NormalParser extends Parser {
             throws Exception {
 
         switch (commandWord) {
+        // Exit
+        case Ui.EXIT:
+            return new ExitCommand();
         // Edit
         case Ui.EDIT:
             Deck deck = prepareDeck(arguments);
             return new EditCommand(deckList, deck);
-
-        // Help
-        case Ui.HELP:
-            return new HelpCommand(deckList);
-
-        // Exit
-        case Ui.EXIT:
-            return new ExitCommand();
-
         // Create
         case Ui.CREATE:
             Deck newDeck = new Deck(arguments);
             return new CreateCommand(deckList, newDeck);
-
         // Decks
         case Ui.DECKS:
             return new DecksCommand(deckList);
-
         // Delete
         case Ui.DELETE:
             int deckID = prepareDeletedDeck(arguments);
             return new DeleteDeckCommand(deckList, deckID);
-
+        // Help
+        case Ui.HELP:
+            return new HelpCommand(deckList);
         default:
             return new VoidCommand();
         }
     }
-
 
     @Override
     public Command parse(String userInput) {

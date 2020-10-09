@@ -1,5 +1,7 @@
-package seedu.ecardnomics.command;
+package seedu.ecardnomics.command.deck;
 
+import seedu.ecardnomics.command.Command;
+import seedu.ecardnomics.command.DeckCommand;
 import seedu.ecardnomics.deck.Deck;
 
 public class DoneEditCommand extends DeckCommand {
