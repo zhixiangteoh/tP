@@ -146,6 +146,7 @@ public class Ui {
 
     /**
      * Displays the add FlashCard line.
+     *
      * @param deck current deck
      */
     public static void printAddFlashCardLine(Deck deck) {
@@ -175,20 +176,43 @@ public class Ui {
         System.out.println(FLASHCARD_ADDED_LINE);
     }
 
+    /**
+     * Displays an index list of FlashCards in the deck.
+     *
+     * @param deck deck to display
+     * @param type optional <>/ans</> to display answers
+     */
     public static void printDeck(Deck deck, String type) {
         printMessage(LIST_FLASHCARDS_LINE + deck.getName());
         System.out.print(deck.toString(type));
         printDashLines();
     }
 
+    /**
+     * Displays the delete FlashCard line.
+     *
+     * @param flashCard FlashCard to delete
+     */
     public static void printDeleteFlashCardLine(FlashCard flashCard) {
         System.out.print(DELETE_FLASHCARD_LINE + flashCard.getQuestion() + "? " + YN_LINE + " ");
     }
 
+    /**
+     * Displays the FlashCard deleted line.
+     *
+     * @param flashCard deleted FlashCard
+     */
     public static void printFlashCardDeletedLine(FlashCard flashCard) {
         System.out.println(flashCard.getQuestion() + FLASHCARD_DELETED_LINE);
     }
 
+    /**
+     * Displays the help page of commands.
+     *
+     * Displays a different help page for Normal Mode and Deck Mode.
+     *
+     * @param helpDisplay help text to display
+     */
     public static void printHelp(String helpDisplay) {
         printMessage(helpDisplay);
     }
