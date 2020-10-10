@@ -10,6 +10,9 @@ import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.exceptions.DeckRangeException;
+import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.exceptions.QuestionRangeException;
 
 public class DeckParser extends Parser {
     public Deck deck;
@@ -17,6 +20,23 @@ public class DeckParser extends Parser {
     /** Constructor. */
     public DeckParser(Deck deck) {
         this.deck = deck;
+    }
+
+    @Override
+    protected int getIndex(String arguments)
+            throws IndexFormatException, QuestionRangeException {
+
+        if (!arguments.matches(Ui.DIGITS_REGEX)) {
+            throw new IndexFormatException();
+        }
+
+        int index = Integer.parseInt(arguments) - 1;
+
+        if (index >= deck.size()) {
+            throw new QuestionRangeException();
+        }
+
+        return index;
     }
 
     @Override
