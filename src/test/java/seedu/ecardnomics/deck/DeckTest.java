@@ -116,7 +116,7 @@ class DeckTest {
         assertEquals(deckStringAns, deck.toString("answer"));
     }
 
-    private Deck initialiseDeck(int size) {
+    Deck initialiseDeck(int size) {
         Deck deck = new Deck("Pokemon");
         for (int i = 1; i <= size; i++) {
             FlashCard flashCard = new FlashCard(String.format("q %d", i), String.format("a %d", i));

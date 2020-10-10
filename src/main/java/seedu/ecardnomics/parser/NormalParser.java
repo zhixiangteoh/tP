@@ -3,7 +3,7 @@ package seedu.ecardnomics.parser;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.normal.EditCommand;
-import seedu.ecardnomics.command.deck.ExitCommand;
+import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.normal.CreateCommand;
 import seedu.ecardnomics.command.normal.DecksCommand;
