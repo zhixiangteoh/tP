@@ -13,6 +13,7 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.QuestionRangeException;
+import seedu.ecardnomics.exceptions.EmptyInputException;
 
 public class DeckParser extends Parser {
     public Deck deck;
@@ -20,6 +21,25 @@ public class DeckParser extends Parser {
     /** Constructor. */
     public DeckParser(Deck deck) {
         this.deck = deck;
+    }
+
+    private String[] prepareFlashCard() throws EmptyInputException {
+        String[] questionAndAnswer = new String[2];
+        Ui.printAddFlashCardLine(deck);
+        Ui.printEnterQuestionLine();
+        questionAndAnswer[0] = Ui.readUserInput();
+        if (questionAndAnswer[0].trim().length() == 0) {
+            throw new EmptyInputException();
+        }
+        Ui.printEnterAnswerLine();
+        questionAndAnswer[1] = Ui.readUserInput();
+        if (questionAndAnswer[1].trim().length() == 0) {
+            throw new EmptyInputException();
+        }
+        Ui.printFlashCardAddedLine();
+        Ui.printDashLines();
+
+        return questionAndAnswer;
     }
 
     @Override
@@ -52,7 +72,8 @@ public class DeckParser extends Parser {
             return new DoneEditCommand(deck);
         // Add a FlashCard
         case Ui.ADD:
-            return new AddCommand(deck);
+            String[] questionAndAnswer = prepareFlashCard();
+            return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
         // List all FlashCards
         case Ui.LIST:
             return new ListCommand(deck, arguments);
