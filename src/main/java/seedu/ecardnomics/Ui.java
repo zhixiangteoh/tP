@@ -44,12 +44,8 @@ public class Ui {
             "%1$s has been deleted.";
     public static final String INVALID_YN_RESPONSE_LINE =
             "Response should be 'y' or 'n'!";
-<<<<<<< HEAD
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
-=======
-
->>>>>>> origin/master
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -270,14 +266,10 @@ public class Ui {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
     }
 
-<<<<<<< HEAD
     /**
      * Prints a line prompting user to enter only 'y' or 'n'.
      */
     public static void printInvalidYorNResponse() {
-=======
-    public static void printInvalidYNResponse() {
->>>>>>> origin/master
         System.out.println(INVALID_YN_RESPONSE_LINE);
     }
 }
