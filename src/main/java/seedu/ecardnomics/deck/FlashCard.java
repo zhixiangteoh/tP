@@ -37,7 +37,7 @@ public class FlashCard {
             return "Question: " + question;
         case "answer":
             return "Question: " + question + "\n"
-                    + "Answer : " + answer;
+                    + "Answer: " + answer;
         default:
             return "";
         }

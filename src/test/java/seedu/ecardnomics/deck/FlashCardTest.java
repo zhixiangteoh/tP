@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FlashCardTest {
-    FlashCard flashCard;
+    static FlashCard flashCard;
 
     @Test
     void testToString_default_goodFormat() {
@@ -23,8 +23,7 @@ class FlashCardTest {
     }
 
     @BeforeAll
-    private FlashCard createFlashCard() {
+    public static void createFlashCard() {
         flashCard = new FlashCard("Who's that Pokemon?", "It's Pikachu!");
-        return flashCard;
     }
 }
