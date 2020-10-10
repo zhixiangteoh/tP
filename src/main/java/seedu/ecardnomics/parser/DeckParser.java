@@ -10,6 +10,9 @@ import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.exceptions.FlashCardRangeException;
+import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.deck.FlashCard;
 
 public class DeckParser extends Parser {
     public Deck deck;
@@ -17,6 +20,41 @@ public class DeckParser extends Parser {
     /** Constructor. */
     public DeckParser(Deck deck) {
         this.deck = deck;
+    }
+
+    private int prepareDeletedFlashCard(String arguments) throws IndexFormatException, FlashCardRangeException {
+
+        if (!arguments.matches(Ui.DIGITS_REGEX)) {
+            throw new IndexFormatException();
+        }
+
+        int flashCardID = Integer.parseInt(arguments);
+
+        if (flashCardID > deck.size()) {
+            throw new FlashCardRangeException();
+        }
+
+        return flashCardID;
+    }
+
+    public static String getDeleteYNResponse(FlashCard flashCard) {
+        String response = "";
+        do {
+            Ui.printDeleteFlashCardLine(flashCard);
+            response = Ui.readUserInput();
+            switch (response.trim()) {
+            case Ui.Y:
+                response = Ui.Y;
+                break;
+            case Ui.N:
+                response = Ui.N;
+                break;
+            default:
+                Ui.printInvalidYNResponse();
+            }
+        }
+        while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
+        return response;
     }
 
     @Override
@@ -38,7 +76,8 @@ public class DeckParser extends Parser {
             return new ListCommand(deck, arguments);
         // Delete a FlashCard
         case Ui.DELETE:
-            return new DeleteCommand(deck, arguments);
+            int flashCardID = prepareDeletedFlashCard(arguments);
+            return new DeleteCommand(deck, flashCardID);
         // Help
         case Ui.HELP:
             return new HelpCommand();
@@ -64,10 +103,5 @@ public class DeckParser extends Parser {
         } catch (Exception e) {
             return new VoidCommand(e.getMessage());
         }
-    }
-
-    public boolean isValidDeckIndex(String arguments) {
-        int index = Integer.parseInt(arguments.trim());
-        return index > 0 && index <= deck.size();
     }
 }
