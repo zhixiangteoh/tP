@@ -73,7 +73,7 @@ public class DeckParser extends Parser {
         return index;
     }
 
-    private String getDeleteYorNResponse(FlashCard flashCard) {
+    public static String getDeleteYorNResponse(FlashCard flashCard) {
         String response = "";
         do {
             Ui.printDeleteFlashCardLine(flashCard);
