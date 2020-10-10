@@ -42,6 +42,8 @@ public class Ui {
             "Do you want to delete %1$s deck? [y/n]";
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
+    public static final String INVALID_YN_RESPONSE_LINE =
+            "Response should be 'y' or 'n'!";
 
 
     public static final String EXIT = "exit";
@@ -58,6 +60,8 @@ public class Ui {
     public static final String DIGITS_REGEX = "\\d+";
     public static final int INDEX_OFFSET = 1;
 
+    public static final String Y = "y";
+    public static final String N = "n";
     public static final String DASH_LINES = "------------------------------------------------------------";
 
     public static Scanner in = new Scanner(System.in);
@@ -255,5 +259,9 @@ public class Ui {
      */
     public static void printDeletedDeck(String deletedDeckName) {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
+    }
+
+    public static void printInvalidYNResponse() {
+        System.out.println(INVALID_YN_RESPONSE_LINE);
     }
 }
