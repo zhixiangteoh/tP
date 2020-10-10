@@ -4,40 +4,34 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.DeckCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.FlashCard;
-import seedu.ecardnomics.parser.DeckParser;
+
+import static seedu.ecardnomics.parser.DeckParser.getDeleteYNResponse;
 
 public class DeleteCommand extends DeckCommand {
-    private final String arguments;
-    private final DeckParser deckParser;
+    private int flashCardID;
+    private String response;
 
-    public DeleteCommand(Deck deck, String arguments) {
+    public DeleteCommand(Deck deck, int flashCardID) {
         super(deck);
-        this.arguments = arguments;
-        deckParser = new DeckParser(deck);
+        this.flashCardID = flashCardID;
     }
 
     @Override
     public void execute() {
-        try {
-            int index = Integer.parseInt(arguments) - 1;
-            FlashCard flashCard = currentDeck.get(index);
-
-            Ui.printDeleteFlashCardLine(flashCard);
-            final String yn = Ui.readUserInput();
-            switch (yn) {
-            case "y":
-                Ui.printFlashCardDeletedLine(flashCard);
-                Ui.printDashLines();
-                currentDeck.delete(index);
-                break;
-            case "n":
-                //
-                break;
-            default:
-                //
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        int deleteIndex = flashCardID - Ui.INDEX_OFFSET;
+        FlashCard flashCard = currentDeck.get(deleteIndex);
+        response = getDeleteYNResponse(flashCard);
+        switch (response) {
+        case "y":
+            Ui.printFlashCardDeletedLine(flashCard);
+            Ui.printDashLines();
+            currentDeck.delete(deleteIndex);
+            break;
+        case "n":
+            //
+            break;
+        default:
+            //
         }
     }
 }
