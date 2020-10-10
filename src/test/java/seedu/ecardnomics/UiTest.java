@@ -30,7 +30,8 @@ public class UiTest {
     @Test
     public void printMessage_singleLine_goodFormat() {
         String singleLine = "Hello! Welcome to eCardnomics!\t\t\tFlashCards Application.";
-        String message = Ui.DASH_LINES + "\n" + singleLine + "\n" + Ui.DASH_LINES  + "\n";
+        String message = Ui.DASH_LINES + System.lineSeparator() + singleLine + System.lineSeparator()
+                + Ui.DASH_LINES + System.lineSeparator();
         Ui.printMessage(singleLine);
         assertEquals(message, outContent.toString());
     }
