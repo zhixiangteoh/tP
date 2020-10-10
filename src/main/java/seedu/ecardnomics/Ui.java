@@ -266,7 +266,10 @@ public class Ui {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
     }
 
-    public static void printInvalidYNResponse() {
+    /**
+     * Prints a line prompting user to enter only 'y' or 'n'.
+     */
+    public static void printInvalidYorNResponse() {
         System.out.println(INVALID_YN_RESPONSE_LINE);
     }
 }

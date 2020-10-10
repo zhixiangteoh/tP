@@ -1,6 +1,5 @@
 package seedu.ecardnomics.command.deck;
 
-import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.DeckCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.FlashCard;
