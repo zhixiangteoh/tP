@@ -58,6 +58,8 @@ public class Ui {
     public static final String DIGITS_REGEX = "\\d+";
     public static final int INDEX_OFFSET = 1;
 
+    public static final String DASH_LINES = "------------------------------------------------------------";
+
     public static Scanner in = new Scanner(System.in);
 
     /**
@@ -71,7 +73,7 @@ public class Ui {
 
     /** Displays dash line. */
     public static void printDashLines() {
-        System.out.println("------------------------------------------------------------");
+        System.out.println(DASH_LINES);
     }
 
     /**
@@ -180,7 +182,7 @@ public class Ui {
      * Displays an index list of FlashCards in the deck.
      *
      * @param deck deck to display
-     * @param type optional <>/ans</> to display answers
+     * @param type optional <code>/ans</code> to display answers
      */
     public static void printDeck(Deck deck, String type) {
         printMessage(LIST_FLASHCARDS_LINE + deck.getName());
@@ -209,7 +211,7 @@ public class Ui {
     /**
      * Displays the help page of commands.
      *
-     * Displays a different help page for Normal Mode and Deck Mode.
+     * <p>Displays a different help page for Normal Mode and Deck Mode.</p>
      *
      * @param helpDisplay help text to display
      */
