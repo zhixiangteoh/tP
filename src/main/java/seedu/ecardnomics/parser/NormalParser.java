@@ -22,7 +22,8 @@ public class NormalParser extends Parser {
         this.deckList = deckList;
     }
 
-    private Deck prepareDeck(String arguments)
+    @Override
+    protected int getIndex(String arguments)
             throws IndexFormatException, DeckRangeException {
 
         if (!arguments.matches(Ui.DIGITS_REGEX)) {
@@ -35,22 +36,18 @@ public class NormalParser extends Parser {
             throw new DeckRangeException();
         }
 
-        return deckList.getDeck(index);
+        return index;
     }
 
-    private int prepareDeletedDeck(String arguments) throws IndexFormatException, DeckRangeException {
+    private Deck prepareDeck(String arguments)
+            throws IndexFormatException, DeckRangeException {
 
-        if (!arguments.matches(Ui.DIGITS_REGEX)) {
-            throw new IndexFormatException();
-        }
+        return deckList.getDeck(getIndex(arguments));
+    }
 
-        int deckID = Integer.parseInt(arguments);
-
-        if (deckID > deckList.size()) {
-            throw new DeckRangeException();
-        }
-
-        return deckID;
+    private int prepareDeletedDeck(String arguments)
+            throws IndexFormatException, DeckRangeException {
+        return getIndex(arguments);
     }
 
     @Override

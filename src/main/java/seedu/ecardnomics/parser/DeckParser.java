@@ -13,6 +13,10 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.exceptions.DeckRangeException;
+import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.exceptions.QuestionRangeException;
+import seedu.ecardnomics.exceptions.EmptyInputException;
 
 public class DeckParser extends Parser {
     public Deck deck;
@@ -23,11 +27,6 @@ public class DeckParser extends Parser {
     }
 
     private int prepareDeletedFlashCard(String arguments) throws IndexFormatException, FlashCardRangeException {
-
-        if (!arguments.matches(Ui.DIGITS_REGEX)) {
-            throw new IndexFormatException();
-        }
-
         int flashCardID = Integer.parseInt(arguments);
 
         if (flashCardID > deck.size()) {
@@ -36,6 +35,41 @@ public class DeckParser extends Parser {
 
         return flashCardID;
     }
+
+    private String[] prepareFlashCard() throws EmptyInputException {
+        String[] questionAndAnswer = new String[2];
+        Ui.printAddFlashCardLine(deck);
+        Ui.printEnterQuestionLine();
+        questionAndAnswer[0] = Ui.readUserInput();
+        if (questionAndAnswer[0].trim().length() == 0) {
+            throw new EmptyInputException();
+        }
+        Ui.printEnterAnswerLine();
+        questionAndAnswer[1] = Ui.readUserInput();
+        if (questionAndAnswer[1].trim().length() == 0) {
+            throw new EmptyInputException();
+        }
+        Ui.printFlashCardAddedLine();
+        Ui.printDashLines();
+
+        return questionAndAnswer;
+    }
+
+    @Override
+    protected int getIndex(String arguments)
+            throws IndexFormatException, QuestionRangeException {
+        if (!arguments.matches(Ui.DIGITS_REGEX)) {
+            throw new IndexFormatException();
+        }
+        int index = Integer.parseInt(arguments) - 1;
+
+        if (index >= deck.size()) {
+            throw new QuestionRangeException();
+        }
+
+        return index;
+    }
+    
 
     public static String getDeleteYNResponse(FlashCard flashCard) {
         String response = "";
@@ -70,7 +104,8 @@ public class DeckParser extends Parser {
             return new DoneEditCommand(deck);
         // Add a FlashCard
         case Ui.ADD:
-            return new AddCommand(deck);
+            String[] questionAndAnswer = prepareFlashCard();
+            return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
         // List all FlashCards
         case Ui.LIST:
             return new ListCommand(deck, arguments);
