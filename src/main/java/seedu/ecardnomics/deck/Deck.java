@@ -51,4 +51,19 @@ public class Deck {
         }
         return output;
     }
+
+    // public boolean equals(Deck other) {
+    //     if (!name.equals(other.name)) {
+    //         return false;
+    //     }
+    //     if (deck.size() != other.deck.size()) {
+    //         return false;
+    //     }
+    //     for (int i = 0; i < deck.size(); i++) {
+    //         if (!deck.get(i).equals(other.get(i))) {
+    //             return false;
+    //         }
+    //     }
+    //     return true;
+    // }
 }
