@@ -1,4 +1,6 @@
-package seedu.ecardnomics.command;
+package seedu.ecardnomics.command.deck;
+
+import seedu.ecardnomics.command.Command;
 
 public class ExitCommand extends Command {
     public ExitCommand() {

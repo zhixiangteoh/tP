@@ -42,6 +42,8 @@ public class Ui {
             "Do you want to delete %1$s deck? [y/n]";
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
+    private static final String EMPTY_DECK_LINE =
+            "Deck is currently empty!";
 
 
     public static final String EXIT = "exit";
@@ -177,7 +179,11 @@ public class Ui {
 
     public static void printDeck(Deck deck, String type) {
         printMessage(LIST_FLASHCARDS_LINE + deck.getName());
-        System.out.print(deck.toString(type));
+        if (deck.toString(type).trim().equals("")) {
+            System.out.println(EMPTY_DECK_LINE);
+        } else {
+            System.out.print(deck.toString(type));
+        }
         printDashLines();
     }
 
