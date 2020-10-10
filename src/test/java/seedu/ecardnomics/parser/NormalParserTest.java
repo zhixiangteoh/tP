@@ -66,7 +66,31 @@ class NormalParserTest {
 
     @Test
     void parseCommand_EditCommand_success() throws Exception {
-        assertTrue(normalParser.parseCommand("done", "") instanceof EditCommand);
+        assertTrue(normalParser.parseCommand("edit", "1") instanceof EditCommand);
+        assertTrue(normalParser.parseCommand("edit", "2") instanceof EditCommand);
+    }
+
+    @Test
+    void parseCommand_EditCommandNoIndex_exceptionThrown() {
+        try {
+            assertTrue(normalParser.parseCommand("edit", "") instanceof EditCommand);
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexFormatException);
+        }
+    }
+
+    @Test
+    void parseCommand_EditCommandOutOfRangeIndex_exceptionThrown() {
+        try {
+            // first two currently fail because caught in IndexFormatException...
+            // assertTrue(normalParser.parseCommand("edit", "-1") instanceof EditCommand);
+            // assertTrue(normalParser.parseCommand("edit", "0") instanceof EditCommand);
+            assertTrue(normalParser.parseCommand("edit", "3") instanceof EditCommand);
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof DeckRangeException);
+        }
     }
 
     // @Test
