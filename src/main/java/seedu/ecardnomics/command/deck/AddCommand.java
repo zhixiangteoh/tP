@@ -6,22 +6,18 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.FlashCard;
 
 public class AddCommand extends DeckCommand {
+    private final String question;
+    private final String answer;
 
     /** Constructor. */
-    public AddCommand(Deck deck) {
+    public AddCommand(Deck deck, String question, String answer) {
         super(deck);
+        this.question = question;
+        this.answer = answer;
     }
 
     @Override
     public void execute() {
-        Ui.printAddFlashCardLine(currentDeck);
-        Ui.printEnterQuestionLine();
-        final String question = Ui.readUserInput();
-        Ui.printEnterAnswerLine();
-        final String answer = Ui.readUserInput();
-        Ui.printFlashCardAddedLine();
-        Ui.printDashLines();
-
-        this.currentDeck.add(new FlashCard(question, answer));
+        this.currentDeck.add(new FlashCard(this.question, this.answer));
     }
 }

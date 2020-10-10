@@ -46,6 +46,9 @@ public class Deck {
 
     public String toString(String type) {
         String output = "";
+        if (this.deck.size() == 0) {
+            return output;
+        }
         for (int i = 0; i < deck.size(); i++) {
             output += (i + 1) + ". " + deck.get(i).toString(type) + "\n" + System.lineSeparator();
         }
