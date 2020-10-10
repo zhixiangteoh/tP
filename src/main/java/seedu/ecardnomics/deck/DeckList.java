@@ -1,7 +1,5 @@
 package seedu.ecardnomics.deck;
 
-import seedu.ecardnomics.Ui;
-
 import java.util.ArrayList;
 
 public class DeckList {

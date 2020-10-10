@@ -3,7 +3,6 @@ package seedu.ecardnomics.deck;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 class DeckTest {
     @Test
@@ -104,15 +103,24 @@ class DeckTest {
     @Test
     void testToString_default_goodFormat() {
         Deck deck = initialiseDeck(2);
+        String deckString = "Pokemon:\n1. Question: q 1\nAnswer: a 1\n\n2. Question: q 2\nAnswer: a 2\n";
+        assertEquals(deckString, deck.toString());
     }
 
     @Test
-    void testToString_withAns_goodFormat() {
+    void testToString_withType_goodFormat() {
+        Deck deck = initialiseDeck(2);
+        String deckString = "1. Question: q 1\n" + System.lineSeparator() + "2. Question: q 2\n"
+                + System.lineSeparator();
+        String deckStringAns = "1. Question: q 1\nAnswer: a 1\n" + System.lineSeparator() + "2. Question: q 2\n"
+                + "Answer: a 2\n" + System.lineSeparator();
+        assertEquals(deckString, deck.toString("question"));
+        assertEquals(deckStringAns, deck.toString("answer"));
     }
 
     private Deck initialiseDeck(int size) {
         Deck deck = new Deck("Pokemon");
-        for (int i = 0; i < size; i++) {
+        for (int i = 1; i <= size; i++) {
             FlashCard flashCard = new FlashCard(String.format("q %d", i), String.format("a %d", i));
             deck.add(flashCard);
         }
