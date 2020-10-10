@@ -30,9 +30,9 @@ public class NormalParser extends Parser {
             throw new IndexFormatException();
         }
 
-        int index = Integer.parseInt(arguments) - 1;
+        int index = Integer.parseInt(arguments) - Ui.INDEX_OFFSET;
 
-        if (index >= deckList.size()) {
+        if ((index >= deckList.size()) || (index < 0)) {
             throw new DeckRangeException();
         }
 

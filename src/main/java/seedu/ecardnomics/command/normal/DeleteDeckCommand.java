@@ -5,29 +5,20 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.deck.DeckList;
 
 public class DeleteDeckCommand extends NormalCommand {
-    public int deckID;
+    public int index;
 
-    public DeleteDeckCommand(DeckList decks, int deckID) {
+    public DeleteDeckCommand(DeckList decks, int index) {
         super(decks);
-        this.deckID = deckID;
+        this.index = index;
     }
 
     @Override
     public void execute() {
-        String nameDeletedDeck = deckList.getDeck(deckID - Ui.INDEX_OFFSET).getName();
+        String nameDeletedDeck = deckList.getDeck(index).getName();
         Ui.printDeletedDeckQuestion(nameDeletedDeck);
         String answer = Ui.readUserInput();
 
-        switch (answer) {
-        case "y":
-            deckList.removeDeck(deckID - Ui.INDEX_OFFSET);
-            Ui.printDeletedDeck(nameDeletedDeck);
-            break;
-        case "n":
-            //
-            break;
-        default:
-            //
-        }
+        deckList.removeDeck(index);
+        Ui.printDeletedDeck(nameDeletedDeck);
     }
 }
