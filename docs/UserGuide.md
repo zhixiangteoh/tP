@@ -234,7 +234,9 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
     <td>Example</td>
   </tr>
   <tr>
-    <td colspan="3">Normal Mode</td>
+    <td>Normal Mode</td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
     <td>Create deck</td>
@@ -262,7 +264,9 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
     <td></td>
   </tr>
   <tr>
-    <td colspan="3">Deck Mode</td>
+    <td>Deck Mode</td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
     <td>Add flash card</td>
@@ -290,7 +294,9 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
     <td></td>
   </tr>
   <tr>
-    <td colspan="3">Anywhere</td>
+    <td>Anywhere</td>
+    <td></td>
+    <td></td>
   </tr>
   <tr>
     <td>Exit program</td>
