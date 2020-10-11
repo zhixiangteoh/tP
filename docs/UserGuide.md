@@ -247,7 +247,7 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
 |Exit Deck Mode|`done`||
 |Help|`help`||
 
-### 
+### Anywhere
 
 |Action|Format|Example|
 |------|------|-------|
