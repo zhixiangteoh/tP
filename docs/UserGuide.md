@@ -227,19 +227,26 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
 
 ## Command Summary
 
+### Normal Mode
+
 |Action|Format|Example|
 |------|------|-------|
-|Normal Mode|||
 |Create deck|`create `|`create market-failure`|
 |Display decks|`decks`||
 |Delete deck|`delete `|`delete 1`|
 |Enter Deck Mode|`edit `|`edit 1`|
 |Help|`help`||
-|Deck Mode|||
+
+### Deck Mode
+|Action|Format|Example|
+|------|------|-------|
 |Add flash card|`add`||
 |List flash cards|`list [/ans]`||
 |Delete flash card|`delete `|`delete 1`|
 |Exit Deck Mode|`done`||
 |Help|`help`||
-|Anywhere|||
+
+### Anywhere
+|Action|Format|Example|
+|------|------|-------|
 |Exit program|`exit`||
