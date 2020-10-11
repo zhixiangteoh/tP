@@ -227,80 +227,19 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
 
 ## Command Summary
 
-<table>
-  <tr>
-    <td>Action</td>
-    <td>Format</td>
-    <td>Example</td>
-  </tr>
-  <tr>
-    <td>Normal Mode</td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Create deck</td>
-    <td>`create <name of deck>`</td>
-    <td>`create market-failure`</td>
-  </tr>
-  <tr>
-    <td>Display decks</td>
-    <td>`decks`</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Delete deck</td>
-    <td>`delete <index of deck>`</td>
-    <td>`delete 1`</td>
-  </tr>
-  <tr>
-    <td>Enter Deck Mode</td>
-    <td>`edit <index of deck>`</td>
-    <td>`edit 1`</td>
-  </tr>
-  <tr>
-    <td>Help</td>
-    <td>`help`</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Deck Mode</td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Add flash card</td>
-    <td>`add`</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>List flash cards</td>
-    <td>`list [/ans]`</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Delete flash card</td>
-    <td>`delete <index of flash card>`</td>
-    <td>`delete 1`</td>
-  </tr>
-  <tr>
-    <td>Exit Deck Mode</td>
-    <td>`done`</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Help</td>
-    <td>`help`</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Anywhere</td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Exit program</td>
-    <td>`exit`</td>
-    <td></td>
-  </tr>
-</table>
+|Action|Format|Example|
+|------|------|-------|
+|Normal Mode|||
+|Create deck|`create `|`create market-failure`|
+|Display decks|`decks`||
+|Delete deck|`delete `|`delete 1`|
+|Enter Deck Mode|`edit `|`edit 1`|
+|Help|`help`||
+|Deck Mode|||
+|Add flash card|`add`||
+|List flash cards|`list [/ans]`||
+|Delete flash card|`delete `|`delete 1`|
+|Exit Deck Mode|`done`||
+|Help|`help`||
+|Anywhere|||
+|Exit program|`exit`||
