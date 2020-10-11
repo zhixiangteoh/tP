@@ -60,12 +60,15 @@ Words in square brackets `[]` represent optional input parameters.
 > `[Normal]` is displayed at every command prompt, to indicate that the program is in Normal Mode.
 
 ### Create a new deck: `create`
+
 Creates a new deck of flashcards. The `create` command expects one argument specifying the name of the deck to be
  created.
 
 #### Format
 
-`create <name of deck>`
+```java
+create <name of deck>
+```
 
 #### Examples
 
@@ -76,11 +79,14 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
 ```
 
 ### Display all decks: `decks`
+
 Displays an enumerated list of all the decks available to the user. The `decks` command does not expect any arguments.
 
 #### Format
 
-`decks`
+```java
+decks
+```
 
 #### Examples
 
@@ -92,6 +98,105 @@ Displays an enumerated list of all the decks available to the user. The `decks` 
 // 1. market-failure
 // 2. perfect competition
 // 3. externalities
+```
+
+### Delete an existing deck: `delete`
+
+Deletes an existing deck of flashcards. The `delete` command expects one argument specifying the name of the deck to
+ be deleted. User is then further prompted for an input of only either `y` or `n`.
+ 
+#### Format
+
+```java
+[Normal]
+  > delete <index of deck>
+// Do you want to delete `name of deck`? [y/n] <y/n>
+// `name of deck` has been deleted.
+```
+
+> Note: `name of deck` is a placeholder for the actual name of the deck corresonding to the index entered. The second
+> line will only be displayed if the user entered y at the prompt for <y/n>.
+
+#### Examples
+
+```java
+[Normal]
+  > delete 1
+// Do you want to delete market-failure? [y/n] n
+[Normal]
+  > 
+```
+
+```java
+[Normal]
+  > delete 2
+// Do you want to delete perfect competition? [y/n] y
+// perfect competition has been deleted.
+[Normal]
+  >
+```
+
+```java
+[Normal]
+  > delete 1
+// Do you want to delete market-failure? [y/n] not_y_or_n
+// Response should be 'y' or 'n'!
+// Do you want to delete market-failure? [y/n] y
+// market-failure has been deleted.
+[Normal]
+  >
+```
+
+### Deck Mode: `edit`
+
+Enters the Deck Mode to edit an existing deck. The `edit` command expects one argument specifying the deck index for
+ which to enter Deck Mode.
+ 
+#### Format
+
+```java
+[Normal]
+  > edit <index of deck>
+```
+
+#### Examples
+
+```java
+[Normal]
+  > edit 1
+// ------------------------------------------------------------
+// You are now in Deck Mode, editing: [1] market-failure
+// ------------------------------------------------------------
+[Deck - market-failure]
+  >
+```
+
+> Notice how the prompt mode identifier `[Normal]` changed to `[Deck - market-failure]`.
+
+### Viewing help in Normal Mode: `help`
+
+Displays the list of all commands in Normal Mode.
+
+#### Examples
+
+```java
+[Normal]
+  > help
+// ------------------------------------------------------------
+// eCardnomics.
+// Normal Mode.
+// 
+// Usage:
+//  create         Creates a new deck of flash cards.
+//  decks          Lists all available decks.
+//  edit <ix>      Enter Deck Mode for editing the deck at list index <ix>.
+//  delete <ix>    Deletes the deck at list index <ix> from list of decks.
+//  exit           Exits the program.
+//  help           Show this output.
+//
+// Options:
+//  --version      Show version.
+// ------------------------------------------------------------
 ```
 
 ## Features - Deck Mode
