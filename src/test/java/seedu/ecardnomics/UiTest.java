@@ -106,7 +106,7 @@ public class UiTest {
 
     @Test
     void printNewDeck_newDeckName_deckName() {
-        String expectedOutput = "New deck created: Pokemon";
+        String expectedOutput = "New deck created: Pokemon" + System.lineSeparator();
         printNewDeck(new Deck("Pokemon"));
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -124,7 +124,7 @@ public class UiTest {
 
     @Test
     void printDeletedDeck_deletedDeckName_confirmation() {
-        String expectedOutput = "Pokemon has been deleted.";
+        String expectedOutput = "Pokemon has been deleted." + System.lineSeparator();
         printDeckDeletedLine("Pokemon");
         assertEquals(expectedOutput, outContent.toString());
     }
