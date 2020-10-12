@@ -30,9 +30,9 @@ public class NormalParser extends Parser {
             throw new IndexFormatException();
         }
 
-        int index = Integer.parseInt(arguments) - 1;
+        int index = Integer.parseInt(arguments) - Ui.INDEX_OFFSET;
 
-        if (index >= deckList.size()) {
+        if ((index >= deckList.size()) || (index < 0)) {
             throw new DeckRangeException();
         }
 
@@ -45,9 +45,18 @@ public class NormalParser extends Parser {
         return deckList.getDeck(getIndex(arguments));
     }
 
-    private int prepareDeletedDeck(String arguments)
-            throws IndexFormatException, DeckRangeException {
-        return getIndex(arguments);
+    private boolean verifyDeleteDeck(int index) {
+        String nameDeletedDeck = deckList.getDeck(index).getName();
+        Ui.printDeletedDeckQuestion(nameDeletedDeck);
+        String answer = Ui.readUserInput();
+
+        switch (answer) {
+        case "y":
+            return true;
+        case "n":
+        default:
+            return false;
+        }
     }
 
     @Override
@@ -71,8 +80,9 @@ public class NormalParser extends Parser {
             return new DecksCommand(deckList);
         // Delete
         case Ui.DELETE:
-            int deckID = prepareDeletedDeck(arguments);
-            return new DeleteDeckCommand(deckList, deckID);
+            int index = getIndex(arguments);
+            boolean isVerified = verifyDeleteDeck(index);
+            return new DeleteDeckCommand(deckList, index, isVerified);
         // Help
         case Ui.HELP:
             return new HelpCommand(deckList);
