@@ -201,21 +201,35 @@ Displays the list of all commands in Normal Mode.
 
 ## Features - Deck Mode
 
-### Create a new deck: `create`
-Creates a new deck of flashcards. The `create` command expects one argument specifying the name of the deck to be
- created. Additional arguments after /tag specify tags to use for the deck.
+### Add a flashcard: `add`
+Adds a flashcard to the end of the current deck. The `add` command expects no initial arguments. Instructions and 
+format of card entry is displayed. Then, the user is prompted to specify the details of the flashcard to be added.
 
 #### Format
-
-`create <name of deck>`
-* The `DEADLINE` can be in a natural language format.
-* The `TODO_NAME` cannot contain punctuation.  
+```java
+add
+// Enter question: <question description>
+// Enter answer: <question answer or explanation>
+```
+ 
 
 #### Examples
 
-`todo n/Write the rest of the User Guide d/next week`
-
-`todo n/Refactor the User Guide to remove passive voice d/13/04/2020`
+```java
+// [Deck - market failure]
+     > add 
+// Enter question: <question description>
+// ------------------------------------------------------------
+// You are now adding a FlashCard to: market failure
+// ------------------------------------------------------------
+// Enter question:
+     > define market failure
+// Enter answer:
+     > Market failure is the economic situation defined by an inefficient distribution of goods 
+and services in the free market
+// FlashCard successfully added! 
+// ------------------------------------------------------------ 
+```
 
 ## Features - Anywhere
 
