@@ -1,13 +1,13 @@
 package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.deck.AddCommand;
 import seedu.ecardnomics.command.Command;
-import seedu.ecardnomics.command.deck.DeleteCommand;
+import seedu.ecardnomics.command.deck.AddCommand;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
-import seedu.ecardnomics.command.deck.ExitCommand;
+import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.deck.ListCommand;
+import seedu.ecardnomics.command.deck.DeleteCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
@@ -23,7 +23,7 @@ public class DeckParser extends Parser {
         this.deck = deck;
     }
 
-    private boolean prepareDeletedFlashCard(int flashCardID) {
+    protected boolean prepareDeletedFlashCard(int flashCardID) {
         FlashCard flashCard = deck.get(flashCardID);
         String response = getDeleteYorNResponse(flashCard);
         switch (response) {
@@ -40,7 +40,7 @@ public class DeckParser extends Parser {
         return false;
     }
 
-    private String[] prepareFlashCard() throws EmptyInputException {
+    protected String[] prepareFlashCard() throws EmptyInputException {
         String[] questionAndAnswer = new String[2];
         Ui.printAddFlashCardLine(deck);
         Ui.printEnterQuestionLine();
@@ -73,7 +73,7 @@ public class DeckParser extends Parser {
         return index;
     }
 
-    public static String getDeleteYorNResponse(FlashCard flashCard) {
+    protected String getDeleteYorNResponse(FlashCard flashCard) {
         String response = "";
         do {
             Ui.printDeleteFlashCardLine(flashCard);
