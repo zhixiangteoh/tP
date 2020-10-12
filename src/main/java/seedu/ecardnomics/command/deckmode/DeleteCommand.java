@@ -1,4 +1,4 @@
-package seedu.ecardnomics.command.deck;
+package seedu.ecardnomics.command.deckmode;
 
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.DeckCommand;
