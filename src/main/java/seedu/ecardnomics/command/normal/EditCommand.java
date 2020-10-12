@@ -29,4 +29,3 @@ public class EditCommand extends NormalCommand {
         return command instanceof EditCommand;
     }
 }
-

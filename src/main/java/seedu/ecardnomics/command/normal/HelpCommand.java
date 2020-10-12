@@ -1,3 +1,4 @@
+
 package seedu.ecardnomics.command.normal;
 
 import seedu.ecardnomics.Ui;
