@@ -24,7 +24,7 @@ class DeckListTest {
         assertEquals(deckListString, deckList.toString());
     }
 
-    private DeckList initialiseDeckList(int size) {
+    DeckList initialiseDeckList(int size) {
         DeckList deckList = new DeckList();
         for (int i = 1; i <= size; i++) {
             Deck deck = new Deck(String.format("deck %d", i));
