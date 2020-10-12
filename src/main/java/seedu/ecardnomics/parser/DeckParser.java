@@ -23,7 +23,7 @@ public class DeckParser extends Parser {
         this.deck = deck;
     }
 
-    private boolean prepareDeletedFlashCard(int flashCardID) {
+    protected boolean prepareDeletedFlashCard(int flashCardID) {
         FlashCard flashCard = deck.get(flashCardID);
         String response = getDeleteYorNResponse(flashCard);
         switch (response) {
@@ -40,7 +40,7 @@ public class DeckParser extends Parser {
         return false;
     }
 
-    private String[] prepareFlashCard() throws EmptyInputException {
+    protected String[] prepareFlashCard() throws EmptyInputException {
         String[] questionAndAnswer = new String[2];
         Ui.printAddFlashCardLine(deck);
         Ui.printEnterQuestionLine();
@@ -73,7 +73,7 @@ public class DeckParser extends Parser {
         return index;
     }
 
-    public static String getDeleteYorNResponse(FlashCard flashCard) {
+    protected String getDeleteYorNResponse(FlashCard flashCard) {
         String response = "";
         do {
             Ui.printDeleteFlashCardLine(flashCard);
