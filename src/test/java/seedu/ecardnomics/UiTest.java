@@ -3,11 +3,13 @@ package seedu.ecardnomics;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seedu.ecardnomics.deck.Deck;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.ecardnomics.Ui.*;
 
 public class UiTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -101,7 +103,10 @@ public class UiTest {
     }
 
     @Test
-    void printNewDeck() {
+    void printNewDeck_newDeckName_deckName() {
+        String expectedOutput = "New deck created: Pokemon";
+        printNewDeck(new Deck("Pokemon"));
+        assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
@@ -109,10 +114,16 @@ public class UiTest {
     }
 
     @Test
-    void printDeletedDeckQuestion() {
+    void printDeletedDeckQuestion_deletedDeckName_questionLine() {
+        String expectedOutput = "Do you want to delete Pokemon deck? [y/n]";
+        printDeletedDeckQuestion("Pokemon");
+        assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
-    void printDeletedDeck() {
+    void printDeletedDeck_deletedDeckName_confirmation() {
+        String expectedOutput = "Pokemon has been deleted.";
+        printDeletedDeck("Pokemon");
+        assertEquals(expectedOutput, outContent.toString());
     }
 }

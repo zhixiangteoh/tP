@@ -1,17 +1,13 @@
 package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.deck.AddCommand;
 import seedu.ecardnomics.command.Command;
-<<<<<<< HEAD
-import seedu.ecardnomics.DeleteCommand;
+import seedu.ecardnomics.command.deck.AddCommand;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
 import seedu.ecardnomics.command.deck.ExitCommand;
 import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.deck.ListCommand;
-=======
 import seedu.ecardnomics.command.deck.DeleteCommand;
->>>>>>> 5c090b433eb3cdca02c4fa46a4d619bfaae66747
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;

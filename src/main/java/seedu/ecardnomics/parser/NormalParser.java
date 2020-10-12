@@ -2,12 +2,9 @@ package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
-<<<<<<< HEAD
-import seedu.ecardnomics.command.deck.EditCommand;
 import seedu.ecardnomics.command.deck.ExitCommand;
-=======
 import seedu.ecardnomics.command.normal.EditCommand;
->>>>>>> 5c090b433eb3cdca02c4fa46a4d619bfaae66747
+
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.normal.CreateCommand;
 import seedu.ecardnomics.command.normal.DecksCommand;
