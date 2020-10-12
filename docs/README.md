@@ -1,6 +1,7 @@
-# Duke
+# eCardnomics
 
-{Give product intro here}
+eCardnomics is a **desktop flashcard application to quickly create, manage, and access new flashcards via a Command
+ Line Interface (CLI)**.
 
 Useful links:
 * [User Guide](UserGuide.md)
