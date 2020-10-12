@@ -43,7 +43,7 @@ Words in `<>` are parameters or additional input to be supplied by the user.
 Commented-out lines `//` represent system output by the program.
 
 > Example:
-> ```java 
+> ``` 
 > add
 > // Enter question: <question description>
 > // Enter answer: <question answer or explanation>
@@ -66,13 +66,13 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
 
 #### Format
 
-```java
+```
 create <name of deck>
 ```
 
 #### Examples
 
-```java
+```
 [Normal]
   > create market-failure
 // New deck created: market-failure
@@ -84,13 +84,13 @@ Displays an enumerated list of all the decks available to the user. The `decks` 
 
 #### Format
 
-```java
+```
 decks
 ```
 
 #### Examples
 
-```java
+```
 [Normal]
   > decks
 // The following decks are available:
@@ -107,7 +107,7 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
  
 #### Format
 
-```java
+```
 [Normal]
   > delete <index of deck>
 // Do you want to delete `name of deck`? [y/n] <y/n>
@@ -119,7 +119,8 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
 
 #### Examples
 
-```java
+Deciding not to delete:
+```
 [Normal]
   > delete 1
 // Do you want to delete market-failure? [y/n] n
@@ -127,7 +128,8 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
   > 
 ```
 
-```java
+Confirming a delete:
+```
 [Normal]
   > delete 2
 // Do you want to delete perfect competition? [y/n] y
@@ -136,7 +138,8 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
   >
 ```
 
-```java
+Entering an invalid response:
+```
 [Normal]
   > delete 1
 // Do you want to delete market-failure? [y/n] not_y_or_n
@@ -154,14 +157,14 @@ Enters the Deck Mode to edit an existing deck. The `edit` command expects one ar
  
 #### Format
 
-```java
+```
 [Normal]
   > edit <index of deck>
 ```
 
 #### Examples
 
-```java
+```
 [Normal]
   > edit 1
 // ------------------------------------------------------------
@@ -179,7 +182,7 @@ Displays the list of all commands in Normal Mode.
 
 #### Examples
 
-```java
+```
 [Normal]
   > help
 // ------------------------------------------------------------
@@ -201,21 +204,217 @@ Displays the list of all commands in Normal Mode.
 
 ## Features - Deck Mode
 
-### Create a new deck: `create`
-Creates a new deck of flashcards. The `create` command expects one argument specifying the name of the deck to be
- created. Additional arguments after /tag specify tags to use for the deck.
+### Add a flashcard: `create`
+
+Adds a flashcard to the end of the current deck.
+The `add` command expects no initial arguments.
+Instructions and format of card entry is displayed.
+Then, the user is prompted to specify the details of the flashcard to be added.
 
 #### Format
 
-`create <name of deck>`
-* The `DEADLINE` can be in a natural language format.
-* The `TODO_NAME` cannot contain punctuation.  
+```
+[Deck - `name`]
+  > add
+// ------------------------------------------------------------
+// You are now adding a FlashCard to: name
+// ------------------------------------------------------------
+// Enter question:
+   > <question description>
+// Enter answer:
+   > <question answer or explanation>
+// FlashCard successfully added!
+// ------------------------------------------------------------
+```
+> Note: `name` is a placeholder for the actual name of the deck that is being edited.
 
 #### Examples
 
-`todo n/Write the rest of the User Guide d/next week`
+```
+[Deck - market failure]
+  > add
+// ------------------------------------------------------------
+// You are now adding a FlashCard to: market failure
+// ------------------------------------------------------------
+// Enter question:
+   > define market failure
+// Enter answer:
+   > Economic situation defined by inefficient distribution of goods and services in the free market
+// FlashCard successfully added!
+// ------------------------------------------------------------
+[Deck - market failure]
+```
 
-`todo n/Refactor the User Guide to remove passive voice d/13/04/2020`
+### List all flashcards: `list`
+
+Displays an enumerated list of the flashcards in the current deck.
+By default, the `list` command displays only the question for each flashcard.
+Optionally, the user can append the argument `/ans` that will prompt the program
+to also list the answer for each flashcard.
+
+#### Format
+
+```
+[Deck - `name`]
+  > list [/ans]
+```
+> Note: `name` is a placeholder for the actual name of the deck that is being edited.
+
+#### Examples
+
+List without answers:
+```
+[Deck - market failure]
+  > list
+// ------------------------------------------------------------
+// You are now viewing deck: [Deck - market failure]
+// ------------------------------------------------------------
+// 1. Question: Define market failure.
+
+// 2. Question: What is the difference between free-loading and free-riding?
+
+// ------------------------------------------------------------
+[Deck - market failure]
+```
+
+List with answers:
+```
+[Deck - market failure]
+  > list /ans
+// ------------------------------------------------------------
+// You are now viewing deck: [Deck - market failure]
+// ------------------------------------------------------------
+// 1. Question: Define market failure.
+// Answer: Economic situation defined by inefficient distribution of goods and services in the free market
+
+// 2. Question: What is the difference between free-loading and free-riding?
+// Answer: Free-loading gives a benefit to the free-loader but there is a cost to the people taken advantage of.
+// Free-riding is an advantage to the free-rider without imposing a cost on others or society.
+
+// ------------------------------------------------------------
+[Deck - market failure]
+```
+
+### Delete a flashcard: `delete`
+
+Deletes the specified flashcard from the deck.
+
+#### Format
+
+```
+[Deck - `name`]
+  > delete <index of flashcard>
+// Do you want to delete `name of flashcard`? [y/n] <y/n>
+// `name of flashcard` has been deleted.
+```
+
+> Note: `name` is a placeholder for the actual name of the deck that is being edited.
+> Note: `name of flashcard` is a placeholder for the actual name of the flashcard corresonding to the index entered.
+> The second line will only be displayed if the user entered y at the prompt for <y/n>.
+
+#### Examples
+
+Deciding not to delete: 
+```
+[Deck - market failure]
+  > delete 1
+// Do you want to delete Define market failure? [y/n] n
+[Deck - market failure]
+```
+
+Confirming a delete:
+```
+[Deck - market failure]
+  > delete 1
+// Do you want to delete Define market failure? [y/n] y
+// Define market failure has been deleted.
+[Deck - market failure]
+  >
+```
+
+Entering an invalid response:
+```
+[Deck - market failure]
+  > delete 1
+// Do you want to delete Define market failure? [y/n] not_y_or_n
+// Response should be 'y' or 'n'!
+// Do you want to delete Define market failure? [y/n] y
+// Define market failure has been deleted.
+[Deck - market failure]
+```
+
+### Exit Deck Mode: `done`
+
+Exits Deck Mode and returns to Normal Mode.
+
+#### Format
+
+`done`
+
+#### Examples
+
+```
+[Deck - market failure]
+  > done
+------------------------------------------------------------
+You are back in Normal Mode
+------------------------------------------------------------
+[Normal]
+```
+
+### Viewing help in Deck Mode: `help`
+
+Displays the list of all commands in Deck Mode.
+
+#### Examples
+
+```
+[Deck - market failure]
+  > help
+// ------------------------------------------------------------
+// eCardnomics.
+// Deck Mode.
+
+// Usage:
+//   add            Adds a new flash card to the current deck.
+//   list [/ans]    Lists all flash cards in the current deck, optionally with answers.
+//   delete <ix>    Deletes the flash card at list index <ix> from the current deck.
+//   done           Exits from Deck Mode and returns to Normal Mode.
+//   exit           Exits the program.
+//   help           Show this output.
+
+// Options:
+//   --version      Show version.
+// ------------------------------------------------------------
+[Deck - market failure]
+  > 
+```
+
+## Features - Anywhere
+
+### Exit the program: `exit`
+
+Exits the program.
+
+#### Examples
+
+In Normal Mode:
+```
+[Normal]
+  > exit
+------------------------------------------------------------
+Bye. Hope to see you again soon!
+------------------------------------------------------------
+```
+
+In Deck Mode:
+```
+[Deck - market failure]
+  > exit
+------------------------------------------------------------
+Bye. Hope to see you again soon!
+------------------------------------------------------------
+```
 
 ## Features - Anywhere
 
