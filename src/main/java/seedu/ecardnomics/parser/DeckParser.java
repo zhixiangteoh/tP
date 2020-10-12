@@ -1,15 +1,23 @@
 package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.deckmode.AddCommand;
+import seedu.ecardnomics.command.deck.AddCommand;
 import seedu.ecardnomics.command.Command;
-import seedu.ecardnomics.command.deckmode.DeleteCommand;
-import seedu.ecardnomics.command.DoneEditCommand;
-import seedu.ecardnomics.command.deckmode.ExitCommand;
-import seedu.ecardnomics.command.deckmode.HelpCommand;
-import seedu.ecardnomics.command.deckmode.ListCommand;
+<<<<<<< HEAD
+import seedu.ecardnomics.DeleteCommand;
+import seedu.ecardnomics.command.deck.DoneEditCommand;
+import seedu.ecardnomics.command.deck.ExitCommand;
+import seedu.ecardnomics.command.deck.HelpCommand;
+import seedu.ecardnomics.command.deck.ListCommand;
+=======
+import seedu.ecardnomics.command.deck.DeleteCommand;
+>>>>>>> 5c090b433eb3cdca02c4fa46a4d619bfaae66747
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.exceptions.FlashCardRangeException;
+import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.exceptions.EmptyInputException;
 
 public class DeckParser extends Parser {
     public Deck deck;
@@ -19,43 +27,105 @@ public class DeckParser extends Parser {
         this.deck = deck;
     }
 
+    private boolean prepareDeletedFlashCard(int flashCardID) {
+        FlashCard flashCard = deck.get(flashCardID);
+        String response = getDeleteYorNResponse(flashCard);
+        switch (response) {
+        case Ui.Y:
+            Ui.printFlashCardDeletedLine(flashCard);
+            Ui.printDashLines();
+            return true;
+        case Ui.N:
+            //
+            break;
+        default:
+            //
+        }
+        return false;
+    }
+
+    private String[] prepareFlashCard() throws EmptyInputException {
+        String[] questionAndAnswer = new String[2];
+        Ui.printAddFlashCardLine(deck);
+        Ui.printEnterQuestionLine();
+        questionAndAnswer[0] = Ui.readUserInput();
+        if (questionAndAnswer[0].trim().length() == 0) {
+            throw new EmptyInputException();
+        }
+        Ui.printEnterAnswerLine();
+        questionAndAnswer[1] = Ui.readUserInput();
+        if (questionAndAnswer[1].trim().length() == 0) {
+            throw new EmptyInputException();
+        }
+        Ui.printFlashCardAddedLine();
+        Ui.printDashLines();
+
+        return questionAndAnswer;
+    }
+
+    @Override
+    protected int getIndex(String arguments) throws IndexFormatException, FlashCardRangeException {
+        if (!arguments.matches(Ui.DIGITS_REGEX)) {
+            throw new IndexFormatException();
+        }
+        int index = Integer.parseInt(arguments) - Ui.INDEX_OFFSET;
+
+        if (index >= deck.size()) {
+            throw new FlashCardRangeException();
+        }
+
+        return index;
+    }
+
+    public static String getDeleteYorNResponse(FlashCard flashCard) {
+        String response = "";
+        do {
+            Ui.printDeleteFlashCardLine(flashCard);
+            response = Ui.readUserInput();
+            switch (response.trim()) {
+            case Ui.Y:
+                response = Ui.Y;
+                break;
+            case Ui.N:
+                response = Ui.N;
+                break;
+            default:
+                Ui.printInvalidYorNResponse();
+            }
+        } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
+        return response;
+    }
+
     @Override
     protected Command parseCommand(String commandWord, String arguments)
             throws Exception {
 
+        switch (commandWord) {
         // Exit
-        if (commandWord.equals(Ui.EXIT)) {
+        case Ui.EXIT:
             return new ExitCommand();
-        }
-
         // Done with Edit Mode
-        if (commandWord.equals(Ui.DONE)) {
+        case Ui.DONE:
             return new DoneEditCommand(deck);
-        }
-
         // Add a FlashCard
-        if (commandWord.equals(Ui.ADD)) {
-            return new AddCommand(deck);
-        }
-
+        case Ui.ADD:
+            String[] questionAndAnswer = prepareFlashCard();
+            return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
         // List all FlashCards
-        if (commandWord.equals(Ui.LIST)) {
+        case Ui.LIST:
             return new ListCommand(deck, arguments);
-        }
-
         // Delete a FlashCard
-        if (commandWord.equals(Ui.DELETE)) {
-            return new DeleteCommand(deck, arguments);
-        }
-
+        case Ui.DELETE:
+            int flashCardID = getIndex(arguments);
+            boolean isFlashCardDeleted = prepareDeletedFlashCard(flashCardID);
+            return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
         // Help
-        if (commandWord.equals(Ui.HELP)) {
+        case Ui.HELP:
             return new HelpCommand();
+        default:
+            return new VoidCommand();
         }
-
-        return new VoidCommand();
     }
-
 
     @Override
     public Command parse(String userInput) {
@@ -74,10 +144,5 @@ public class DeckParser extends Parser {
         } catch (Exception e) {
             return new VoidCommand(e.getMessage());
         }
-    }
-
-    public boolean isValidDeckIndex(String arguments) {
-        int index = Integer.parseInt(arguments.trim());
-        return index > 0 && index <= deck.size();
     }
 }

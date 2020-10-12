@@ -42,7 +42,10 @@ public class Ui {
             "Do you want to delete %1$s deck? [y/n]";
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
-
+    public static final String INVALID_YN_RESPONSE_LINE =
+            "Response should be 'y' or 'n'!";
+    private static final String EMPTY_DECK_LINE =
+            "Deck is currently empty!";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -58,6 +61,10 @@ public class Ui {
     public static final String DIGITS_REGEX = "\\d+";
     public static final int INDEX_OFFSET = 1;
 
+    public static final String Y = "y";
+    public static final String N = "n";
+    public static final String DASH_LINES = "------------------------------------------------------------";
+
     public static Scanner in = new Scanner(System.in);
 
     /**
@@ -71,7 +78,7 @@ public class Ui {
 
     /** Displays dash line. */
     public static void printDashLines() {
-        System.out.println("------------------------------------------------------------");
+        System.out.println(DASH_LINES);
     }
 
     /**
@@ -146,6 +153,7 @@ public class Ui {
 
     /**
      * Displays the add FlashCard line.
+     *
      * @param deck current deck
      */
     public static void printAddFlashCardLine(Deck deck) {
@@ -175,20 +183,47 @@ public class Ui {
         System.out.println(FLASHCARD_ADDED_LINE);
     }
 
+    /**
+     * Displays an index list of FlashCards in the deck.
+     *
+     * @param deck deck to display
+     * @param type optional <code>/ans</code> to display answers
+     */
     public static void printDeck(Deck deck, String type) {
         printMessage(LIST_FLASHCARDS_LINE + deck.getName());
-        System.out.print(deck.toString(type));
+        if (deck.toString(type).trim().equals("")) {
+            System.out.println(EMPTY_DECK_LINE);
+        } else {
+            System.out.print(deck.toString(type));
+        }
         printDashLines();
     }
 
+    /**
+     * Displays the delete FlashCard line.
+     *
+     * @param flashCard FlashCard to delete
+     */
     public static void printDeleteFlashCardLine(FlashCard flashCard) {
         System.out.print(DELETE_FLASHCARD_LINE + flashCard.getQuestion() + "? " + YN_LINE + " ");
     }
 
+    /**
+     * Displays the FlashCard deleted line.
+     *
+     * @param flashCard deleted FlashCard
+     */
     public static void printFlashCardDeletedLine(FlashCard flashCard) {
         System.out.println(flashCard.getQuestion() + FLASHCARD_DELETED_LINE);
     }
 
+    /**
+     * Displays the help page of commands.
+     *
+     * <p>Displays a different help page for Normal Mode and Deck Mode.</p>
+     *
+     * @param helpDisplay help text to display
+     */
     public static void printHelp(String helpDisplay) {
         printMessage(helpDisplay);
     }
@@ -229,5 +264,12 @@ public class Ui {
      */
     public static void printDeletedDeck(String deletedDeckName) {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
+    }
+
+    /**
+     * Prints a line prompting user to enter only 'y' or 'n'.
+     */
+    public static void printInvalidYorNResponse() {
+        System.out.println(INVALID_YN_RESPONSE_LINE);
     }
 }

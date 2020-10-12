@@ -1,9 +1,13 @@
 package seedu.ecardnomics;
 
 import seedu.ecardnomics.command.Command;
-import seedu.ecardnomics.command.DoneEditCommand;
-import seedu.ecardnomics.command.deckmode.EditCommand;
-import seedu.ecardnomics.command.deckmode.ExitCommand;
+<<<<<<< HEAD
+import seedu.ecardnomics.command.deck.DoneEditCommand;
+import seedu.ecardnomics.command.deck.EditCommand;
+import seedu.ecardnomics.command.deck.ExitCommand;
+=======
+import seedu.ecardnomics.command.normal.EditCommand;
+>>>>>>> 5c090b433eb3cdca02c4fa46a4d619bfaae66747
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.parser.DeckParser;
@@ -26,7 +30,6 @@ public class Main {
     private static void executeCommand(Command command) {
         command.execute();
     }
-
 
     /**
      * Runs Deck Mode to edit a deck.
@@ -91,7 +94,7 @@ public class Main {
     /**
      * Main method.
      *
-     * @param args Arrguments from command line when user starts the program
+     * @param args Arguments from command line when user starts the program
      */
     public static void main(String[] args) {
         // TEMP FOR TESTING
