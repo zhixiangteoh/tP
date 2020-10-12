@@ -262,7 +262,7 @@ public class Ui {
      *
      * @param deletedDeckName name of the deleted deck
      */
-    public static void printDeletedDeck(String deletedDeckName) {
+    public static void printDeckDeletedLine(String deletedDeckName) {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
     }
 
