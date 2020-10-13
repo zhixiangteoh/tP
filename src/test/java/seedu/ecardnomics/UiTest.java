@@ -9,7 +9,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.ecardnomics.Ui.*;
+import static seedu.ecardnomics.Ui.printNewDeck;
+import static seedu.ecardnomics.Ui.printDeletedDeckQuestion;
+import static seedu.ecardnomics.Ui.printDeckDeletedLine;
 
 public class UiTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -104,7 +106,7 @@ public class UiTest {
 
     @Test
     void printNewDeck_newDeckName_deckName() {
-        String expectedOutput = "New deck created: Pokemon";
+        String expectedOutput = "New deck created: Pokemon" + System.lineSeparator();
         printNewDeck(new Deck("Pokemon"));
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -122,8 +124,8 @@ public class UiTest {
 
     @Test
     void printDeletedDeck_deletedDeckName_confirmation() {
-        String expectedOutput = "Pokemon has been deleted.";
-        printDeletedDeck("Pokemon");
+        String expectedOutput = "Pokemon has been deleted." + System.lineSeparator();
+        printDeckDeletedLine("Pokemon");
         assertEquals(expectedOutput, outContent.toString());
     }
 }

@@ -3,6 +3,7 @@ package seedu.ecardnomics.parser;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.deck.DeleteCommand;
 import seedu.ecardnomics.command.normal.EditCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.normal.CreateCommand;
@@ -45,18 +46,40 @@ public class NormalParser extends Parser {
         return deckList.getDeck(getIndex(arguments));
     }
 
-    private boolean verifyDeleteDeck(int index) {
-        String nameDeletedDeck = deckList.getDeck(index).getName();
-        Ui.printDeletedDeckQuestion(nameDeletedDeck);
-        String answer = Ui.readUserInput();
-
-        switch (answer) {
-        case "y":
+    protected boolean prepareDeletedDeck(int index) {
+        Deck deck = deckList.getDeck(index);
+        String response = getDeleteYorNResponse(deck);
+        switch (response) {
+        case Ui.Y:
+            Ui.printDeckDeletedLine(deck.getName());
+            Ui.printDashLines();
             return true;
-        case "n":
+        case Ui.N:
+            //
+            break;
         default:
-            return false;
+            //
         }
+        return false;
+    }
+
+    private String getDeleteYorNResponse(Deck deck) {
+        String response = "";
+        do {
+            Ui.printDeletedDeckQuestion(deck.getName());
+            response = Ui.readUserInput();
+            switch (response.trim()) {
+            case Ui.Y:
+                response = Ui.Y;
+                break;
+            case Ui.N:
+                response = Ui.N;
+                break;
+            default:
+                Ui.printInvalidYorNResponse();
+            }
+        } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
+        return response;
     }
 
     @Override
@@ -80,9 +103,9 @@ public class NormalParser extends Parser {
             return new DecksCommand(deckList);
         // Delete
         case Ui.DELETE:
-            int index = getIndex(arguments);
-            boolean isVerified = verifyDeleteDeck(index);
-            return new DeleteDeckCommand(deckList, index, isVerified);
+            int deckID = getIndex(arguments);
+            boolean isDeckDeleted = prepareDeletedDeck(deckID);
+            return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
         // Help
         case Ui.HELP:
             return new HelpCommand(deckList);
