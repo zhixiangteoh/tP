@@ -111,8 +111,8 @@ class DeckTest {
     void testToString_withType_goodFormat() {
         Deck deck = initialiseDeck(2);
         String deckString = "1. Question: q 1\n\n" + "2. Question: q 2\n";
-        String deckStringAns = "1. Question: q 1\n   Answer:   a 1\n\n" + "2. Question: q 2\n"
-                + "   Answer:   a 2\n";
+        String deckStringAns = "1. Question: q 1\n   Answer:   a 1\n\n"
+                + "2. Question: q 2\n   Answer:   a 2\n";
         assertEquals(deckString, deck.toString("question"));
         assertEquals(deckStringAns, deck.toString("answer"));
     }
