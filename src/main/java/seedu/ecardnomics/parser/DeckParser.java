@@ -89,6 +89,7 @@ public class DeckParser extends Parser {
                 Ui.printInvalidYorNResponse();
             }
         } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
+        Ui.printDashLines();
         return response;
     }
 
