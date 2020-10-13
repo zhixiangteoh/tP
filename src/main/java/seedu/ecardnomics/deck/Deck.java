@@ -51,7 +51,7 @@ public class Deck {
         }
         for (int i = 0; i < deck.size(); i++) {
             output += (i + 1) + ". " + deck.get(i).toString(type) + "\n";
-            if (i != deck.size()-1) {
+            if (i != deck.size() - 1) {
                 output += "\n";
             }
         }
