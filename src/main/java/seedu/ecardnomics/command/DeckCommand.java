@@ -10,6 +10,7 @@ public abstract class DeckCommand extends Command {
     }
 
     public DeckCommand(Deck currentDeck) {
+        assert currentDeck != null : "Command must operate on a deck.";
         this.currentDeck = currentDeck;
     }
 

@@ -11,7 +11,9 @@ public class AddCommand extends DeckCommand {
     /** Constructor. */
     public AddCommand(Deck deck, String question, String answer) {
         super(deck);
+        assert (question != null && !question.isEmpty()) : "Flashcard must have one question.";
         this.question = question;
+        assert (answer != null && !answer.isEmpty()) : "Flashcard must have one question.";
         this.answer = answer;
     }
 
