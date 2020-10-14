@@ -1,7 +1,6 @@
 package seedu.ecardnomics.command.deck;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.DeckCommand;
 
 public class HelpCommand extends DeckCommand {
     public static final String DECK_HELP = ""

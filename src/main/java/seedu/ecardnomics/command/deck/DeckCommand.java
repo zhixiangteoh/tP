@@ -1,5 +1,6 @@
-package seedu.ecardnomics.command;
+package seedu.ecardnomics.command.deck;
 
+import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.deck.Deck;
 
 public abstract class DeckCommand extends Command {

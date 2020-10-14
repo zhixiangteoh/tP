@@ -2,6 +2,7 @@ package seedu.ecardnomics.parser;
 
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
+import seedu.ecardnomics.command.VersionCommand;
 import seedu.ecardnomics.command.deck.AddCommand;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
 import seedu.ecardnomics.command.ExitCommand;
@@ -87,7 +88,6 @@ public class DeckParser extends Parser {
             logger.log(Level.WARNING, "Flash card index larger than total number of cards");
             throw new FlashCardRangeException();
         }
-
         return index;
     }
 
@@ -119,6 +119,9 @@ public class DeckParser extends Parser {
             throws Exception {
 
         switch (commandWord) {
+        // Version
+        case Ui.VERSION_CMD:
+            return new VersionCommand();
         // Exit
         case Ui.EXIT:
             logger.log(Level.INFO, "returning ExitCommand object");

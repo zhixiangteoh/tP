@@ -6,6 +6,8 @@ import seedu.ecardnomics.deck.FlashCard;
 
 import java.util.Scanner;
 
+import static seedu.ecardnomics.Main.VERSION_NUMBER;
+
 public class Ui {
 
     public static final String GREETING_LINES =
@@ -56,6 +58,8 @@ public class Ui {
     public static final String DECKS = "decks";
     public static final String DELETE = "delete";
     public static final String HELP = "help";
+
+    public static final String VERSION_CMD = "--version";
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
@@ -271,5 +275,9 @@ public class Ui {
      */
     public static void printInvalidYorNResponse() {
         System.out.println(INVALID_YN_RESPONSE_LINE);
+    }
+
+    public static void printVersionNumber() {
+        printMessage("Version: " + VERSION_NUMBER);
     }
 }
