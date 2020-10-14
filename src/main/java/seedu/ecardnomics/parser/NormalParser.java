@@ -13,6 +13,7 @@ import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
+import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 
 public class NormalParser extends Parser {
@@ -63,6 +64,13 @@ public class NormalParser extends Parser {
         return false;
     }
 
+    protected Deck prepareNewDeck(String arguments) throws EmptyInputException {
+        if (arguments.trim().isEmpty()) {
+            throw new EmptyInputException();
+        }
+        return new Deck(arguments);
+    }
+
     private String getDeleteYorNResponse(Deck deck) {
         String response = "";
         do {
@@ -96,7 +104,7 @@ public class NormalParser extends Parser {
             return new EditCommand(deckList, deck);
         // Create
         case Ui.CREATE:
-            Deck newDeck = new Deck(arguments);
+            Deck newDeck = prepareNewDeck(arguments);
             return new CreateCommand(deckList, newDeck);
         // Decks
         case Ui.DECKS:
