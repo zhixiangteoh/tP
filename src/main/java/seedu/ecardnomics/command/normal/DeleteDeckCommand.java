@@ -10,6 +10,7 @@ public class DeleteDeckCommand extends NormalCommand {
 
     public DeleteDeckCommand(DeckList decks, int index, boolean isDeckDeleted) {
         super(decks);
+        assert (index >= 0 && index < decks.size()) : "Index must be within range.";
         this.index = index;
         this.isDeckDeleted = isDeckDeleted;
     }

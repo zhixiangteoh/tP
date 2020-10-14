@@ -6,7 +6,12 @@ import seedu.ecardnomics.deck.DeckList;
 public abstract class NormalCommand extends Command {
     protected DeckList deckList;
 
+    public NormalCommand() {
+        deckList = null;
+    }
+
     public NormalCommand(DeckList deckList) {
+        assert deckList != null : "Command must operate on a deck list";
         this.deckList = deckList;
     }
 

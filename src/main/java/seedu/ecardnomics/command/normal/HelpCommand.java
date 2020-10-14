@@ -19,8 +19,8 @@ public class HelpCommand extends NormalCommand {
             + "Options:\n"
             + "  --version      Show version.";
 
-    public HelpCommand(DeckList deckList) {
-        super(deckList);
+    public HelpCommand() {
+        super();
     }
 
     @Override
