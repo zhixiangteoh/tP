@@ -10,14 +10,14 @@ class FlashCardTest {
 
     @Test
     void testToString_default_goodFormat() {
-        String flashCardString = "Question: Who's that Pokemon?\nAnswer: It's Pikachu!";
+        String flashCardString = "Question: Who's that Pokemon?\n   Answer:   It's Pikachu!";
         assertEquals(flashCardString, flashCard.toString());
     }
 
     @Test
     void testToString_withType_goodFormat() {
         String flashCardString = "Question: Who's that Pokemon?";
-        String flashCardStringWithAns = "Question: Who's that Pokemon?\nAnswer: It's Pikachu!";
+        String flashCardStringWithAns = "Question: Who's that Pokemon?\n   Answer:   It's Pikachu!";
         assertEquals(flashCardString, flashCard.toString("question"));
         assertEquals(flashCardStringWithAns, flashCard.toString("answer"));
     }
