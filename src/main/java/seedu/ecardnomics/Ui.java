@@ -31,9 +31,9 @@ public class Ui {
     public static final String LIST_FLASHCARDS_LINE =
             "You are now viewing deck: ";
     public static final String DELETE_FLASHCARD_LINE =
-            "Do you want to delete ";
+            "Do you want to delete the following flash card? ";
     public static final String FLASHCARD_DELETED_LINE =
-            " has been deleted.";
+            "The following flash card has been deleted:\n  '";
     public static final String NEW_DECK_CREATED_LINE =
             "New deck created: ";
     public static final String DECKS_AVAILABLE_LINE =
@@ -111,8 +111,7 @@ public class Ui {
     /**
      * Displays the prompt for user input without specifying current mode.
      */
-    public static void printPrompt(Deck deck) {
-        System.out.println("[Deck - " + deck.getName() + "]");
+    public static void printPrompt() {
         System.out.print("  > ");
     }
 
@@ -165,7 +164,7 @@ public class Ui {
      */
     public static void printEnterQuestionLine() {
         System.out.println(ENTER_QUESTION_LINE);
-        System.out.print("  > ");
+        printPrompt();
     }
 
     /**
@@ -173,7 +172,7 @@ public class Ui {
      */
     public static void printEnterAnswerLine() {
         System.out.println(ENTER_ANSWER_LINE);
-        System.out.print("  > ");
+        printPrompt();
     }
 
     /**
@@ -205,7 +204,8 @@ public class Ui {
      * @param flashCard FlashCard to delete
      */
     public static void printDeleteFlashCardLine(FlashCard flashCard) {
-        System.out.print(DELETE_FLASHCARD_LINE + flashCard.getQuestion() + "? " + YN_LINE + " ");
+        System.out.print(DELETE_FLASHCARD_LINE + YN_LINE + "\n  '" + flashCard.getQuestion() + "`\n");
+        printPrompt();
     }
 
     /**
@@ -214,7 +214,7 @@ public class Ui {
      * @param flashCard deleted FlashCard
      */
     public static void printFlashCardDeletedLine(FlashCard flashCard) {
-        System.out.println(flashCard.getQuestion() + FLASHCARD_DELETED_LINE);
+        System.out.println(FLASHCARD_DELETED_LINE + flashCard.getQuestion() + "'");
     }
 
     /**

@@ -12,6 +12,7 @@ import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
+import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 
 /**
@@ -81,6 +82,20 @@ public class NormalParser extends Parser {
     }
 
     /**
+     * Create a new deck for adding to deckList.
+     *
+     * @param arguments String that represents the nae of deck to be created
+     * @return Reference to the deck created
+     * @throws EmptyInputException if no name is supplied for the deck
+     */
+    protected Deck prepareNewDeck(String arguments) throws EmptyInputException {
+        if (arguments.trim().isEmpty()) {
+            throw new EmptyInputException();
+        }
+        return new Deck(arguments);
+    }
+
+    /**
      * Uses Ui to get y or n response from user.
      * @param deck Reference to Deck that is being checked
      * @return Ui.Y if user enters confirms, otherwise Ui.N
@@ -122,7 +137,7 @@ public class NormalParser extends Parser {
             return new EditCommand(deckList, deck);
         // Create
         case Ui.CREATE:
-            Deck newDeck = new Deck(arguments);
+            Deck newDeck = prepareNewDeck(arguments);
             return new CreateCommand(deckList, newDeck);
         // Decks
         case Ui.DECKS:

@@ -52,7 +52,7 @@ public class FlashCard {
     @Override
     public String toString() {
         return "Question: " + question + "\n"
-                + "Answer: " + answer;
+                + "   Answer:   " + answer;
     }
 
     public String toString(String type) {
@@ -61,7 +61,7 @@ public class FlashCard {
             return "Question: " + question;
         case "answer":
             return "Question: " + question + "\n"
-                    + "Answer: " + answer;
+                    + "   Answer:   " + answer;
         default:
             return "";
         }

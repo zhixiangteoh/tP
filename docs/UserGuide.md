@@ -102,7 +102,7 @@ decks
 
 ### Delete an existing deck: `delete`
 
-Deletes an existing deck of flashcards. The `delete` command expects one argument specifying the name of the deck to
+Deletes an existing deck of flashcards. The `delete` command expects one argument specifying the index of the deck to
  be deleted. User is then further prompted for an input of only either `y` or `n`.
  
 #### Format
@@ -114,7 +114,7 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
 // `name of deck` has been deleted.
 ```
 
-> Note: `name of deck` is a placeholder for the actual name of the deck corresonding to the index entered. The second
+> Note: `name of deck` is a placeholder for the actual name of the deck corresponding to the index entered. The second
 > line will only be displayed if the user entered y at the prompt for <y/n>.
 
 #### Examples
@@ -230,6 +230,132 @@ and services in the free market
 // FlashCard successfully added! 
 // ------------------------------------------------------------ 
 ```
+
+### Delete an existing Flash Card: `delete`
+
+Deletes an existing flashcard from deck. The `delete` command expects one argument specifying the index of the flash card to
+ be deleted. User is then further prompted for an input of only either `y` or `n`.
+ 
+#### Format
+
+```java
+[Deck - `name of deck`]
+  > delete 1
+//Do you want to delete the following flash card? [y/n]
+//  '<question 1>'
+//  > n
+//------------------------------------------------------------
+```
+
+```java
+[Deck - `name of deck`]
+  > delete 2
+//Do you want to delete the following flash card? [y/n]?
+//  '<question 2>'? 
+//  > y
+//------------------------------------------------------------
+//The following flash card has been deleted:
+//  '<question 2>'
+//------------------------------------------------------------
+```
+
+> Note: `name of deck` is a placeholder for the name of the current deck. The second
+> line will only be displayed if the user entered y at the prompt for <y/n>.
+
+#### Examples
+```java
+[Deck - market-failure]
+  > delete 1
+//Do you want to delete the following flash card? [y/n]
+//  `define market failure?`
+//  > n
+//------------------------------------------------------------
+```
+
+```java
+[Deck - market-failure]
+  > delete 2
+//Do you want to delete the following flash card? [y/n]?
+//  'What is a public good?'? 
+//  > y
+//------------------------------------------------------------
+//The following flash card has been deleted:
+//  'What is a public good?'
+//------------------------------------------------------------
+```
+``
+
+
+
+### List all the flashcards in the deck `list`
+Lists all the existing flash cards within the current deck. You can add the option `\ans` after the `list` command 
+to show all the questions, and their respective answers.
+
+#### Format
+```java
+[Deck - `name of deck`]
+  > list
+//------------------------------------------------------------
+//You are now viewing deck: `name of deck`
+//------------------------------------------------------------
+//1. Question: <question 1>
+//
+//2. Question: <question 2>
+//
+//3. Question: <question 3>
+//------------------------------------------------------------
+```
+
+```java
+[Deck - `name of deck`]
+  > list /ans
+//------------------------------------------------------------
+//You are now viewing deck: `name of deck`
+//------------------------------------------------------------
+//1. Question: <question 1>
+//   Answer:   <answer 1>
+//
+//2. Question: <question 2>
+//   Answer:   <answer 2>
+//
+//3. Question: <question 3>
+//   Answer:   <answer 3>
+//------------------------------------------------------------
+```
+
+#### Examples
+
+```java
+[Deck - market-failure]
+  > list
+//------------------------------------------------------------
+//You are now viewing deck: market-failure
+//------------------------------------------------------------
+//1. Question: define market failure
+//
+//2. Question: What is a public good?
+//
+//3. Question: What is a merit good?
+//------------------------------------------------------------
+```
+
+```java
+[Deck - market-failure]
+  > list /ans
+//------------------------------------------------------------
+//You are now viewing deck: market-failure
+//------------------------------------------------------------
+//1. Question: define market failure
+//   Answer:   Market failure is the economic situation defined by an inefficient distribution of goods and services in the free market
+//
+//2. Question: What is a public good?
+//   Answer:   A good which are non-rival and non-excludable
+//
+//3. Question: What is a merit good?
+//   Answer:   A good that people underestimates the benefits of
+//------------------------------------------------------------
+```
+
 
 ## Features - Anywhere
 

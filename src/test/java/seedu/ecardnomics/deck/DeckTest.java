@@ -103,17 +103,16 @@ class DeckTest {
     @Test
     void testToString_default_goodFormat() {
         Deck deck = initialiseDeck(2);
-        String deckString = "Pokemon:\n1. Question: q 1\nAnswer: a 1\n\n2. Question: q 2\nAnswer: a 2\n";
+        String deckString = "Pokemon:\n1. Question: q 1\n   Answer:   a 1\n\n2. Question: q 2\n   Answer:   a 2\n";
         assertEquals(deckString, deck.toString());
     }
 
     @Test
     void testToString_withType_goodFormat() {
         Deck deck = initialiseDeck(2);
-        String deckString = "1. Question: q 1\n" + System.lineSeparator() + "2. Question: q 2\n"
-                + System.lineSeparator();
-        String deckStringAns = "1. Question: q 1\nAnswer: a 1\n" + System.lineSeparator() + "2. Question: q 2\n"
-                + "Answer: a 2\n" + System.lineSeparator();
+        String deckString = "1. Question: q 1\n\n" + "2. Question: q 2\n";
+        String deckStringAns = "1. Question: q 1\n   Answer:   a 1\n\n"
+                + "2. Question: q 2\n   Answer:   a 2\n";
         assertEquals(deckString, deck.toString("question"));
         assertEquals(deckStringAns, deck.toString("answer"));
     }
