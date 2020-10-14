@@ -14,12 +14,15 @@ import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Parser for commands supplied in Normal Mode.
  */
 public class NormalParser extends Parser {
     DeckList deckList;
+    private static Logger logger = Logger.getLogger("NormalParserLogger");
 
     /** Constructor. */
     public NormalParser(DeckList deckList) {
@@ -30,13 +33,16 @@ public class NormalParser extends Parser {
     protected int getIndex(String arguments)
             throws IndexFormatException, DeckRangeException {
 
+        logger.log(Level.INFO, "Logging method getIndex() in NormalParser.");
         if (!arguments.matches(Ui.DIGITS_REGEX)) {
+            logger.log(Level.WARNING, "User did not enter a valid integer index.");
             throw new IndexFormatException();
         }
 
         int index = Integer.parseInt(arguments) - Ui.INDEX_OFFSET;
 
         if ((index >= deckList.size()) || (index < 0)) {
+            logger.log(Level.WARNING, "User did not enter an index in the valid range.");
             throw new DeckRangeException();
         }
 
@@ -65,6 +71,7 @@ public class NormalParser extends Parser {
      */
     protected boolean prepareDeletedDeck(int index) {
         Deck deck = deckList.getDeck(index);
+        logger.log(Level.INFO, "Logging method prepareDeletedDeck() in NormalParser.");
         String response = getDeleteYorNResponse(deck);
         assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
         switch (response) {
@@ -76,6 +83,7 @@ public class NormalParser extends Parser {
             //
             break;
         default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
             //
         }
         return false;
@@ -89,7 +97,9 @@ public class NormalParser extends Parser {
      * @throws EmptyInputException if no name is supplied for the deck
      */
     protected Deck prepareNewDeck(String arguments) throws EmptyInputException {
+        logger.log(Level.INFO, "Logging method prepareNewDeck() in NormalParser.");
         if (arguments.trim().isEmpty()) {
+            logger.log(Level.WARNING, "User did not supply name when creating a new deck.");
             throw new EmptyInputException();
         }
         return new Deck(arguments);
@@ -101,6 +111,7 @@ public class NormalParser extends Parser {
      * @return Ui.Y if user enters confirms, otherwise Ui.N
      */
     private String getDeleteYorNResponse(Deck deck) {
+        logger.log(Level.INFO, "Logging method getDeleteYorNResponse() in NormalParser.");
         String response = "";
         do {
             Ui.printDeletedDeckQuestion(deck.getName());
@@ -114,9 +125,12 @@ public class NormalParser extends Parser {
                 response = Ui.N;
                 break;
             default:
+                logger.log(Level.INFO, "User entered response other than 'y' or 'n'");
                 Ui.printInvalidYorNResponse();
+                logger.log(Level.INFO, "Re-prompting...");
             }
         } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
+        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "Response should be y/n";
         return response;
     }
 
@@ -127,48 +141,62 @@ public class NormalParser extends Parser {
         assert (commandWord != null && arguments != null) :
                 "commandWord and arguments should not be null";
 
+        logger.log(Level.INFO, "Logging method parseCommand() in NormalParser.");
+
         switch (commandWord) {
         // Exit
         case Ui.EXIT:
+            logger.log(Level.INFO, "User issued command to terminate program.");
             return new ExitCommand();
         // Edit
         case Ui.EDIT:
             Deck deck = prepareDeck(arguments);
+            logger.log(Level.INFO, "User issued command to edit deck " + deck.getName() + ".");
             return new EditCommand(deckList, deck);
         // Create
         case Ui.CREATE:
             Deck newDeck = prepareNewDeck(arguments);
+            logger.log(Level.INFO, "User issued command to create deck " + newDeck.getName() + ".");
             return new CreateCommand(deckList, newDeck);
         // Decks
         case Ui.DECKS:
+            logger.log(Level.INFO, "User issued command to list decks.");
             return new DecksCommand(deckList);
         // Delete
         case Ui.DELETE:
             int deckID = getIndex(arguments);
+            logger.log(Level.INFO, "User issued command to delete deck at index " + deckID);
             boolean isDeckDeleted = prepareDeletedDeck(deckID);
             return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
         // Help
         case Ui.HELP:
+            logger.log(Level.INFO, "User issued command to view help.");
             return new HelpCommand();
         default:
+            logger.log(Level.INFO, "User issued an invalid command.");
             return new VoidCommand();
         }
     }
 
     @Override
     public Command parse(String userInput) {
+        logger.log(Level.INFO, "Logging method parse() in NormalParser.");
         String[] splitString = userInput.split(" ", 2);
         String commandWord = splitString[0];
+        logger.log(Level.INFO, "Parsed commandWord");
         boolean argumentsExist =  splitString.length > 1;
         String arguments = "";
 
         if (argumentsExist) {
             arguments = splitString[1];
+            logger.log(Level.INFO, "Parsed arguments");
         }
 
         try {
+            logger.log(Level.INFO, "Parsing command");
             return parseCommand(commandWord, arguments);
         } catch (Exception e) {
+            logger.log(Level.WARNING, "Parsed void or invalid command");
             return new VoidCommand(e.getMessage());
         }
     }
