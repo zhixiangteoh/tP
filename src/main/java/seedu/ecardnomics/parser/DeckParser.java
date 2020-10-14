@@ -22,6 +22,8 @@ import java.util.logging.Logger;
  * Parser for commands supplied in Deck Mode.
  */
 public class DeckParser extends Parser {
+
+
     public Deck deck;
     private static Logger logger = Logger.getLogger("DeckParserLogger");
 
@@ -70,8 +72,8 @@ public class DeckParser extends Parser {
             logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for answer");
             throw new EmptyInputException();
         }
-        assert questionAndAnswer[0].length() <= 0 : "question field empty!";
-        assert questionAndAnswer[1].length() <= 0 : "answer field empty!";
+        assert questionAndAnswer[0].length() > 0 : "question field empty!";
+        assert questionAndAnswer[1].length() > 0 : "answer field empty!";
         Ui.printFlashCardAddedLine();
         Ui.printDashLines();
 
@@ -80,13 +82,19 @@ public class DeckParser extends Parser {
 
     @Override
     protected int getIndex(String arguments) throws IndexFormatException, FlashCardRangeException {
+
+        arguments = arguments.trim();
+
         if (!arguments.matches(Ui.DIGITS_REGEX)) {
             logger.log(Level.WARNING, "User did not enter valid integer");
             throw new IndexFormatException();
         }
+
         assert arguments.length() > 0 : "arguments empty!";
-        int index = Integer.parseInt(arguments) - Ui.INDEX_OFFSET;
-        if (index >= deck.size()) {
+
+        int index = Integer.parseInt(arguments) - INDEX_OFFSET;
+
+        if (index >= deck.size() || index < LOWEST_POSSIBLE_INDEX) {
             logger.log(Level.WARNING, "Flash card index larger than total number of cards");
             throw new FlashCardRangeException();
         }
@@ -146,7 +154,7 @@ public class DeckParser extends Parser {
         case Ui.DELETE:
             logger.log(Level.INFO, "Preparing FlashCard to delete");
             int flashCardID = getIndex(arguments);
-            assert flashCardID >= Ui.INDEX_OFFSET : "flash card ID less than lowest possible flash card index!";
+            assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
             boolean isFlashCardDeleted = prepareDeletedFlashCard(flashCardID);
             logger.log(Level.INFO, "returning DeleteCommand object");
             return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
