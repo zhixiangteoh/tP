@@ -11,6 +11,7 @@ public class Deck {
 
     /** Constructor. */
     public Deck(String name) {
+        assert (name != null && !name.isEmpty()) : "A deck requires a name.";
         this.name = name;
         deck = new ArrayList<>();
     }
@@ -30,6 +31,7 @@ public class Deck {
      * @param name new name of the deck
      */
     public void setName(String name) {
+        assert (name != null && !name.isEmpty()) : "A deck requires a name.";
         this.name = name;
     }
 
@@ -40,6 +42,7 @@ public class Deck {
      * @return
      */
     public FlashCard get(int index) {
+        assert (index >= 0 && index < deck.size()) : "Index should be within range";
         return deck.get(index);
     }
 
@@ -49,6 +52,7 @@ public class Deck {
      * @param flashCard Reference to the flashcard to be added
      */
     public void add(FlashCard flashCard) {
+        assert flashCard != null : "Do not add null objects into deck";
         deck.add(flashCard);
     }
 
@@ -67,6 +71,7 @@ public class Deck {
      * @param index Index of flashcard to be deleted
      */
     public void delete(int index) {
+        assert (index >= 0 && index < deck.size()) : "Index should be within range";
         deck.remove(index);
     }
 

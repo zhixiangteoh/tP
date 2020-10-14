@@ -9,7 +9,9 @@ public class FlashCard {
 
     /** Constructor. */
     public FlashCard(String question, String answer) {
+        assert (question != null && !question.isEmpty()) : "Flashcard must have one question.";
         this.question = question;
+        assert (answer != null && !answer.isEmpty()) : "Flashcard must have one answer";
         this.answer = answer;
     }
 
@@ -37,6 +39,7 @@ public class FlashCard {
      * @param answer new answer on the flashcard
      */
     public void setAnswer(String answer) {
+        assert (answer != null && !answer.isEmpty()) : "Flashcard must have one answer";
         this.answer = answer;
     }
 
@@ -46,6 +49,7 @@ public class FlashCard {
      * @param question new answer on the flashcard
      */
     public void setQuestion(String question) {
+        assert (question != null && !question.isEmpty()) : "Flashcard must have one question.";
         this.question = question;
     }
 
