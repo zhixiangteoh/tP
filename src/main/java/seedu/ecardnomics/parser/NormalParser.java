@@ -3,7 +3,7 @@ package seedu.ecardnomics.parser;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
-import seedu.ecardnomics.command.deck.DeleteCommand;
+import seedu.ecardnomics.command.VersionCommand;
 import seedu.ecardnomics.command.normal.EditCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.normal.CreateCommand;
@@ -95,6 +95,9 @@ public class NormalParser extends Parser {
             throws Exception {
 
         switch (commandWord) {
+        // Version
+        case Ui.VERSION_CMD:
+            return new VersionCommand();
         // Exit
         case Ui.EXIT:
             return new ExitCommand();
