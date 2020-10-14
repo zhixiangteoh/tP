@@ -149,7 +149,7 @@ public class NormalParser extends Parser {
             return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
         // Help
         case Ui.HELP:
-            return new HelpCommand(deckList);
+            return new HelpCommand();
         default:
             return new VoidCommand();
         }
