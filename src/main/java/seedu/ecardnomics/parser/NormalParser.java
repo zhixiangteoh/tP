@@ -3,7 +3,6 @@ package seedu.ecardnomics.parser;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
-import seedu.ecardnomics.command.deck.DeleteCommand;
 import seedu.ecardnomics.command.normal.EditCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.normal.CreateCommand;
@@ -49,6 +48,7 @@ public class NormalParser extends Parser {
     protected boolean prepareDeletedDeck(int index) {
         Deck deck = deckList.getDeck(index);
         String response = getDeleteYorNResponse(deck);
+        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
         switch (response) {
         case Ui.Y:
             Ui.printDeckDeletedLine(deck.getName());
@@ -68,6 +68,7 @@ public class NormalParser extends Parser {
         do {
             Ui.printDeletedDeckQuestion(deck.getName());
             response = Ui.readUserInput();
+            assert response != null : "response should not be null";
             switch (response.trim()) {
             case Ui.Y:
                 response = Ui.Y;
@@ -85,6 +86,9 @@ public class NormalParser extends Parser {
     @Override
     protected Command parseCommand(String commandWord, String arguments)
             throws Exception {
+
+        assert (commandWord != null && arguments != null) :
+                "commandWord and arguments should not be null";
 
         switch (commandWord) {
         // Exit
@@ -127,7 +131,6 @@ public class NormalParser extends Parser {
 
         try {
             return parseCommand(commandWord, arguments);
-
         } catch (Exception e) {
             return new VoidCommand(e.getMessage());
         }
