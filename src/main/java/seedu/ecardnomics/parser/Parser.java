@@ -6,6 +6,7 @@ public abstract class Parser {
 
     public static final int LOWEST_POSSIBLE_INDEX = 0;
     public static final int INDEX_OFFSET = 1;
+
     /**
      * Checks whether argument from user is a number and whether the index given is a within the correct range of
      * decks/ flash cards.

@@ -1,16 +1,23 @@
 package seedu.ecardnomics.parser;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.ecardnomics.command.VersionCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.ExitCommand;
-import seedu.ecardnomics.command.normal.*;
+import seedu.ecardnomics.command.normal.CreateCommand;
+import seedu.ecardnomics.command.normal.DecksCommand;
+import seedu.ecardnomics.command.normal.DeleteDeckCommand;
+import seedu.ecardnomics.command.normal.EditCommand;
+import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
+
+import java.io.ByteArrayInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,13 +32,13 @@ class NormalParserTest {
         assertEquals(1, normalParser.getIndex("2"));
     }
 
-     @Test
-     void getIndex_validIndexSpacePadded_success() throws IndexFormatException, DeckRangeException {
-         assertEquals(0, normalParser.getIndex(" 1"));
-         assertEquals(0, normalParser.getIndex("\t1"));
-         assertEquals(1, normalParser.getIndex("2\t"));
-         assertEquals(1, normalParser.getIndex("     2 "));
-     }
+    @Test
+    void getIndex_validIndexSpacePadded_success() throws IndexFormatException, DeckRangeException {
+        assertEquals(0, normalParser.getIndex(" 1"));
+        assertEquals(0, normalParser.getIndex("\t1"));
+        assertEquals(1, normalParser.getIndex("2\t"));
+        assertEquals(1, normalParser.getIndex("     2 "));
+    }
 
     @Test
     void getIndex_outOfRangeIndex_exceptionThrown() {
@@ -96,17 +103,17 @@ class NormalParserTest {
         }
     }
 
-     @Test
-     void parseCommand_CreateCommand_success() throws Exception {
-         assertTrue(normalParser.parseCommand("create", "Deck 3") instanceof CreateCommand);
-     }
+    @Test
+    void parseCommand_CreateCommand_success() throws Exception {
+        assertTrue(normalParser.parseCommand("create", "Deck 3") instanceof CreateCommand);
+    }
 
     @Test
     void parseCommand_CreateCommandEmptyInput_exceptionThrown() throws Exception {
         try {
             normalParser.parseCommand("create", "");
             fail();
-        } catch (Exception e){
+        } catch (Exception e) {
             assertTrue(e instanceof EmptyInputException);
         }
     }
@@ -117,30 +124,30 @@ class NormalParserTest {
         assertTrue(normalParser.parseCommand("decks", "") instanceof DecksCommand);
     }
 
-//     @Test
-//     void parseCommand_DeleteDeckCommand_success() throws Exception {
-//         assertTrue(normalParser.parseCommand("delete", "1") instanceof DeleteDeckCommand);
-//     }
+    @Test
+    void parseCommand_DeleteDeckCommand_success() throws Exception {
+        assertTrue(normalParser.parseCommand("delete", "1") instanceof DeleteDeckCommand);
+    }
 
-     @Test
-     void parseCommand_DeleteDeckCommandNoIndex_exceptionThrown() {
-         try {
-             normalParser.parseCommand("delete", "");
-             fail();
-         } catch (Exception e) {
-             assertTrue(e instanceof IndexFormatException);
-         }
-     }
+    @Test
+    void parseCommand_DeleteDeckCommandNoIndex_exceptionThrown() {
+        try {
+            normalParser.parseCommand("delete", "");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexFormatException);
+        }
+    }
 
-     @Test
-     void parseCommand_DeleteDeckCommandOutOfRangeIndex_exceptionThrown() {
-         try {
-             normalParser.parseCommand("delete", "3");
-             fail();
-         } catch (Exception e) {
-             assertTrue(e instanceof DeckRangeException);
-         }
-     }
+    @Test
+    void parseCommand_DeleteDeckCommandOutOfRangeIndex_exceptionThrown() {
+        try {
+            normalParser.parseCommand("delete", "3");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof DeckRangeException);
+        }
+    }
 
     @Test
     void parseCommand_HelpCommand_success() throws Exception {
@@ -154,6 +161,13 @@ class NormalParserTest {
         assertTrue(normalParser.parse("   ") instanceof VoidCommand);
         assertTrue(normalParser.parse("\t") instanceof VoidCommand);
         assertTrue(normalParser.parse("blah") instanceof VoidCommand);
+    }
+
+    @BeforeAll
+    public static void addUserInput() {
+        String userInputs = "y";
+        ByteArrayInputStream input = new ByteArrayInputStream(userInputs.getBytes());
+        System.setIn(input);
     }
 
     @BeforeEach

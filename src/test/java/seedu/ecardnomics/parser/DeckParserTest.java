@@ -4,7 +4,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.ecardnomics.command.VoidCommand;
-import seedu.ecardnomics.command.deck.*;
+import seedu.ecardnomics.command.deck.AddCommand;
+import seedu.ecardnomics.command.deck.DeleteCommand;
+import seedu.ecardnomics.command.deck.DoneEditCommand;
+import seedu.ecardnomics.command.deck.ListCommand;
+import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.FlashCard;
@@ -26,13 +30,13 @@ class DeckParserTest {
         assertEquals(1, deckParser.getIndex("2"));
     }
 
-     @Test
-     void getIndex_validIndexSpacePadded_success() throws IndexFormatException, FlashCardRangeException {
-         assertEquals(0, deckParser.getIndex(" 1"));
-         assertEquals(0, deckParser.getIndex("\t1"));
-         assertEquals(1, deckParser.getIndex("2\t"));
-         assertEquals(1, deckParser.getIndex("     2 "));
-     }
+    @Test
+    void getIndex_validIndexSpacePadded_success() throws IndexFormatException, FlashCardRangeException {
+        assertEquals(0, deckParser.getIndex(" 1"));
+        assertEquals(0, deckParser.getIndex("\t1"));
+        assertEquals(1, deckParser.getIndex("2\t"));
+        assertEquals(1, deckParser.getIndex("     2 "));
+    }
 
     @Test
     void getIndex_outOfRangeIndex_exceptionThrown() {
@@ -68,40 +72,40 @@ class DeckParserTest {
         assertTrue(deckParser.parseCommand("done", "") instanceof DoneEditCommand);
     }
 
-     @Test
-     void parseCommand_AddCommand_success() throws Exception {
+    @Test
+    void parseCommand_AddCommand_success() throws Exception {
 
         assertTrue(deckParser.parseCommand("add", "") instanceof AddCommand);
-     }
+    }
 
     @Test
     void parseCommand_ListCommand_success() throws Exception {
         assertTrue(deckParser.parseCommand("list", "") instanceof ListCommand);
     }
 
-     @Test
-     void parseCommand_DeleteCommand_success() throws Exception {
+    @Test
+    void parseCommand_DeleteCommand_success() throws Exception {
         assertTrue(deckParser.parseCommand("delete", "1") instanceof DeleteCommand);
         System.setIn(System.in);
-     }
+    }
 
-     @Test
-     void parseCommand_DeleteCommandNoIndex_exceptionThrown() {
-         try {
-             deckParser.parseCommand("delete", "");
-         } catch (Exception e) {
-             assertTrue(e instanceof IndexFormatException);
-         }
-     }
+    @Test
+    void parseCommand_DeleteCommandNoIndex_exceptionThrown() {
+        try {
+            deckParser.parseCommand("delete", "");
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexFormatException);
+        }
+    }
 
-     @Test
-     void parseCommand_DeleteCommandOutOfRangeIndex_exceptionThrown() {
-         try {
-             deckParser.parseCommand("delete", "3");
-         } catch (Exception e) {
-             assertTrue(e instanceof FlashCardRangeException);
-         }
-     }
+    @Test
+    void parseCommand_DeleteCommandOutOfRangeIndex_exceptionThrown() {
+        try {
+            deckParser.parseCommand("delete", "3");
+        } catch (Exception e) {
+            assertTrue(e instanceof FlashCardRangeException);
+        }
+    }
 
     @Test
     void parseCommand_HelpCommand_success() throws Exception {
@@ -118,9 +122,9 @@ class DeckParserTest {
     }
 
     @BeforeAll
-    public static void addUserInput(){
+    public static void addUserInput() {
         String userInputs = "q1" + System.getProperty("line.separator") + "a1" + System.getProperty("line.separator")
-                + "y";
+                + "y" + System.getProperty("line.separator") + "y";
         ByteArrayInputStream input = new ByteArrayInputStream(userInputs.getBytes());
         System.setIn(input);
     }

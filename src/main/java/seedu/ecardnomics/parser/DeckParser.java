@@ -15,6 +15,7 @@ import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.exceptions.EmptyInputException;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,8 +23,6 @@ import java.util.logging.Logger;
  * Parser for commands supplied in Deck Mode.
  */
 public class DeckParser extends Parser {
-
-
     public Deck deck;
     private static Logger logger = Logger.getLogger("DeckParserLogger");
 
