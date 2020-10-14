@@ -2,25 +2,39 @@ package seedu.ecardnomics.deck;
 
 import java.util.ArrayList;
 
+/**
+ * List for storing decks.
+ */
 public class DeckList {
     private ArrayList<Deck> deckList;
 
+    /** Constructor. */
     public DeckList() {
         deckList = new ArrayList<>();
     }
 
+    /**
+     * Adds a deck to the list.
+     *
+     * @param deck reference to Deck to be added
+     */
     public void addDeck(Deck deck) {
         deckList.add(deck);
     }
 
+    /**
+     * Removes a deck from the list.
+     *
+     * @param index int representing index of deck to to be removed
+     */
     public void removeDeck(int index) {
         deckList.remove(index);
     }
 
     /**
-     * Returns size of current deck.
+     * Returns size of current list.
      *
-     * @return size of deck
+     * @return size of list
      */
     public int size() {
         return deckList.size();

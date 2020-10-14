@@ -14,6 +14,15 @@ public abstract class Parser {
     protected abstract int getIndex(String arguments)
             throws Exception;
 
+    /**
+     * Determines the Command subclass to return based on the commandWord
+     * and arguments provided.
+     *
+     * @param commandWord String that corresponds to a command
+     * @param arguments String that lists the arguments for the command
+     * @return Command representing the command to be executed
+     * @throws Exception if arguments are inappropriate
+     */
     protected abstract Command parseCommand(String commandWord, String arguments)
             throws Exception;
 

@@ -14,6 +14,9 @@ import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 
+/**
+ * Parser for commands supplied in Normal Mode.
+ */
 public class NormalParser extends Parser {
     DeckList deckList;
 
@@ -39,12 +42,26 @@ public class NormalParser extends Parser {
         return index;
     }
 
+    /**
+     * Retrieves deck at index specified in arguments from deckList.
+     * getIndex() is used to convert arguments from String to an int index.
+     *
+     * @param arguments String that contains the ID number of the deck requested
+     * @return Reference to requested deck
+     * @throws IndexFormatException if arguments is not a digit
+     * @throws DeckRangeException if index obtained from arguments is not in range
+     */
     private Deck prepareDeck(String arguments)
             throws IndexFormatException, DeckRangeException {
 
         return deckList.getDeck(getIndex(arguments));
     }
 
+    /**
+     * Prepares a deck for being deleted.
+     * @param index int representing the index of the deck in deckList
+     * @return true if delete is confirmed, otherwise false
+     */
     protected boolean prepareDeletedDeck(int index) {
         Deck deck = deckList.getDeck(index);
         String response = getDeleteYorNResponse(deck);
@@ -63,6 +80,11 @@ public class NormalParser extends Parser {
         return false;
     }
 
+    /**
+     * Uses Ui to get y or n response from user.
+     * @param deck Reference to Deck that is being checked
+     * @return Ui.Y if user enters confirms, otherwise Ui.N
+     */
     private String getDeleteYorNResponse(Deck deck) {
         String response = "";
         do {

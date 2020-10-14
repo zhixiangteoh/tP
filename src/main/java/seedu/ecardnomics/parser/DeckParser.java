@@ -15,6 +15,9 @@ import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 
+/**
+ * Parser for commands supplied in Deck Mode.
+ */
 public class DeckParser extends Parser {
     public Deck deck;
 
