@@ -54,15 +54,15 @@ public class DeckParser extends Parser {
         String[] questionAndAnswer = new String[2];
         Ui.printAddFlashCardLine(deck);
         Ui.printEnterQuestionLine();
-        logger.log(Level.INFO, "Reading user input for question");
         questionAndAnswer[0] = Ui.readUserInput();
+        logger.log(Level.INFO, "Reading user input for question");
         if (questionAndAnswer[0].trim().length() == 0) {
             logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for question");
             throw new EmptyInputException();
         }
         Ui.printEnterAnswerLine();
-        logger.log(Level.INFO, "Reading user input for answer");
         questionAndAnswer[1] = Ui.readUserInput();
+        logger.log(Level.INFO, "Reading user input for answer");
         if (questionAndAnswer[1].trim().length() == 0) {
             logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for answer");
             throw new EmptyInputException();
@@ -83,7 +83,6 @@ public class DeckParser extends Parser {
         }
         assert arguments.length() > 0 : "arguments empty!";
         int index = Integer.parseInt(arguments) - Ui.INDEX_OFFSET;
-        assert index >= Ui.INDEX_OFFSET : "index argument less than lowest possible index!";
         if (index >= deck.size()) {
             logger.log(Level.WARNING, "Flash card index larger than total number of cards");
             throw new FlashCardRangeException();
@@ -168,7 +167,6 @@ public class DeckParser extends Parser {
             arguments = splitString[1];
             logger.log(Level.INFO, "Parsed arguments");
         }
-        assert arguments.length() > 0 : "arguments exist but is empty!";
         try {
             logger.log(Level.INFO, "Parsing command");
             return parseCommand(commandWord, arguments);
