@@ -3,6 +3,7 @@ package seedu.ecardnomics.parser;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.VersionCommand;
 import seedu.ecardnomics.command.normal.EditCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.normal.CreateCommand;
@@ -144,6 +145,9 @@ public class NormalParser extends Parser {
         logger.log(Level.INFO, "Logging method parseCommand() in NormalParser.");
 
         switch (commandWord) {
+        // Version
+        case Ui.VERSION_CMD:
+            return new VersionCommand();
         // Exit
         case Ui.EXIT:
             logger.log(Level.INFO, "User issued command to terminate program.");

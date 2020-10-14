@@ -67,7 +67,6 @@ public class Main {
             Ui.printNormalPrompt();
             userInput = Ui.readUserInput();
 
-
             command = normalParser.parse(userInput);
 
             executeCommand(command);
@@ -80,7 +79,6 @@ public class Main {
                     Ui.printNormalWelcome();
                 }
             }
-
 
         } while (!ExitCommand.isExit(command));
 
