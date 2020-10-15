@@ -63,7 +63,6 @@ public class Ui {
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
-    public static final int INDEX_OFFSET = 1;
 
     public static final String Y = "y";
     public static final String N = "n";

@@ -34,15 +34,17 @@ public class NormalParser extends Parser {
     protected int getIndex(String arguments)
             throws IndexFormatException, DeckRangeException {
 
+        arguments = arguments.trim();
+
         logger.log(Level.INFO, "Logging method getIndex() in NormalParser.");
         if (!arguments.matches(Ui.DIGITS_REGEX)) {
             logger.log(Level.WARNING, "User did not enter a valid integer index.");
             throw new IndexFormatException();
         }
 
-        int index = Integer.parseInt(arguments) - Ui.INDEX_OFFSET;
+        int index = Integer.parseInt(arguments) - INDEX_OFFSET;
 
-        if ((index >= deckList.size()) || (index < 0)) {
+        if ((index >= deckList.size()) || (index < LOWEST_POSSIBLE_INDEX)) {
             logger.log(Level.WARNING, "User did not enter an index in the valid range.");
             throw new DeckRangeException();
         }
