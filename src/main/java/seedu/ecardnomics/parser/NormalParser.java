@@ -75,8 +75,10 @@ public class NormalParser extends Parser {
     protected boolean prepareDeletedDeck(int index) {
         Deck deck = deckList.getDeck(index);
         logger.log(Level.INFO, "Logging method prepareDeletedDeck() in NormalParser.");
+
         String response = getDeleteYorNResponse(deck);
         assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
+
         switch (response) {
         case Ui.Y:
             Ui.printDeckDeletedLine(deck.getName());
@@ -116,6 +118,7 @@ public class NormalParser extends Parser {
     private String getDeleteYorNResponse(Deck deck) {
         logger.log(Level.INFO, "Logging method getDeleteYorNResponse() in NormalParser.");
         String response = "";
+        Ui.printDashLines();
         do {
             Ui.printDeletedDeckQuestion(deck.getName());
             response = Ui.readUserInput();
