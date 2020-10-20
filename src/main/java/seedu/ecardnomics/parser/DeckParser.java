@@ -37,8 +37,10 @@ public class DeckParser extends Parser {
         logger.log(Level.INFO, "Retrieving flash card at flash card index");
         FlashCard flashCard = deck.get(flashCardID);
         assert flashCard != null : "flash card does not exist!";
+
         String response = getDeleteYorNResponse(flashCard);
         assert response.equals(Ui.Y) || response.equals(Ui.N) : "response not 'Y' or 'N'!";
+
         switch (response) {
         case Ui.Y:
             Ui.printFlashCardDeletedLine(flashCard);
@@ -103,6 +105,8 @@ public class DeckParser extends Parser {
     protected String getDeleteYorNResponse(FlashCard flashCard) {
         logger.log(Level.INFO, "Prompting user for 'Y' or 'N' response");
         String response = "";
+
+        Ui.printDashLines();
         do {
             Ui.printDeleteFlashCardLine(flashCard);
             response = Ui.readUserInput();

@@ -106,7 +106,9 @@ public class UiTest {
 
     @Test
     void printNewDeck_newDeckName_deckName() {
-        String expectedOutput = "New deck created: Pokemon" + System.lineSeparator();
+        String expectedOutput =  "------------------------------------------------------------" + System.lineSeparator()
+                + "New deck created: Pokemon" + System.lineSeparator()
+                + "------------------------------------------------------------" + System.lineSeparator();
         printNewDeck(new Deck("Pokemon"));
         assertEquals(expectedOutput, outContent.toString());
     }

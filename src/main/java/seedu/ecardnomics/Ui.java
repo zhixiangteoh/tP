@@ -192,13 +192,14 @@ public class Ui {
      * @param type optional <code>/ans</code> to display answers
      */
     public static void printDeck(Deck deck, String type) {
-        printMessage(LIST_FLASHCARDS_LINE + deck.getName());
+        String deckMessage = "";
         if (deck.toString(type).trim().equals("")) {
-            System.out.println(EMPTY_DECK_LINE);
+            deckMessage += EMPTY_DECK_LINE;
         } else {
-            System.out.print(deck.toString(type));
+            deckMessage += LIST_FLASHCARDS_LINE + deck.getName() + "\n"
+                    + deck.toString(type);
         }
-        printDashLines();
+        printMessage(deckMessage);
     }
 
     /**
@@ -237,7 +238,7 @@ public class Ui {
      * @param deck in new Deck added
      */
     public static void printNewDeck(Deck deck) {
-        System.out.println(NEW_DECK_CREATED_LINE + deck.getName());
+        printMessage(NEW_DECK_CREATED_LINE + deck.getName());
     }
 
     /**
@@ -246,9 +247,7 @@ public class Ui {
      * @param decks all decks in the list
      */
     public static void printDeckList(DeckList decks) {
-        System.out.println(DECKS_AVAILABLE_LINE);
-        System.out.println(decks.toString());
-
+        printMessage(DECKS_AVAILABLE_LINE + decks.toString());
     }
 
     /**

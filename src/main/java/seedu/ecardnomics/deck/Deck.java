@@ -77,9 +77,12 @@ public class Deck {
 
     @Override
     public String toString() {
-        String output = name + ":";
+        String output = name + ":\n";
         for (int i = 0; i < deck.size(); i++) {
-            output += "\n" + (i + 1) + ". " + deck.get(i).toString() + "\n";
+            output += (i + 1) + ". " + deck.get(i).toString();
+            if (i != deck.size() - 1) {
+                output += "\n\n";
+            }
         }
         return output;
     }
@@ -90,12 +93,11 @@ public class Deck {
             return output;
         }
         for (int i = 0; i < deck.size(); i++) {
-            output += (i + 1) + ". " + deck.get(i).toString(type) + "\n";
+            output += (i + 1) + ". " + deck.get(i).toString(type);
             if (i != deck.size() - 1) {
-                output += "\n";
+                output += "\n\n";
             }
         }
-        output = output.replace("\n$", "");
         return output;
     }
 }

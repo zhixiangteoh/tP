@@ -67,9 +67,12 @@ public class DeckList {
 
     @Override
     public String toString() {
-        String output = "Decks:";
+        String output = "";
         for (int i = 0; i < deckList.size(); i++) {
-            output += "\n" + (i + 1) + ". " + deckList.get(i).getName();
+            output += (i + 1) + ". " + deckList.get(i).getName();
+            if (i != deckList.size() - 1) {
+                output += "\n";
+            }
         }
 
         return output;
