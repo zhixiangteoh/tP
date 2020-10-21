@@ -4,11 +4,12 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.VersionCommand;
 import seedu.ecardnomics.command.deck.AddCommand;
+import seedu.ecardnomics.command.deck.DeleteCommand;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
-import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.deck.ListCommand;
-import seedu.ecardnomics.command.deck.DeleteCommand;
+import seedu.ecardnomics.command.deck.UpdateCommand;
+import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
@@ -79,6 +80,30 @@ public class DeckParser extends Parser {
         Ui.printDashLines();
 
         return questionAndAnswer;
+    }
+
+    protected String[] prepareUpdate(int flashCardID) throws EmptyInputException {
+        String[] newQnA = new String[2];
+        Ui.printUpdateQuestionLine(deck.get(flashCardID));
+        newQnA[0] = Ui.readUserInput();
+        logger.log(Level.INFO, "Reading user input for question");
+        if (newQnA[0].trim().length() == 0) {
+            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for question");
+            throw new EmptyInputException();
+        }
+        Ui.printUpdateAnswerLine(deck.get(flashCardID));
+        newQnA[1] = Ui.readUserInput();
+        logger.log(Level.INFO, "Reading user input for answer");
+        logger.log(Level.INFO, "Reading user input for answer");
+        if (newQnA[1].trim().length() == 0) {
+            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for answer");
+            throw new EmptyInputException();
+        }
+        assert newQnA[0].length() > 0 : "question field empty!";
+        assert newQnA[1].length() > 0 : "answer field empty!";
+        Ui.printFlashCardUpdatedLine();
+        Ui.printDashLines();
+        return newQnA;
     }
 
     @Override
@@ -161,6 +186,13 @@ public class DeckParser extends Parser {
             boolean isFlashCardDeleted = prepareDeletedFlashCard(flashCardID);
             logger.log(Level.INFO, "returning DeleteCommand object");
             return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
+        // Update a FlashCard
+        case Ui.UPDATE:
+            logger.log(Level.INFO, "Preparing FlashCard to update");
+            flashCardID = getIndex(arguments);
+            assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
+            String[] newQnA = prepareUpdate(flashCardID);
+            return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);
         // Help
         case Ui.HELP:
             logger.log(Level.INFO, "returning HelpCommand object");

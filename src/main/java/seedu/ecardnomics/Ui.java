@@ -48,6 +48,12 @@ public class Ui {
             "Response should be 'y' or 'n'!";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
+    private static final String NEW_QUESTION_LINE =
+            "New Question: ";
+    private static final String NEW_ANSWER_LINE =
+            "New Answer: ";
+    private static final String FLASHCARD_UPDATED_LINE =
+            "The flashcard has been updated.";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -57,6 +63,7 @@ public class Ui {
     public static final String LIST = "list";
     public static final String DECKS = "decks";
     public static final String DELETE = "delete";
+    public static final String UPDATE = "update";
     public static final String HELP = "help";
 
     public static final String VERSION_CMD = "--version";
@@ -266,6 +273,32 @@ public class Ui {
      */
     public static void printDeckDeletedLine(String deletedDeckName) {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
+    }
+
+    /**
+     * Prints the update question lines for a flashcard.
+     *
+     * @param flashCard for which the question should be updated.
+     */
+    public static void printUpdateQuestionLine(FlashCard flashCard) {
+        System.out.println(flashCard.toString("question"));
+        System.out.println(NEW_QUESTION_LINE);
+        printPrompt();
+    }
+
+    /**
+     * Prints the update answer lines for a flashcard.
+     *
+     * @param flashCard for which the answer should be updated.
+     */
+    public static void printUpdateAnswerLine(FlashCard flashCard) {
+        System.out.println(flashCard.toString("answer"));
+        System.out.println(NEW_ANSWER_LINE);
+        printPrompt();
+    }
+
+    public static void printFlashCardUpdatedLine() {
+        System.out.println(FLASHCARD_UPDATED_LINE);
     }
 
     /**
