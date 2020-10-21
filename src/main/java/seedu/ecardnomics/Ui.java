@@ -49,7 +49,6 @@ public class Ui {
             "Response should be 'y' or 'n'!";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
-<<<<<<< HEAD
     private static final String ALL_TAGS_LINE =
             "The deck %1$s has been tagged as %2$s ";
     private static final String REMOVED_TAGS_QUESTION_LINE =
