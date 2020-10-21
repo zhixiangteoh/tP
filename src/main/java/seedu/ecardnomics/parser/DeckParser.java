@@ -87,10 +87,13 @@ public class DeckParser extends Parser {
         Ui.printUpdateQuestionLine(deck.get(flashCardID));
         newQnA[0] = Ui.readUserInput();
         logger.log(Level.INFO, "Reading user input for question");
+        boolean hasNewQ = true;
+        boolean hasNewA = true;
         if (newQnA[0].trim().length() == 0) {
             logger.log(Level.INFO, "User entered nothing or a series of blank spaces for question. "
                     + "Keep current question.");
             newQnA[0] = deck.get(flashCardID).getQuestion();
+            hasNewQ = false;
         }
         Ui.printUpdateAnswerLine(deck.get(flashCardID));
         newQnA[1] = Ui.readUserInput();
@@ -99,10 +102,11 @@ public class DeckParser extends Parser {
             logger.log(Level.INFO, "User entered nothing or a series of blank spaces for answer. "
                     + "Keep current answer.");
             newQnA[1] = deck.get(flashCardID).getAnswer();
+            hasNewA = false;
         }
         assert newQnA[0].length() > 0 : "question field empty!";
         assert newQnA[1].length() > 0 : "answer field empty!";
-        Ui.printFlashCardUpdatedLine();
+        Ui.printFlashCardUpdatedLine(hasNewQ, hasNewA);
         Ui.printDashLines();
         return newQnA;
     }

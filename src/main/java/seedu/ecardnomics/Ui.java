@@ -52,8 +52,14 @@ public class Ui {
             "New Question: ";
     private static final String NEW_ANSWER_LINE =
             "New Answer: ";
-    private static final String FLASHCARD_UPDATED_LINE =
-            "The flashcard has been updated.";
+    private static final String QUESTION_UPDATED_LINE =
+            "Question updated.";
+    private static final String ANSWER_UPDATED_LINE =
+            "Answer updated.";
+    private static final String QNA_UPDATED_LINE =
+            "Question and answer updated.";
+    private static final String NO_UPDATE_LINE =
+            "Original question and answer retained";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -297,8 +303,18 @@ public class Ui {
         printPrompt();
     }
 
-    public static void printFlashCardUpdatedLine() {
-        System.out.println(FLASHCARD_UPDATED_LINE);
+    public static void printFlashCardUpdatedLine(boolean hasNewQ, boolean hasNewA) {
+        if (hasNewQ && hasNewA) {
+            System.out.println(QNA_UPDATED_LINE);
+        } else if (hasNewQ) {
+            // !hasNewA
+            System.out.println(QUESTION_UPDATED_LINE);
+        } else if (hasNewA) {
+            // !hasNewQ
+            System.out.println(ANSWER_UPDATED_LINE);
+        } else {
+            System.out.println(NO_UPDATE_LINE);
+        }
     }
 
     /**
