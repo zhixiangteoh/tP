@@ -4,7 +4,13 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VersionCommand;
-import seedu.ecardnomics.command.normal.*;
+import seedu.ecardnomics.command.normal.EditCommand;
+import seedu.ecardnomics.command.normal.CreateCommand;
+import seedu.ecardnomics.command.normal.DeleteDeckCommand;
+import seedu.ecardnomics.command.normal.DecksCommand;
+import seedu.ecardnomics.command.normal.HelpCommand;
+import seedu.ecardnomics.command.normal.TagCommand;
+import seedu.ecardnomics.command.normal.UntagCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
@@ -95,8 +101,8 @@ public class NormalParser extends Parser {
         return false;
     }
 
-    protected boolean getRemovedTagsConfirmation(String[] tags, int ID) {
-        Deck deck = deckList.getDeck(ID);
+    protected boolean getRemovedTagsConfirmation(String[] tags, int id) {
+        Deck deck = deckList.getDeck(id);
 
         Ui.printRemovedTagsQuestion(deck.getName(), tags);
         String userConfirmation = Ui.readUserInput();

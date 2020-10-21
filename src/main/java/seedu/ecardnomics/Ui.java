@@ -357,7 +357,7 @@ public class Ui {
 
         for (int i = 0; i < tags.length; i++) {
             stringOfTags += tags[i];
-            if (i< tags.length -1) {
+            if (i < tags.length - 1) {
                 stringOfTags += ", ";
             }
         }

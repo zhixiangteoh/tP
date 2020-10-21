@@ -18,7 +18,7 @@ public class UntagCommand extends NormalCommand {
     @Override
     public void execute() {
         if (isTagsRemoved) {
-        deckList.getDeck(index).removeTag(removedTags);
+            deckList.getDeck(index).removeTag(removedTags);
         }
     }
 }
