@@ -261,7 +261,7 @@ public class Ui {
      */
     public static void printNewDeck(Deck deck) {
         printMessage(NEW_DECK_CREATED_LINE + deck.getName()
-                + ": " + deck.getTag());
+                + deck.getTag());
     }
 
     /**
