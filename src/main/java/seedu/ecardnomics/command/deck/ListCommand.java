@@ -1,7 +1,6 @@
 package seedu.ecardnomics.command.deck;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.DeckCommand;
 import seedu.ecardnomics.deck.Deck;
 
 public class ListCommand extends DeckCommand {
@@ -13,6 +12,7 @@ public class ListCommand extends DeckCommand {
     /** Constructor. */
     public ListCommand(Deck deck, String arguments) {
         super(deck);
+        assert arguments != null : "Arguments cannot be a null String.";
         this.arguments = arguments;
     }
 

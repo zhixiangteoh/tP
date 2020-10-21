@@ -20,7 +20,7 @@ class DeckListTest {
     @Test
     void testToString() {
         DeckList deckList = initialiseDeckList(2);
-        String deckListString = "Decks:\n1. deck 1\n2. deck 2";
+        String deckListString = "1. deck 1\n2. deck 2";
         assertEquals(deckListString, deckList.toString());
     }
 

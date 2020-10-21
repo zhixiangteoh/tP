@@ -9,6 +9,7 @@ public class CreateCommand extends NormalCommand {
 
     public CreateCommand(DeckList deckList, Deck deck) {
         super(deckList);
+        assert deck != null : "Do not add null objects to the list.";
         newDeck = deck;
     }
 

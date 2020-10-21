@@ -6,6 +6,8 @@ import seedu.ecardnomics.deck.FlashCard;
 
 import java.util.Scanner;
 
+import static seedu.ecardnomics.Main.VERSION_NUMBER;
+
 public class Ui {
 
     public static final String GREETING_LINES =
@@ -31,9 +33,9 @@ public class Ui {
     public static final String LIST_FLASHCARDS_LINE =
             "You are now viewing deck: ";
     public static final String DELETE_FLASHCARD_LINE =
-            "Do you want to delete ";
+            "Do you want to delete the following flash card? ";
     public static final String FLASHCARD_DELETED_LINE =
-            " has been deleted.";
+            "The following flash card has been deleted:\n  '";
     public static final String NEW_DECK_CREATED_LINE =
             "New deck created: ";
     public static final String DECKS_AVAILABLE_LINE =
@@ -57,9 +59,10 @@ public class Ui {
     public static final String DELETE = "delete";
     public static final String HELP = "help";
 
+    public static final String VERSION_CMD = "--version";
+
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
-    public static final int INDEX_OFFSET = 1;
 
     public static final String Y = "y";
     public static final String N = "n";
@@ -111,8 +114,7 @@ public class Ui {
     /**
      * Displays the prompt for user input without specifying current mode.
      */
-    public static void printPrompt(Deck deck) {
-        System.out.println("[Deck - " + deck.getName() + "]");
+    public static void printPrompt() {
         System.out.print("  > ");
     }
 
@@ -165,7 +167,7 @@ public class Ui {
      */
     public static void printEnterQuestionLine() {
         System.out.println(ENTER_QUESTION_LINE);
-        System.out.print("  > ");
+        printPrompt();
     }
 
     /**
@@ -173,7 +175,7 @@ public class Ui {
      */
     public static void printEnterAnswerLine() {
         System.out.println(ENTER_ANSWER_LINE);
-        System.out.print("  > ");
+        printPrompt();
     }
 
     /**
@@ -190,13 +192,14 @@ public class Ui {
      * @param type optional <code>/ans</code> to display answers
      */
     public static void printDeck(Deck deck, String type) {
-        printMessage(LIST_FLASHCARDS_LINE + deck.getName());
+        String deckMessage = "";
         if (deck.toString(type).trim().equals("")) {
-            System.out.println(EMPTY_DECK_LINE);
+            deckMessage += EMPTY_DECK_LINE;
         } else {
-            System.out.print(deck.toString(type));
+            deckMessage += LIST_FLASHCARDS_LINE + deck.getName() + "\n"
+                    + deck.toString(type);
         }
-        printDashLines();
+        printMessage(deckMessage);
     }
 
     /**
@@ -205,7 +208,8 @@ public class Ui {
      * @param flashCard FlashCard to delete
      */
     public static void printDeleteFlashCardLine(FlashCard flashCard) {
-        System.out.print(DELETE_FLASHCARD_LINE + flashCard.getQuestion() + "? " + YN_LINE + " ");
+        System.out.print(DELETE_FLASHCARD_LINE + YN_LINE + "\n  '" + flashCard.getQuestion() + "`\n");
+        printPrompt();
     }
 
     /**
@@ -214,7 +218,7 @@ public class Ui {
      * @param flashCard deleted FlashCard
      */
     public static void printFlashCardDeletedLine(FlashCard flashCard) {
-        System.out.println(flashCard.getQuestion() + FLASHCARD_DELETED_LINE);
+        System.out.println(FLASHCARD_DELETED_LINE + flashCard.getQuestion() + "'");
     }
 
     /**
@@ -234,7 +238,7 @@ public class Ui {
      * @param deck in new Deck added
      */
     public static void printNewDeck(Deck deck) {
-        System.out.println(NEW_DECK_CREATED_LINE + deck.getName());
+        printMessage(NEW_DECK_CREATED_LINE + deck.getName());
     }
 
     /**
@@ -243,9 +247,7 @@ public class Ui {
      * @param decks all decks in the list
      */
     public static void printDeckList(DeckList decks) {
-        System.out.println(DECKS_AVAILABLE_LINE);
-        System.out.println(decks.toString());
-
+        printMessage(DECKS_AVAILABLE_LINE + decks.toString());
     }
 
     /**
@@ -254,7 +256,7 @@ public class Ui {
      * @param deletedDeckName name of the deleted deck
      */
     public static void printDeletedDeckQuestion(String deletedDeckName) {
-        System.out.println(String.format(DELETED_DECK_QUESTION_LINE, deletedDeckName));
+        System.out.print(String.format(DELETED_DECK_QUESTION_LINE, deletedDeckName));
     }
 
     /**
@@ -262,7 +264,7 @@ public class Ui {
      *
      * @param deletedDeckName name of the deleted deck
      */
-    public static void printDeletedDeck(String deletedDeckName) {
+    public static void printDeckDeletedLine(String deletedDeckName) {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
     }
 
@@ -271,5 +273,9 @@ public class Ui {
      */
     public static void printInvalidYorNResponse() {
         System.out.println(INVALID_YN_RESPONSE_LINE);
+    }
+
+    public static void printVersionNumber() {
+        printMessage("Version: " + VERSION_NUMBER);
     }
 }
