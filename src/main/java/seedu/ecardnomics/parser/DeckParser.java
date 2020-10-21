@@ -94,7 +94,6 @@ public class DeckParser extends Parser {
         Ui.printUpdateAnswerLine(deck.get(flashCardID));
         newQnA[1] = Ui.readUserInput();
         logger.log(Level.INFO, "Reading user input for answer");
-        logger.log(Level.INFO, "Reading user input for answer");
         if (newQnA[1].trim().length() == 0) {
             logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for answer");
             throw new EmptyInputException();
