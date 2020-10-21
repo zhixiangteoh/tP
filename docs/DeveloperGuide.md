@@ -5,6 +5,23 @@
 ### Application Architecture
 
 ### User Interface
+**API** `Ui.java`
+
+The UI contains String constants that represent the outputs
+that the application is defined to produce.
+
+The `UI` component has two main purposes:
+* Reading user input from the console.
+* Printing program output to the console.
+
+Reading of user input is done using the method `readUserInput()`
+which reads one line of user input. The other methods within `UI` are
+called when a specific output needs to be printed.
+
+The `UI` component passes the user input to the `NormalParser` and
+`DeckParser` components that will extract the relevant information.
+The `UI` component provides its printing methods to `NormalParser`
+and `DeckParser` for printing the appropriate output when required.
 
 ### Parsing and Logic
 
