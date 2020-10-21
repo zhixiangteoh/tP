@@ -3,6 +3,23 @@
 ## Design
 
 ### Application Architecture
+![Architecture](images-dg/Architecture.png)
+
+The **Architecture Diagram** given above explains the high-level design of the Flash Card Manager Application.
+
+`Main` is responsible for initializing the other components in the program and linking them up correctly.
+
+* `Ui` Takes in instructions from user and displays the output to the user
+* `Logic` Consists of the `Parsers` and the `Commands`. The `Parser` decipher the user input and executes the specific `Command` that affects the change the user wishes.
+* `Model` Holds the data that is in memory as the program runs. It consists of the 3 components:
+    * `Flash Card` : A single question and answer pair.
+    * `Deck` : A list of `Flash Card`s under a common topic.
+    * `Deck List` : A complete list of all the `Deck`s in memory.
+* `Storage` Reads and writes data from and to a text file.
+
+#### How to **components** interact with one another
+![Sequence Diagram](images-dg/Sequence%20Diagram.png)
+The **Sequence Diagram** above shows how the components interact for a basic `create <deck name>` command where a new deck is created and added in to the `Deck List`.
 
 ### User Interface
 
