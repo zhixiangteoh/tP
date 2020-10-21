@@ -82,21 +82,23 @@ public class DeckParser extends Parser {
         return questionAndAnswer;
     }
 
-    protected String[] prepareUpdate(int flashCardID) throws EmptyInputException {
+    protected String[] prepareUpdate(int flashCardID) {
         String[] newQnA = new String[2];
         Ui.printUpdateQuestionLine(deck.get(flashCardID));
         newQnA[0] = Ui.readUserInput();
         logger.log(Level.INFO, "Reading user input for question");
         if (newQnA[0].trim().length() == 0) {
-            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for question");
-            throw new EmptyInputException();
+            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for question. "
+                    + "Keep current question.");
+            newQnA[0] = deck.get(flashCardID).getQuestion();
         }
         Ui.printUpdateAnswerLine(deck.get(flashCardID));
         newQnA[1] = Ui.readUserInput();
         logger.log(Level.INFO, "Reading user input for answer");
         if (newQnA[1].trim().length() == 0) {
-            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for answer");
-            throw new EmptyInputException();
+            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for answer. "
+                    + "Keep current answer.");
+            newQnA[1] = deck.get(flashCardID).getAnswer();
         }
         assert newQnA[0].length() > 0 : "question field empty!";
         assert newQnA[1].length() > 0 : "answer field empty!";
