@@ -88,7 +88,7 @@ public class DeckParser extends Parser {
         newQnA[0] = Ui.readUserInput();
         logger.log(Level.INFO, "Reading user input for question");
         if (newQnA[0].trim().length() == 0) {
-            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for question. "
+            logger.log(Level.INFO, "User entered nothing or a series of blank spaces for question. "
                     + "Keep current question.");
             newQnA[0] = deck.get(flashCardID).getQuestion();
         }
@@ -96,7 +96,7 @@ public class DeckParser extends Parser {
         newQnA[1] = Ui.readUserInput();
         logger.log(Level.INFO, "Reading user input for answer");
         if (newQnA[1].trim().length() == 0) {
-            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for answer. "
+            logger.log(Level.INFO, "User entered nothing or a series of blank spaces for answer. "
                     + "Keep current answer.");
             newQnA[1] = deck.get(flashCardID).getAnswer();
         }
