@@ -271,7 +271,8 @@ List without answers:
 // ------------------------------------------------------------
 // 1. Question: Define market failure.
 
-// 2. Question: What is the difference between free-loading and free-riding?
+// 2. Question: What is the difference between free-loading and
+//              free-riding?
 
 // ------------------------------------------------------------
 [Deck - market failure]
@@ -285,11 +286,17 @@ List with answers:
 // You are now viewing deck: [Deck - market failure]
 // ------------------------------------------------------------
 // 1. Question: Define market failure.
-// Answer: Economic situation defined by inefficient distribution of goods and services in the free market
+//    Answer:   Economic situation defined by inefficient
+//              distribution of goods and services in the free
+//              market
 
-// 2. Question: What is the difference between free-loading and free-riding?
-// Answer: Free-loading gives a benefit to the free-loader but there is a cost to the people taken advantage of.
-// Free-riding is an advantage to the free-rider without imposing a cost on others or society.
+// 2. Question: What is the difference between free-loading
+//              and free-riding?
+//    Answer:   Free-loading gives a benefit to the free-loader
+//              but there is a cost to the people taken
+//              advantage of. Free-riding is an advantage to
+//              the free-rider without imposing a cost on 
+//              others or society.
 
 // ------------------------------------------------------------
 [Deck - market failure]
@@ -341,6 +348,87 @@ Entering an invalid response:
 // Do you want to delete Define market failure? [y/n] y
 // Define market failure has been deleted.
 [Deck - market failure]
+```
+
+### Update a flashcard: `update`
+
+Updates the question and answer fields of a  specified flashcard
+in the deck.
+The `update` command expects no initial arguments.
+The current question and answer are displayed.
+Then, the user is prompted to specify the new details of the flashcard.
+
+#### Format
+```
+[Deck - `name`]
+  > update <index of flashcard>
+// Question: `Current Question`
+// New Question:
+    > <new question>
+// Answer:   `Current Answer`
+// New Answer:
+    > <new answer>
+// The flashcard has been updated.
+```
+> Note: `name` is a placeholder for the actual name of the deck that is being edited.
+> `Current Question` and `Current Answer` are placeholders for the original question
+> and answer of the flashcard.
+
+If a blank line is supplied as the new detail, then the detail is unchanged.
+
+#### Examples
+
+Updating both the question and answer:
+```
+[Deck - market failure]
+  > update 1
+// Question: Define market failure
+// New Question:
+  > What is the difference between free-loading and free-riding?
+// Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
+// New Answer:
+  > Free-loading gives a benefit to the free-loader but there is a cost to the people taken advantage of.
+    Free-riding is an advantage to the free-rider without imposing a cost on others or society.
+// Question and answer updated.
+```
+
+Updating question only:
+```
+[Deck - market failure]
+  > update 1
+// Question: Define market failure
+// New Question:
+  > Define Market Failure
+// Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
+// New Answer:
+  > 
+// Question updated.
+```
+
+Updating answer only:
+```
+[Deck - market failure]
+  > update 1
+// Question: Define market failure
+// New Question:
+  > 
+// Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
+// New Answer: Economic situation where distribution of goods and services in the free market is inefficient
+  > Economic situation where distribution of goods and services in the free market is inefficient
+// Answer updated.
+```
+
+No updates:
+```
+[Deck - market failure]
+  > update 1
+// Question: Define market failure
+// New Question:
+  > 
+// Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
+// New Answer: Economic situation where distribution of goods and services in the free market is inefficient
+  > 
+// Original question and answer retained.
 ```
 
 ### Exit Deck Mode: `done`
@@ -415,8 +503,6 @@ In Deck Mode:
 Bye. Hope to see you again soon!
 ------------------------------------------------------------
 ```
-
-## Features - Anywhere
 
 ## FAQ
 
