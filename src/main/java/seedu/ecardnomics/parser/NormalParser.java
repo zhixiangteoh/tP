@@ -4,12 +4,8 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VersionCommand;
-import seedu.ecardnomics.command.normal.EditCommand;
+import seedu.ecardnomics.command.normal.*;
 import seedu.ecardnomics.command.VoidCommand;
-import seedu.ecardnomics.command.normal.CreateCommand;
-import seedu.ecardnomics.command.normal.DecksCommand;
-import seedu.ecardnomics.command.normal.DeleteDeckCommand;
-import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
@@ -36,15 +32,15 @@ public class NormalParser extends Parser {
     protected int getIndex(String arguments)
             throws IndexFormatException, DeckRangeException {
 
-        arguments = arguments.trim();
+        String indexString = arguments.trim();
 
         logger.log(Level.INFO, "Logging method getIndex() in NormalParser.");
-        if (!arguments.matches(Ui.DIGITS_REGEX)) {
+        if (!indexString.matches(Ui.DIGITS_REGEX)) {
             logger.log(Level.WARNING, "User did not enter a valid integer index.");
             throw new IndexFormatException();
         }
 
-        int index = Integer.parseInt(arguments) - INDEX_OFFSET;
+        int index = Integer.parseInt(indexString) - INDEX_OFFSET;
 
         if ((index >= deckList.size()) || (index < LOWEST_POSSIBLE_INDEX)) {
             logger.log(Level.WARNING, "User did not enter an index in the valid range.");
@@ -97,7 +93,7 @@ public class NormalParser extends Parser {
     }
 
     /**
-     * Create a new deck for adding to deckList.
+     * Creates a new deck for adding to deckList.
      *
      * @param arguments String that represents the nae of deck to be created
      * @return Reference to the deck created
@@ -195,6 +191,13 @@ public class NormalParser extends Parser {
         case Ui.HELP:
             logger.log(Level.INFO, "User issued command to view help.");
             return new HelpCommand();
+        // Tag
+        case Ui.TAG:
+            String[] idAndNewTags = arguments.split("/tag");
+            deckID = getIndex(idAndNewTags[0]);
+            String[] newTags = idAndNewTags[1].trim().split(" ");
+            return new TagCommand(deckList, deckID, newTags);
+
         default:
             logger.log(Level.INFO, "User issued an invalid command.");
             return new VoidCommand();

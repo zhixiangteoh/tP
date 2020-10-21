@@ -4,6 +4,7 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static seedu.ecardnomics.Main.VERSION_NUMBER;
@@ -48,6 +49,8 @@ public class Ui {
             "Response should be 'y' or 'n'!";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
+    private static final String ALL_TAGS_LINE =
+            "The deck %1$s has been tagged as %2$s ";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -58,6 +61,8 @@ public class Ui {
     public static final String DECKS = "decks";
     public static final String DELETE = "delete";
     public static final String HELP = "help";
+    public static final String TAG = "tag";
+    public static final String UNTAG = "untag";
 
     public static final String VERSION_CMD = "--version";
 
@@ -278,5 +283,9 @@ public class Ui {
 
     public static void printVersionNumber() {
         printMessage("Version: " + VERSION_NUMBER);
+    }
+
+    public  static void printTags(String name, String tags) {
+        System.out.println(String.format(ALL_TAGS_LINE, name, tags));
     }
 }

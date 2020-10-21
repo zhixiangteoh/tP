@@ -22,7 +22,7 @@ public class Deck {
         assert (name != null && !name.isEmpty()) : "A deck requires a name.";
         this.name = name;
         deck = new ArrayList<>();
-        tags = new ArrayList<>();
+        this.tags = new ArrayList<>();
         this.tags = tags;
     }
 
@@ -45,8 +45,14 @@ public class Deck {
     }
 
     public void addTag(String[] newTags) {
-        for (String newTag: newTags) {
-            tags.add(newTag);
+        for (String tag: newTags) {
+            tags.add(tag);
+        }
+    }
+
+    public void removeTag(String[] deletedTags) {
+        for (String tag: deletedTags) {
+            tags.remove(tag);
         }
     }
 
