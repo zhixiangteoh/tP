@@ -5,7 +5,8 @@
 ### Application Architecture
 
 ### User Interface
-**API** `Ui.java`
+
+**API**: [seedu/ecardnomics/Ui.java](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/Ui.java)
 
 The UI contains String constants that represent the outputs
 that the application is defined to produce.
@@ -53,6 +54,27 @@ It only requires that all derived children implement the `execute()` method. The
   
 ![DG-Design CreateCommand Sequence UML](./images-dg/DG-Design-Sequence-Diagram.png?raw=true "CreateCommand UML
  Sequence Diagram")
+
+### Deck Model
+
+![DG-Design Model UML](./images-dg/DG-Design-Model.png?raw=true "Model UML Class Diagram")
+
+**API**: [seedu/ecardnomics/deck](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/deck)
+
+The Deck Model component is made up of three parts:
+* `DeckList`
+* `Deck`
+* `FlashCard`
+
+The `FlashCard` component represents a flashcard, storing question
+and answer data. The `Deck` represents a collection of flashcards
+related by a common topic. The `DeckList` represents the collection
+of all the `Deck` objects that the user has.
+
+Only the `Command` components can modify the `DeckList`, `Deck` and
+`FlashCard` components. However, `Ui`, `DeckParser` and `NormalParser`
+are able to read data from the `DeckList`, `Deck` and `FlashCard`
+components.
 
 ### Storage
 
