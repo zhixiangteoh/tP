@@ -15,6 +15,8 @@ import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
+
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,7 +109,19 @@ public class NormalParser extends Parser {
             logger.log(Level.WARNING, "User did not supply name when creating a new deck.");
             throw new EmptyInputException();
         }
-        return new Deck(arguments);
+
+        if (arguments.contains("/tag")) {
+            ArrayList<String> tagsList = new ArrayList<>();
+            String[] nameAndTags = arguments.split("/tag", 2);
+            String name = nameAndTags[0].trim();
+            String[] tags = nameAndTags[1].trim().split(" ");
+            for (String tag: tags) {
+                tagsList.add(tag);
+            }
+            return new Deck(name, tagsList);
+        } else {
+            return new Deck(arguments);
+        }
     }
 
     /**

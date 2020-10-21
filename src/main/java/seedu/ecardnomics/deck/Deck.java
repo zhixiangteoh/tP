@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Deck {
     private String name;
+    private ArrayList<String> tags;
     private ArrayList<FlashCard> deck;
 
     /** Constructor. */
@@ -14,6 +15,15 @@ public class Deck {
         assert (name != null && !name.isEmpty()) : "A deck requires a name.";
         this.name = name;
         deck = new ArrayList<>();
+        tags = new ArrayList<>();
+    }
+
+    public Deck(String name, ArrayList<String> tags) {
+        assert (name != null && !name.isEmpty()) : "A deck requires a name.";
+        this.name = name;
+        deck = new ArrayList<>();
+        tags = new ArrayList<>();
+        this.tags = tags;
     }
 
     /**
@@ -23,6 +33,21 @@ public class Deck {
      */
     public String getName() {
         return name;
+    }
+
+    public String getTag() {
+        String tagString = "";
+        for (int j = 0; j < tags.size(); j++) {
+            tagString += tags.get(j);
+            tagString += " ";
+        }
+        return tagString;
+    }
+
+    public void addTag(String[] newTags) {
+        for (String newTag: newTags) {
+            tags.add(newTag);
+        }
     }
 
     /**

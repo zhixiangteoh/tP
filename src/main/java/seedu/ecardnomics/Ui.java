@@ -39,7 +39,7 @@ public class Ui {
     public static final String NEW_DECK_CREATED_LINE =
             "New deck created: ";
     public static final String DECKS_AVAILABLE_LINE =
-            "The following decks are available: ";
+            "The following decks are available:\n";
     public static final String DELETED_DECK_QUESTION_LINE =
             "Do you want to delete %1$s deck? [y/n]";
     public static final String DELETED_DECK_LINE =
@@ -238,7 +238,8 @@ public class Ui {
      * @param deck in new Deck added
      */
     public static void printNewDeck(Deck deck) {
-        printMessage(NEW_DECK_CREATED_LINE + deck.getName());
+        printMessage(NEW_DECK_CREATED_LINE + deck.getName()
+                + ": " + deck.getTag());
     }
 
     /**
