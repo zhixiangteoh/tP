@@ -51,6 +51,10 @@ public class Ui {
             "Deck is currently empty!";
     private static final String ALL_TAGS_LINE =
             "The deck %1$s has been tagged as %2$s ";
+    private static final String REMOVED_TAGS_QUESTION_LINE =
+            "Do you want to remove the tag(s) %1$s from %2$s? [y/n]";
+    private static final String REMOVED_TAGS_LINE =
+            "The tag(s) %1$s have been removed from the deck %2$s.";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -288,4 +292,27 @@ public class Ui {
     public  static void printTags(String name, String tags) {
         System.out.println(String.format(ALL_TAGS_LINE, name, tags));
     }
+
+    public static void printRemovedTagsQuestion(String deckName, String[] tags) {
+        String removedTags = formStringOfTags(tags);
+        System.out.println(String.format(REMOVED_TAGS_QUESTION_LINE, removedTags, deckName));
+    }
+
+    public static void printTagsRemovedLine(String deckName, String[] tags) {
+        String removedTags = formStringOfTags(tags);
+        System.out.println(String.format(REMOVED_TAGS_LINE, removedTags, deckName));
+    }
+
+    public static String formStringOfTags(String[] tags) {
+        String stringOfTags = "";
+
+        for (int i = 0; i < tags.length; i++) {
+            stringOfTags += tags[i];
+            if (i< tags.length -1) {
+                stringOfTags += ", ";
+            }
+        }
+        return stringOfTags;
+    }
+
 }

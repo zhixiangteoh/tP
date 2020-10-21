@@ -70,11 +70,14 @@ public class NormalParser extends Parser {
      * @param index int representing the index of the deck in deckList
      * @return true if delete is confirmed, otherwise false
      */
-    protected boolean prepareDeletedDeck(int index) {
+    protected boolean getDeletedDeckConfirmation(int index) {
         Deck deck = deckList.getDeck(index);
-        logger.log(Level.INFO, "Logging method prepareDeletedDeck() in NormalParser.");
+        logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
 
-        String response = getDeleteYorNResponse(deck);
+        Ui.printDeletedDeckQuestion(deck.getName());
+        String userConfirmation = Ui.readUserInput();
+
+        String response = checkYorNResponse(userConfirmation);
         assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
 
         switch (response) {
@@ -90,6 +93,29 @@ public class NormalParser extends Parser {
             //
         }
         return false;
+    }
+
+    protected boolean getRemovedTagsConfirmation(String[] tags, int ID) {
+        Deck deck = deckList.getDeck(ID);
+
+        Ui.printRemovedTagsQuestion(deck.getName(), tags);
+        String userConfirmation = Ui.readUserInput();
+        String response = checkYorNResponse(userConfirmation);
+
+        switch (response) {
+        case Ui.Y:
+            Ui.printTagsRemovedLine(deck.getName(), tags);
+            Ui.printDashLines();
+            return true;
+        case Ui.N:
+            //
+            break;
+        default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
+            //
+        }
+        return false;
+
     }
 
     /**
@@ -122,16 +148,14 @@ public class NormalParser extends Parser {
 
     /**
      * Uses Ui to get y or n response from user.
-     * @param deck Reference to Deck that is being checked
+     * @param response Reference to the input from user
      * @return Ui.Y if user enters confirms, otherwise Ui.N
      */
-    private String getDeleteYorNResponse(Deck deck) {
-        logger.log(Level.INFO, "Logging method getDeleteYorNResponse() in NormalParser.");
-        String response = "";
+    private String checkYorNResponse(String response) {
+        logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
         Ui.printDashLines();
+
         do {
-            Ui.printDeletedDeckQuestion(deck.getName());
-            response = Ui.readUserInput();
             assert response != null : "response should not be null";
             switch (response.trim()) {
             case Ui.Y:
@@ -185,7 +209,7 @@ public class NormalParser extends Parser {
         case Ui.DELETE:
             int deckID = getIndex(arguments);
             logger.log(Level.INFO, "User issued command to delete deck at index " + deckID);
-            boolean isDeckDeleted = prepareDeletedDeck(deckID);
+            boolean isDeckDeleted = getDeletedDeckConfirmation(deckID);
             return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
         // Help
         case Ui.HELP:
@@ -197,6 +221,13 @@ public class NormalParser extends Parser {
             deckID = getIndex(idAndNewTags[0]);
             String[] newTags = idAndNewTags[1].trim().split(" ");
             return new TagCommand(deckList, deckID, newTags);
+
+        case Ui.UNTAG:
+            String[] idAndDeletedTags = arguments.split("/tag");
+            deckID = getIndex(idAndDeletedTags[0]);
+            String[] deletedTags = idAndDeletedTags[1].trim().split(" ");
+            boolean isTagsRemoved = getRemovedTagsConfirmation(deletedTags, deckID);
+            return new UntagCommand(deckList, deckID, deletedTags, isTagsRemoved);
 
         default:
             logger.log(Level.INFO, "User issued an invalid command.");
