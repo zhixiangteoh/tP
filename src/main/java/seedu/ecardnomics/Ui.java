@@ -4,6 +4,7 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static seedu.ecardnomics.Main.VERSION_NUMBER;
@@ -39,7 +40,7 @@ public class Ui {
     public static final String NEW_DECK_CREATED_LINE =
             "New deck created: ";
     public static final String DECKS_AVAILABLE_LINE =
-            "The following decks are available: ";
+            "The following decks are available:\n";
     public static final String DELETED_DECK_QUESTION_LINE =
             "Do you want to delete %1$s deck? [y/n]";
     public static final String DELETED_DECK_LINE =
@@ -48,6 +49,12 @@ public class Ui {
             "Response should be 'y' or 'n'!";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
+    private static final String ALL_TAGS_LINE =
+            "The deck %1$s has been tagged as %2$s ";
+    private static final String REMOVED_TAGS_QUESTION_LINE =
+            "Do you want to remove the tag(s) %1$s from %2$s? [y/n]";
+    private static final String REMOVED_TAGS_LINE =
+            "The tag(s) %1$s have been removed from the deck %2$s.";
     private static final String NEW_QUESTION_LINE =
             "New Question: ";
     private static final String NEW_ANSWER_LINE =
@@ -71,6 +78,8 @@ public class Ui {
     public static final String DELETE = "delete";
     public static final String UPDATE = "update";
     public static final String HELP = "help";
+    public static final String TAG = "tag";
+    public static final String UNTAG = "untag";
 
     public static final String VERSION_CMD = "--version";
 
@@ -251,7 +260,8 @@ public class Ui {
      * @param deck in new Deck added
      */
     public static void printNewDeck(Deck deck) {
-        printMessage(NEW_DECK_CREATED_LINE + deck.getName());
+        printMessage(NEW_DECK_CREATED_LINE + deck.getName()
+                + deck.getTag());
     }
 
     /**
@@ -327,4 +337,31 @@ public class Ui {
     public static void printVersionNumber() {
         printMessage("Version: " + VERSION_NUMBER);
     }
+
+    public  static void printTags(String name, String tags) {
+        System.out.println(String.format(ALL_TAGS_LINE, name, tags));
+    }
+
+    public static void printRemovedTagsQuestion(String deckName, String[] tags) {
+        String removedTags = formStringOfTags(tags);
+        System.out.println(String.format(REMOVED_TAGS_QUESTION_LINE, removedTags, deckName));
+    }
+
+    public static void printTagsRemovedLine(String deckName, String[] tags) {
+        String removedTags = formStringOfTags(tags);
+        System.out.println(String.format(REMOVED_TAGS_LINE, removedTags, deckName));
+    }
+
+    public static String formStringOfTags(String[] tags) {
+        String stringOfTags = "";
+
+        for (int i = 0; i < tags.length; i++) {
+            stringOfTags += tags[i];
+            if (i < tags.length - 1) {
+                stringOfTags += ", ";
+            }
+        }
+        return stringOfTags;
+    }
+
 }

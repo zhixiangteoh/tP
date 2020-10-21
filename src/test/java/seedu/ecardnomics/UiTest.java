@@ -109,6 +109,7 @@ public class UiTest {
 
     @Test
     void printNewDeck_newDeckName_deckName() {
+
         String expectedOutput =  "------------------------------------------------------------" + System.lineSeparator()
                 + "New deck created: Pokemon" + System.lineSeparator()
                 + "------------------------------------------------------------" + System.lineSeparator();
@@ -123,7 +124,7 @@ public class UiTest {
     @Test
     void printDeletedDeckQuestion_deletedDeckName_questionLine() {
         String expectedOutput = "Do you want to delete Pokemon deck? [y/n]";
-        printDeletedDeckQuestion("Pokemon");
+        Ui.printDeletedDeckQuestion("Pokemon");
         assertEquals(expectedOutput, outContent.toString());
     }
 

@@ -23,9 +23,75 @@ The **Sequence Diagram** above shows how the components interact for a basic `cr
 
 ### User Interface
 
+**API**: [seedu/ecardnomics/Ui.java](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/Ui.java)
+
+The UI contains String constants that represent the outputs
+that the application is defined to produce.
+
+The `UI` component has two main purposes:
+* Reading user input from the console.
+* Printing program output to the console.
+
+Reading of user input is done using the method `readUserInput()`
+which reads one line of user input. The other methods within `UI` are
+called when a specific output needs to be printed.
+
+The `UI` component passes the user input to the `NormalParser` and
+`DeckParser` components that will extract the relevant information.
+The `UI` component provides its printing methods to `NormalParser`
+and `DeckParser` for printing the appropriate output when required.
+
 ### Parsing and Logic
 
 ### Commands
+
+![DG-Design Commands UML](./images-dg/DG-Design-Commands.png?raw=true "Commands UML Class Diagram")
+
+API: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/command)
+
+Commands are primarily classified into two categories, `NormalCommand` and `DeckCommand`, corresponding to the
+ application's Normal and Deck Modes, respectively. `NormalCommand` and `DeckCommand` are both abstract children derived
+  from the overarching abstract class `Command`. The basis `Command` class is defined as such:
+   
+```java
+public abstract class Command {
+    public abstract void execute();
+}
+```
+
+It only requires that all derived children implement the `execute()` method. The only two classes not belonging to
+ either Normal or Deck Mode are `ExitCommand` and `VoidCommand`. The former is so that users can call the command
+  `exit` from anywhere in the application, while the latter is a catch-all "command" for all erroneous commands a
+   user enters. 
+   
+`NormalParser` and `DeckParser` play important roles in execution of specific commands, e.g. `CreateCommand`, because
+ they define methods that check and ensure the conformity of user input to the commands' expected input. Below is a
+  sequence diagram showcasing this interaction, for execution of a `CreateCommand`, e.g. `create
+   microeconomics`:
+  
+![DG-Design CreateCommand Sequence UML](./images-dg/DG-Design-Sequence-Diagram.png?raw=true "CreateCommand UML
+ Sequence Diagram")
+
+### Deck Model
+
+![DG-Design Model UML](./images-dg/DG-Design-Model.png?raw=true "Model UML Class Diagram")
+
+**API**: [seedu/ecardnomics/deck](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/deck)
+
+The Deck Model component is made up of three parts:
+* `DeckList`
+* `Deck`
+* `FlashCard`
+
+The `FlashCard` component represents a flashcard, storing question
+and answer data. The `Deck` represents a collection of flashcards
+related by a common topic. The `DeckList` represents the collection
+of all the `Deck` objects that the user has.
+
+Only the `Command` components can modify the `DeckList`, `Deck` and
+`FlashCard` components. However, `Ui`, `DeckParser` and `NormalParser`
+are able to read data from the `DeckList`, `Deck` and `FlashCard`
+components.
 
 ### Storage
 
