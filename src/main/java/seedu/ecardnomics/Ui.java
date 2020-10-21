@@ -49,12 +49,25 @@ public class Ui {
             "Response should be 'y' or 'n'!";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
+<<<<<<< HEAD
     private static final String ALL_TAGS_LINE =
             "The deck %1$s has been tagged as %2$s ";
     private static final String REMOVED_TAGS_QUESTION_LINE =
             "Do you want to remove the tag(s) %1$s from %2$s? [y/n]";
     private static final String REMOVED_TAGS_LINE =
             "The tag(s) %1$s have been removed from the deck %2$s.";
+    private static final String NEW_QUESTION_LINE =
+            "New Question: ";
+    private static final String NEW_ANSWER_LINE =
+            "New Answer: ";
+    private static final String QUESTION_UPDATED_LINE =
+            "Question updated.";
+    private static final String ANSWER_UPDATED_LINE =
+            "Answer updated.";
+    private static final String QNA_UPDATED_LINE =
+            "Question and answer updated.";
+    private static final String NO_UPDATE_LINE =
+            "Original question and answer retained";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -64,6 +77,7 @@ public class Ui {
     public static final String LIST = "list";
     public static final String DECKS = "decks";
     public static final String DELETE = "delete";
+    public static final String UPDATE = "update";
     public static final String HELP = "help";
     public static final String TAG = "tag";
     public static final String UNTAG = "untag";
@@ -276,6 +290,42 @@ public class Ui {
      */
     public static void printDeckDeletedLine(String deletedDeckName) {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
+    }
+
+    /**
+     * Prints the update question lines for a flashcard.
+     *
+     * @param flashCard for which the question should be updated.
+     */
+    public static void printUpdateQuestionLine(FlashCard flashCard) {
+        System.out.println(flashCard.toString("question"));
+        System.out.println(NEW_QUESTION_LINE);
+        printPrompt();
+    }
+
+    /**
+     * Prints the update answer lines for a flashcard.
+     *
+     * @param flashCard for which the answer should be updated.
+     */
+    public static void printUpdateAnswerLine(FlashCard flashCard) {
+        System.out.println(flashCard.toString("answer"));
+        System.out.println(NEW_ANSWER_LINE);
+        printPrompt();
+    }
+
+    public static void printFlashCardUpdatedLine(boolean hasNewQ, boolean hasNewA) {
+        if (hasNewQ && hasNewA) {
+            System.out.println(QNA_UPDATED_LINE);
+        } else if (hasNewQ) {
+            // !hasNewA
+            System.out.println(QUESTION_UPDATED_LINE);
+        } else if (hasNewA) {
+            // !hasNewQ
+            System.out.println(ANSWER_UPDATED_LINE);
+        } else {
+            System.out.println(NO_UPDATE_LINE);
+        }
     }
 
     /**

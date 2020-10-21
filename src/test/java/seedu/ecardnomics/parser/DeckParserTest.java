@@ -106,6 +106,24 @@ class DeckParserTest {
     }
 
     @Test
+    void parseCommand_UpdateCommandNoIndex_exceptionThrown() {
+        try {
+            deckParser.parseCommand("update", "");
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexFormatException);
+        }
+    }
+
+    @Test
+    void parseCommand_UpdateCommandOutOfRangeIndex_exceptionThrown() {
+        try {
+            deckParser.parseCommand("update", "3");
+        } catch (Exception e) {
+            assertTrue(e instanceof FlashCardRangeException);
+        }
+    }
+
+    @Test
     void parseCommand_HelpCommand_success() throws Exception {
         assertTrue(deckParser.parseCommand("help", "") instanceof HelpCommand);
     }

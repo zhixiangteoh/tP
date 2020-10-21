@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.deck.FlashCard;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -12,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.ecardnomics.Ui.printNewDeck;
 import static seedu.ecardnomics.Ui.printDeletedDeckQuestion;
 import static seedu.ecardnomics.Ui.printDeckDeletedLine;
+import static seedu.ecardnomics.Ui.printUpdateQuestionLine;
+import static seedu.ecardnomics.Ui.printUpdateAnswerLine;
 
 public class UiTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -129,6 +132,28 @@ public class UiTest {
     void printDeletedDeck_deletedDeckName_confirmation() {
         String expectedOutput = "Pokemon has been deleted." + System.lineSeparator();
         printDeckDeletedLine("Pokemon");
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void printUpdateQuestionLine_existingFlashCard_updateQuestionLine() {
+        String question = "Old question";
+        String answer = "Old answer";
+        FlashCard existingCard = new FlashCard(question, answer);
+        String expectedOutput = existingCard.toString("question") + System.lineSeparator()
+                + "New Question: " + System.lineSeparator() + "  > ";
+        printUpdateQuestionLine(existingCard);
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void printUpdateAnswerLine_existingFlashCard_updateAnswerLine() {
+        String question = "Old question";
+        String answer = "Old answer";
+        FlashCard existingCard = new FlashCard(question, answer);
+        String expectedOutput = existingCard.toString("answer") + System.lineSeparator()
+                + "New Answer: " + System.lineSeparator() + "  > ";
+        printUpdateAnswerLine(existingCard);
         assertEquals(expectedOutput, outContent.toString());
     }
 }
