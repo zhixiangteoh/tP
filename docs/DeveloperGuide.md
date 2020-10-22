@@ -41,9 +41,17 @@ The `UI` component passes the user input to the `NormalParser` and
 The `UI` component provides its printing methods to `NormalParser`
 and `DeckParser` for printing the appropriate output when required.
 
-### Parsing and Logic
+### Logic
+#### Overall Logic
+![DG-Overall Logic UML](./images-dg/Logic-DG.png?raw=true "Overall Logic Diagram")
 
-### Commands
+1. The overall logic component consists of the Parser class and Command class.
+2. The Parser parses the user input and creates the respective Command object.
+3. This command will be executed by the Main class.
+4. The command execution then can affect the Model (e.g. creating a new deck)
+
+#### Parsers
+#### Commands
 
 ![DG-Design Commands UML](./images-dg/DG-Design-Commands.png?raw=true "Commands UML Class Diagram")
 
