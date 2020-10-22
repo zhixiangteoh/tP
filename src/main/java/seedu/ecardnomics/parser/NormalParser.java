@@ -103,7 +103,7 @@ public class NormalParser extends Parser {
 
     /**
      * Checks whether the user want to remove the tags specified
-     * from the deck specified
+     * from the deck specified.
      *
      * @param tags String[] representing the tags be removed
      * @param id int representing the index of the deck of the tags

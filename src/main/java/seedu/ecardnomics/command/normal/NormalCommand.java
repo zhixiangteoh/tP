@@ -4,7 +4,7 @@ import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.deck.DeckList;
 
 /**
- * Parent Command in Normal Mode
+ * Parent Command in Normal Mode.
  */
 public abstract class NormalCommand extends Command {
     protected DeckList deckList;
