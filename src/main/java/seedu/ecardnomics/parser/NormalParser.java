@@ -77,8 +77,8 @@ public class NormalParser extends Parser {
      * @return true if delete is confirmed, otherwise false
      */
     protected boolean getDeletedDeckConfirmation(int index) {
-        Deck deck = deckList.getDeck(index);
         logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
+        Deck deck = deckList.getDeck(index);
 
         Ui.printDeletedDeckQuestion(deck.getName());
         String userConfirmation = Ui.readUserInput();
