@@ -101,6 +101,14 @@ public class NormalParser extends Parser {
         return false;
     }
 
+    /**
+     * Checks whether the user want to remove the tags specified
+     * from the deck specified.
+     *
+     * @param tags String[] representing the tags be removed
+     * @param id int representing the index of the deck of the tags
+     * @return true if the removal is confimred, otherwise false
+     */
     protected boolean getRemovedTagsConfirmation(String[] tags, int id) {
         Deck deck = deckList.getDeck(id);
 
@@ -153,7 +161,7 @@ public class NormalParser extends Parser {
     }
 
     /**
-     * Uses Ui to get y or n response from user.
+     * Checks y or n response from user.
      * @param response Reference to the input from user
      * @return Ui.Y if user enters confirms, otherwise Ui.N
      */
@@ -223,12 +231,18 @@ public class NormalParser extends Parser {
             return new HelpCommand();
         // Tag
         case Ui.TAG:
+            logger.log(Level.INFO, "User issued command to tag a deck.");
+            assert (arguments.contains("/tag")) :
+                    "tags to be added are after /tag label";
             String[] idAndNewTags = arguments.split("/tag");
             deckID = getIndex(idAndNewTags[0]);
             String[] newTags = idAndNewTags[1].trim().split(" ");
             return new TagCommand(deckList, deckID, newTags);
 
         case Ui.UNTAG:
+            logger.log(Level.INFO, "User issued command to untag a deck.");
+            assert (arguments.contains("/tag")) :
+                    "tags to be removed are after /tag label";
             String[] idAndDeletedTags = arguments.split("/tag");
             deckID = getIndex(idAndDeletedTags[0]);
             String[] deletedTags = idAndDeletedTags[1].trim().split(" ");
