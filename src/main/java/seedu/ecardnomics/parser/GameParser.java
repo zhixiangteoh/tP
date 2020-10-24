@@ -5,6 +5,7 @@ import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VersionCommand;
 import seedu.ecardnomics.command.VoidCommand;
+import seedu.ecardnomics.command.game.HelpCommand;
 import seedu.ecardnomics.command.game.DoneGameCommand;
 import seedu.ecardnomics.command.game.GameResponseCommand;
 import seedu.ecardnomics.deck.Deck;
@@ -86,6 +87,10 @@ public class GameParser extends Parser {
         case Ui.DONE:
             logger.log(Level.INFO, "returning DoneGameCommand object");
             return new DoneGameCommand(deck);
+        // Help
+        case Ui.HELP:
+            logger.log(Level.INFO, "returning HelpCommand object");
+            return new HelpCommand();
         default:
             return new VoidCommand();
         }

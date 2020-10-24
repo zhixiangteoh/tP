@@ -3,6 +3,7 @@ package seedu.ecardnomics;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.game.Game;
 
 import java.util.Scanner;
 
@@ -17,19 +18,6 @@ public class Ui {
             "You are back in Normal Mode";
     public static final String DECK_WELCOME_LINE =
             "You are now in Deck Mode, editing: ";
-    public static final String GAME_WELCOME_MESSAGE =
-            "Welcome to Game Mode!\n" + System.lineSeparator() +
-                    "In this mode, you test your knowledge against the flash cards in the deck.\n" +
-                    "Questions will be displayed in a randomised order. At each question, you can\n" +
-                    "    1. Try to attempt an answer at the question, by typing at the prompt\n" +
-                    "    2. Press <enter> (with an empty attempt if you want to do it in your head)\n" +
-                    "Then, our 'advanced' algorithms will check your answer and score your answer \n" +
-                    "(if any), and display the correct answer for you to check your answer against.\n" +
-                    "Finally, we will ask if you think you got it right. If you did not, the\n" +
-                    "question will be inserted back into the question pool, and you will get a \n" +
-                    "chance to attempt it again!\n" + System.lineSeparator() +
-                    "Press <enter> to begin. Type `help` for help. Have fun!\n" + System.lineSeparator() +
-                    "Game Mode is started for: ";
     public static final String BYE_LINE =
             "Bye. Hope to see you again soon!";
     public static final String NOT_RECOGNISED_LINE =
@@ -80,7 +68,8 @@ public class Ui {
     private static final String ENTER_ATTEMPT_LINE =
             "  Enter your attempt below (or `done`, `exit`, `help`):";
     private static final String DONE_GAME_LINE =
-            "You have completed all the flash cards in this deck! Returning to Normal Mode...";
+            "You have completed all the flash cards in this deck!\n"
+                    + "Returning to Normal Mode...";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -179,7 +168,7 @@ public class Ui {
      * Displays the welcome message for Game Mode.
      */
     public static void printGameWelcome(int index, Deck deck) {
-        printMessage(GAME_WELCOME_MESSAGE + "[" + index + "] " + deck.getName());
+        printMessage(Game.WELCOME_MESSAGE + "[" + index + "] " + deck.getName());
     }
 
     /**
@@ -385,7 +374,6 @@ public class Ui {
     }
 
     public static void printDoneGameMessage() {
-        System.out.println(DASH_LINES);
         System.out.println(DONE_GAME_LINE);
     }
 }

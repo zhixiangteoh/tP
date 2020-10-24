@@ -3,8 +3,10 @@ package seedu.ecardnomics.game;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.VersionCommand;
 import seedu.ecardnomics.command.game.DoneGameCommand;
 import seedu.ecardnomics.command.game.GameResponseCommand;
+import seedu.ecardnomics.command.game.HelpCommand;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.parser.GameParser;
 
@@ -21,8 +23,14 @@ public class GameEngine {
         Command command;
 
         do {
-            FlashCard flashCard = poseQuestion();
-            command = getAttempt();
+            FlashCard flashCard = getQuestion();
+            do {
+                poseQuestion(flashCard);
+                command = getAttempt();
+                if (isHelpCommand(command) || isVersionCommand(command)) {
+                    command.execute();
+                }
+            } while (isHelpCommand(command) || isVersionCommand(command));
             if (isTerminate(command)) {
                 break;
             }
@@ -34,7 +42,7 @@ public class GameEngine {
             }
             command = update(getInclExclYorNResponse(), flashCard, command);
 
-        } while (!isTerminate(command) && !isEndOfDeque());
+        } while (!isTerminate(command) && !isNoMoreCards());
 
         return command;
     }
@@ -82,10 +90,12 @@ public class GameEngine {
         }
     }
 
-    FlashCard poseQuestion() {
-        FlashCard flashCard = storage.deque.pop();
+    FlashCard getQuestion() {
+        return storage.deque.pop();
+    }
+
+    void poseQuestion(FlashCard flashCard) {
         Ui.printGameQuestion(flashCard.getQuestion());
-        return flashCard;
     }
 
     String getInclExclYorNResponse() {
@@ -133,7 +143,15 @@ public class GameEngine {
         return DoneGameCommand.isDoneGame(command) || ExitCommand.isExit(command);
     }
 
-    boolean isEndOfDeque() {
-        return storage.deque.size() == 0;
+    boolean isNoMoreCards() {
+        return storage.deque.isEmpty() && storage.retestStore.isEmpty();
+    }
+
+    boolean isHelpCommand(Command command) {
+        return command instanceof HelpCommand;
+    }
+
+    boolean isVersionCommand(Command command) {
+        return command instanceof VersionCommand;
     }
 }
