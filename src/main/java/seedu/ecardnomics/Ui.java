@@ -211,15 +211,15 @@ public class Ui {
      * Displays an index list of FlashCards in the deck.
      *
      * @param deck deck to display
-     * @param type optional <code>/ans</code> to display answers
+     * @param isQuestionOnly print question only if true, question and answer otherwise
      */
-    public static void printDeck(Deck deck, String type) {
+    public static void printDeck(Deck deck, boolean isQuestionOnly) {
         String deckMessage = "";
-        if (deck.toString(type).trim().equals("")) {
+        if (deck.toString(isQuestionOnly).trim().equals("")) {
             deckMessage += EMPTY_DECK_LINE;
         } else {
-            deckMessage += LIST_FLASHCARDS_LINE + deck.getName() + "\n"
-                    + deck.toString(type);
+            deckMessage += LIST_FLASHCARDS_LINE + deck.getName() + System.lineSeparator()
+                    + deck.toString(isQuestionOnly);
         }
         printMessage(deckMessage);
     }
@@ -297,7 +297,8 @@ public class Ui {
      * @param flashCard for which the question should be updated.
      */
     public static void printUpdateQuestionLine(FlashCard flashCard) {
-        System.out.println(flashCard.toString("question"));
+        // No offset since printing from start of line.
+        System.out.println(flashCard.toString(true, 0));
         System.out.println(NEW_QUESTION_LINE);
         printPrompt();
     }
@@ -308,7 +309,8 @@ public class Ui {
      * @param flashCard for which the answer should be updated.
      */
     public static void printUpdateAnswerLine(FlashCard flashCard) {
-        System.out.println(flashCard.toString("answer"));
+        // No offset since printing from start of line.
+        System.out.println(flashCard.toString(false, 0));
         System.out.println(NEW_ANSWER_LINE);
         printPrompt();
     }
