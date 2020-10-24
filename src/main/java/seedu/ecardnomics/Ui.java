@@ -17,6 +17,19 @@ public class Ui {
             "You are back in Normal Mode";
     public static final String DECK_WELCOME_LINE =
             "You are now in Deck Mode, editing: ";
+    public static final String GAME_WELCOME_MESSAGE =
+            "Welcome to Game Mode!\n" + System.lineSeparator() +
+                    "In this mode, you test your knowledge against the flash cards in the deck.\n" +
+                    "Questions will be displayed in a randomised order. At each question, you can\n" +
+                    "    1. Try to attempt an answer at the question, by typing at the prompt\n" +
+                    "    2. Press <enter> (with an empty attempt if you want to do it in your head)\n" +
+                    "Then, our 'advanced' algorithms will check your answer and score your answer \n" +
+                    "(if any), and display the correct answer for you to check your answer against.\n" +
+                    "Finally, we will ask if you think you got it right. If you did not, the\n" +
+                    "question will be inserted back into the question pool, and you will get a \n" +
+                    "chance to attempt it again!\n" + System.lineSeparator() +
+                    "Press <enter> to begin. Type `help` for help. Have fun!\n" + System.lineSeparator() +
+                    "Game Mode is started for: ";
     public static final String BYE_LINE =
             "Bye. Hope to see you again soon!";
     public static final String NOT_RECOGNISED_LINE =
@@ -60,9 +73,18 @@ public class Ui {
             "Question and answer updated.";
     private static final String NO_UPDATE_LINE =
             "Original question and answer retained";
+    private static final String INCLUDE_EXCLUDE_LINE =
+            "Do you want to re-attempt this question later? ";
+    private static final String ATTEMPT_FEEDBACK_LINE =
+            "The % match between your answer and the actual answer is:";
+    private static final String ENTER_ATTEMPT_LINE =
+            "  Enter your attempt below (or `done`, `exit`, `help`):";
+    private static final String DONE_GAME_LINE =
+            "You have completed all the flash cards in this deck! Returning to Normal Mode...";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
+    public static final String START = "start";
     public static final String DONE = "done";
     public static final String ADD = "add";
     public static final String CREATE = "create";
@@ -125,6 +147,14 @@ public class Ui {
     }
 
     /**
+     * Displays the prompt for user input in Game Mode.
+     */
+    public static void printGamePrompt(Deck deck) {
+        System.out.println("[Game - " + deck.getName() + "]");
+        System.out.print("  > ");
+    }
+
+    /**
      * Displays the prompt for user input without specifying current mode.
      */
     public static void printPrompt() {
@@ -143,6 +173,13 @@ public class Ui {
      */
     public static void printDeckWelcome(int index, Deck deck) {
         printMessage(DECK_WELCOME_LINE + "[" + index + "] " + deck.getName());
+    }
+
+    /**
+     * Displays the welcome message for Game Mode.
+     */
+    public static void printGameWelcome(int index, Deck deck) {
+        printMessage(GAME_WELCOME_MESSAGE + "[" + index + "] " + deck.getName());
     }
 
     /**
@@ -326,5 +363,29 @@ public class Ui {
 
     public static void printVersionNumber() {
         printMessage("Version: " + VERSION_NUMBER);
+    }
+
+    public static void printIncludeExcludeLine() {
+        System.out.print(INCLUDE_EXCLUDE_LINE + YN_LINE + "\n");
+        printPrompt();
+    }
+
+    public static void printAttemptFeedback(double matchPercentage) {
+        System.out.println(String.format("%s %.2f", ATTEMPT_FEEDBACK_LINE, matchPercentage));
+    }
+
+    public static void printGameQuestion(String question) {
+        System.out.println("Q: " + question);
+        System.out.println(ENTER_ATTEMPT_LINE);
+        printPrompt();
+    }
+
+    public static void printAnswerGameMode(String answer) {
+        System.out.println("A: " + answer);
+    }
+
+    public static void printDoneGameMessage() {
+        System.out.println(DASH_LINES);
+        System.out.println(DONE_GAME_LINE);
     }
 }

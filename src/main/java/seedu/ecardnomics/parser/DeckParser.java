@@ -173,6 +173,10 @@ public class DeckParser extends Parser {
         case Ui.DONE:
             logger.log(Level.INFO, "returning DoneEditCommand object");
             return new DoneEditCommand(deck);
+        // Help
+        case Ui.HELP:
+            logger.log(Level.INFO, "returning HelpCommand object");
+            return new HelpCommand();
         // Add a FlashCard
         case Ui.ADD:
             logger.log(Level.INFO, "Preparing FlashCard to add");
@@ -198,10 +202,6 @@ public class DeckParser extends Parser {
             assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
             String[] newQnA = prepareUpdate(flashCardID);
             return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);
-        // Help
-        case Ui.HELP:
-            logger.log(Level.INFO, "returning HelpCommand object");
-            return new HelpCommand();
         default:
             logger.log(Level.WARNING, "returning VoidCommand object");
             return new VoidCommand();
