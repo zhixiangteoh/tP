@@ -47,12 +47,12 @@ public class GameEngine {
         return command;
     }
 
-    Command update(String YorN, FlashCard flashCard, Command command) {
+    Command update(String response, FlashCard flashCard, Command command) {
         if (isTerminate(command)) {
             return command;
         }
 
-        updateRetestStore(YorN, flashCard);
+        updateRetestStore(response, flashCard);
 
         if (storage.deque.isEmpty()) {
             if (storage.retestStore.isEmpty()) {
@@ -71,8 +71,8 @@ public class GameEngine {
         storage.refreshRetestStore();
     }
 
-    void updateRetestStore(String YorN, FlashCard flashCard) {
-        switch (YorN) {
+    void updateRetestStore(String response, FlashCard flashCard) {
+        switch (response) {
         // include
         case Ui.Y:
             if (!storage.retestStore.contains(flashCard)) {
@@ -135,7 +135,7 @@ public class GameEngine {
         if (answerLength == 0) {
             return 0;
         }
-        assert matchCount <= answerLength: "matchCount > answerLength!";
+        assert matchCount <= answerLength : "matchCount > answerLength!";
         return (double) matchCount / answerLength * 100;
     }
 

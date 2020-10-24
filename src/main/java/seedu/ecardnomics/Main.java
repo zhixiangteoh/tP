@@ -62,7 +62,7 @@ public class Main {
     /**
      * Runs Game Mode for specified deck.
      *
-     * @param deck
+     * @param deck to run Game Mode on
      * @return Command used to exit Game Mode (either <code>done</code> or <code>exit</code>)
      */
     public static Command runGameMode(Deck deck) {
