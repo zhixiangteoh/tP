@@ -12,6 +12,7 @@ public class HelpCommand extends NormalCommand {
             + "  create <nm>    Creates a new deck of flash cards, named <nm>.\n"
             + "  decks          Lists all available decks.\n"
             + "  edit <ix>      Enter Deck Mode for editing the deck at list index <ix>.\n"
+            + "  start <ix>     Enter Game Mode for deck at list index <ix>! Do your best!\n"
             + "  delete <ix>    Deletes the deck at list index <ix> from list of decks.\n"
             + "  exit           Exits the program.\n"
             + "  help           Show this output.\n"

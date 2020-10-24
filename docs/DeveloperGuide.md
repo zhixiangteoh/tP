@@ -10,6 +10,33 @@
 
 ### Commands
 
+![DG-Design Commands UML](./images-dg/DG-Design-Commands.png?raw=true "Commands UML Class Diagram")
+
+API: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/command)
+
+Commands are primarily classified into two categories, `NormalCommand` and `DeckCommand`, corresponding to the
+ application's Normal and Deck Modes, respectively. `NormalCommand` and `DeckCommand` are both abstract children derived
+  from the overarching abstract class `Command`. The basis `Command` class is defined as such:
+   
+```java
+public abstract class Command {
+    public abstract void execute();
+}
+```
+
+It only requires that all derived children implement the `execute()` method. The only two classes not belonging to
+ either Normal or Deck Mode are `ExitCommand` and `VoidCommand`. The former is so that users can call the command
+  `exit` from anywhere in the application, while the latter is a catch-all "command" for all erroneous commands a
+   user enters. 
+   
+`NormalParser` and `DeckParser` play important roles in execution of specific commands, e.g. `CreateCommand`, because
+ they define methods that check and ensure the conformity of user input to the commands' expected input. Below is a
+  sequence diagram showcasing this interaction, for execution of a `CreateCommand`, e.g. `create
+   microeconomics`:
+  
+![DG-Design CreateCommand Sequence UML](./images-dg/DG-Design-Sequence-Diagram.png?raw=true "CreateCommand UML
+ Sequence Diagram")
+
 ### Storage
 
 ## Implementation - Basic

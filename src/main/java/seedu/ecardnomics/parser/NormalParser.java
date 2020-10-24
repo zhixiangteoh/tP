@@ -10,6 +10,7 @@ import seedu.ecardnomics.command.normal.CreateCommand;
 import seedu.ecardnomics.command.normal.DecksCommand;
 import seedu.ecardnomics.command.normal.DeleteDeckCommand;
 import seedu.ecardnomics.command.normal.HelpCommand;
+import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
@@ -157,11 +158,20 @@ public class NormalParser extends Parser {
         case Ui.EXIT:
             logger.log(Level.INFO, "User issued command to terminate program.");
             return new ExitCommand();
+        // Help
+        case Ui.HELP:
+            logger.log(Level.INFO, "User issued command to view help.");
+            return new HelpCommand();
         // Edit
         case Ui.EDIT:
             Deck deck = prepareDeck(arguments);
             logger.log(Level.INFO, "User issued command to edit deck " + deck.getName() + ".");
             return new EditCommand(deckList, deck);
+        // Start
+        case Ui.START:
+            Deck startDeck = prepareDeck(arguments);
+            logger.log(Level.INFO, "User issued command to start deck " + startDeck.getName() + ".");
+            return new StartCommand(deckList, startDeck);
         // Create
         case Ui.CREATE:
             Deck newDeck = prepareNewDeck(arguments);
@@ -177,10 +187,6 @@ public class NormalParser extends Parser {
             logger.log(Level.INFO, "User issued command to delete deck at index " + deckID);
             boolean isDeckDeleted = prepareDeletedDeck(deckID);
             return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
-        // Help
-        case Ui.HELP:
-            logger.log(Level.INFO, "User issued command to view help.");
-            return new HelpCommand();
         default:
             logger.log(Level.INFO, "User issued an invalid command.");
             return new VoidCommand();
