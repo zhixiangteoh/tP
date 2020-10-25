@@ -9,6 +9,7 @@ import seedu.ecardnomics.command.normal.CreateCommand;
 import seedu.ecardnomics.command.normal.DeleteDeckCommand;
 import seedu.ecardnomics.command.normal.DecksCommand;
 import seedu.ecardnomics.command.normal.HelpCommand;
+import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.command.normal.TagCommand;
 import seedu.ecardnomics.command.normal.UntagCommand;
 import seedu.ecardnomics.command.VoidCommand;
@@ -35,8 +36,7 @@ public class NormalParser extends Parser {
     }
 
     @Override
-    protected int getIndex(String arguments)
-            throws IndexFormatException, DeckRangeException {
+    protected int getIndex(String arguments) throws IndexFormatException, DeckRangeException {
 
         String indexString = arguments.trim();
 
@@ -205,11 +205,20 @@ public class NormalParser extends Parser {
         case Ui.EXIT:
             logger.log(Level.INFO, "User issued command to terminate program.");
             return new ExitCommand();
+        // Help
+        case Ui.HELP:
+            logger.log(Level.INFO, "User issued command to view help.");
+            return new HelpCommand();
         // Edit
         case Ui.EDIT:
             Deck deck = prepareDeck(arguments);
             logger.log(Level.INFO, "User issued command to edit deck " + deck.getName() + ".");
             return new EditCommand(deckList, deck);
+        // Start
+        case Ui.START:
+            Deck startDeck = prepareDeck(arguments);
+            logger.log(Level.INFO, "User issued command to start deck " + startDeck.getName() + ".");
+            return new StartCommand(deckList, startDeck);
         // Create
         case Ui.CREATE:
             Deck newDeck = prepareNewDeck(arguments);
@@ -225,10 +234,6 @@ public class NormalParser extends Parser {
             logger.log(Level.INFO, "User issued command to delete deck at index " + deckID);
             boolean isDeckDeleted = getDeletedDeckConfirmation(deckID);
             return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
-        // Help
-        case Ui.HELP:
-            logger.log(Level.INFO, "User issued command to view help.");
-            return new HelpCommand();
         // Tag
         case Ui.TAG:
             logger.log(Level.INFO, "User issued command to tag a deck.");
@@ -238,7 +243,7 @@ public class NormalParser extends Parser {
             deckID = getIndex(idAndNewTags[0]);
             String[] newTags = idAndNewTags[1].trim().split(" ");
             return new TagCommand(deckList, deckID, newTags);
-
+        // Untag
         case Ui.UNTAG:
             logger.log(Level.INFO, "User issued command to untag a deck.");
             assert (arguments.contains("/tag")) :
@@ -248,7 +253,6 @@ public class NormalParser extends Parser {
             String[] deletedTags = idAndDeletedTags[1].trim().split(" ");
             boolean isTagsRemoved = getRemovedTagsConfirmation(deletedTags, deckID);
             return new UntagCommand(deckList, deckID, deletedTags, isTagsRemoved);
-
         default:
             logger.log(Level.INFO, "User issued an invalid command.");
             return new VoidCommand();

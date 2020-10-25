@@ -2,10 +2,14 @@ package seedu.ecardnomics;
 
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
+import seedu.ecardnomics.command.game.DoneGameCommand;
+import seedu.ecardnomics.command.game.GameStartCommand;
 import seedu.ecardnomics.command.normal.EditCommand;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
+import seedu.ecardnomics.game.Game;
 import seedu.ecardnomics.parser.DeckParser;
 import seedu.ecardnomics.parser.NormalParser;
 import seedu.ecardnomics.storage.Storage;
@@ -50,9 +54,24 @@ public class Main {
             executeCommand(command);
 
         } while (!DoneEditCommand.isDoneEdit(command)
-                && !ExitCommand.isExit(command));
+                && !ExitCommand.isExit(command)
+                && !StartCommand.isStart(command));
 
         return command;
+    }
+
+    /**
+     * Runs Game Mode for specified deck.
+     *
+     * @param deck to run Game Mode on
+     * @return Command used to exit Game Mode (either <code>done</code> or <code>exit</code>)
+     */
+    public static Command runGameMode(Deck deck) {
+        GameStartCommand gameStartCommand = new GameStartCommand(deck);
+        executeCommand(gameStartCommand);
+
+        Game game = gameStartCommand.getGameInstance();
+        return game.run();
     }
 
     /**
@@ -82,6 +101,15 @@ public class Main {
                 }
             }
 
+            if (StartCommand.isStart(command)) {
+                StartCommand startCommand = (StartCommand) command;
+                command = runGameMode(startCommand.getDeck());
+
+                if (command instanceof DoneGameCommand) {
+                    Ui.printNormalWelcome();
+                }
+            }
+
         } while (!ExitCommand.isExit(command));
 
         Ui.printExitLine();
@@ -94,7 +122,6 @@ public class Main {
      */
     public static void main(String[] args) {
         deckList = storage.load(deckList);
-
         runNormalMode();
 
         try {
