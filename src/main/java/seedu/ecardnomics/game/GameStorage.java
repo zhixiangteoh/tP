@@ -19,8 +19,9 @@ public class GameStorage {
     }
 
     ArrayDeque<FlashCard> createRandomisedStack(Deck deck) {
-        Collections.shuffle(deck.getDeck());
-        return new ArrayDeque<>(deck.getDeck());
+        ArrayList<FlashCard> randomisedDeck = new ArrayList<>(deck.getDeck());
+        Collections.shuffle(randomisedDeck);
+        return new ArrayDeque<>(randomisedDeck);
     }
 
     ArrayDeque<FlashCard> createRandomisedStack(ArrayList<FlashCard> retestStore) {
