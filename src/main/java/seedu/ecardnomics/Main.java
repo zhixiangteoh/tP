@@ -54,7 +54,8 @@ public class Main {
             executeCommand(command);
 
         } while (!DoneEditCommand.isDoneEdit(command)
-                && !ExitCommand.isExit(command));
+                && !ExitCommand.isExit(command)
+                && !StartCommand.isStart(command));
 
         return command;
     }

@@ -13,6 +13,9 @@ public class HelpCommand extends GameCommand {
             + "  exit           Exits the program.\n"
             + "  help           Show this output.\n"
             + "\n"
+            + "Options:\n"
+            + "  --version      Show version.\n"
+            + "\n"
             + "Gameplay:\n"
             + Game.GAMEPLAY_MESSAGE;
 

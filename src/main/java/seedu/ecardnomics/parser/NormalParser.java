@@ -36,8 +36,7 @@ public class NormalParser extends Parser {
     }
 
     @Override
-    protected int getIndex(String arguments)
-            throws IndexFormatException, DeckRangeException {
+    protected int getIndex(String arguments) throws IndexFormatException, DeckRangeException {
 
         String indexString = arguments.trim();
 
