@@ -8,6 +8,7 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.parser.DeckParser;
 import seedu.ecardnomics.parser.NormalParser;
+import seedu.ecardnomics.storage.Storage;
 
 /**
  * Main Class for eCardnomics - Flash Card Manager Command Line Program.
@@ -17,6 +18,7 @@ public class Main {
     public static final double VERSION_NUMBER = 1.0;
     public static DeckList deckList = new DeckList();
     public static NormalParser normalParser = new NormalParser(deckList);
+    public static Storage storage = new Storage();
 
     /**
      * Executes the command.
@@ -91,10 +93,14 @@ public class Main {
      * @param args Arguments from command line when user starts the program
      */
     public static void main(String[] args) {
-        // TEMP FOR TESTING
-        Deck pokemon = new Deck("Pokemon");
-        deckList.addDeck(pokemon);
+        deckList = storage.load(deckList);
+
         runNormalMode();
-        // runDeckMode(pokemon);
+
+        try {
+            storage.write(Main.deckList);
+        } catch (Exception e) {
+            System.out.println("Unable to write file...");
+        }
     }
 }
