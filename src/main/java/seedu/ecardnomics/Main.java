@@ -97,11 +97,10 @@ public class Main {
 
         runNormalMode();
 
-
         try {
             storage.write(Main.deckList);
-        } catch(Exception e) {
-            System.out.println("CATCHEXCEPTION");
+        } catch (Exception e) {
+            System.out.println("Unable to write file...");
         }
     }
 }

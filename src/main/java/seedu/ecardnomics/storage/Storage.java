@@ -37,14 +37,13 @@ public class Storage {
             int deckIndex = Integer.parseInt(line.substring(7));
             line = scanner.nextLine();
             String deckName = line.substring(7);
+            Deck deck = new Deck(deckName);
             line = scanner.nextLine();
             line = line.substring(line.indexOf("|") + 2);
             String[] tags = line.split(" | ");
+            deck.addTag(tags);
             line = scanner.nextLine();
             int deckSize = Integer.parseInt(line.substring(7));
-
-            Deck deck = new Deck(deckName);
-            deck.addTag(tags);
 
             for (int i = 0; i < deckSize; i++) {
                 line = scanner.nextLine();
