@@ -14,6 +14,7 @@ import seedu.ecardnomics.game.Game;
 import seedu.ecardnomics.parser.DeckParser;
 import seedu.ecardnomics.parser.GameParser;
 import seedu.ecardnomics.parser.NormalParser;
+import seedu.ecardnomics.storage.Storage;
 
 /**
  * Main Class for eCardnomics - Flash Card Manager Command Line Program.
@@ -23,6 +24,7 @@ public class Main {
     public static final double VERSION_NUMBER = 1.0;
     public static DeckList deckList = new DeckList();
     public static NormalParser normalParser = new NormalParser(deckList);
+    public static Storage storage = new Storage();
 
     /**
      * Executes the command.
@@ -121,17 +123,24 @@ public class Main {
      */
     public static void main(String[] args) {
         // TEMP FOR TESTING
-        Deck pokemon = new Deck("Pokemon");
-        deckList.addDeck(pokemon);
-        pokemon.add(new FlashCard("Who's that Pokemon?", "It's Pikachu!"));
-        pokemon.add(new FlashCard("Who's that Digimon?", "It's Agumon!"));
-        pokemon.add(new FlashCard("Who's that Ben 10 alien?", "It's Grey Matter!"));
-        pokemon.add(new FlashCard("Who's that Dog?", "It's Scooby-Doo!"));
+        // Deck pokemon = new Deck("Pokemon");
+        // deckList.addDeck(pokemon);
+        // pokemon.add(new FlashCard("Who's that Pokemon?", "It's Pikachu!"));
+        // pokemon.add(new FlashCard("Who's that Digimon?", "It's Agumon!"));
+        // pokemon.add(new FlashCard("Who's that Ben 10 alien?", "It's Grey Matter!"));
+        // pokemon.add(new FlashCard("Who's that Dog?", "It's Scooby-Doo!"));
         // pokemon.add(new FlashCard("A Question 5", "It's Question 5"));
         // pokemon.add(new FlashCard("B Question 6", "It's Question 6"));
         // pokemon.add(new FlashCard("C Question 7", "It's Question 7"));
         // pokemon.add(new FlashCard("D Question 8", "It's Question 8"));
+
+        deckList = storage.load(deckList);
         runNormalMode();
-        // runDeckMode(pokemon);
+
+        try {
+            storage.write(Main.deckList);
+        } catch (Exception e) {
+            System.out.println("Unable to write file...");
+        }
     }
 }
