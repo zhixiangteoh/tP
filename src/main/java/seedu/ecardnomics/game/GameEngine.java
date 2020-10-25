@@ -48,9 +48,7 @@ public class GameEngine {
     }
 
     Command update(String response, FlashCard flashCard, Command command) {
-        if (isTerminate(command)) {
-            return command;
-        }
+        assert !isTerminate(command) : "Command is either `done` or `exit` when it shouldn't be!";
 
         updateRetestStore(response, flashCard);
 
