@@ -23,6 +23,10 @@ public class GameEngine {
         Command command;
 
         do {
+            if (isDeckInitiallyEmpty()) {
+                Ui.printGameEmptyDeckLine();
+                return forceDoneGame();
+            }
             FlashCard flashCard = getQuestion();
             do {
                 poseQuestion(flashCard);
@@ -55,7 +59,7 @@ public class GameEngine {
         if (storage.deque.isEmpty()) {
             if (storage.retestStore.isEmpty()) {
                 Ui.printDoneGameMessage();
-                return gameParser.parse("done");
+                return forceDoneGame();
             } else {
                 updateDeque();
             }
@@ -135,6 +139,14 @@ public class GameEngine {
         }
         assert matchCount <= answerLength : "matchCount > answerLength!";
         return (double) matchCount / answerLength * 100;
+    }
+
+    Command forceDoneGame() {
+        return gameParser.parse("done");
+    }
+
+    boolean isDeckInitiallyEmpty() {
+        return storage.originalDeck.size() == 0;
     }
 
     boolean isTerminate(Command command) {

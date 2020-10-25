@@ -10,6 +10,7 @@ import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.exceptions.EmptyDeckException;
 import seedu.ecardnomics.game.Game;
 import seedu.ecardnomics.parser.DeckParser;
 import seedu.ecardnomics.parser.GameParser;
@@ -122,18 +123,6 @@ public class Main {
      * @param args Arguments from command line when user starts the program
      */
     public static void main(String[] args) {
-        // TEMP FOR TESTING
-        // Deck pokemon = new Deck("Pokemon");
-        // deckList.addDeck(pokemon);
-        // pokemon.add(new FlashCard("Who's that Pokemon?", "It's Pikachu!"));
-        // pokemon.add(new FlashCard("Who's that Digimon?", "It's Agumon!"));
-        // pokemon.add(new FlashCard("Who's that Ben 10 alien?", "It's Grey Matter!"));
-        // pokemon.add(new FlashCard("Who's that Dog?", "It's Scooby-Doo!"));
-        // pokemon.add(new FlashCard("A Question 5", "It's Question 5"));
-        // pokemon.add(new FlashCard("B Question 6", "It's Question 6"));
-        // pokemon.add(new FlashCard("C Question 7", "It's Question 7"));
-        // pokemon.add(new FlashCard("D Question 8", "It's Question 8"));
-
         deckList = storage.load(deckList);
         runNormalMode();
 

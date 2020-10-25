@@ -1,7 +1,9 @@
 package seedu.ecardnomics.game;
 
+import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.exceptions.EmptyDeckException;
 
 public class Game {
     GameStorage storage;

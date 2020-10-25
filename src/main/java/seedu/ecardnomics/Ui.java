@@ -5,7 +5,6 @@ import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.game.Game;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static seedu.ecardnomics.Main.VERSION_NUMBER;
@@ -77,6 +76,8 @@ public class Ui {
     private static final String DONE_GAME_LINE =
             "You have completed all the flash cards in this deck!\n"
                     + "Returning to Normal Mode...";
+    private static final String GAME_EMPTY_DECK_LINE =
+            EMPTY_DECK_LINE + " Please add some flash cards first.";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -411,5 +412,9 @@ public class Ui {
             }
         }
         return stringOfTags;
+    }
+
+    public static void printGameEmptyDeckLine() {
+        System.out.println(GAME_EMPTY_DECK_LINE);
     }
 }

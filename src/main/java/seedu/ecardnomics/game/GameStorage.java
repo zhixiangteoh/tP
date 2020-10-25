@@ -2,6 +2,7 @@ package seedu.ecardnomics.game;
 
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.exceptions.EmptyDeckException;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
