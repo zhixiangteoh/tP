@@ -10,8 +10,6 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
 
 ## Contents
 
-* [Introduction](#introduction)
-* [Contents](#contents)
 * [Preliminaries](#preliminaries)
   + [Installation](#installation)
   + [Running the program](#running-the-program)
@@ -70,16 +68,6 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
   + [Deck Mode](#deck-mode)
   + [Game Mode](#game-mode-1)
   + [Anywhere](#anywhere)
-
-<details>
-  <summary>Click to expand!</summary>
-  
-  ## Heading
-  1. A numbered
-  2. list
-     * With some
-     * Sub bullets
-</details>
 
 ## Preliminaries
 
