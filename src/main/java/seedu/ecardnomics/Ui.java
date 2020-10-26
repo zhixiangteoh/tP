@@ -6,6 +6,8 @@ import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.game.Game;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static seedu.ecardnomics.Main.VERSION_NUMBER;
 
@@ -103,6 +105,7 @@ public class Ui {
     public static final String DASH_LINES = "------------------------------------------------------------";
 
     public static Scanner in = new Scanner(System.in);
+    private static Logger logger = Logger.getLogger("UiLogger");
 
     /**
      * Reads user input from command line.
@@ -414,7 +417,98 @@ public class Ui {
         return stringOfTags;
     }
 
+
     public static void printGameEmptyDeckLine() {
         System.out.println(GAME_EMPTY_DECK_LINE);
     }
+
+    /**
+     * Checks y or n response from user.
+     * @param response Reference to the input from user
+     * @return Ui.Y if user enters confirms, otherwise Ui.N
+     */
+    private static String checkYorNResponse(String response) {
+        logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
+        printDashLines();
+
+        do {
+            assert response != null : "response should not be null";
+            switch (response.trim()) {
+            case Y:
+                response = Y;
+                break;
+            case N:
+                response = N;
+                break;
+            default:
+                logger.log(Level.INFO, "User entered response other than 'y' or 'n'");
+                printInvalidYorNResponse();
+                logger.log(Level.INFO, "Re-prompting...");
+            }
+        } while (!response.trim().equals(Y) && !response.trim().equals(N));
+        assert (response.equals(Y) || response.equals(N)) : "Response should be y/n";
+        return response;
+    }
+
+    /**
+     * Prepares a deck for being deleted.
+     * @param deckName String representing the index of the deck in deckList
+     * @return true if delete is confirmed, otherwise false
+     */
+    public static boolean getDeletedDeckConfirmation(String deckName) {
+        logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
+
+        printDeletedDeckQuestion(deckName);
+        String userConfirmation = readUserInput();
+
+        String response = checkYorNResponse(userConfirmation);
+        assert (response.equals(Y) || response.equals(N)) : "response should be y/n";
+
+        switch (response) {
+        case Y:
+            printDeckDeletedLine(deckName);
+            printDashLines();
+            return true;
+        case N:
+            //
+            break;
+        default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
+            //
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether the user want to remove the tags specified
+     * from the deck specified.
+     *
+     * @param tags String[] representing the tags be removed
+     * @param deckName String representing the index of the deck of the tags
+     * @return true if the removal is confirmed, otherwise false
+     */
+    public static boolean getRemovedTagsConfirmation(String[] tags, String deckName) {
+
+        printRemovedTagsQuestion(deckName, tags);
+        String userConfirmation = readUserInput();
+
+        String response = checkYorNResponse(userConfirmation);
+        assert (response.equals(Y) || response.equals(N)) : "response should be y/n";
+
+        switch (response) {
+        case Y:
+            printTagsRemovedLine(deckName, tags);
+            printDashLines();
+            return true;
+        case N:
+            //
+            break;
+        default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
+            //
+        }
+        return false;
+
+    }
+    
 }

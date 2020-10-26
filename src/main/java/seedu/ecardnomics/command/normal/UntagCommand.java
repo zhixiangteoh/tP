@@ -9,21 +9,24 @@ import seedu.ecardnomics.deck.DeckList;
 public class UntagCommand extends NormalCommand {
     private int index;
     private String[] removedTags;
-    private boolean isTagsRemoved;
 
     /** Constructor. */
-    public UntagCommand(DeckList decks, int index, String[] removedTags, boolean isTagsRemoved) {
+    public UntagCommand(DeckList decks, int index, String[] removedTags) {
         super(decks);
         assert (index >= 0 && index < decks.size()) : "Index must be within range.";
         this.index = index;
+        assert  (removedTags.length != 0): "Remove tags must be provided.";
         this.removedTags = removedTags;
-        this.isTagsRemoved = isTagsRemoved;
     }
 
     @Override
     public void execute() {
+        String deckName = deckList.getDeck(index).getName();
+        boolean isTagsRemoved = Ui.getRemovedTagsConfirmation(removedTags, deckName);
+
         if (isTagsRemoved) {
             deckList.getDeck(index).removeTag(removedTags);
         }
     }
+
 }
