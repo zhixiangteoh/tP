@@ -51,7 +51,7 @@ public class Ui {
             "Response should be 'y' or 'n'!";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
-    private static final String ALL_TAGS_LINE =
+    private static final String NEW_TAGS_LINE =
             "The deck %1$s has been tagged as %2$s ";
     private static final String REMOVED_TAGS_QUESTION_LINE =
             "Do you want to remove the tag(s) %1$s from %2$s? [y/n]";
@@ -290,8 +290,11 @@ public class Ui {
      * @param deck in new Deck added
      */
     public static void printNewDeck(Deck deck) {
-        printMessage(NEW_DECK_CREATED_LINE + deck.getName()
-                + deck.getTag());
+        String tagOfNewDeck = "";
+        if (deck.getTag().length > 0) {
+            tagOfNewDeck = "| Tag(s): " + prepareStringOfTags(deck.getTag());
+        }
+        printMessage(NEW_DECK_CREATED_LINE + deck.getName() + tagOfNewDeck);
     }
 
     /**
@@ -309,7 +312,7 @@ public class Ui {
      * @param deletedDeckName name of the deleted deck
      */
     public static void printDeletedDeckQuestion(String deletedDeckName) {
-        System.out.print(String.format(DELETED_DECK_QUESTION_LINE, deletedDeckName));
+        printMessage(String.format(DELETED_DECK_QUESTION_LINE, deletedDeckName));
     }
 
     /**
@@ -391,8 +394,22 @@ public class Ui {
         System.out.println(DONE_GAME_LINE);
     }
 
-    public  static void printTags(String name, String tags) {
-        System.out.println(String.format(ALL_TAGS_LINE, name, tags));
+    private static String prepareStringOfTags(String[] tags) {
+        String tagString = "";
+        for (int j = 0; j < tags.length; j++) {
+            tagString += tags[j];
+            tagString += " ";
+        }
+        return tagString;
+    }
+
+    public  static void printNewTags(String name, String[] newTags) {
+        String tagString = prepareStringOfTags(newTags);
+        printMessage(String.format(NEW_TAGS_LINE, name, tagString));
+    }
+
+    public static void printTagList(String name, String[] tags) {
+
     }
 
     public static void printRemovedTagsQuestion(String deckName, String[] tags) {

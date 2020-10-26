@@ -35,11 +35,10 @@ public class Deck {
         return name;
     }
 
-    public String getTag() {
-        String tagString = "";
+    public String[] getTag() {
+        String[] tagString = new String[tags.size()];
         for (int j = 0; j < tags.size(); j++) {
-            tagString += tags.get(j);
-            tagString += " ";
+            tagString[j] = tags.get(j);
         }
         return tagString;
     }
