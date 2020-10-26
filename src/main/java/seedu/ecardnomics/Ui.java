@@ -3,8 +3,8 @@ package seedu.ecardnomics;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.game.Game;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static seedu.ecardnomics.Main.VERSION_NUMBER;
@@ -67,9 +67,21 @@ public class Ui {
             "Question and answer updated.";
     private static final String NO_UPDATE_LINE =
             "Original question and answer retained";
+    private static final String INCLUDE_EXCLUDE_LINE =
+            "Do you want to re-attempt this question later? ";
+    private static final String ATTEMPT_FEEDBACK_LINE =
+            "The % match between your answer and the actual answer is:";
+    private static final String ENTER_ATTEMPT_LINE =
+            "  Enter your attempt below (or `done`, `exit`, `help`):";
+    private static final String DONE_GAME_LINE =
+            "You have completed all the flash cards in this deck!\n"
+                    + "Returning to Normal Mode...";
+    private static final String GAME_EMPTY_DECK_LINE =
+            EMPTY_DECK_LINE + " Please add some flash cards first.";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
+    public static final String START = "start";
     public static final String DONE = "done";
     public static final String ADD = "add";
     public static final String CREATE = "create";
@@ -134,6 +146,14 @@ public class Ui {
     }
 
     /**
+     * Displays the prompt for user input in Game Mode.
+     */
+    public static void printGamePrompt(Deck deck) {
+        System.out.println("[Game - " + deck.getName() + "]");
+        System.out.print("  > ");
+    }
+
+    /**
      * Displays the prompt for user input without specifying current mode.
      */
     public static void printPrompt() {
@@ -152,6 +172,13 @@ public class Ui {
      */
     public static void printDeckWelcome(int index, Deck deck) {
         printMessage(DECK_WELCOME_LINE + "[" + index + "] " + deck.getName());
+    }
+
+    /**
+     * Displays the welcome message for Game Mode.
+     */
+    public static void printGameWelcome(int index, Deck deck) {
+        printMessage(Game.WELCOME_MESSAGE + "[" + index + "] " + deck.getName());
     }
 
     /**
@@ -338,6 +365,29 @@ public class Ui {
         printMessage("Version: " + VERSION_NUMBER);
     }
 
+    public static void printIncludeExcludeLine() {
+        System.out.print(INCLUDE_EXCLUDE_LINE + YN_LINE + "\n");
+        printPrompt();
+    }
+
+    public static void printAttemptFeedback(double matchPercentage) {
+        System.out.println(String.format("%s %.2f", ATTEMPT_FEEDBACK_LINE, matchPercentage));
+    }
+
+    public static void printGameQuestion(String question) {
+        System.out.println("Q: " + question);
+        System.out.println(ENTER_ATTEMPT_LINE);
+        printPrompt();
+    }
+
+    public static void printAnswerGameMode(String answer) {
+        System.out.println("A: " + answer);
+    }
+
+    public static void printDoneGameMessage() {
+        System.out.println(DONE_GAME_LINE);
+    }
+
     public  static void printTags(String name, String tags) {
         System.out.println(String.format(ALL_TAGS_LINE, name, tags));
     }
@@ -364,4 +414,7 @@ public class Ui {
         return stringOfTags;
     }
 
+    public static void printGameEmptyDeckLine() {
+        System.out.println(GAME_EMPTY_DECK_LINE);
+    }
 }

@@ -1,5 +1,6 @@
 package seedu.ecardnomics.parser;
 
+import seedu.ecardnomics.Main;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.VersionCommand;
@@ -11,7 +12,9 @@ import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.deck.UpdateCommand;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VoidCommand;
+import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.deck.FlashCard;
@@ -25,6 +28,7 @@ import java.util.logging.Logger;
  */
 public class DeckParser extends Parser {
     public Deck deck;
+    public DeckList deckList;
     private static Logger logger = Logger.getLogger("DeckParserLogger");
 
     /**
@@ -173,6 +177,13 @@ public class DeckParser extends Parser {
         case Ui.DONE:
             logger.log(Level.INFO, "returning DoneEditCommand object");
             return new DoneEditCommand(deck);
+        // Help
+        case Ui.HELP:
+            logger.log(Level.INFO, "returning HelpCommand object");
+            return new HelpCommand();
+        // Start
+        case Ui.START:
+            return new NormalParser(Main.deckList).parseCommand(commandWord, arguments);
         // Add a FlashCard
         case Ui.ADD:
             logger.log(Level.INFO, "Preparing FlashCard to add");
@@ -198,10 +209,6 @@ public class DeckParser extends Parser {
             assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
             String[] newQnA = prepareUpdate(flashCardID);
             return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);
-        // Help
-        case Ui.HELP:
-            logger.log(Level.INFO, "returning HelpCommand object");
-            return new HelpCommand();
         default:
             logger.log(Level.WARNING, "returning VoidCommand object");
             return new VoidCommand();

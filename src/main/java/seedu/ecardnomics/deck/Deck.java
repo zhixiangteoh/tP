@@ -67,10 +67,19 @@ public class Deck {
     }
 
     /**
+     * Retrieves the inherent ArrayList data structure of the deck.
+     *
+     * @return ArrayList of FlashCards
+     */
+    public ArrayList<FlashCard> getDeck() {
+        return deck;
+    }
+
+    /**
      * Retrieves the flashcard at specified index.
      *
      * @param index Index of flashcard to be found
-     * @return
+     * @return FlashCard at index
      */
     public FlashCard get(int index) {
         assert (index >= 0 && index < deck.size()) : "Index should be within range";
