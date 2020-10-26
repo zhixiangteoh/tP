@@ -55,11 +55,12 @@ and `DeckParser` for printing the appropriate output when required.
 
 ![DG-Design Commands UML](./images-dg/DG-Design-Commands.png?raw=true "Commands UML Class Diagram")
 
-API: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/command)
+**API**: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu
+/ecardnomics/command)
 
-Commands are primarily classified into two categories, `NormalCommand` and `DeckCommand`, corresponding to the
- application's Normal and Deck Modes, respectively. `NormalCommand` and `DeckCommand` are both abstract children derived
-  from the overarching abstract class `Command`. The basis `Command` class is defined as such:
+Commands are primarily classified into three categories, `NormalCommand`, `DeckCommand`, and `GameCommand`,
+ corresponding to the application's Normal, Deck, and Game Modes, respectively. All three are abstract children
+  derived from the overarching abstract class `Command`. The basis `Command` class is defined as such:
    
 ```java
 public abstract class Command {
@@ -68,11 +69,10 @@ public abstract class Command {
 ```
 
 It only requires that all derived children implement the `execute()` method. The only two classes not belonging to
- either Normal or Deck Mode are `ExitCommand` and `VoidCommand`. The former is so that users can call the command
-  `exit` from anywhere in the application, while the latter is a catch-all "command" for all erroneous commands a
-   user enters. 
+ individual modes are `ExitCommand` and `VoidCommand`. The former is so that users can call the command `exit` from
+  anywhere in the application, while the latter is a catch-all "command" for all erroneous commands a user enters. 
    
-`NormalParser` and `DeckParser` play important roles in execution of specific commands, e.g. `CreateCommand`, because
+The `Parser` classes play important roles in execution of specific commands, e.g. `CreateCommand`, because
  they define methods that check and ensure the conformity of user input to the commands' expected input. Below is a
   sequence diagram showcasing this interaction, for execution of a `CreateCommand`, e.g. `create
    microeconomics`:
@@ -103,8 +103,6 @@ components.
 
 ### Storage
 
-## Implementation - Basic
-
 ## Implementation - Features
 
 ### Save to PPT (Kai Jie)
@@ -115,9 +113,35 @@ components.
 
 ### Saving to text file (Wayne)
 
-### Game Mode (Zhixiang)
+### Game Mode
+
+eCardnomics' quintessential mode. cGame Mode can be started from either Normal Mode or Deck Mode. The `start` command
+ is parsed by `NormalParser` (see [Commands](#commands)).
+ 
+Game Mode contains two main components: a storage component, `GameStorage`, and a logic component, `GameEngine`. The
+ former handles all data structures used by Game Mode, and stores the original deck (`originalDeck`), question pool
+  (`deque`), and retest question pool (`retestStore`). The latter executes the main game loop (`runGameLoop()`), and
+   interacts with `GameStorage` on package-private basis; i.e., `GameEngine` and `GameStorage` have full mutual
+    access as if they were a single class. This is one of the main intentional design decisions.
+  
+![DG-Implementation-Features-Game-Mode-Architecture](./images-dg/Game-Mode-Design.png?raw=true "Game Mode
+ Architecture Diagram")
+ 
+**See also**: [Gameplay description](./UserGuide.md#gameplay)
+
+The actual "game" aspect of eCardnomics is essentially summarised in the `runGameLoop()` high-level overview above
+. For a textual gameplay description, check out the "See also" link.
+
+The following elaborates the execution flow of Game Mode, from after a `start` command has been parsed in Normal Mode:
+
+![DG-Implementation-Features-Game-Mode-Sequence](./images-dg/Game-Mode-Sequence.png?raw=true "Game Mode UML Sequence
+ Diagram"
+ 
+**API**: [seedu/ecardnomics/game](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu
+/ecardnomics/game)
 
 ## Product scope
+
 ### Target user profile
 
 {Describe the target user profile}
