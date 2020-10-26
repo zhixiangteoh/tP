@@ -40,7 +40,7 @@ public class GameEngine {
             }
             Ui.printAnswerGameMode(flashCard.getAnswer());
             try {
-                Ui.printAttemptFeedback(checkResponse(command, flashCard));
+                Ui.printAttemptFeedback(checkAttempt(command, flashCard));
             } catch (Exception e) {
                 e.getMessage();
             }
@@ -110,7 +110,7 @@ public class GameEngine {
         return command;
     }
 
-    double checkResponse(Command command, FlashCard flashCard) throws Exception {
+    double checkAttempt(Command command, FlashCard flashCard) throws Exception {
         if (!(command instanceof GameResponseCommand)) {
             throw new Exception();
         }

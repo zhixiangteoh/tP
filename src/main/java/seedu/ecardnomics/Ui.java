@@ -70,7 +70,7 @@ public class Ui {
     private static final String INCLUDE_EXCLUDE_LINE =
             "Do you want to re-attempt this question later? ";
     private static final String ATTEMPT_FEEDBACK_LINE =
-            "The % match between your answer and the actual answer is:";
+            "The score for your answer is:";
     private static final String ENTER_ATTEMPT_LINE =
             "  Enter your attempt below (or `done`, `exit`, `help`):";
     private static final String DONE_GAME_LINE =
