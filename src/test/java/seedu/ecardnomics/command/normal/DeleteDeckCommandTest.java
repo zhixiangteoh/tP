@@ -13,7 +13,7 @@ class DeleteDeckCommandTest {
         DeckList deckList = new DeckList();
         deckList.addDeck(new Deck("Test"));
         assertEquals(1, deckList.size());
-        DeleteDeckCommand cmd = new DeleteDeckCommand(deckList, 0, true);
+        DeleteDeckCommand cmd = new DeleteDeckCommand(deckList, 0);
         cmd.execute();
         assertEquals(0, deckList.size());
     }
@@ -23,7 +23,7 @@ class DeleteDeckCommandTest {
         DeckList deckList = new DeckList();
         deckList.addDeck(new Deck("Test"));
         assertEquals(1, deckList.size());
-        DeleteDeckCommand cmd = new DeleteDeckCommand(deckList, 0, false);
+        DeleteDeckCommand cmd = new DeleteDeckCommand(deckList, 0);
         cmd.execute();
         assertEquals(1, deckList.size());
     }
