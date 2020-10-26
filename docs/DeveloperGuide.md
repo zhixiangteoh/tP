@@ -135,8 +135,8 @@ The actual "game" aspect of eCardnomics is essentially summarised in the `runGam
 The following elaborates the execution flow of Game Mode, from after a `start` command has been parsed in Normal Mode:
 
 ![DG-Implementation-Features-Game-Mode-Sequence](./images-dg/Game-Mode-Sequence.png?raw=true "Game Mode UML Sequence
- Diagram"
- 
+ Diagram")
+
 **API**: [seedu/ecardnomics/game](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu
 /ecardnomics/game)
 
@@ -144,18 +144,29 @@ The following elaborates the execution flow of Game Mode, from after a `start` c
 
 ### Target user profile
 
-{Describe the target user profile}
+Junior College Economics Students.
+
+Anybody > Students > Students in courses with high amount of content > Economics students > **Junior College
+ Economics students** (focus on theory than calculations)
 
 ### Value proposition
 
-{Describe the value proposition: what problem does it solve?}
+Flashcard application that allows students to quickly create new flash cards and access flashcards quickly on the
+ command line to enhance their studying experience, and ultimately be an aid for [active recall](https://getatomi.com/blog/what-is-active-recall-and-how-effective-is-it).
 
 ## User Stories
 
-|Version| As a ... | I want to ... | So that I can ...|
+|Version| As a(n) ... | I want to ... | So that I can ...|
 |--------|----------|---------------|------------------|
-|v1.0|new user|see usage instructions|refer to them when I forget how to use the application|
-|v2.0|user|find a to-do item by name|locate a to-do without having to go through the entire list|
+|v1.0|poor student|have small computer programs|run it on my old computer|
+|v1.0|fast typist|have an easily-navigable interface to type up notes and store them|create and manage notes quickly and efficiently|
+|v1.0|smart student|be able to use the system effectively and efficiently|save time and maximise my productivity|
+|v1.0|JC econs student|quickly create short notes of key concepts|keep up during lectures and tutorials|
+|v1.0|tech-savvy student|have a software tool to store my notes|stop needing to worry about losing my hardcopy notes|
+|v1.0|lazy student|create flash cards to keep my notes concise|learn at a comfortable, incrementing pace|
+|v2.0|organised student|have my notes be stored in a systematic way|retrieve them quickly and easily|
+|v2.0|student|have a system that can categorise material into different topics|quickly revise all the content for a topic when studying for an exam|
+|v2.0|hardworking student|have a studying system that can help me memorise content in a non-traditional manner|remember all the facts during an exam through active recall|
 
 ## Non-Functional Requirements
 
