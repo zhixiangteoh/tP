@@ -18,6 +18,7 @@ import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.exceptions.NoSeparatorException;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -71,10 +72,14 @@ public class NormalParser extends Parser {
         return deckList.getDeck(getIndex(arguments));
     }
 
-    private Command prepareTagCommand(String arguments) throws Exception{
+    private Command prepareTagCommand(String arguments) throws Exception {
+        String[] idAndNewTags = arguments.split("/tag");
+        if (idAndNewTags.length < 2) {
+            logger.log(Level.WARNING, "User did not provide /tag when adding tag.");
+            throw new NoSeparatorException();
+        }
         assert (arguments.contains("/tag")) :
                 "Tags to be added are after /tag label.";
-        String[] idAndNewTags = arguments.split("/tag");
         int deckID = getIndex(idAndNewTags[0]);
 
         if (idAndNewTags[1].trim().isEmpty()) {
@@ -86,29 +91,32 @@ public class NormalParser extends Parser {
         return new TagCommand(deckList, deckID, newTags);
     }
 
+    /**
+     * Prepares arguments for the Untag Command.
+     *
+     * @param arguments arguments input from user
+     * @return a Untag Command
+     * @throws Exception if index is invalid or empty arguments
+     */
     private Command prepareUntagCommand (String arguments) throws Exception {
+        String[] idAndRemovedTags = arguments.split("/tag");
+
+        if (idAndRemovedTags.length < 2) {
+            logger.log(Level.WARNING, "User did not provide /tag when removing tags.");
+            throw new NoSeparatorException();
+        }
         assert (arguments.contains("/tag")) :
                 "tags to be removed are after /tag label";
 
-        String[] idAndRemovedTags = arguments.split("/tag");
         int deckID = getIndex(idAndRemovedTags[0]);
-
         if (idAndRemovedTags[1].trim().isEmpty()) {
-            logger.log(Level.WARNING, "User did not supply tags when adding tag.");
+            logger.log(Level.WARNING, "User did not supply tags when removing tags.");
             throw new EmptyInputException();
         }
         String[] removedTags = idAndRemovedTags[1].trim().split(" ");
 
-//        boolean isTagsAvailable = checkTagsAvailability(removedTags, deckID);
-
         return new UntagCommand(deckList, deckID, removedTags);
     }
-
-//    private boolean checkTagsAvailability(String[] removedTags) {
-//
-//    }
-
-
 
     /**
      * Creates a new deck for adding to deckList.
@@ -138,7 +146,14 @@ public class NormalParser extends Parser {
         }
     }
 
-
+    /**
+     * Prepare Command for execution in Main.
+     *
+     * @param commandWord String that corresponds to a command
+     * @param arguments String that lists the arguments for the command
+     * @return
+     * @throws Exception when something wrong with the argument
+     */
     @Override
     protected Command parseCommand(String commandWord, String arguments)
             throws Exception {

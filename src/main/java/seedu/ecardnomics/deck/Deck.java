@@ -35,12 +35,17 @@ public class Deck {
         return name;
     }
 
-    public String[] getTag() {
-        String[] tagString = new String[tags.size()];
+    public String getTagString() {
+        String tagString = "";
         for (int j = 0; j < tags.size(); j++) {
-            tagString[j] = tags.get(j);
+            tagString += tags.get(j);
+            tagString += " ";
         }
         return tagString;
+    }
+
+    public ArrayList<String> getTag() {
+        return tags;
     }
 
     public void addTag(String[] newTags) {

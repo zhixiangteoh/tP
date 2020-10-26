@@ -80,6 +80,8 @@ public class Ui {
                     + "Returning to Normal Mode...";
     private static final String GAME_EMPTY_DECK_LINE =
             EMPTY_DECK_LINE + " Please add some flash cards first.";
+    private static final String INVALID_TAGS_LINE =
+            "You entered invalid tag(s)!";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -290,11 +292,11 @@ public class Ui {
      * @param deck in new Deck added
      */
     public static void printNewDeck(Deck deck) {
-        String tagOfNewDeck = "";
-        if (deck.getTag().length > 0) {
-            tagOfNewDeck = "| Tag(s): " + prepareStringOfTags(deck.getTag());
+        String tagsOfNewDeck = deck.getTagString();
+        if (!tagsOfNewDeck.equals("")) {
+            tagsOfNewDeck = "| Tag(s): " + tagsOfNewDeck;
         }
-        printMessage(NEW_DECK_CREATED_LINE + deck.getName() + tagOfNewDeck);
+        printMessage(NEW_DECK_CREATED_LINE + deck.getName() + tagsOfNewDeck);
     }
 
     /**
@@ -394,7 +396,7 @@ public class Ui {
         System.out.println(DONE_GAME_LINE);
     }
 
-    private static String prepareStringOfTags(String[] tags) {
+    public static String prepareStringOfTags(String[] tags) {
         String tagString = "";
         for (int j = 0; j < tags.length; j++) {
             tagString += tags[j];
@@ -526,6 +528,11 @@ public class Ui {
         }
         return false;
 
+    }
+
+    public static void printInvalidTagsLine() {
+        logger.log(Level.WARNING, "User did not supply valid tags.");
+        printMessage(INVALID_TAGS_LINE);
     }
 
 }
