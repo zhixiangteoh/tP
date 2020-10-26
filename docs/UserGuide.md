@@ -10,16 +10,10 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
 
 ## Contents
 
-<details><summary>Preliminaries</summary><p>
-
 * [Preliminaries](#preliminaries)
   + [Installation](#installation)
   + [Running the program](#running-the-program)
   + [Guide format](#guide-format)
-
-</p></details>
-<details><summary>Features - Normal Mode</summary><p>
-
 * [Features - Normal Mode](#features---normal-mode)
   + [Create a new deck: `create`](#create-a-new-deck---create-)
     - [Format](#format)
@@ -38,10 +32,6 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     - [Examples](#examples-4)
   + [Viewing help in Normal Mode: `help`](#viewing-help-in-normal-mode---help-)
     - [Examples](#examples-5)
-
-</p></details>
-<details><summary>Features - Deck Mode</summary><p>
-
 * [Features - Deck Mode](#features---deck-mode)
   + [Add a flashcard: `add`](#add-a-flashcard---add-)
     - [Format](#format-5)
@@ -59,10 +49,6 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     - [Examples](#examples-10)
   + [Viewing help in Deck Mode: `help`](#viewing-help-in-deck-mode---help-)
     - [Examples](#examples-11)
-
-</p></details>
-<details><summary>Features - Game Mode</summary><p>
-
 * [Features - Game Mode](#features---game-mode)
   + [Gameplay](#gameplay)
     - [Examples](#examples-12)
@@ -70,18 +56,11 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     - [Examples](#examples-13)
   + [Viewing help in Game Mode: `help`](#viewing-help-in-game-mode---help-)
     - [Examples](#examples-14)
-
-</p></details>
-<details><summary>Features - Anywhere</summary><p>
-
 * [Features - Anywhere](#features---anywhere)
   + [Exits the program: `exit`](#exits-the-program---exit-)
     - [Examples](#examples-15)
   + [Shows release version: `--version`](#shows-release-version-----version-)
     - [Examples](#examples-16)
-
-</p></details>
-
 * [FAQ](#faq)
   + [Game Mode](#game-mode)
 * [Command Summary](#command-summary)
