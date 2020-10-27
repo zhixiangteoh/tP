@@ -10,7 +10,19 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.ecardnomics.Ui.*;
+import static seedu.ecardnomics.Ui.printTagsRemovedLine;
+import static seedu.ecardnomics.Ui.printNewDeck;
+import static seedu.ecardnomics.Ui.printNewTags;
+import static seedu.ecardnomics.Ui.printDeletedDeckQuestion;
+import static seedu.ecardnomics.Ui.printDeckDeletedLine;
+import static seedu.ecardnomics.Ui.printInvalidTagsLine;
+import static seedu.ecardnomics.Ui.printRemovedTagsQuestion;
+import static seedu.ecardnomics.Ui.printUpdateAnswerLine;
+import static seedu.ecardnomics.Ui.printUpdateQuestionLine;
+import static seedu.ecardnomics.Ui.printSearchDecksLine;
+import static seedu.ecardnomics.Ui.formStringOfTags;
+
+
 
 public class UiTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
