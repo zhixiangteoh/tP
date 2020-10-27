@@ -1,22 +1,18 @@
 package seedu.ecardnomics.parser;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.ecardnomics.command.VoidCommand;
-import seedu.ecardnomics.command.deck.AddCommand;
-import seedu.ecardnomics.command.deck.DeleteCommand;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
 import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.normal.PowerPointCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
-
-import java.io.ByteArrayInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -121,6 +117,27 @@ class DeckParserTest {
             deckParser.parseCommand("update", "3");
         } catch (Exception e) {
             assertTrue(e instanceof FlashCardRangeException);
+        }
+    }
+
+    @Test
+    void parseCommand_PptxCommandForceYes_success() {
+        try {
+            assertTrue(deckParser.parseCommand("pptx", "-y") instanceof PowerPointCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
+    void parseCommand_PptxCommandExtraArguments_exceptionThrown() {
+        try {
+            deckParser.parseCommand("pptx", "1");
+            deckParser.parseCommand("pptx", "1 -y");
+            deckParser.parseCommand("pptx", "-y 1");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexFormatException);
         }
     }
 

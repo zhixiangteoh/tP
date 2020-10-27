@@ -165,7 +165,6 @@ public class NormalParser extends Parser {
      */
     private String checkYorNResponse() {
         logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
-        Ui.printDashLines();
 
         String response = "";
 
