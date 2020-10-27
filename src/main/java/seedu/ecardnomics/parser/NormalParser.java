@@ -4,20 +4,22 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VersionCommand;
-import seedu.ecardnomics.command.normal.EditCommand;
-import seedu.ecardnomics.command.normal.CreateCommand;
-import seedu.ecardnomics.command.normal.DeleteDeckCommand;
-import seedu.ecardnomics.command.normal.DecksCommand;
-import seedu.ecardnomics.command.normal.HelpCommand;
-import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.command.normal.TagCommand;
 import seedu.ecardnomics.command.normal.UntagCommand;
+import seedu.ecardnomics.command.normal.DeleteDeckCommand;
+import seedu.ecardnomics.command.normal.HelpCommand;
+import seedu.ecardnomics.command.normal.CreateCommand;
+import seedu.ecardnomics.command.normal.SearchCommand;
+import seedu.ecardnomics.command.normal.EditCommand;
+import seedu.ecardnomics.command.normal.DecksCommand;
+import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.exceptions.NoSeparatorException;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -71,65 +73,50 @@ public class NormalParser extends Parser {
         return deckList.getDeck(getIndex(arguments));
     }
 
-    /**
-     * Prepares a deck for being deleted.
-     * @param index int representing the index of the deck in deckList
-     * @return true if delete is confirmed, otherwise false
-     */
-    protected boolean getDeletedDeckConfirmation(int index) {
-        Deck deck = deckList.getDeck(index);
-        logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
-
-        Ui.printDeletedDeckQuestion(deck.getName());
-        String userConfirmation = Ui.readUserInput();
-
-        String response = checkYorNResponse(userConfirmation);
-        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
-
-        switch (response) {
-        case Ui.Y:
-            Ui.printDeckDeletedLine(deck.getName());
-            Ui.printDashLines();
-            return true;
-        case Ui.N:
-            //
-            break;
-        default:
-            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
-            //
+    private Command prepareTagCommand(String arguments) throws Exception {
+        String[] idAndNewTags = arguments.split("/tag");
+        if (idAndNewTags.length < 2) {
+            logger.log(Level.WARNING, "User did not provide /tag when adding tag.");
+            throw new NoSeparatorException();
         }
-        return false;
+        assert (arguments.contains("/tag")) :
+                "Tags to be added are after /tag label.";
+        int deckID = getIndex(idAndNewTags[0]);
+
+        if (idAndNewTags[1].trim().isEmpty()) {
+            logger.log(Level.WARNING, "User did not supply tags when adding tag.");
+            throw new EmptyInputException();
+        }
+
+        String[] newTags = idAndNewTags[1].trim().split(" ");
+        return new TagCommand(deckList, deckID, newTags);
     }
 
     /**
-     * Checks whether the user want to remove the tags specified
-     * from the deck specified.
+     * Prepares arguments for the Untag Command.
      *
-     * @param tags String[] representing the tags be removed
-     * @param id int representing the index of the deck of the tags
-     * @return true if the removal is confimred, otherwise false
+     * @param arguments arguments input from user
+     * @return a Untag Command
+     * @throws Exception if index is invalid or empty arguments
      */
-    protected boolean getRemovedTagsConfirmation(String[] tags, int id) {
-        Deck deck = deckList.getDeck(id);
+    private Command prepareUntagCommand(String arguments) throws Exception {
+        String[] idAndRemovedTags = arguments.split("/tag");
 
-        Ui.printRemovedTagsQuestion(deck.getName(), tags);
-        String userConfirmation = Ui.readUserInput();
-        String response = checkYorNResponse(userConfirmation);
-
-        switch (response) {
-        case Ui.Y:
-            Ui.printTagsRemovedLine(deck.getName(), tags);
-            Ui.printDashLines();
-            return true;
-        case Ui.N:
-            //
-            break;
-        default:
-            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
-            //
+        if (idAndRemovedTags.length < 2) {
+            logger.log(Level.WARNING, "User did not provide /tag when removing tags.");
+            throw new NoSeparatorException();
         }
-        return false;
+        assert (arguments.contains("/tag")) :
+                "tags to be removed are after /tag label";
 
+        int deckID = getIndex(idAndRemovedTags[0]);
+        if (idAndRemovedTags[1].trim().isEmpty()) {
+            logger.log(Level.WARNING, "User did not supply tags when removing tags.");
+            throw new EmptyInputException();
+        }
+        String[] removedTags = idAndRemovedTags[1].trim().split(" ");
+
+        return new UntagCommand(deckList, deckID, removedTags);
     }
 
     /**
@@ -160,34 +147,26 @@ public class NormalParser extends Parser {
         }
     }
 
-    /**
-     * Checks y or n response from user.
-     * @param response Reference to the input from user
-     * @return Ui.Y if user enters confirms, otherwise Ui.N
-     */
-    private String checkYorNResponse(String response) {
-        logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
-        Ui.printDashLines();
+    private Command prepareSearchCommand(String arguments) throws EmptyInputException {
+        logger.log(Level.INFO, "Logging method prepareSearchCommand() in NormalParser.");
 
-        do {
-            assert response != null : "response should not be null";
-            switch (response.trim()) {
-            case Ui.Y:
-                response = Ui.Y;
-                break;
-            case Ui.N:
-                response = Ui.N;
-                break;
-            default:
-                logger.log(Level.INFO, "User entered response other than 'y' or 'n'");
-                Ui.printInvalidYorNResponse();
-                logger.log(Level.INFO, "Re-prompting...");
-            }
-        } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
-        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "Response should be y/n";
-        return response;
+        if (arguments.trim().isEmpty()) {
+            logger.log(Level.WARNING, "User did not supply tags when searching for decks.");
+            throw new EmptyInputException();
+        }
+
+        String[] relevantTags = arguments.trim().split(" ");
+        return new SearchCommand(deckList, relevantTags);
     }
 
+    /**
+     * Prepare Command for execution in Main.
+     *
+     * @param commandWord String that corresponds to a command
+     * @param arguments String that lists the arguments for the command
+     * @return respective Command object
+     * @throws Exception when something wrong with the argument
+     */
     @Override
     protected Command parseCommand(String commandWord, String arguments)
             throws Exception {
@@ -232,33 +211,33 @@ public class NormalParser extends Parser {
         case Ui.DELETE:
             int deckID = getIndex(arguments);
             logger.log(Level.INFO, "User issued command to delete deck at index " + deckID);
-            boolean isDeckDeleted = getDeletedDeckConfirmation(deckID);
+            boolean isDeckDeleted = Ui.getDeletedDeckConfirmation(deckList.getDeck(deckID).getName());
             return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
         // Tag
         case Ui.TAG:
             logger.log(Level.INFO, "User issued command to tag a deck.");
-            assert (arguments.contains("/tag")) :
-                    "tags to be added are after /tag label";
-            String[] idAndNewTags = arguments.split("/tag");
-            deckID = getIndex(idAndNewTags[0]);
-            String[] newTags = idAndNewTags[1].trim().split(" ");
-            return new TagCommand(deckList, deckID, newTags);
+            return prepareTagCommand(arguments);
         // Untag
         case Ui.UNTAG:
             logger.log(Level.INFO, "User issued command to untag a deck.");
-            assert (arguments.contains("/tag")) :
-                    "tags to be removed are after /tag label";
-            String[] idAndDeletedTags = arguments.split("/tag");
-            deckID = getIndex(idAndDeletedTags[0]);
-            String[] deletedTags = idAndDeletedTags[1].trim().split(" ");
-            boolean isTagsRemoved = getRemovedTagsConfirmation(deletedTags, deckID);
-            return new UntagCommand(deckList, deckID, deletedTags, isTagsRemoved);
+            return prepareUntagCommand(arguments);
+        // Search
+        case Ui.SEARCH:
+            logger.log(Level.INFO, "User issued command to search for decks.");
+            return prepareSearchCommand(arguments);
+
         default:
             logger.log(Level.INFO, "User issued an invalid command.");
             return new VoidCommand();
         }
     }
 
+    /**
+     * Parses User Input from Main.
+     *
+     * @param userInput Input from user, passed through Main
+     * @return
+     */
     @Override
     public Command parse(String userInput) {
         logger.log(Level.INFO, "Logging method parse() in NormalParser.");
