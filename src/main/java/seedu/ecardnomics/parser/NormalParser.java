@@ -180,8 +180,8 @@ public class NormalParser extends Parser {
                 break;
             default:
                 logger.log(Level.INFO, "User entered response other than 'y' or 'n'");
-                Ui.printInvalidYorNResponse();
                 logger.log(Level.INFO, "Re-prompting...");
+                Ui.printInvalidYorNResponse();
             }
         } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
         assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "Response should be y/n";
@@ -205,7 +205,6 @@ public class NormalParser extends Parser {
 
         switch (response) {
         case Ui.Y:
-            Ui.printDashLines();
             return true;
         case Ui.N:
             //

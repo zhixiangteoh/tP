@@ -46,11 +46,11 @@ public class Ui {
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
     public static final String PPTX_DECK_QUESTION_LINE =
-            "Do you want to print %1$s deck to PowerPoint? [y/n]";
+            "Do you want to print %1$s deck to PowerPoint? [y/n]\n  > ";
     public static final String PPTX_DECK_LINE =
             "%1$s has been created as PowerPoint.";
     public static final String INVALID_YN_RESPONSE_LINE =
-            "Response should be 'y' or 'n': ";
+            "Response should be 'y' or 'n'\n  > ";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
     private static final String ALL_TAGS_LINE =
@@ -387,7 +387,7 @@ public class Ui {
      * Prints a line prompting user to enter only 'y' or 'n'.
      */
     public static void printInvalidYorNResponse() {
-        System.out.println(INVALID_YN_RESPONSE_LINE);
+        System.out.print(INVALID_YN_RESPONSE_LINE);
     }
 
     public static void printVersionNumber() {
