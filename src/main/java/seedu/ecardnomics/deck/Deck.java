@@ -18,6 +18,12 @@ public class Deck {
         tags = new ArrayList<>();
     }
 
+    /**
+     * Constructors with tags parameter.
+     *
+     * @param name the name of the new deck
+     * @param tags tags of the new deck
+     */
     public Deck(String name, ArrayList<String> tags) {
         assert (name != null && !name.isEmpty()) : "A deck requires a name.";
         this.name = name;

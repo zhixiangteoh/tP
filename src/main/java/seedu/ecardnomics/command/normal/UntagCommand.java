@@ -34,6 +34,12 @@ public class UntagCommand extends NormalCommand {
         }
     }
 
+    /**
+     * Checks if the deck specified contains the removed tags.
+     *
+     * @param removedTags String[] list tags to be removed
+     * @return a boolean value indicating if all the tags exist
+     */
     public boolean checkTagsExist(String[] removedTags) {
         boolean isExist = true;
         ArrayList<String> availableTagList = deckList.getDeck(index).getTag();
