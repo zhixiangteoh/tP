@@ -109,13 +109,59 @@ components.
 
 ### Pretty Printing (Wei Siew)
 
+The purpose of this feature is to improve the readability of the
+question and answer fields of a flashcard for the user. Without this
+feature, long question and answer fields will follow the default
+wrapping style of the console. When words are truncated unnecessarily,
+it is going to be distracting and annoying for students trying to
+study. We illustrate the problem in the following example:
+```
+This is a long question (or maybe answer) field. Suppose tha
+t our console is 60 characters wide, we see that the word "t
+hat" was truncated in the first line and again in the second
+line.
+```
+In this section, we define the following terms:
+* `lineLength` is the maximum number of characters on a line,
+set to be equal to Ui.DASH_LINES.length(). This is also the number of
+characters between the start of line and end of line.
+* `label` can be "Question: " or "Answer:   " and is used to indicate
+whether a field is the question or answer of the flashcard.
+* `usableLength` is the number of characters that can be used for
+printing a field. This is also the number of characters between the end
+of `label` and end of line.
+
+The following sequence diagram illustrates the call to the
+`toString(boolean isQuestion, int offset)` method of a `FlashCard`
+object.
+
+![DG-Implementation-Features-PP-Sequence](./images-dg/PP-Sequence.png?raw=true)
+
+The `offset` parameter specifies the number of characters already
+printed on the line before the flashcard field will be printed.
+The `offset` is used by the `formatResponse()` method to determine
+`usableLength`.
+
+`formatResponse()` places as many words as possible on each line until
+the next word does not fit within the `usableLength` of the current
+line. This word is therefore placed on the next line and the process
+repeats until all the words have been formatted into the response. If
+the  length of a single word exceeds the `usableLength`, the word is
+split across multiple lines to prevent the program from looping
+infinitely as it would never be able to fit the word on any line.
+
+Take note that infinite loops can still occur if
+* formatResponse() is called with offset >= `lineLength` or
+* toString(boolean, int) is called with offset >= `lineLength` - length
+of `label`
+
 ### Tags and Filtering (Trang)
 
 ### Saving to text file (Wayne)
 
 ### Game Mode
 
-eCardnomics' quintessential mode. cGame Mode can be started from either Normal Mode or Deck Mode. The `start` command
+eCardnomics' quintessential mode. Game Mode can be started from either Normal Mode or Deck Mode. The `start` command
  is parsed by `NormalParser` (see [Commands](#commands)).
  
 Game Mode contains two main components: a storage component, `GameStorage`, and a logic component, `GameEngine`. The
@@ -137,8 +183,7 @@ The following elaborates the execution flow of Game Mode, from after a `start` c
 ![DG-Implementation-Features-Game-Mode-Sequence](./images-dg/Game-Mode-Sequence.png?raw=true "Game Mode UML Sequence
  Diagram")
 
-**API**: [seedu/ecardnomics/game](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu
-/ecardnomics/game)
+**API**: [seedu/ecardnomics/game](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/game)
 
 ## Product scope
 
@@ -151,7 +196,7 @@ Anybody > Students > Students in courses with high amount of content > Economics
 
 ### Value proposition
 
-Flashcard application that allows students to quickly create new flash cards and access flashcards quickly on the
+Flashcard application that allows students to quickly create new flashcards and access flashcards quickly on the
  command line to enhance their studying experience, and ultimately be an aid for [active recall](https://getatomi.com/blog/what-is-active-recall-and-how-effective-is-it).
 
 ## User Stories
@@ -163,7 +208,7 @@ Flashcard application that allows students to quickly create new flash cards and
 |v1.0|smart student|be able to use the system effectively and efficiently|save time and maximise my productivity|
 |v1.0|JC econs student|quickly create short notes of key concepts|keep up during lectures and tutorials|
 |v1.0|tech-savvy student|have a software tool to store my notes|stop needing to worry about losing my hardcopy notes|
-|v1.0|lazy student|create flash cards to keep my notes concise|learn at a comfortable, incrementing pace|
+|v1.0|lazy student|create flashcards to keep my notes concise|learn at a comfortable, incrementing pace|
 |v2.0|organised student|have my notes be stored in a systematic way|retrieve them quickly and easily|
 |v2.0|student|have a system that can categorise material into different topics|quickly revise all the content for a topic when studying for an exam|
 |v2.0|hardworking student|have a studying system that can help me memorise content in a non-traditional manner|remember all the facts during an exam through active recall|
