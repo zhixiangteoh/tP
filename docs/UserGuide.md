@@ -451,8 +451,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 
 ### Game Mode: `start`
 
-Starts Game Mode for an existing deck. The `start` command expects one argument specifying the deck index for which to
- enter Deck Mode.
+Starts Game Mode for an existing deck. 
  
 > The `start` command can also be entered from within Normal Mode.
  
@@ -460,7 +459,7 @@ Starts Game Mode for an existing deck. The `start` command expects one argument 
 
 ```java
 [Deck - market-failure]
-  > start <index of deck>
+  > start 
 ```
 
 #### Examples
@@ -488,7 +487,6 @@ Starts Game Mode for an existing deck. The `start` command expects one argument 
   >
 ```
 
-> Notice how the `start 1` command is entered with the deck index. This is required! 
 
 ### Exits Deck Mode: `done`
 
