@@ -15,5 +15,6 @@ class CreateCommandTest {
         CreateCommand cmd = new CreateCommand(deckList, new Deck("Test"));
         cmd.execute();
         assertEquals(1, deckList.size());
+        assertEquals("Test", deckList.getDeck(0).getName());
     }
 }

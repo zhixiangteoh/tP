@@ -53,6 +53,10 @@ public class DeckList {
         return deckList.get(index);
     }
 
+    public ArrayList<Deck> getAllDecks() {
+        return deckList;
+    }
+
 
     /**
      * Returns index of deck in deck list.

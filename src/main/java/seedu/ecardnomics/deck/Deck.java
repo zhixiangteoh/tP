@@ -131,6 +131,7 @@ public class Deck {
         if (this.deck.size() == 0) {
             return output;
         }
+
         for (int i = 0; i < deck.size(); i++) {
             String serialNumber = (i + 1) + ". ";
             // Always print the question.

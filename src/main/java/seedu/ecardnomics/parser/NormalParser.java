@@ -4,14 +4,7 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VersionCommand;
-import seedu.ecardnomics.command.normal.EditCommand;
-import seedu.ecardnomics.command.normal.CreateCommand;
-import seedu.ecardnomics.command.normal.DeleteDeckCommand;
-import seedu.ecardnomics.command.normal.DecksCommand;
-import seedu.ecardnomics.command.normal.HelpCommand;
-import seedu.ecardnomics.command.normal.StartCommand;
-import seedu.ecardnomics.command.normal.TagCommand;
-import seedu.ecardnomics.command.normal.UntagCommand;
+import seedu.ecardnomics.command.normal.*;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
@@ -146,6 +139,18 @@ public class NormalParser extends Parser {
         }
     }
 
+    private Command prepareSearchCommand(String arguments) throws EmptyInputException {
+        logger.log(Level.INFO, "Logging method prepareSearchCommand() in NormalParser.");
+
+        if (arguments.trim().isEmpty()) {
+            logger.log(Level.WARNING, "User did not supply tags when searching for decks.");
+            throw new EmptyInputException();
+        }
+
+        String[] relevantTags = arguments.trim().split(" ");
+        return new SearchCommand(deckList, relevantTags);
+    }
+
     /**
      * Prepare Command for execution in Main.
      *
@@ -198,15 +203,20 @@ public class NormalParser extends Parser {
         case Ui.DELETE:
             int deckID = getIndex(arguments);
             logger.log(Level.INFO, "User issued command to delete deck at index " + deckID);
-            return new DeleteDeckCommand(deckList, deckID);
+            boolean isDeckDeleted = Ui.getDeletedDeckConfirmation(deckList.getDeck(deckID).getName());
+            return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
         // Tag
         case Ui.TAG:
             logger.log(Level.INFO, "User issued command to tag a deck.");
             return prepareTagCommand(arguments);
-
+        // Untag
         case Ui.UNTAG:
             logger.log(Level.INFO, "User issued command to untag a deck.");
             return prepareUntagCommand(arguments);
+        // Search
+        case Ui.SEARCH:
+            logger.log(Level.INFO, "User issued command to search for decks.");
+            return prepareSearchCommand(arguments);
 
         default:
             logger.log(Level.INFO, "User issued an invalid command.");

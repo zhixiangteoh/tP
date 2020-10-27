@@ -17,7 +17,11 @@ public class UntagCommand extends NormalCommand {
         super(decks);
         assert (index >= 0 && index < decks.size()) : "Index must be within range.";
         this.index = index;
+<<<<<<< HEAD
         assert  (removedTags.length != 0) : "Remove tags must be provided.";
+=======
+        assert  (removedTags.length != 0): "Removed tags must be provided.";
+>>>>>>> trang-tag
         this.removedTags = removedTags;
     }
 
