@@ -6,9 +6,6 @@ import seedu.ecardnomics.deck.Deck;
 public class ListCommand extends DeckCommand {
     private final String arguments;
 
-    public static final String TYPE_ANSWER = "answer";
-    public static final String TYPE_QUESTION = "question";
-
     /** Constructor. */
     public ListCommand(Deck deck, String arguments) {
         super(deck);
@@ -18,10 +15,6 @@ public class ListCommand extends DeckCommand {
 
     @Override
     public void execute() {
-        if (arguments.contains("/ans")) {
-            Ui.printDeck(currentDeck, TYPE_ANSWER);
-        } else {
-            Ui.printDeck(currentDeck, TYPE_QUESTION);
-        }
+        Ui.printDeck(currentDeck, !arguments.contains("/ans"));
     }
 }

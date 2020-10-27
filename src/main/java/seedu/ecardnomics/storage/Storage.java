@@ -1,5 +1,6 @@
 package seedu.ecardnomics.storage;
 
+import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
@@ -68,7 +69,7 @@ public class Storage {
             fw.write(System.lineSeparator());
             fw.write("name | " + deck.getName());
             fw.write(System.lineSeparator());
-            fw.write("tags | " + deck.getTag());
+            fw.write("tags | " + deck.getTagString());
             fw.write(System.lineSeparator());
             fw.write("size | " + deck.size());
             fw.write(System.lineSeparator());

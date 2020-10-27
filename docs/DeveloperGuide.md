@@ -55,11 +55,12 @@ and `DeckParser` for printing the appropriate output when required.
 
 ![DG-Design Commands UML](./images-dg/DG-Design-Commands.png?raw=true "Commands UML Class Diagram")
 
-API: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/command)
+**API**: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu
+/ecardnomics/command)
 
-Commands are primarily classified into two categories, `NormalCommand` and `DeckCommand`, corresponding to the
- application's Normal and Deck Modes, respectively. `NormalCommand` and `DeckCommand` are both abstract children derived
-  from the overarching abstract class `Command`. The basis `Command` class is defined as such:
+Commands are primarily classified into three categories, `NormalCommand`, `DeckCommand`, and `GameCommand`,
+ corresponding to the application's Normal, Deck, and Game Modes, respectively. All three are abstract children
+  derived from the overarching abstract class `Command`. The basis `Command` class is defined as such:
    
 ```java
 public abstract class Command {
@@ -68,11 +69,10 @@ public abstract class Command {
 ```
 
 It only requires that all derived children implement the `execute()` method. The only two classes not belonging to
- either Normal or Deck Mode are `ExitCommand` and `VoidCommand`. The former is so that users can call the command
-  `exit` from anywhere in the application, while the latter is a catch-all "command" for all erroneous commands a
-   user enters. 
+ individual modes are `ExitCommand` and `VoidCommand`. The former is so that users can call the command `exit` from
+  anywhere in the application, while the latter is a catch-all "command" for all erroneous commands a user enters. 
    
-`NormalParser` and `DeckParser` play important roles in execution of specific commands, e.g. `CreateCommand`, because
+The `Parser` classes play important roles in execution of specific commands, e.g. `CreateCommand`, because
  they define methods that check and ensure the conformity of user input to the commands' expected input. Below is a
   sequence diagram showcasing this interaction, for execution of a `CreateCommand`, e.g. `create
    microeconomics`:
@@ -103,8 +103,6 @@ components.
 
 ### Storage
 
-## Implementation - Basic
-
 ## Implementation - Features
 
 ### Print to PowerPoint SlideShow
@@ -134,27 +132,118 @@ The following are the Classes/ Enum of the third part package `org.apache.poi.xs
 
 ### Pretty Printing (Wei Siew)
 
+The purpose of this feature is to improve the readability of the
+question and answer fields of a flashcard for the user. Without this
+feature, long question and answer fields will follow the default
+wrapping style of the console. When words are truncated unnecessarily,
+it is going to be distracting and annoying for students trying to
+study. We illustrate the problem in the following example:
+```
+This is a long question (or maybe answer) field. Suppose tha
+t our console is 60 characters wide, we see that the word "t
+hat" was truncated in the first line and again in the second
+line.
+```
+In this section, we define the following terms:
+* `lineLength` is the maximum number of characters on a line,
+set to be equal to Ui.DASH_LINES.length(). This is also the number of
+characters between the start of line and end of line.
+* `label` can be "Question: " or "Answer:   " and is used to indicate
+whether a field is the question or answer of the flashcard.
+* `usableLength` is the number of characters that can be used for
+printing a field. This is also the number of characters between the end
+of `label` and end of line.
+
+The following sequence diagram illustrates the call to the
+`toString(boolean isQuestion, int offset)` method of a `FlashCard`
+object.
+
+![DG-Implementation-Features-PP-Sequence](./images-dg/PP-Sequence.png?raw=true)
+
+The `offset` parameter specifies the number of characters already
+printed on the line before the flashcard field will be printed.
+The `offset` is used by the `formatResponse()` method to determine
+`usableLength`.
+
+`formatResponse()` places as many words as possible on each line until
+the next word does not fit within the `usableLength` of the current
+line. This word is therefore placed on the next line and the process
+repeats until all the words have been formatted into the response. If
+the  length of a single word exceeds the `usableLength`, the word is
+split across multiple lines to prevent the program from looping
+infinitely as it would never be able to fit the word on any line.
+
+Take note that infinite loops can still occur if
+* formatResponse() is called with offset >= `lineLength` or
+* toString(boolean, int) is called with offset >= `lineLength` - length
+of `label`
+
+#### Design Consideration:
+
+In order to maximize `usableLength`,
+`toString(boolean isQuestion, int offset)` is designed to take
+parameter `offset` instead of hardcoding `offset` to be
+`"2147483647. ".length()` which is the maximum possible index when
+listing flashcards. As a result, flashcards with different number of
+digits in the index will be misaligned when listing flashcards.
+
 ### Tags and Filtering (Trang)
 
 ### Saving to text file (Wayne)
 
-### Game Mode (Zhixiang)
+### Game Mode
+
+eCardnomics' quintessential mode. Game Mode can be started from either Normal Mode or Deck Mode. The `start` command
+ is parsed by `NormalParser` (see [Commands](#commands)).
+ 
+Game Mode contains two main components: a storage component, `GameStorage`, and a logic component, `GameEngine`. The
+ former handles all data structures used by Game Mode, and stores the original deck (`originalDeck`), question pool
+  (`deque`), and retest question pool (`retestStore`). The latter executes the main game loop (`runGameLoop()`), and
+   interacts with `GameStorage` on package-private basis; i.e., `GameEngine` and `GameStorage` have full mutual
+    access as if they were a single class. This is one of the main intentional design decisions.
+  
+![DG-Implementation-Features-Game-Mode-Architecture](./images-dg/Game-Mode-Design.png?raw=true "Game Mode
+ Architecture Diagram")
+ 
+**See also**: [Gameplay description](./UserGuide.md#gameplay)
+
+The actual "game" aspect of eCardnomics is essentially summarised in the `runGameLoop()` high-level overview above
+. For a textual gameplay description, check out the "See also" link.
+
+The following elaborates the execution flow of Game Mode, from after a `start` command has been parsed in Normal Mode:
+
+![DG-Implementation-Features-Game-Mode-Sequence](./images-dg/Game-Mode-Sequence.png?raw=true "Game Mode UML Sequence
+ Diagram")
+
+**API**: [seedu/ecardnomics/game](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/game)
 
 ## Product scope
+
 ### Target user profile
 
-{Describe the target user profile}
+Junior College Economics Students.
+
+Anybody > Students > Students in courses with high amount of content > Economics students > **Junior College
+ Economics students** (focus on theory than calculations)
 
 ### Value proposition
 
-{Describe the value proposition: what problem does it solve?}
+Flashcard application that allows students to quickly create new flashcards and access flashcards quickly on the
+ command line to enhance their studying experience, and ultimately be an aid for [active recall](https://getatomi.com/blog/what-is-active-recall-and-how-effective-is-it).
 
 ## User Stories
 
-|Version| As a ... | I want to ... | So that I can ...|
+|Version| As a(n) ... | I want to ... | So that I can ...|
 |--------|----------|---------------|------------------|
-|v1.0|new user|see usage instructions|refer to them when I forget how to use the application|
-|v2.0|user|find a to-do item by name|locate a to-do without having to go through the entire list|
+|v1.0|poor student|have small computer programs|run it on my old computer|
+|v1.0|fast typist|have an easily-navigable interface to type up notes and store them|create and manage notes quickly and efficiently|
+|v1.0|smart student|be able to use the system effectively and efficiently|save time and maximise my productivity|
+|v1.0|JC econs student|quickly create short notes of key concepts|keep up during lectures and tutorials|
+|v1.0|tech-savvy student|have a software tool to store my notes|stop needing to worry about losing my hardcopy notes|
+|v1.0|lazy student|create flashcards to keep my notes concise|learn at a comfortable, incrementing pace|
+|v2.0|organised student|have my notes be stored in a systematic way|retrieve them quickly and easily|
+|v2.0|student|have a system that can categorise material into different topics|quickly revise all the content for a topic when studying for an exam|
+|v2.0|hardworking student|have a studying system that can help me memorise content in a non-traditional manner|remember all the facts during an exam through active recall|
 
 ## Non-Functional Requirements
 
