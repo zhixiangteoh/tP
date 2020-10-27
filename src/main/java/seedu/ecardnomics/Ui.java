@@ -45,8 +45,12 @@ public class Ui {
             "Do you want to delete %1$s deck? [y/n]";
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
+    public static final String PPTX_DECK_QUESTION_LINE =
+            "Do you want to print %1$s deck to PowerPoint? [y/n]";
+    public static final String PPTX_DECK_LINE =
+            "%1$s has been created as PowerPoint.";
     public static final String INVALID_YN_RESPONSE_LINE =
-            "Response should be 'y' or 'n'!";
+            "Response should be 'y' or 'n': ";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
     private static final String ALL_TAGS_LINE =
@@ -323,6 +327,24 @@ public class Ui {
      */
     public static void printDeckDeletedLine(String deletedDeckName) {
         System.out.println(String.format(DELETED_DECK_LINE, deletedDeckName));
+    }
+
+    /**
+     * Confirms the deck the user wants to print to PowerPoint.
+     *
+     * @param pptxDeckName name of the pptx deck
+     */
+    public static void printPptxDeckQuestion(String pptxDeckName) {
+        System.out.print(String.format(PPTX_DECK_QUESTION_LINE, pptxDeckName));
+    }
+
+    /**
+     * Prints the name of the deck to be printed to PowerPoint.
+     *
+     * @param pptxDeckName name of the pptx deck
+     */
+    public static void printDeckPptxLine(String pptxDeckName) {
+        printMessage(String.format(PPTX_DECK_LINE, pptxDeckName));
     }
 
     /**

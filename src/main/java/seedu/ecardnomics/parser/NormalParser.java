@@ -82,9 +82,8 @@ public class NormalParser extends Parser {
         logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
 
         Ui.printDeletedDeckQuestion(deck.getName());
-        String userConfirmation = Ui.readUserInput();
 
-        String response = checkYorNResponse(userConfirmation);
+        String response = checkYorNResponse();
         assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
 
         switch (response) {
@@ -108,14 +107,13 @@ public class NormalParser extends Parser {
      *
      * @param tags String[] representing the tags be removed
      * @param id int representing the index of the deck of the tags
-     * @return true if the removal is confimred, otherwise false
+     * @return true if the removal is confirmed, otherwise false
      */
     protected boolean getRemovedTagsConfirmation(String[] tags, int id) {
         Deck deck = deckList.getDeck(id);
 
         Ui.printRemovedTagsQuestion(deck.getName(), tags);
-        String userConfirmation = Ui.readUserInput();
-        String response = checkYorNResponse(userConfirmation);
+        String response = checkYorNResponse();
 
         switch (response) {
         case Ui.Y:
@@ -163,14 +161,16 @@ public class NormalParser extends Parser {
 
     /**
      * Checks y or n response from user.
-     * @param response Reference to the input from user
      * @return Ui.Y if user enters confirms, otherwise Ui.N
      */
-    private String checkYorNResponse(String response) {
+    private String checkYorNResponse() {
         logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
         Ui.printDashLines();
 
+        String response = "";
+
         do {
+            response = Ui.readUserInput();
             assert response != null : "response should not be null";
             switch (response.trim()) {
             case Ui.Y:
@@ -187,6 +187,45 @@ public class NormalParser extends Parser {
         } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
         assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "Response should be y/n";
         return response;
+    }
+
+
+    /**
+     * Prepares a deck to be printed to PowerPoint.
+     * @param index int representing the index of the deck in deckList
+     * @return true if delete is confirmed, otherwise false
+     */
+    protected boolean getPptxDeckConfirmation(int index) {
+        Deck deck = deckList.getDeck(index);
+        logger.log(Level.INFO, "Logging method getPptxDeckConfirmation() in NormalParser.");
+
+        Ui.printPptxDeckQuestion(deck.getName());
+
+        String response = checkYorNResponse();
+        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
+
+        switch (response) {
+        case Ui.Y:
+            Ui.printDashLines();
+            return true;
+        case Ui.N:
+            //
+            break;
+        default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
+            //
+        }
+        return false;
+    }
+
+    private PowerPointCommand preparePptxDeck(String arguments) throws Exception {
+        if (arguments.contains("-y")) {
+            arguments = arguments.replaceAll("-y", "");
+            return new PowerPointCommand(deckList, prepareDeck(arguments), true);
+        }
+        int deckID = getIndex(arguments);
+        boolean isPptxCreated = getPptxDeckConfirmation(deckID);
+        return new PowerPointCommand(deckList, deckList.getDeck(deckID), isPptxCreated);
     }
 
     @Override
@@ -257,8 +296,7 @@ public class NormalParser extends Parser {
         // Create new PowerPoint
         case Ui.PPTX:
             logger.log(Level.INFO, "User issued command to create a PowerPoint.");
-            Deck pptxDeck = prepareDeck(arguments);
-            return new PowerPointCommand(deckList, pptxDeck);
+            return preparePptxDeck(arguments);
         default:
             logger.log(Level.INFO, "User issued an invalid command.");
             return new VoidCommand();

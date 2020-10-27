@@ -106,6 +106,7 @@ public class PowerPoint {
                 pptx.write(out);
                 out.close();
                 pptx.close();
+                Ui.printDeckPptxLine(deck.getName());
             } catch (IOException e) {
                 Ui.printMessage(Ui.WRITE_TO_FILE_ERROR_LINE);
             }

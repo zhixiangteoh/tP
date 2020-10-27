@@ -11,6 +11,7 @@ import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
@@ -147,12 +148,23 @@ class DeckParserTest {
 
     @BeforeEach
     void initialiseDeckParser() {
-        Deck deck = initialiseDeck(2);
-        deckParser = new DeckParser(deck);
+        DeckList deckList = initialiseDeckList(2);
+        Deck deck = initialiseDeck(deckList, 2);
+        deckParser = new DeckParser(deckList, deck);
     }
 
-    Deck initialiseDeck(int size) {
-        Deck deck = new Deck("Pokemon");
+    DeckList initialiseDeckList(int size) {
+        DeckList deckList = new DeckList();
+        for (int i = 1; i <= size; i++) {
+            Deck deck = new Deck(String.format("deck %d", i));
+            deckList.addDeck(deck);
+        }
+        return deckList;
+    }
+
+    Deck initialiseDeck(DeckList deckList, int size) {
+        deckList.addDeck(new Deck("Pokemon"));
+        Deck deck = deckList.getDeck(2);
         for (int i = 1; i <= size; i++) {
             FlashCard flashCard = new FlashCard(String.format("q %d", i), String.format("a %d", i));
             deck.add(flashCard);
