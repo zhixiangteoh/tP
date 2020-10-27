@@ -10,11 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.ecardnomics.Ui.printNewDeck;
-import static seedu.ecardnomics.Ui.printDeletedDeckQuestion;
-import static seedu.ecardnomics.Ui.printDeckDeletedLine;
-import static seedu.ecardnomics.Ui.printUpdateQuestionLine;
-import static seedu.ecardnomics.Ui.printUpdateAnswerLine;
+import static seedu.ecardnomics.Ui.*;
 
 public class UiTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -136,6 +132,51 @@ public class UiTest {
     }
 
     @Test
+    void printNewTags_none_newTagsLine() {
+        String expectedOutput = "------------------------------------------------------------" + System.lineSeparator()
+                + "The deck Pokemon has been tagged as: Anime, Unreal" + System.lineSeparator()
+                + "------------------------------------------------------------" + System.lineSeparator();
+        String[] newTagsArray = {"Anime", "Unreal"};
+        printNewTags("Pokemon", newTagsArray);
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void printInvalidTagsLine_none_warning() {
+        String expectedOutput = "------------------------------------------------------------" + System.lineSeparator()
+                + "You entered invalid tag(s)!" + System.lineSeparator()
+                + "------------------------------------------------------------" + System.lineSeparator();
+        printInvalidTagsLine();
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void printRemovedTagsQuestion_StringArrayOfTagsAndDeckName_question() {
+        String expectedOutput = "Do you want to remove the tag(s) Beginner, Year2 from Micro-Economics? [y/n]"
+                + System.lineSeparator();
+        String[] removedTagsArray = {"Beginner", "Year2"};
+        printRemovedTagsQuestion("Micro-Economics", removedTagsArray);
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void printTagsRemovedLine_removedTagsAndDeckName_confirmation() {
+        String expectedOutput = "The tag(s) Beginner, Year2 have been removed from the deck Micro-Economics."
+                + System.lineSeparator();
+        String[] removedTagsArray = {"Beginner", "Year2"};
+        printTagsRemovedLine("Micro-Economics", removedTagsArray);
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void formStringOfTags_StringArrayOfTags_aStringOfTags() {
+        String[] arrayStringOfTags = {"Advanced", "Year4", "Finance"};
+        String expectedOutput = "Advanced, Year4, Finance";
+        String actualOutput = formStringOfTags(arrayStringOfTags);
+        assertEquals(expectedOutput, actualOutput);
+    }
+
+    @Test
     void printUpdateQuestionLine_existingFlashCard_updateQuestionLine() {
         String question = "Old question";
         String answer = "Old answer";
@@ -154,6 +195,27 @@ public class UiTest {
         String expectedOutput = existingCard.toString(false, 0) + System.lineSeparator()
                 + "New Answer: " + System.lineSeparator() + "  > ";
         printUpdateAnswerLine(existingCard);
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void printSearchDecksLine_emptyString_NoDecksLine() {
+        String expectedOutput = "------------------------------------------------------------" + System.lineSeparator()
+                + "There is no decks having the tags you are looking for." + System.lineSeparator()
+                + "------------------------------------------------------------" + System.lineSeparator();
+        printSearchDecksLine("");
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void printSearchDecksLine_stringOfMatchedDecks_decksListings() {
+        String expectedOutput = "------------------------------------------------------------" + System.lineSeparator()
+                + "The decks having tags you are searching for:"
+                + "\n1. Micro-Economics"
+                + "\n3. Object-oriented Programming" + System.lineSeparator()
+                + "------------------------------------------------------------" + System.lineSeparator();
+        String input = "\n1. Micro-Economics\n3. Object-oriented Programming";
+        printSearchDecksLine(input);
         assertEquals(expectedOutput, outContent.toString());
     }
 }

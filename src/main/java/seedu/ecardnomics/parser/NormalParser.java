@@ -139,7 +139,7 @@ public class NormalParser extends Parser {
             String name = nameAndTags[0].trim();
             String[] tags = nameAndTags[1].trim().split(" ");
             for (String tag: tags) {
-                tagsList.add(tag);
+                tagsList.add(tag.trim());
             }
             return new Deck(name, tagsList);
         } else {
