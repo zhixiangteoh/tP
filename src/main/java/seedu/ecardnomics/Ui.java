@@ -44,11 +44,11 @@ public class Ui {
     public static final String DECKS_AVAILABLE_LINE =
             "The following decks are available:\n";
     public static final String DELETED_DECK_QUESTION_LINE =
-            "Do you want to delete %1$s deck? [y/n]";
+            "Do you want to delete %1$s deck? [y/n] ";
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
     public static final String INVALID_YN_RESPONSE_LINE =
-            "Response should be 'y' or 'n'! Re-enter [y/n]:";
+            "Response should be 'y' or 'n'! Re-enter [y/n] ";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
     private static final String NEW_TAGS_LINE =
@@ -492,8 +492,8 @@ public class Ui {
                 break;
             default:
                 logger.log(Level.INFO, "User entered response other than 'y' or 'n'");
-                printInvalidYorNResponse();
                 logger.log(Level.INFO, "Re-prompting...");
+                printInvalidYorNResponse();
             }
         } while (!response.trim().equals(Y) && !response.trim().equals(N));
         assert (response.equals(Y) || response.equals(N)) : "Response should be y/n";
