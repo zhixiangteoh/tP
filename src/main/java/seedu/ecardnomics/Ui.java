@@ -343,6 +343,12 @@ public class Ui {
         printPrompt();
     }
 
+    /**
+     * Prints line informing updated flashcards.
+     *
+     * @param hasNewQ boolean parameter indicating new Question provided
+     * @param hasNewA boolean parameter indicating new Answer providid
+     */
     public static void printFlashCardUpdatedLine(boolean hasNewQ, boolean hasNewA) {
         if (hasNewQ && hasNewA) {
             System.out.println(QNA_UPDATED_LINE);
