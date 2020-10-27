@@ -105,7 +105,30 @@ components.
 
 ## Implementation - Features
 
-### Save to PPT (Kai Jie)
+### Print to PowerPoint SlideShow
+
+An additional feature targeted at students who wish to use add more style to their flash cards outside of the command 
+line option to allow keep things interesting when they are revising.
+
+The `PowerPointCommand` is parsed by `NormalParser` but the "Print to PowerPoint" command can be called from both Normal 
+and Deck Mode. 
+
+The following diagram shows how the `PowerPointCommand`'s `execute()` calls the `createNewPowerPoint()` method of `PowerPoint`.
+![PPTX Sequence Diagram](images-dg/DG-PPTX-Sequence-Diagram.png)
+
+The `newIntroSlide()`, `newSlide()` and `exportSlide()` method of `PowerPoint` uses a third party library - Apache POI 
+to create new slides, populate them with the questions and answers from the deck and finally print them out to a new PowerPoint
+ file in the `pptx` folder under the name `<deck name>.pptx`.
+ 
+The following are the Classes/ Enum of the third part package `org.apache.poi.xslf.usermodel` which are used:
+* `SlideLayout` - Enum representing the Slide Layouts available
+* `XMLSlideShow` - Class representing an entire Slide Show
+* `XSLFSlide` - Class representing a single Slide
+* `XSLFSlideLayout` - Class representing the layout of a slide
+* `XSLFSlideMaster` - Class representing the default slides layouts
+* `XSLFTextShape` - Class representing a shape within a slide
+* `XSLFTextParagraph` - Class representing a paragraph of text within a shape
+* `XSLFTextRun` - Class representing the properties of the text within a paragraph
 
 ### Pretty Printing (Wei Siew)
 

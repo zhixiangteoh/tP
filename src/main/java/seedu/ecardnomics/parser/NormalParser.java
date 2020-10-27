@@ -4,16 +4,17 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VersionCommand;
+import seedu.ecardnomics.command.VoidCommand;
+import seedu.ecardnomics.command.normal.CreateCommand;
+import seedu.ecardnomics.command.normal.DecksCommand;
+import seedu.ecardnomics.command.normal.DeleteDeckCommand;
+import seedu.ecardnomics.command.normal.EditCommand;
+import seedu.ecardnomics.command.normal.HelpCommand;
+import seedu.ecardnomics.command.normal.PowerPointCommand;
+import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.command.normal.TagCommand;
 import seedu.ecardnomics.command.normal.UntagCommand;
-import seedu.ecardnomics.command.normal.DeleteDeckCommand;
-import seedu.ecardnomics.command.normal.HelpCommand;
-import seedu.ecardnomics.command.normal.CreateCommand;
 import seedu.ecardnomics.command.normal.SearchCommand;
-import seedu.ecardnomics.command.normal.EditCommand;
-import seedu.ecardnomics.command.normal.DecksCommand;
-import seedu.ecardnomics.command.normal.StartCommand;
-import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
@@ -73,6 +74,41 @@ public class NormalParser extends Parser {
         return deckList.getDeck(getIndex(arguments));
     }
 
+    /**
+     * Prepares a deck for being deleted.
+     *
+     * @param index int representing the index of the deck in deckList
+     * @return true if delete is confirmed, otherwise false
+     */
+    private boolean getDeletedDeckConfirmation(int index) {
+        Deck deck = deckList.getDeck(index);
+        logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
+
+        Ui.printDeletedDeckQuestion(deck.getName());
+
+        String response = checkYorNResponse();
+        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
+
+        switch (response) {
+        case Ui.Y:
+            return true;
+        case Ui.N:
+            //
+            break;
+        default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
+            //
+        }
+        return false;
+    }
+
+    /**
+     * Prepares new Tag Command from given arguments.
+     *
+     * @param arguments arguments input from user
+     * @return a Tag Command
+     * @throws Exception if index is invalid or empty arguments
+     */
     private Command prepareTagCommand(String arguments) throws Exception {
         String[] idAndNewTags = arguments.split("/tag");
         if (idAndNewTags.length < 2) {
@@ -92,11 +128,13 @@ public class NormalParser extends Parser {
         return new TagCommand(deckList, deckID, newTags);
     }
 
+
+
     /**
-     * Prepares arguments for the Untag Command.
+     * Prepares new Tag Command from given arguments.
      *
      * @param arguments arguments input from user
-     * @return a Untag Command
+     * @return a Tag Command
      * @throws Exception if index is invalid or empty arguments
      */
     private Command prepareUntagCommand(String arguments) throws Exception {
@@ -126,7 +164,7 @@ public class NormalParser extends Parser {
      * @return Reference to the deck created
      * @throws EmptyInputException if no name is supplied for the deck
      */
-    protected Deck prepareNewDeck(String arguments) throws EmptyInputException {
+    private Deck prepareNewDeck(String arguments) throws EmptyInputException {
         logger.log(Level.INFO, "Logging method prepareNewDeck() in NormalParser.");
         if (arguments.trim().isEmpty()) {
             logger.log(Level.WARNING, "User did not supply name when creating a new deck.");
@@ -145,6 +183,75 @@ public class NormalParser extends Parser {
         } else {
             return new Deck(arguments);
         }
+    }
+
+    /**
+     * Checks y or n response from user.
+     *
+     * @return Ui.Y if user enters confirms, otherwise Ui.N
+     */
+    private String checkYorNResponse() {
+        logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
+
+        String response = "";
+
+        do {
+            response = Ui.readUserInput();
+            assert response != null : "response should not be null";
+            switch (response.trim()) {
+            case Ui.Y:
+                response = Ui.Y;
+                break;
+            case Ui.N:
+                response = Ui.N;
+                break;
+            default:
+                logger.log(Level.INFO, "User entered response other than 'y' or 'n'");
+                logger.log(Level.INFO, "Re-prompting...");
+                Ui.printInvalidYorNResponse();
+            }
+        } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
+        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "Response should be y/n";
+        return response;
+    }
+
+
+    /**
+     * Get confirmation from user on whether to print deck to PowerPoint.
+     *
+     * @param index int representing the index of the deck in deckList
+     * @return true if delete is confirmed, otherwise false
+     */
+    private boolean getPptxDeckConfirmation(int index) {
+        Deck deck = deckList.getDeck(index);
+        logger.log(Level.INFO, "Logging method getPptxDeckConfirmation() in NormalParser.");
+
+        Ui.printPptxDeckQuestion(deck.getName());
+
+        String response = checkYorNResponse();
+        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
+
+        switch (response) {
+        case Ui.Y:
+            return true;
+        case Ui.N:
+            //
+            break;
+        default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
+            //
+        }
+        return false;
+    }
+
+    private PowerPointCommand preparePptxDeck(String arguments) throws Exception {
+        if (arguments.contains("-y")) {
+            arguments = arguments.replaceAll("-y", "");
+            return new PowerPointCommand(deckList, prepareDeck(arguments), true);
+        }
+        int deckID = getIndex(arguments);
+        boolean isPptxCreated = getPptxDeckConfirmation(deckID);
+        return new PowerPointCommand(deckList, deckList.getDeck(deckID), isPptxCreated);
     }
 
     private Command prepareSearchCommand(String arguments) throws EmptyInputException {
@@ -221,11 +328,14 @@ public class NormalParser extends Parser {
         case Ui.UNTAG:
             logger.log(Level.INFO, "User issued command to untag a deck.");
             return prepareUntagCommand(arguments);
+        // Create new PowerPoint
+        case Ui.PPTX:
+            logger.log(Level.INFO, "User issued command to create a PowerPoint.");
+            return preparePptxDeck(arguments);
         // Search
         case Ui.SEARCH:
             logger.log(Level.INFO, "User issued command to search for decks.");
             return prepareSearchCommand(arguments);
-
         default:
             logger.log(Level.INFO, "User issued an invalid command.");
             return new VoidCommand();
@@ -236,7 +346,7 @@ public class NormalParser extends Parser {
      * Parses User Input from Main.
      *
      * @param userInput Input from user, passed through Main
-     * @return
+     * @return Command to be executed
      */
     @Override
     public Command parse(String userInput) {

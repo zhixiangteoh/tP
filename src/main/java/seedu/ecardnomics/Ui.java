@@ -47,8 +47,12 @@ public class Ui {
             "Do you want to delete %1$s deck? [y/n] ";
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
+    public static final String PPTX_DECK_QUESTION_LINE =
+            "Do you want to print %1$s deck to PowerPoint? [y/n]\n  > ";
+    public static final String PPTX_DECK_LINE =
+            "%1$s has been created as PowerPoint.";
     public static final String INVALID_YN_RESPONSE_LINE =
-            "Response should be 'y' or 'n'! Re-enter [y/n] ";
+            "Response should be 'y' or 'n'\n  > ";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
     private static final String NEW_TAGS_LINE =
@@ -87,6 +91,12 @@ public class Ui {
     private static final String NO_DECKS_WITH_TAGS_LINE =
             "There is no decks having the tags you are looking for.";
 
+    public static final String QUESTION = "Question ";
+    public static final String ANSWER = "Answer";
+    public static final String CREATE_NEW_FILE_ERROR_LINE = "Error creating new file - ";
+    public static final String WRITE_TO_FILE_ERROR_LINE = "Error writing for file";
+    public static final String FILE_NOT_FOUND_ERROR_LINE = " not found or file currently open";
+
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
     public static final String START = "start";
@@ -100,6 +110,7 @@ public class Ui {
     public static final String HELP = "help";
     public static final String TAG = "tag";
     public static final String UNTAG = "untag";
+    public static final String PPTX = "pptx";
     public static final String SEARCH = "search";
 
     public static final String VERSION_CMD = "--version";
@@ -332,6 +343,24 @@ public class Ui {
     }
 
     /**
+     * Confirms the deck the user wants to print to PowerPoint.
+     *
+     * @param pptxDeckName name of the pptx deck
+     */
+    public static void printPptxDeckQuestion(String pptxDeckName) {
+        System.out.print(String.format(PPTX_DECK_QUESTION_LINE, pptxDeckName));
+    }
+
+    /**
+     * Prints the name of the deck to be printed to PowerPoint.
+     *
+     * @param pptxDeckName name of the pptx deck
+     */
+    public static void printDeckPptxLine(String pptxDeckName) {
+        printMessage(String.format(PPTX_DECK_LINE, pptxDeckName));
+    }
+
+    /**
      * Prints the update question lines for a flashcard.
      *
      * @param flashCard for which the question should be updated.
@@ -379,7 +408,7 @@ public class Ui {
      * Prints a line prompting user to enter only 'y' or 'n'.
      */
     public static void printInvalidYorNResponse() {
-        System.out.println(INVALID_YN_RESPONSE_LINE);
+        System.out.print(INVALID_YN_RESPONSE_LINE);
     }
 
     public static void printVersionNumber() {

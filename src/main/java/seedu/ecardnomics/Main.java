@@ -40,7 +40,7 @@ public class Main {
      * @return Command used to exit Deck Mode (either <code>done</code> or <code>exit</code>)
      */
     public static Command runDeckMode(Deck deck) {
-        DeckParser deckParser = new DeckParser(deck);
+        DeckParser deckParser = new DeckParser(deckList, deck);
 
         String userInput;
         Command command;
