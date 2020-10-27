@@ -15,7 +15,7 @@ public class TagCommand extends NormalCommand {
         super(decks);
         assert (index >= 0 && index < decks.size()) : "Index must be within range.";
         this.index = index;
-        assert  (newTags.length != 0): "Tags must be provided.";
+        assert  (newTags.length != 0) : "Tags must be provided.";
         this.newTags = newTags;
     }
 

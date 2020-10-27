@@ -98,7 +98,7 @@ public class NormalParser extends Parser {
      * @return a Untag Command
      * @throws Exception if index is invalid or empty arguments
      */
-    private Command prepareUntagCommand (String arguments) throws Exception {
+    private Command prepareUntagCommand(String arguments) throws Exception {
         String[] idAndRemovedTags = arguments.split("/tag");
 
         if (idAndRemovedTags.length < 2) {
@@ -151,7 +151,7 @@ public class NormalParser extends Parser {
      *
      * @param commandWord String that corresponds to a command
      * @param arguments String that lists the arguments for the command
-     * @return
+     * @return respective Command object
      * @throws Exception when something wrong with the argument
      */
     @Override
@@ -215,7 +215,7 @@ public class NormalParser extends Parser {
     }
 
     /**
-     * Parses User Input from Main
+     * Parses User Input from Main.
      *
      * @param userInput Input from user, passed through Main
      * @return

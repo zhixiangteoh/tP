@@ -420,7 +420,7 @@ public class Ui {
     }
 
     /**
-     * Prints out warning about invalid tags provided
+     * Prints out warning about invalid tags provided.
      */
     public static void printInvalidTagsLine() {
         logger.log(Level.WARNING, "User did not supply valid tags.");
@@ -439,7 +439,7 @@ public class Ui {
     }
 
     /**
-     * Prints the tags that are removed from the specified deck
+     * Prints the tags that are removed from the specified deck.
      *
      * @param deckName the name of the deck having removed tags
      * @param tags tags were removed
@@ -450,7 +450,7 @@ public class Ui {
     }
 
     /**
-     * Forms a String of provided tags
+     * Forms a String of provided tags.
      *
      * @param tags tags to be formed to String
      * @return a String of tags

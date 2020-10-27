@@ -17,7 +17,7 @@ public class UntagCommand extends NormalCommand {
         super(decks);
         assert (index >= 0 && index < decks.size()) : "Index must be within range.";
         this.index = index;
-        assert  (removedTags.length != 0): "Remove tags must be provided.";
+        assert  (removedTags.length != 0) : "Remove tags must be provided.";
         this.removedTags = removedTags;
     }
 
@@ -36,8 +36,8 @@ public class UntagCommand extends NormalCommand {
 
     public boolean checkTagsExist(String[] removedTags) {
         boolean isExist = true;
-        ArrayList<String> availableTagList= deckList.getDeck(index).getTag();
-        for (String removedTag: removedTags) {
+        ArrayList<String> availableTagList = deckList.getDeck(index).getTag();
+        for (String removedTag : removedTags) {
             if (!availableTagList.contains(removedTag)) {
                 isExist = false;
                 Ui.printInvalidTagsLine();
