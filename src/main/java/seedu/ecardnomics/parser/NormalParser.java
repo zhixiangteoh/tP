@@ -4,15 +4,16 @@ import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VersionCommand;
-import seedu.ecardnomics.command.normal.EditCommand;
+import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.normal.CreateCommand;
-import seedu.ecardnomics.command.normal.DeleteDeckCommand;
 import seedu.ecardnomics.command.normal.DecksCommand;
+import seedu.ecardnomics.command.normal.DeleteDeckCommand;
+import seedu.ecardnomics.command.normal.EditCommand;
 import seedu.ecardnomics.command.normal.HelpCommand;
+import seedu.ecardnomics.command.normal.PowerPointCommand;
 import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.command.normal.TagCommand;
 import seedu.ecardnomics.command.normal.UntagCommand;
-import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
@@ -253,6 +254,11 @@ public class NormalParser extends Parser {
             String[] deletedTags = idAndDeletedTags[1].trim().split(" ");
             boolean isTagsRemoved = getRemovedTagsConfirmation(deletedTags, deckID);
             return new UntagCommand(deckList, deckID, deletedTags, isTagsRemoved);
+        // Create new PowerPoint
+        case Ui.PPTX:
+            logger.log(Level.INFO, "User issued command to create a PowerPoint.");
+            Deck pptxDeck = prepareDeck(arguments);
+            return new PowerPointCommand(deckList, pptxDeck);
         default:
             logger.log(Level.INFO, "User issued an invalid command.");
             return new VoidCommand();

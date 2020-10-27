@@ -79,6 +79,12 @@ public class Ui {
     private static final String GAME_EMPTY_DECK_LINE =
             EMPTY_DECK_LINE + " Please add some flash cards first.";
 
+    public static final String QUESTION = "Question ";
+    public static final String ANSWER = "Answer";
+    public static final String CREATE_NEW_FILE_ERROR_LINE = "Error creating new file - ";
+    public static final String WRITE_TO_FILE_ERROR_LINE = "Error writing for file";
+    public static final String FILE_NOT_FOUND_ERROR_LINE = " not found or file currently open";
+
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
     public static final String START = "start";
@@ -92,6 +98,7 @@ public class Ui {
     public static final String HELP = "help";
     public static final String TAG = "tag";
     public static final String UNTAG = "untag";
+    public static final String PPTX = "pptx";
 
     public static final String VERSION_CMD = "--version";
 
