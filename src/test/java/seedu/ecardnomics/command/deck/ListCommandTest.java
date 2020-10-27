@@ -46,8 +46,8 @@ class ListCommandTest {
     void execute_nonEmptyDeck_ansArgument_listCommand() {
         String expectedOutput =
                 "------------------------------------------------------------" + System.lineSeparator()
-                + "You are now viewing deck: Test\n"
-                + "1. Question: Test Question\n"
+                + "You are now viewing deck: Test" + System.lineSeparator()
+                + "1. Question: Test Question" + System.lineSeparator()
                 + "   Answer:   Test Answer" + System.lineSeparator()
                 + "------------------------------------------------------------" + System.lineSeparator();
 
@@ -62,7 +62,7 @@ class ListCommandTest {
     void execute_nonEmptyDeck_noAnsArgument_listCommand() {
         String expectedOutput =
                 "------------------------------------------------------------" + System.lineSeparator()
-                + "You are now viewing deck: Test\n"
+                + "You are now viewing deck: Test" + System.lineSeparator()
                 + "1. Question: Test Question" + System.lineSeparator()
                 + "------------------------------------------------------------" + System.lineSeparator();
 
