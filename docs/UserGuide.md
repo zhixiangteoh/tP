@@ -30,37 +30,45 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
   + [Game Mode: `start`](#game-mode---start-)
     - [Format](#format-4)
     - [Examples](#examples-4)
-  + [Viewing help in Normal Mode: `help`](#viewing-help-in-normal-mode---help-)
+  + [Print to PowerPoint: `pptx``](#print-an-existing-deck-to-a-powerpoint-file-pptx)
+    - [Format](#format-5)
     - [Examples](#examples-5)
+  + [Viewing help in Normal Mode: `help`](#viewing-help-in-normal-mode---help-)
+    - [Examples](#examples-6)
 * [Features - Deck Mode](#features---deck-mode)
   + [Add a flashcard: `add`](#add-a-flashcard---add-)
-    - [Format](#format-5)
-    - [Examples](#examples-6)
-  + [List all the flashcards in the deck: `list`](#list-all-the-flashcards-in-the-deck---list-)
     - [Format](#format-6)
     - [Examples](#examples-7)
-  + [Delete an existing Flash Card: `delete`](#delete-an-existing-flash-card---delete-)
+  + [List all the flashcards in the deck: `list`](#list-all-the-flashcards-in-the-deck---list-)
     - [Format](#format-7)
     - [Examples](#examples-8)
-  + [Game Mode: `start`](#game-mode---start--1)
+  + [Delete an existing Flash Card: `delete`](#delete-an-existing-flash-card---delete-)
     - [Format](#format-8)
     - [Examples](#examples-9)
-  + [Exits Deck Mode: `done`](#exits-deck-mode---done-)
+  + [Game Mode: `start`](#game-mode---start--1)
+    - [Format](#format-9)
     - [Examples](#examples-10)
-  + [Viewing help in Deck Mode: `help`](#viewing-help-in-deck-mode---help-)
+  + [Print to PowerPoint: `pptx`](#print-current-deck-to-a-powerpoint-file-pptx)
+    - [Format](#format-10)
     - [Examples](#examples-11)
+  + [Exits Deck Mode: `done`](#exits-deck-mode---done-)
+    - [Examples](#examples-12)
+  + [Viewing help in Deck Mode: `help`](#viewing-help-in-deck-mode---help-)
+    - [Examples](#examples-13)
 * [Features - Game Mode](#features---game-mode)
   + [Gameplay](#gameplay)
-    - [Examples](#examples-12)
-  + [Exits Game Mode: `done`](#exits-game-mode---done-)
-    - [Examples](#examples-13)
-  + [Viewing help in Game Mode: `help`](#viewing-help-in-game-mode---help-)
     - [Examples](#examples-14)
+  + [Exits Game Mode: `done`](#exits-game-mode---done-)
+    - [Examples](#examples-15)
+  + [Viewing help in Game Mode: `help`](#viewing-help-in-game-mode---help-)
+    - [Examples](#examples-16)
+* [Features - Print to PowerPoint](#features---print-to-powerpoint)
+  + [Create New PowerPoint](#create-new-powerpoint-based-on-the-selected-deck-pptx)
 * [Features - Anywhere](#features---anywhere)
   + [Exits the program: `exit`](#exits-the-program---exit-)
-    - [Examples](#examples-15)
+    - [Examples](#examples-17)
   + [Shows release version: `--version`](#shows-release-version-----version-)
-    - [Examples](#examples-16)
+    - [Examples](#examples-18)
 * [FAQ](#faq)
   + [Game Mode](#game-mode)
 * [Command Summary](#command-summary)
@@ -239,7 +247,7 @@ Enters the Deck Mode to edit an existing deck. The `edit` command expects one ar
 Starts Game Mode for an existing deck. The `start` command expects one argument specifying the deck index for which to
  enter Deck Mode.
  
-> The `start` command can also be entered from within Deck Mode, although the index of the deck is still expected.
+> The `start` command can also be entered from within Deck Mode, without the need for a deck index.
  
 #### Format
 
@@ -266,6 +274,63 @@ Starts Game Mode for an existing deck. The `start` command expects one argument 
 //   Enter your attempt below (or `done`, `exit`, `help`):
   >
 ```
+
+### Print an Existing Deck to a PowerPoint File: `pptx`
+
+Prints an existing deck to a new PowerPoint file named `<deck name>.pptx` in `pptx/` folder.
+The `pptx` command expects one argument specifying the deck index for which to enter Deck Mode.
+You can add the option `-y` to create the PowerPoint without any further prompt.
+
+ > The `pptx` command can also be entered from within Deck Mode, without the need for deck index.
+
+#### Format
+
+```java
+------------------------------------------------------------
+[Deck - `name of deck`]
+  > pptx <index of deck>
+// Do you want to print `name of deck` deck to PowerPoint? [y/n]
+//   > yes
+// Response should be 'y' or 'n'
+//   > y
+// ------------------------------------------------------------
+// `name of deck` has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+```java
+------------------------------------------------------------
+[Deck - `name of deck`]
+  > pptx <index of deck> -y
+// ------------------------------------------------------------
+// `name of deck` has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+#### Examples
+
+```java
+------------------------------------------------------------
+[Deck - Micro-Economics]
+  > pptx 1
+// Do you want to print Micro-Economics deck to PowerPoint? [y/n]
+//   > yes
+// Response should be 'y' or 'n'
+//   > y
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+```java
+------------------------------------------------------------
+[Deck - Micro-Economics]
+  > pptx 1 -y
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
 
 ### Viewing help in Normal Mode: `help`
 
@@ -451,8 +516,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 
 ### Game Mode: `start`
 
-Starts Game Mode for an existing deck. The `start` command expects one argument specifying the deck index for which to
- enter Deck Mode.
+Starts Game Mode for the current deck. 
  
 > The `start` command can also be entered from within Normal Mode.
  
@@ -460,7 +524,7 @@ Starts Game Mode for an existing deck. The `start` command expects one argument 
 
 ```java
 [Deck - market-failure]
-  > start <index of deck>
+  > start 
 ```
 
 #### Examples
@@ -488,7 +552,60 @@ Starts Game Mode for an existing deck. The `start` command expects one argument 
   >
 ```
 
-> Notice how the `start 1` command is entered with the deck index. This is required! 
+### Print Current Deck to a PowerPoint File: `pptx`
+
+Prints the current deck to a new PowerPoint file named `<deck name>.pptx` in `pptx/` folder.
+You can add the option `-y` to create the PowerPoint without any further prompt.
+
+> The `pptx` command can also be entered from within Normal Mode.
+ 
+#### Format
+
+```java
+------------------------------------------------------------
+[Deck - `name of deck`]
+  > pptx
+// Do you want to print `name of deck` deck to PowerPoint? [y/n]
+//   > yes
+// Response should be 'y' or 'n'
+//   > y
+// ------------------------------------------------------------
+// `name of deck` has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+```java
+------------------------------------------------------------
+[Deck - `name of deck`]
+  > pptx -y
+// ------------------------------------------------------------
+// `name of deck` has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+#### Examples
+
+```java
+------------------------------------------------------------
+[Deck - Micro-Economics]
+  > pptx
+// Do you want to print Micro-Economics deck to PowerPoint? [y/n]
+//   > yes
+// Response should be 'y' or 'n'
+//   > y
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+```java
+------------------------------------------------------------
+[Deck - Micro-Economics]
+  > pptx -y
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint.
+// ------------------------------------------------------------
+```
 
 ### Exits Deck Mode: `done`
 
@@ -562,7 +679,7 @@ Then, the correct answer is displayed, and our 'advanced' algorithm scores the u
 // 4. Question: What is price elasticity of supply?
 // ------------------------------------------------------------
 [Deck - Micro-Economics]
-  > start 1
+  > start
 ```
 
 * Play!
@@ -693,6 +810,18 @@ Displays the list of all commands in Game Mode.
   > 
 ```
 
+## Features - Print to PowerPoint
+### Create new PowerPoint based on the selected deck: `pptx`
+
+Can be done from both Normal Mode and Deck Mode. In Normal Mode, a deck index is required, 
+but in Deck Mode, there is no need to specify the deck index.
+Has the option to skip confirmation prompt using `-y` suffix.
+
+For details, check out:
+[Normal Mode PowerPoint](#print-an-existing-deck-to-a-powerpoint-file-pptx)
+[Deck Mode PowerPoint](#print-current-deck-to-a-powerpoint-file-pptx)
+
+
 ## Features - Anywhere
 
 ### Exits the program: `exit`
@@ -792,6 +921,7 @@ Shows release version from anywhere in the program.
 |Delete deck|`delete <ix>`|`delete 1`|
 |Enter Deck Mode|`edit <ix>`|`edit 1`|
 |Enter Game Mode|`start <ix>`|`start 1`|
+|Create PowerPoint|`pptx <ix> [-y]`|`pptx 1`|
 |Help|`help`||
 
 ### Deck Mode
@@ -801,7 +931,8 @@ Shows release version from anywhere in the program.
 |Add flash card|`add`||
 |List flash cards|`list [/ans]`||
 |Delete flash card|`delete <ix>`|`delete 1`|
-|Enter Game Mode|`start <ix>`|`start 1`|
+|Enter Game Mode|`start`||
+|Create PowerPoint|`pptx [-y]`||
 |Exit Deck Mode|`done`||
 |Help|`help`||
 
