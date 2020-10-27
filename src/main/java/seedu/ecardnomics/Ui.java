@@ -52,7 +52,7 @@ public class Ui {
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
     private static final String NEW_TAGS_LINE =
-            "The deck %1$s has been tagged as %2$s: ";
+            "The deck %1$s has been tagged as: %2$s";
     private static final String REMOVED_TAGS_QUESTION_LINE =
             "Do you want to remove the tag(s) %1$s from %2$s? [y/n]";
     private static final String REMOVED_TAGS_LINE =
@@ -82,6 +82,10 @@ public class Ui {
             EMPTY_DECK_LINE + " Please add some flash cards first.";
     private static final String INVALID_TAGS_LINE =
             "You entered invalid tag(s)!";
+    private static final String DECKS_HAVING_TAGS_LINE =
+            "The decks having tags you are searching for are:";
+    private static final String NO_DECKS_WITH_TAGS_LINE =
+            "There is no decks having the tags you are looking for.";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -96,6 +100,7 @@ public class Ui {
     public static final String HELP = "help";
     public static final String TAG = "tag";
     public static final String UNTAG = "untag";
+    public static final String SEARCH = "search";
 
     public static final String VERSION_CMD = "--version";
 
@@ -293,8 +298,8 @@ public class Ui {
      */
     public static void printNewDeck(Deck deck) {
         String tagsOfNewDeck = deck.getTagString();
-        if (!tagsOfNewDeck.equals("")) {
-            tagsOfNewDeck = "| Tag(s): " + tagsOfNewDeck;
+        if (!tagsOfNewDeck.isEmpty()) {
+            tagsOfNewDeck = " | Tag(s): " + tagsOfNewDeck;
         }
         printMessage(NEW_DECK_CREATED_LINE + deck.getName() + tagsOfNewDeck);
     }
@@ -552,6 +557,14 @@ public class Ui {
         }
         return false;
 
+    }
+
+    public static void printSearchDecksLine(String decksHavingTags) {
+        if (decksHavingTags.isEmpty()) {
+            printMessage(NO_DECKS_WITH_TAGS_LINE);
+        } else {
+            printMessage(DECKS_HAVING_TAGS_LINE + decksHavingTags);
+        }
     }
 
 }
