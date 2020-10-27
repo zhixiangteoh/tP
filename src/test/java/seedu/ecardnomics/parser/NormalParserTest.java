@@ -161,13 +161,6 @@ class NormalParserTest {
         assertTrue(normalParser.parse("blah") instanceof VoidCommand);
     }
 
-    //@BeforeAll
-    //public static void addUserInput() {
-    //String userInputs = "y";
-    //ByteArrayInputStream input = new ByteArrayInputStream(userInputs.getBytes());
-    //System.setIn(input);
-    //}
-
     @BeforeEach
     void initialiseNormalParser() {
         DeckList deckList = initialiseDeckList(2);

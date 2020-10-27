@@ -203,7 +203,8 @@ public class NormalParser extends Parser {
         case Ui.DELETE:
             int deckID = getIndex(arguments);
             logger.log(Level.INFO, "User issued command to delete deck at index " + deckID);
-            return new DeleteDeckCommand(deckList, deckID);
+            boolean isDeckDeleted = Ui.getDeletedDeckConfirmation(deckList.getDeck(deckID).getName());
+            return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
         // Tag
         case Ui.TAG:
             logger.log(Level.INFO, "User issued command to tag a deck.");
