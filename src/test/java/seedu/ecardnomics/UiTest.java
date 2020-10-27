@@ -140,7 +140,7 @@ public class UiTest {
         String question = "Old question";
         String answer = "Old answer";
         FlashCard existingCard = new FlashCard(question, answer);
-        String expectedOutput = existingCard.toString("question") + System.lineSeparator()
+        String expectedOutput = existingCard.toString(true, 0) + System.lineSeparator()
                 + "New Question: " + System.lineSeparator() + "  > ";
         printUpdateQuestionLine(existingCard);
         assertEquals(expectedOutput, outContent.toString());
@@ -151,7 +151,7 @@ public class UiTest {
         String question = "Old question";
         String answer = "Old answer";
         FlashCard existingCard = new FlashCard(question, answer);
-        String expectedOutput = existingCard.toString("answer") + System.lineSeparator()
+        String expectedOutput = existingCard.toString(false, 0) + System.lineSeparator()
                 + "New Answer: " + System.lineSeparator() + "  > ";
         printUpdateAnswerLine(existingCard);
         assertEquals(expectedOutput, outContent.toString());
