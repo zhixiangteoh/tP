@@ -83,7 +83,7 @@ public class Ui {
     private static final String INVALID_TAGS_LINE =
             "You entered invalid tag(s)!";
     private static final String DECKS_HAVING_TAGS_LINE =
-            "The decks having tags you are searching for are:";
+            "The decks having tags you are searching for:";
     private static final String NO_DECKS_WITH_TAGS_LINE =
             "There is no decks having the tags you are looking for.";
 
