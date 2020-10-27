@@ -155,6 +155,15 @@ Take note that infinite loops can still occur if
 * toString(boolean, int) is called with offset >= `lineLength` - length
 of `label`
 
+#### Design Consideration:
+
+In order to maximize `usableLength`,
+`toString(boolean isQuestion, int offset)` is designed to take
+parameter `offset` instead of hardcoding `offset` to be
+`"2147483647. ".length()` which is the maximum possible index when
+listing flashcards. As a result, flashcards with different number of
+digits in the index will be misaligned when listing flashcards.
+
 ### Tags and Filtering (Trang)
 
 ### Saving to text file (Wayne)
