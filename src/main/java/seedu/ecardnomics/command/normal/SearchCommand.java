@@ -12,7 +12,7 @@ public class SearchCommand extends NormalCommand {
     /** Constructor. */
     public SearchCommand(DeckList decks, String[] relevantTags) {
         super(decks);
-        assert  (relevantTags.length != 0): "Relevant tags must be provided.";
+        assert  (relevantTags.length != 0) : "Relevant tags must be provided.";
         this.relevantTags = relevantTags;
     }
 
@@ -23,7 +23,7 @@ public class SearchCommand extends NormalCommand {
         for (String tag: relevantTags) {
             for (int i = 0; i < deckList.size(); i++) {
                 if (allDecks.get(i).getTag().contains(tag)) {
-                    decksHavingTags += "\n" + (i+1) + ". " + allDecks.get(i).getName();
+                    decksHavingTags += "\n" + (i + 1) + ". " + allDecks.get(i).getName();
                 }
             }
         }
