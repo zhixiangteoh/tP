@@ -3,7 +3,7 @@ name | Micro-Economics
 tags | Economics | EC1301 
 size | 4
 Q | What is the Law of demand?
-A | When the price of a good rises, the quantity of the good demanded will fall, ceteris paribus.
+A | Quantity purchased varies inversely with price.
 Q | What is the Law of supply?
 A | When the price of a good increases, the quantity supplied increases, ceteris paribus.
 Q | What is price elasticity of demand?
