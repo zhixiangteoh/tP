@@ -123,7 +123,7 @@ public class UiTest {
 
     @Test
     void printDeletedDeckQuestion_deletedDeckName_questionLine() {
-        String expectedOutput = "Do you want to delete Pokemon deck? [y/n]";
+        String expectedOutput = "Do you want to delete Pokemon deck? [y/n] ";
         Ui.printDeletedDeckQuestion("Pokemon");
         assertEquals(expectedOutput, outContent.toString());
     }
