@@ -3,6 +3,8 @@ package seedu.ecardnomics.command.normal;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.deck.DeckList;
 
+import java.util.ArrayList;
+
 /**
  * Removes tags from the existing deck.
  */
@@ -22,11 +24,27 @@ public class UntagCommand extends NormalCommand {
     @Override
     public void execute() {
         String deckName = deckList.getDeck(index).getName();
-        boolean isTagsRemoved = Ui.getRemovedTagsConfirmation(removedTags, deckName);
+        boolean isTagsValid = checkTagsExist(removedTags);
 
-        if (isTagsRemoved) {
-            deckList.getDeck(index).removeTag(removedTags);
+        if (isTagsValid) {
+            boolean isTagsRemoved = Ui.getRemovedTagsConfirmation(removedTags, deckName);
+            if (isTagsRemoved) {
+                deckList.getDeck(index).removeTag(removedTags);
+            }
         }
+    }
+
+    public boolean checkTagsExist(String[] removedTags) {
+        boolean isExist = true;
+        ArrayList<String> availableTagList= deckList.getDeck(index).getTag();
+        for (String removedTag: removedTags) {
+            if (!availableTagList.contains(removedTag)) {
+                isExist = false;
+                Ui.printInvalidTagsLine();
+                break;
+            }
+        }
+        return isExist;
     }
 
 }

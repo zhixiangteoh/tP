@@ -22,6 +22,6 @@ public class TagCommand extends NormalCommand {
     @Override
     public void execute() {
         deckList.getDeck(index).addTag(newTags);
-        Ui.printTags(deckList.getDeck(index).getName(), deckList.getDeck(index).getTag());
+        Ui.printNewTags(deckList.getDeck(index).getName(), newTags);
     }
 }
