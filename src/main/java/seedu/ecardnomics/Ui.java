@@ -48,11 +48,11 @@ public class Ui {
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
     public static final String INVALID_YN_RESPONSE_LINE =
-            "Response should be 'y' or 'n'!";
+            "Response should be 'y' or 'n'! Re-enter [y/n]:";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
     private static final String NEW_TAGS_LINE =
-            "The deck %1$s has been tagged as %2$s ";
+            "The deck %1$s has been tagged as %2$s: ";
     private static final String REMOVED_TAGS_QUESTION_LINE =
             "Do you want to remove the tag(s) %1$s from %2$s? [y/n]";
     private static final String REMOVED_TAGS_LINE =
@@ -388,6 +388,10 @@ public class Ui {
         printPrompt();
     }
 
+    public static void printGameEmptyDeckLine() {
+        System.out.println(GAME_EMPTY_DECK_LINE);
+    }
+
     public static void printAnswerGameMode(String answer) {
         System.out.println("A: " + answer);
     }
@@ -396,34 +400,53 @@ public class Ui {
         System.out.println(DONE_GAME_LINE);
     }
 
-    public static String prepareStringOfTags(String[] tags) {
-        String tagString = "";
-        for (int j = 0; j < tags.length; j++) {
-            tagString += tags[j];
-            tagString += " ";
-        }
-        return tagString;
-    }
-
-    public  static void printNewTags(String name, String[] newTags) {
-        String tagString = prepareStringOfTags(newTags);
+    /**
+     * Prints the new tags added to the deck.
+     *
+     * @param name the name of the deck
+     * @param newTags the tag(s) will be added to the deck
+     */
+    public static void printNewTags(String name, String[] newTags) {
+        String tagString = formStringOfTags(newTags);
         printMessage(String.format(NEW_TAGS_LINE, name, tagString));
     }
 
-    public static void printTagList(String name, String[] tags) {
-
+    /**
+     * Prints out warning about invalid tags provided
+     */
+    public static void printInvalidTagsLine() {
+        logger.log(Level.WARNING, "User did not supply valid tags.");
+        printMessage(INVALID_TAGS_LINE);
     }
 
+    /**
+     * Prints confirmation question before tag removal.
+     *
+     * @param deckName the name of the deck having tags being removed
+     * @param tags the tags will be removed
+     */
     public static void printRemovedTagsQuestion(String deckName, String[] tags) {
         String removedTags = formStringOfTags(tags);
         System.out.println(String.format(REMOVED_TAGS_QUESTION_LINE, removedTags, deckName));
     }
 
+    /**
+     * Prints the tags that are removed from the specified deck
+     *
+     * @param deckName the name of the deck having removed tags
+     * @param tags tags were removed
+     */
     public static void printTagsRemovedLine(String deckName, String[] tags) {
         String removedTags = formStringOfTags(tags);
         System.out.println(String.format(REMOVED_TAGS_LINE, removedTags, deckName));
     }
 
+    /**
+     * Forms a String of provided tags
+     *
+     * @param tags tags to be formed to String
+     * @return a String of tags
+     */
     public static String formStringOfTags(String[] tags) {
         String stringOfTags = "";
 
@@ -436,21 +459,16 @@ public class Ui {
         return stringOfTags;
     }
 
-
-    public static void printGameEmptyDeckLine() {
-        System.out.println(GAME_EMPTY_DECK_LINE);
-    }
-
     /**
      * Checks y or n response from user.
-     * @param response Reference to the input from user
+     *
      * @return Ui.Y if user enters confirms, otherwise Ui.N
      */
-    private static String checkYorNResponse(String response) {
+    private static String checkYorNResponse() {
         logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
-        printDashLines();
-
+        String response;
         do {
+            response = readUserInput();
             assert response != null : "response should not be null";
             switch (response.trim()) {
             case Y:
@@ -471,16 +489,16 @@ public class Ui {
 
     /**
      * Prepares a deck for being deleted.
+     *
      * @param deckName String representing the index of the deck in deckList
      * @return true if delete is confirmed, otherwise false
      */
     public static boolean getDeletedDeckConfirmation(String deckName) {
         logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
-
+        printDashLines();
         printDeletedDeckQuestion(deckName);
-        String userConfirmation = readUserInput();
 
-        String response = checkYorNResponse(userConfirmation);
+        String response = checkYorNResponse();
         assert (response.equals(Y) || response.equals(N)) : "response should be y/n";
 
         switch (response) {
@@ -507,11 +525,9 @@ public class Ui {
      * @return true if the removal is confirmed, otherwise false
      */
     public static boolean getRemovedTagsConfirmation(String[] tags, String deckName) {
-
+        printDashLines();
         printRemovedTagsQuestion(deckName, tags);
-        String userConfirmation = readUserInput();
-
-        String response = checkYorNResponse(userConfirmation);
+        String response = checkYorNResponse();
         assert (response.equals(Y) || response.equals(N)) : "response should be y/n";
 
         switch (response) {
@@ -528,11 +544,6 @@ public class Ui {
         }
         return false;
 
-    }
-
-    public static void printInvalidTagsLine() {
-        logger.log(Level.WARNING, "User did not supply valid tags.");
-        printMessage(INVALID_TAGS_LINE);
     }
 
 }
