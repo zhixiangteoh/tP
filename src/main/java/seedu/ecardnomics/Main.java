@@ -19,7 +19,7 @@ import seedu.ecardnomics.storage.Storage;
  */
 public class Main {
 
-    public static final double VERSION_NUMBER = 1.0;
+    public static final double VERSION_NUMBER = 2.0;
     public static DeckList deckList = new DeckList();
     public static NormalParser normalParser = new NormalParser(deckList);
     public static Storage storage = new Storage();

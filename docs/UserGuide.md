@@ -602,7 +602,7 @@ Starts Game Mode for the current deck.
 
 ```java
 [Deck - market-failure]
-  > start 
+  > start
 ```
 
 #### Examples
@@ -615,7 +615,7 @@ Starts Game Mode for the current deck.
 // ...
 // ------------------------------------------------------------
 [Deck - market-failure]
-  > start 1
+  > start
 // ------------------------------------------------------------
 // Welcome to Game Mode!
 //

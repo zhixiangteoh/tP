@@ -36,7 +36,7 @@ public class Ui {
     public static final String LIST_FLASHCARDS_LINE =
             "You are now viewing deck: ";
     public static final String DELETE_FLASHCARD_LINE =
-            "Do you want to delete the following flash card? ";
+            "Do you want to delete the following flash card? [y/n] ";
     public static final String FLASHCARD_DELETED_LINE =
             "The following flash card has been deleted:\n  '";
     public static final String NEW_DECK_CREATED_LINE =
@@ -48,7 +48,7 @@ public class Ui {
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
     public static final String PPTX_DECK_QUESTION_LINE =
-            "Do you want to print %1$s deck to PowerPoint? [y/n]\n  > ";
+            "Do you want to print %1$s deck to PowerPoint? [y/n] ";
     public static final String PPTX_DECK_LINE =
             "%1$s has been created as PowerPoint.";
     public static final String INVALID_YN_RESPONSE_LINE =
@@ -58,7 +58,7 @@ public class Ui {
     private static final String NEW_TAGS_LINE =
             "The deck %1$s has been tagged as: %2$s";
     private static final String REMOVED_TAGS_QUESTION_LINE =
-            "Do you want to remove the tag(s) %1$s from %2$s? [y/n]";
+            "Do you want to remove the tag(s) %1$s from %2$s? [y/n] ";
     private static final String REMOVED_TAGS_LINE =
             "The tag(s) %1$s have been removed from the deck %2$s.";
     private static final String NEW_QUESTION_LINE =
@@ -74,7 +74,7 @@ public class Ui {
     private static final String NO_UPDATE_LINE =
             "Original question and answer retained";
     private static final String INCLUDE_EXCLUDE_LINE =
-            "Do you want to re-attempt this question later? ";
+            "Do you want to re-attempt this question later? [y/n] ";
     private static final String ATTEMPT_FEEDBACK_LINE =
             "The score for your answer is:";
     private static final String ENTER_ATTEMPT_LINE =
@@ -278,8 +278,7 @@ public class Ui {
      * @param question The question of the FlashCard to delete
      */
     public static void printDeleteFlashCardLine(String question) {
-        System.out.print(DELETE_FLASHCARD_LINE + YN_LINE + "?\n  '" + question + "`\n");
-        printPrompt();
+        System.out.print(DELETE_FLASHCARD_LINE + "?\n  '" + question + "' ");
     }
 
     /**
@@ -416,12 +415,17 @@ public class Ui {
     }
 
     public static void printIncludeExcludeLine() {
-        System.out.print(INCLUDE_EXCLUDE_LINE + YN_LINE + "\n");
-        printPrompt();
+        System.out.print(INCLUDE_EXCLUDE_LINE);
     }
 
     public static void printAttemptFeedback(double matchPercentage) {
         System.out.println(String.format("%s %.2f", ATTEMPT_FEEDBACK_LINE, matchPercentage));
+    }
+
+    public static boolean getInclExclConfirmation() {
+        logger.log(Level.INFO, "Logging method getInclExclConfirmation() in Ui.");
+        Ui.printIncludeExcludeLine();
+        return checkYorNResponse();
     }
 
     public static void printGameQuestion(String question) {
@@ -469,7 +473,7 @@ public class Ui {
      */
     public static void printRemovedTagsQuestion(String deckName, String[] tags) {
         String removedTags = formStringOfTags(tags);
-        System.out.println(String.format(REMOVED_TAGS_QUESTION_LINE, removedTags, deckName));
+        System.out.print(String.format(REMOVED_TAGS_QUESTION_LINE, removedTags, deckName));
     }
 
     /**

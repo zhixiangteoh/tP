@@ -1,7 +1,7 @@
 deck | 0
 name | Micro-Economics
 tags | Economics | EC1301 
-size | 4
+size | 5
 Q | What is the Law of demand?
 A | When the price of a good rises, the quantity of the good demanded will fall, ceteris paribus.
 Q | What is the Law of supply?
@@ -10,6 +10,8 @@ Q | What is price elasticity of demand?
 A | Percentage change in quantity demanded caused by a 1 percent change in price.
 Q | What is price elasticity of supply?
 A | Percentage change in quantity supplied caused by a 1 percent change in price.
+Q | What is Market Failure? 
+A | Market failure is the economic situation defined by an inefficient distribution of goods and services in the free market.
 ================================================================================
 deck | 1
 name | Macro-Economics
