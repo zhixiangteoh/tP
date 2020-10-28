@@ -104,7 +104,7 @@ public class DeckParser extends Parser {
         return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
     }
 
-    protected String[] prepareUpdate(int flashCardID) {
+    protected Command prepareUpdate(int flashCardID) {
         String[] newQnA = new String[2];
         Ui.printUpdateQuestionLine(deck.get(flashCardID));
         newQnA[0] = Ui.readUserInput();
@@ -128,9 +128,10 @@ public class DeckParser extends Parser {
         }
         assert newQnA[0].length() > 0 : "question field empty!";
         assert newQnA[1].length() > 0 : "answer field empty!";
+        Ui.printDashLines();
         Ui.printFlashCardUpdatedLine(hasNewQ, hasNewA);
         Ui.printDashLines();
-        return newQnA;
+        return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);
     }
 
     @Override
@@ -197,8 +198,7 @@ public class DeckParser extends Parser {
             logger.log(Level.INFO, "Preparing FlashCard to update");
             int flashCardID = getIndex(arguments);
             assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
-            String[] newQnA = prepareUpdate(flashCardID);
-            return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);
+            return prepareUpdate(flashCardID);
         // Create PowerPoint
         case Ui.PPTX:
             logger.log(Level.INFO, "Printing to PowerPoint");
