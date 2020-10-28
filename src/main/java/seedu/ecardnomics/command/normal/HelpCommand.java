@@ -9,18 +9,20 @@ public class HelpCommand extends NormalCommand {
             + "Normal Mode.\n"
             + "\n"
             + "Usage:\n"
-            + "  create         Creates a new deck of flash cards.\n"
+            + "  create <nm>    Creates a new deck of flash cards, named <nm>.\n"
             + "  decks          Lists all available decks.\n"
             + "  edit <ix>      Enter Deck Mode for editing the deck at list index <ix>.\n"
+            + "  start <ix>     Enter Game Mode for deck at list index <ix>! Do your best!\n"
             + "  delete <ix>    Deletes the deck at list index <ix> from list of decks.\n"
+            + "  pptx <ix> [-y] Creates a PowerPoint slides based on the deck at list index <ix>.\n"
             + "  exit           Exits the program.\n"
             + "  help           Show this output.\n"
             + "\n"
             + "Options:\n"
             + "  --version      Show version.";
 
-    public HelpCommand(DeckList deckList) {
-        super(deckList);
+    public HelpCommand() {
+        super();
     }
 
     @Override

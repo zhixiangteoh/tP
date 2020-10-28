@@ -8,6 +8,87 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
  multiple decks of flashcards and tag them independently, students can segment the subject syllabus into topics when
  managing flashcards, yet consolidate flashcards by topic when accessing them to study.
 
+## Contents
+
+* [Preliminaries](#preliminaries)
+  + [Installation](#installation)
+  + [Running the program](#running-the-program)
+  + [Guide format](#guide-format)
+* [Features - Normal Mode](#features---normal-mode)
+  + [Create a new deck: `create`](#create-a-new-deck---create-)
+    - [Format](#format)
+    - [Examples](#examples)
+  + [Tag an existing deck: `tag`](#tag-an-existing-deck--tag-)
+    - [Format](#format-1)
+    - [Examples](#examples-1)
+  + [Untag an existing tag: `untag`](#untag-an-existing-tag--untag-)
+    - [Format](#format-2)
+    - [Examples](#examples-2) 
+  + [Search decks by tag: `search`](#search-decks-by-tag-search-)
+    - [Format](#format-3)
+    - [Examples](#examples-3)
+  + [Display all decks: `decks`](#display-all-decks---decks-)
+    - [Format](#format-4)
+    - [Examples](#examples-4)
+  + [Delete an existing deck: `delete`](#delete-an-existing-deck---delete-)
+    - [Format](#format-5)
+    - [Examples](#examples-5)
+  + [Deck Mode: `edit`](#deck-mode---edit-)
+    - [Format](#format-6)
+    - [Examples](#examples-6)
+  + [Game Mode: `start`](#game-mode---start-)
+    - [Format](#format-7)
+    - [Examples](#examples-7)
+  + [Print to PowerPoint: `pptx``](#print-an-existing-deck-to-a-powerpoint-file-pptx)
+    - [Format](#format-8)
+    - [Examples](#examples-8)
+  + [Viewing help in Normal Mode: `help`](#viewing-help-in-normal-mode---help-)
+    - [Examples](#examples-9)
+* [Features - Deck Mode](#features---deck-mode)
+  + [Add a flashcard: `add`](#add-a-flashcard---add-)
+    - [Format](#format-9)
+    - [Examples](#examples-10)
+  + [List all the flashcards in the deck: `list`](#list-all-the-flashcards-in-the-deck---list-)
+    - [Format](#format-10)
+    - [Examples](#examples-11)
+  + [Delete an existing Flash Card: `delete`](#delete-an-existing-flash-card---delete-)
+    - [Format](#format-11)
+    - [Examples](#examples-12)
+  + [Update an existing Flash Card: `update`](#update-an-existing-flash-card---update-)
+    -[Format](#format-12)
+    -[Examples] (#examples-13)
+  + [Game Mode: `start`](#game-mode---start--1)
+    - [Format](#format-13)
+    - [Examples](#examples-14)
+  + [Print to PowerPoint: `pptx`](#print-current-deck-to-a-powerpoint-file-pptx)
+    - [Format](#format-14)
+    - [Examples](#examples-15)
+  + [Exits Deck Mode: `done`](#exits-deck-mode---done-)
+    - [Examples](#examples-16)
+  + [Viewing help in Deck Mode: `help`](#viewing-help-in-deck-mode---help-)
+    - [Examples](#examples-17)
+* [Features - Game Mode](#features---game-mode)
+  + [Gameplay](#gameplay)
+    - [Examples](#examples-18)
+  + [Exits Game Mode: `done`](#exits-game-mode---done-)
+    - [Examples](#examples-19)
+  + [Viewing help in Game Mode: `help`](#viewing-help-in-game-mode---help-)
+    - [Examples](#examples-20)
+* [Features - Print to PowerPoint](#features---print-to-powerpoint)
+  + [Create New PowerPoint](#create-new-powerpoint-based-on-the-selected-deck-pptx)
+* [Features - Anywhere](#features---anywhere)
+  + [Exits the program: `exit`](#exits-the-program---exit-)
+    - [Examples](#examples-21)
+  + [Shows release version: `--version`](#shows-release-version-----version-)
+    - [Examples](#examples-22)
+* [FAQ](#faq)
+  + [Game Mode](#game-mode)
+* [Command Summary](#command-summary)
+  + [Normal Mode](#normal-mode)
+  + [Deck Mode](#deck-mode)
+  + [Game Mode](#game-mode-1)
+  + [Anywhere](#anywhere)
+
 ## Preliminaries
 
 ### Installation
@@ -66,8 +147,14 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
 
 #### Format
 
-```
+
+Create deck without tags:
+```java
 create <name of deck>
+```
+Create deck with tag(s):
+```java
+create <name of deck> [/tag <tag1> [<tag2>/]]
 ```
 
 #### Examples
@@ -76,6 +163,70 @@ create <name of deck>
 [Normal]
   > create market-failure
 // New deck created: market-failure
+```
+### Tag an existing deck: `tag`
+
+Adds a tag to an existing deck of flashcards. The `tag` command expects one argument specifying the name of the deck
+ to tag. At least one additional argument after /tag specifies tags to be added to the deck.
+
+#### Format
+
+```java
+tag <index of deck> /tag <tag1> [<tag2>]
+```
+> Note: Do `decks` command first to obtain up-to-date index. 
+> Tags' name should not include spaces, spaces are used to separate different tags
+
+#### Examples
+
+```java
+[Normal]
+  > tag 1 /tag beginner
+// The deck market-failure has been tagged as: beginner
+```
+
+### Untag an existing tag: `untag`
+
+Removes an existing tag from an existing deck of flashcards. The `untag` command expects one argument specifying the 
+name of the deck to remove a deck from. At least one additional argument after /tag specifies tags to be removed from the deck.
+
+#### Format
+
+```java
+untag <index of deck> /tag <tag1> [<tag2>]
+// Do you want to remove the tag <tag1> from <name of deck>? [y/n] y/n
+```
+> Note: Do `decks` command first to obtain up-to-date index.
+> Tags' name should not include spaces, spaces are used to separate different tags.
+> 
+
+#### Examples
+
+```java
+[Normal]
+  > untag 1 /tag beginner
+// Do you want to remove the tag beginner from market-failure? [y/n] y/n
+// The tag beginner has been removed from the deck market-failure.
+```
+
+### Search decks by tag: `search`
+
+Searches all the decks containing the specified tag. The `search` command expects at least one argument specifying one 
+or more tags related to the deck. 
+
+#### Format
+
+```java
+search <tag1> [<tag2>]
+```
+#### Examples:
+
+```java
+[Normal]
+  > search beginner
+// The dacks having tags you are searching for:
+// 2. Micro-economics
+// 4. Macro-economics
 ```
 
 ### Display all decks: `decks`
@@ -102,7 +253,7 @@ decks
 
 ### Delete an existing deck: `delete`
 
-Deletes an existing deck of flashcards. The `delete` command expects one argument specifying the name of the deck to
+Deletes an existing deck of flashcards. The `delete` command expects one argument specifying the index of the deck to
  be deleted. User is then further prompted for an input of only either `y` or `n`.
  
 #### Format
@@ -114,7 +265,7 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
 // `name of deck` has been deleted.
 ```
 
-> Note: `name of deck` is a placeholder for the actual name of the deck corresonding to the index entered. The second
+> Note: `name of deck` is a placeholder for the actual name of the deck corresponding to the index entered. The second
 > line will only be displayed if the user entered y at the prompt for <y/n>.
 
 #### Examples
@@ -176,9 +327,99 @@ Enters the Deck Mode to edit an existing deck. The `edit` command expects one ar
 
 > Notice how the prompt mode identifier `[Normal]` changed to `[Deck - market-failure]`.
 
+### Game Mode: `start`
+
+Starts Game Mode for an existing deck. The `start` command expects one argument specifying the deck index for which to
+ enter Deck Mode.
+ 
+> The `start` command can also be entered from within Deck Mode, without the need for a deck index.
+ 
+#### Format
+
+```java
+[Normal]
+  > start <index of deck>
+```
+
+#### Examples
+
+```java
+[Normal]
+  > start 1
+// ------------------------------------------------------------
+// Welcome to Game Mode!
+//
+// In this mode, you test your knowledge against...
+// ... 
+//                                      ...Have fun!
+//
+// Game Mode is started for: [1] market-failure
+// ------------------------------------------------------------
+// Q: What is market failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  >
+```
+
+### Print an Existing Deck to a PowerPoint File: `pptx`
+
+Prints an existing deck to a new PowerPoint file named `<deck name>.pptx` in `pptx/` folder.
+The `pptx` command expects one argument specifying the deck index for which to enter Deck Mode.
+You can add the option `-y` to create the PowerPoint without any further prompt.
+
+ > The `pptx` command can also be entered from within Deck Mode, without the need for deck index.
+
+#### Format
+
+```java
+------------------------------------------------------------
+[Deck - `name of deck`]
+  > pptx <index of deck>
+// Do you want to print `name of deck` deck to PowerPoint? [y/n]
+//   > yes
+// Response should be 'y' or 'n'
+//   > y
+// ------------------------------------------------------------
+// `name of deck` has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+```java
+------------------------------------------------------------
+[Deck - `name of deck`]
+  > pptx <index of deck> -y
+// ------------------------------------------------------------
+// `name of deck` has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+#### Examples
+
+```java
+------------------------------------------------------------
+[Deck - Micro-Economics]
+  > pptx 1
+// Do you want to print Micro-Economics deck to PowerPoint? [y/n]
+//   > yes
+// Response should be 'y' or 'n'
+//   > y
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+```java
+------------------------------------------------------------
+[Deck - Micro-Economics]
+  > pptx 1 -y
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+
 ### Viewing help in Normal Mode: `help`
 
-Displays the list of all commands in Normal Mode.
+Displays the list of all commands in Normal Mode. 
 
 #### Examples
 
@@ -204,153 +445,182 @@ Displays the list of all commands in Normal Mode.
 
 ## Features - Deck Mode
 
-### Add a flashcard: `create`
-
-Adds a flashcard to the end of the current deck.
-The `add` command expects no initial arguments.
-Instructions and format of card entry is displayed.
-Then, the user is prompted to specify the details of the flashcard to be added.
+### Add a flashcard: `add`
+Adds a flashcard to the end of the current deck. The `add` command expects no initial arguments. Instructions and 
+format of card entry is displayed. Then, the user is prompted to specify the details of the flashcard to be added.
 
 #### Format
-
+```java
+add
+// Enter question: <question description>
+// Enter answer: <question answer or explanation>
 ```
-[Deck - `name`]
-  > add
-// ------------------------------------------------------------
-// You are now adding a FlashCard to: name
-// ------------------------------------------------------------
-// Enter question:
-   > <question description>
-// Enter answer:
-   > <question answer or explanation>
-// FlashCard successfully added!
-// ------------------------------------------------------------
-```
-> Note: `name` is a placeholder for the actual name of the deck that is being edited.
+ 
 
 #### Examples
 
-```
-[Deck - market failure]
-  > add
+```java
+// [Deck - market failure]
+     > add 
+// Enter question: <question description>
 // ------------------------------------------------------------
 // You are now adding a FlashCard to: market failure
 // ------------------------------------------------------------
 // Enter question:
-   > define market failure
+     > define market failure
 // Enter answer:
-   > Economic situation defined by inefficient distribution of goods and services in the free market
-// FlashCard successfully added!
-// ------------------------------------------------------------
-[Deck - market failure]
+     > Market failure is the economic situation defined by an inefficient distribution of goods 
+and services in the free market
+// FlashCard successfully added! 
+// ------------------------------------------------------------ 
 ```
 
-### List all flashcards: `list`
-
-Displays an enumerated list of the flashcards in the current deck.
-By default, the `list` command displays only the question for each flashcard.
-Optionally, the user can append the argument `/ans` that will prompt the program
-to also list the answer for each flashcard.
+### List all the flashcards in the deck: `list`
+Lists all the existing flash cards within the current deck. You can add the option `\ans` after the `list` command 
+to show all the questions, and their respective answers.
 
 #### Format
-
-```
-[Deck - `name`]
-  > list [/ans]
-```
-> Note: `name` is a placeholder for the actual name of the deck that is being edited.
-
-#### Examples
-
-List without answers:
-```
-[Deck - market failure]
+```java
+[Deck - `name of deck`]
   > list
 // ------------------------------------------------------------
-// You are now viewing deck: [Deck - market failure]
+// You are now viewing deck: `name of deck`
 // ------------------------------------------------------------
-// 1. Question: Define market failure.
-
-// 2. Question: What is the difference between free-loading and
-//              free-riding?
-
+// 1. Question: <question 1>
+// 
+// 2. Question: <question 2>
+//
+// 3. Question: <question 3>
 // ------------------------------------------------------------
-[Deck - market failure]
+```
+
+```java
+[Deck - `name of deck`]
+  > list /ans
+// ------------------------------------------------------------
+// You are now viewing deck: `name of deck`
+// ------------------------------------------------------------
+// 1. Question: <question 1>
+//    Answer:   <answer 1>
+//
+// 2. Question: <question 2>
+//    Answer:   <answer 2>
+//
+// 3. Question: <question 3>
+//    Answer:   <answer 3>
+// ------------------------------------------------------------
+```
+
+#### Examples
+List without answers:
+```java
+[Deck - market-failure]
+  > list
+// ------------------------------------------------------------
+// You are now viewing deck: market-failure
+// ------------------------------------------------------------
+// 1. Question: define market failure
+//
+// 2. Question: What is a public good?
+//
+// 3. Question: What is a merit good?
+// ------------------------------------------------------------
 ```
 
 List with answers:
-```
-[Deck - market failure]
+```java
+[Deck - market-failure]
   > list /ans
 // ------------------------------------------------------------
-// You are now viewing deck: [Deck - market failure]
+// You are now viewing deck: market-failure
 // ------------------------------------------------------------
-// 1. Question: Define market failure.
-//    Answer:   Economic situation defined by inefficient
-//              distribution of goods and services in the free
-//              market
-
-// 2. Question: What is the difference between free-loading
-//              and free-riding?
-//    Answer:   Free-loading gives a benefit to the free-loader
-//              but there is a cost to the people taken
-//              advantage of. Free-riding is an advantage to
-//              the free-rider without imposing a cost on 
-//              others or society.
-
+// 1. Question: define market failure
+//    Answer:   Market failure is the economic situation
+//              defined by an inefficient distribution of goods
+//              and services in the free market
+// 
+// 2. Question: What is a public good?
+//    Answer:   A good which are non-rival and non-excludable
+// 
+// 3. Question: What is a merit good?
+//    Answer:   A good that people underestimates the benefits
+//              of
 // ------------------------------------------------------------
-[Deck - market failure]
 ```
 
-### Delete a flashcard: `delete`
+### Delete an existing Flash Card: `delete`
 
-Deletes the specified flashcard from the deck.
-
+Deletes an existing flashcard from deck. The `delete` command expects one argument specifying the index of the flash card to
+ be deleted. User is then further prompted for an input of only either `y` or `n`.
+ 
 #### Format
 
-```
-[Deck - `name`]
-  > delete <index of flashcard>
-// Do you want to delete `name of flashcard`? [y/n] <y/n>
-// `name of flashcard` has been deleted.
+```java
+[Deck - `name of deck`]
+  > delete 1
+// Do you want to delete the following flash card? [y/n]
+//   '<question 1>'
+  > n
+// ------------------------------------------------------------
 ```
 
-> Note: `name` is a placeholder for the actual name of the deck that is being edited.
-> Note: `name of flashcard` is a placeholder for the actual name of the flashcard corresonding to the index entered.
-> The second line will only be displayed if the user entered y at the prompt for <y/n>.
+```java
+[Deck - `name of deck`]
+  > delete 2
+// Do you want to delete the following flash card? [y/n]?
+//   '<question 2>'? 
+  > y
+// ------------------------------------------------------------
+// The following flash card has been deleted:
+//   '<question 2>'
+// ------------------------------------------------------------
+```
+
+> Note: `name of deck` is a placeholder for the name of the current deck. The second
+> line will only be displayed if the user entered y at the prompt for <y/n>.
 
 #### Examples
 
-Deciding not to delete: 
-```
-[Deck - market failure]
+Deciding not to delete:
+```java
+[Deck - market-failure]
   > delete 1
-// Do you want to delete Define market failure? [y/n] n
-[Deck - market failure]
+// Do you want to delete the following flash card? [y/n]
+//   `define market failure?`
+  > n
+// ------------------------------------------------------------
 ```
 
 Confirming a delete:
-```
-[Deck - market failure]
-  > delete 1
-// Do you want to delete Define market failure? [y/n] y
-// Define market failure has been deleted.
-[Deck - market failure]
-  >
+```java
+[Deck - market-failure]
+  > delete 2
+// Do you want to delete the following flash card? [y/n]?
+//   'What is a public good?'? 
+  > y
+// ------------------------------------------------------------
+// The following flash card has been deleted:
+//   'What is a public good?'
+// ------------------------------------------------------------
 ```
 
 Entering an invalid response:
 ```
 [Deck - market failure]
-  > delete 1
-// Do you want to delete Define market failure? [y/n] not_y_or_n
+  > delete 2
+// Do you want to delete the following flash card? [y/n]?
+//   'What is a public good?'?
+  > definitely
 // Response should be 'y' or 'n'!
-// Do you want to delete Define market failure? [y/n] y
-// Define market failure has been deleted.
-[Deck - market failure]
+// Do you want to delete Define market failure? [y/n]?
+  > y
+// ------------------------------------------------------------
+// The following flash card has been deleted:
+//   'What is a public good?'
+// ------------------------------------------------------------
 ```
 
-### Update a flashcard: `update`
+### Update an existing Flash Card: `update`
 
 Updates the question and answer fields of a  specified flashcard
 in the deck.
@@ -431,23 +701,113 @@ No updates:
 // Original question and answer retained.
 ```
 
-### Exit Deck Mode: `done`
+### Game Mode: `start`
 
-Exits Deck Mode and returns to Normal Mode.
-
+Starts Game Mode for the current deck. 
+ 
+> The `start` command can also be entered from within Normal Mode.
+ 
 #### Format
 
-`done`
+```java
+[Deck - market-failure]
+  > start 
+```
 
 #### Examples
 
+```java
+// You are now in Deck Mode, editing: [1] market-failure
+// ------------------------------------------------------------
+[Deck - market-failure]
+  > ...
+// ...
+// ------------------------------------------------------------
+[Deck - market-failure]
+  > start 1
+// ------------------------------------------------------------
+// Welcome to Game Mode!
+//
+// In this mode, you test your knowledge against...
+// ... 
+//                                      ...Have fun!
+//
+// Game Mode is started for: [1] market-failure
+// ------------------------------------------------------------
+// Q: What is market failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  >
 ```
-[Deck - market failure]
+
+### Print Current Deck to a PowerPoint File: `pptx`
+
+Prints the current deck to a new PowerPoint file named `<deck name>.pptx` in `pptx/` folder.
+You can add the option `-y` to create the PowerPoint without any further prompt.
+
+> The `pptx` command can also be entered from within Normal Mode.
+ 
+#### Format
+
+```java
+------------------------------------------------------------
+[Deck - `name of deck`]
+  > pptx
+// Do you want to print `name of deck` deck to PowerPoint? [y/n]
+//   > yes
+// Response should be 'y' or 'n'
+//   > y
+// ------------------------------------------------------------
+// `name of deck` has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+```java
+------------------------------------------------------------
+[Deck - `name of deck`]
+  > pptx -y
+// ------------------------------------------------------------
+// `name of deck` has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+#### Examples
+
+```java
+------------------------------------------------------------
+[Deck - Micro-Economics]
+  > pptx
+// Do you want to print Micro-Economics deck to PowerPoint? [y/n]
+//   > yes
+// Response should be 'y' or 'n'
+//   > y
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+```java
+------------------------------------------------------------
+[Deck - Micro-Economics]
+  > pptx -y
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint.
+// ------------------------------------------------------------
+```
+
+### Exits Deck Mode: `done`
+
+Returns to Normal Mode.
+
+#### Examples
+
+```java
+[Deck - market-failure]
   > done
-------------------------------------------------------------
-You are back in Normal Mode
-------------------------------------------------------------
+// ------------------------------------------------------------
+// You are back in Normal Mode
+// ------------------------------------------------------------
 [Normal]
+  >
 ```
 
 ### Viewing help in Deck Mode: `help`
@@ -456,59 +816,287 @@ Displays the list of all commands in Deck Mode.
 
 #### Examples
 
-```
-[Deck - market failure]
+```java
+[Deck - market-failure]
   > help
 // ------------------------------------------------------------
 // eCardnomics.
 // Deck Mode.
-
+// 
 // Usage:
-//   add            Adds a new flash card to the current deck.
-//   list [/ans]    Lists all flash cards in the current deck, optionally with answers.
-//   delete <ix>    Deletes the flash card at list index <ix> from the current deck.
-//   done           Exits from Deck Mode and returns to Normal Mode.
-//   exit           Exits the program.
-//   help           Show this output.
-
+//  add            Adds a new flash card to the current deck.
+//  list [/ans]    Lists all flash cards in the current deck, optionally with answers.
+//  delete <ix>    Deletes the flash card at list index <ix> from the current deck.
+//  done           Exits from Deck Mode and returns to Normal Mode.
+//  exit           Exits the program.
+//  help           Show this output.
+//
 // Options:
-//   --version      Show version.
+//  --version      Show version.
 // ------------------------------------------------------------
-[Deck - market failure]
-  > 
 ```
 
-## Features - Anywhere
+## Features - Game Mode
 
-### Exit the program: `exit`
+### Gameplay
 
-Exits the program.
+Questions are displayed in a randomised order. At each question, the user will:
+
+1. Try to attempt an answer at the question, by typing at the prompt; then
+2. Press `<enter>` (optionally with an empty attempt).
+
+Then, the correct answer is displayed, and our 'advanced' algorithm scores the user's attempt against the correct
+ answer. Finally, the user is given the option to re-attempt the question later. See below for example gamplay.
+ 
+#### Examples
+
+* Start Game Mode (from within Deck Mode)
+
+```java
+[Deck - Micro-Economics]
+  > list
+// ------------------------------------------------------------
+// You are now viewing deck: Micro-Economics
+// 1. Question: What is the Law of demand?
+// 
+// 2. Question: What is the Law of supply?
+//
+// 3. Question: What is price elasticity of demand?
+//
+// 4. Question: What is price elasticity of supply?
+// ------------------------------------------------------------
+[Deck - Micro-Economics]
+  > start
+```
+
+* Play!
+
+```java
+// ...
+// Game Mode is started for: [1] Micro-Economics
+// ------------------------------------------------------------
+// Q: What is the Law of supply?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+   > Price of good increases, quantity supplied increases.
+// A: When the price of a good increases, the quantity supplied increases, ceteris paribus.
+// The % match between your answer and the actual answer is: 53.85
+// ------------------------------------------------------------
+// Do you want to re-attempt this question later? [y/n]
+  > y
+// ------------------------------------------------------------
+// Q: What is price elasticity of demand?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > I don't know.
+// A: Percentage change in quantity demanded caused by a 1 percent change in price.
+// The % match between your answer and the actual answer is: 0.00
+// ------------------------------------------------------------
+// Do you want to re-attempt this question later? [y/n]
+  > y
+// ------------------------------------------------------------
+// Q: What is the Law of demand?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > Quantity of good demanded fall when price of good rises.
+// A: When the price of a good rises, the quantity of the good demanded will fall, ceteris paribus.
+// The % match between your answer and the actual answer is: 58.82
+// ------------------------------------------------------------
+// Do you want to re-attempt this question later? [y/n]
+  > n
+// ------------------------------------------------------------
+// Q: What is price elasticity of supply?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > Percentage change in quantity supplied for a 1 percent price change
+// A: Percentage change in quantity supplied caused by a 1 percent change in price.
+// The % match between your answer and the actual answer is: 84.62
+// ------------------------------------------------------------
+// Do you want to re-attempt this question later? [y/n]
+  > n
+// ------------------------------------------------------------
+// Q: What is price elasticity of demand?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > Percentage change in quantity demanded for a 1 percent price change.
+// A: Percentage change in quantity demanded caused by a 1 percent change in price.
+// The % match between your answer and the actual answer is: 84.62
+// ------------------------------------------------------------
+// Do you want to re-attempt this question later? [y/n]
+  > n
+// ------------------------------------------------------------
+// Q: What is the Law of supply?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > Price of a good increases, the quantity supplied increases, ceteris paribus.
+// A: When the price of a good increases, the quantity supplied increases, ceteris paribus.
+// The % match between your answer and the actual answer is: 92.31
+// ------------------------------------------------------------
+// Do you want to re-attempt this question later? [y/n]
+  > n
+// ------------------------------------------------------------
+// You have completed all the flash cards in this deck!
+// Returning to Normal Mode...
+// ------------------------------------------------------------
+// You are back in Normal Mode
+// ------------------------------------------------------------
+[Normal]
+  >
+```
+
+### Exits Game Mode: `done`
+
+Returns to Normal Mode.
 
 #### Examples
 
-In Normal Mode:
-```
+```java
+// ...
+// ------------------------------------------------------------
+// Q: What is market-failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > done
+// ------------------------------------------------------------
+// You are back in Normal Mode
+// ------------------------------------------------------------
 [Normal]
-  > exit
-------------------------------------------------------------
-Bye. Hope to see you again soon!
-------------------------------------------------------------
+  > 
 ```
 
-In Deck Mode:
+### Viewing help in Game Mode: `help`
+
+Displays the list of all commands in Game Mode.
+
+#### Examples
+
+```java
+// ...
+// ------------------------------------------------------------
+// Q: What is market-failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > help
+// ------------------------------------------------------------
+// eCardnomics.
+// Game Mode.
+//
+// Usage:
+//   done           Exits from Game Mode and returns to Normal Mode.
+//   exit           Exits the program.
+//   help           Show this output.
+// 
+// Options:
+//   --version      Show version.
+//
+// Gameplay:
+// Questions will be displayed in a randomised order. At each question, you can
+//     1. Try to attempt an answer at the question, by typing at the prompt
+//     2. Press <enter> (with an empty attempt if you want to do it in your head)
+// 
+// Then, our 'advanced' algorithms will check your answer and score your answer 
+// (if any), and display the correct answer for you to check your answer against.
+// Finally, we will ask if you think you got it right. If you did not, the
+// question will be inserted back into the question pool, and you will get a 
+// chance to attempt it again!
+// ------------------------------------------------------------
+// Q: What is market-failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > 
 ```
-[Deck - market failure]
+
+## Features - Print to PowerPoint
+### Create new PowerPoint based on the selected deck: `pptx`
+
+Can be done from both Normal Mode and Deck Mode. In Normal Mode, a deck index is required, 
+but in Deck Mode, there is no need to specify the deck index.
+Has the option to skip confirmation prompt using `-y` suffix.
+
+For details, check out:
+[Normal Mode PowerPoint](#print-an-existing-deck-to-a-powerpoint-file-pptx)
+[Deck Mode PowerPoint](#print-current-deck-to-a-powerpoint-file-pptx)
+
+
+## Features - Anywhere
+
+### Exits the program: `exit`
+
+Can be entered from any mode, anywhere in the program.
+
+> Except during Y/N prompts.
+
+#### Examples
+
+```java
+[Normal]
   > exit
-------------------------------------------------------------
-Bye. Hope to see you again soon!
-------------------------------------------------------------
+// ------------------------------------------------------------
+// Bye! Hope to see you again soon!
+// ------------------------------------------------------------
+```
+
+```java
+[Deck - market-failure]
+  > exit
+// ------------------------------------------------------------
+// Bye! Hope to see you again soon!
+// ------------------------------------------------------------
+```
+
+```java
+...
+// ------------------------------------------------------------
+// Q: What is market-failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > exit
+// ------------------------------------------------------------
+// Bye! Hope to see you again soon!
+// ------------------------------------------------------------
+```
+
+### Shows release version: `--version`
+
+Shows release version from anywhere in the program.
+
+> Except during Y/N prompts.
+
+#### Examples
+
+```java
+// ...
+// ------------------------------------------------------------
+// Q: What is market-failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > --version
+// ------------------------------------------------------------
+// Version: 2.0
+// ------------------------------------------------------------
+// Q: What is market-failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > 
+>>>>>>> 429309550e9b48eed8cfca922df8d0c27452898a
 ```
 
 ## FAQ
 
-**Q**: How do I transfer my data to another computer? 
+### Game Mode
 
-**A**: {your answer here}
+**Q**: What if my flash card answer contains a single word "done" or "exit"?
+
+```java
+// Q: What is the command to exit Game Mode or Deck Mode?
+//   Enter your attempt below (or `done`, `exit`, or `help`):
+  > done
+// ------------------------------------------------------------
+// You are back in Normal Mode
+// ------------------------------------------------------------
+[Normal]
+  >
+```
+
+**A**: Escape the command using punctuations, e.g. `\exit` or `"exit"`.
+
+```java
+// Q: What is the command to exit Game Mode or Deck Mode?
+//   Enter your attempt below (or `done`, `exit`, or `help`):
+  > "done"
+// A: done
+// The % match between your answer and the actual answer is: 100.00
+// ------------------------------------------------------------
+// ...
+```
 
 ## Command Summary
 
@@ -516,10 +1104,12 @@ Bye. Hope to see you again soon!
 
 |Action|Format|Example|
 |------|------|-------|
-|Create deck|`create `|`create market-failure`|
+|Create deck|`create <nm>`|`create market-failure`|
 |Display decks|`decks`||
-|Delete deck|`delete `|`delete 1`|
-|Enter Deck Mode|`edit `|`edit 1`|
+|Delete deck|`delete <ix>`|`delete 1`|
+|Enter Deck Mode|`edit <ix>`|`edit 1`|
+|Enter Game Mode|`start <ix>`|`start 1`|
+|Create PowerPoint|`pptx <ix> [-y]`|`pptx 1`|
 |Help|`help`||
 
 ### Deck Mode
@@ -528,8 +1118,17 @@ Bye. Hope to see you again soon!
 |------|------|-------|
 |Add flash card|`add`||
 |List flash cards|`list [/ans]`||
-|Delete flash card|`delete `|`delete 1`|
+|Delete flash card|`delete <ix>`|`delete 1`|
+|Enter Game Mode|`start`||
+|Create PowerPoint|`pptx [-y]`||
 |Exit Deck Mode|`done`||
+|Help|`help`||
+
+### Game Mode
+
+|Action|Format|Example|
+|------|------|-------|
+|Done|`done`||
 |Help|`help`||
 
 ### Anywhere
@@ -537,3 +1136,4 @@ Bye. Hope to see you again soon!
 |Action|Format|Example|
 |------|------|-------|
 |Exit program|`exit`||
+|Show version|`--version`||

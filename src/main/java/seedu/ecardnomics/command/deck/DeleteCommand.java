@@ -1,6 +1,5 @@
 package seedu.ecardnomics.command.deck;
 
-import seedu.ecardnomics.command.DeckCommand;
 import seedu.ecardnomics.deck.Deck;
 
 public class DeleteCommand extends DeckCommand {
@@ -9,6 +8,7 @@ public class DeleteCommand extends DeckCommand {
 
     public DeleteCommand(Deck deck, int flashCardID, boolean isFlashCardDeleted) {
         super(deck);
+        assert (flashCardID >= 0 && flashCardID < deck.size()) : "Index must be within range.";
         this.flashCardID = flashCardID;
         this.isFlashCardDeleted = isFlashCardDeleted;
     }

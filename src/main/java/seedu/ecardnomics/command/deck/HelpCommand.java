@@ -1,7 +1,6 @@
 package seedu.ecardnomics.command.deck;
 
 import seedu.ecardnomics.Ui;
-import seedu.ecardnomics.command.DeckCommand;
 
 public class HelpCommand extends DeckCommand {
     public static final String DECK_HELP = ""
@@ -12,6 +11,7 @@ public class HelpCommand extends DeckCommand {
             + "  add            Adds a new flash card to the current deck.\n"
             + "  list [/ans]    Lists all flash cards in the current deck, optionally with answers.\n"
             + "  delete <ix>    Deletes the flash card at list index <ix> from the current deck.\n"
+            + "  pptx [-y]      Creates a PowerPoint slides based on the current deck.\n"
             + "  done           Exits from Deck Mode and returns to Normal Mode.\n"
             + "  exit           Exits the program.\n"
             + "  help           Show this output.\n"
