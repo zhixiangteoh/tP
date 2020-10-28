@@ -18,6 +18,15 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
   + [Create a new deck: `create`](#create-a-new-deck---create-)
     - [Format](#format)
     - [Examples](#examples)
+  + [Tag an existing deck: `tag`](#tag-an-existing-deck--tag-)
+    - [Format](#format-19)
+    - [Examples](#examples-19)
+  + [Untag an existing tag: `untag`](#untag-an-existing-tag--untag-)
+    - [Format](#format-20)
+    - [Examples](#examples-20) 
+  + [Search decks by tag: `search`](#search-decks-by-tag-search-)
+    - [Format](#format-21)
+    - [Examples](#examples-21)
   + [Display all decks: `decks`](#display-all-decks---decks-)
     - [Format](#format-1)
     - [Examples](#examples-1)
@@ -135,8 +144,13 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
 
 #### Format
 
+Create deck without tags:
 ```java
 create <name of deck>
+```
+Create deck with tag(s):
+```java
+create <name of deck> [/tag <tag1> [<tag2>/]]
 ```
 
 #### Examples
@@ -145,6 +159,70 @@ create <name of deck>
 [Normal]
   > create market-failure
 // New deck created: market-failure
+```
+### Tag an existing deck: `tag`
+
+Adds a tag to an existing deck of flashcards. The `tag` command expects one argument specifying the name of the deck
+ to tag. At least one additional argument after /tag specifies tags to be added to the deck.
+
+#### Format
+
+```java
+tag <index of deck> /tag <tag1> [<tag2>]
+```
+> Note: Do `decks` command first to obtain up-to-date index. 
+> Tags' name should not include spaces, spaces are used to separate different tags
+
+#### Examples
+
+```java
+[Normal]
+  > tag 1 /tag beginner
+// The deck market-failure has been tagged as: beginner
+```
+
+### Untag an existing tag: `untag`
+
+Removes an existing tag from an existing deck of flashcards. The `untag` command expects one argument specifying the 
+name of the deck to remove a deck from. At least one additional argument after /tag specifies tags to be removed from the deck.
+
+#### Format
+
+```java
+untag <index of deck> /tag <tag1> [<tag2>]
+// Do you want to remove the tag <tag1> from <name of deck>? [y/n] y/n
+```
+> Note: Do `decks` command first to obtain up-to-date index.
+> Tags' name should not include spaces, spaces are used to separate different tags.
+> 
+
+#### Examples
+
+```java
+[Normal]
+  > untag 1 /tag beginner
+// Do you want to remove the tag beginner from market-failure? [y/n] y/n
+// The tag beginner has been removed from the deck market-failure.
+```
+
+### Search decks by tag: `search`
+
+Searches all the decks containing the specified tag. The `search` command expects at least one argument specifying one 
+or more tags related to the deck. 
+
+#### Format
+
+```java
+search <tag1> [<tag2>]
+```
+#### Examples:
+
+```java
+[Normal]
+  > search beginner
+// The dacks having tags you are searching for:
+// 2. Micro-economics
+// 4. Macro-economics
 ```
 
 ### Display all decks: `decks`
