@@ -1,21 +1,18 @@
 package seedu.ecardnomics.parser;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.ecardnomics.command.VoidCommand;
-import seedu.ecardnomics.command.deck.AddCommand;
-import seedu.ecardnomics.command.deck.DeleteCommand;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
 import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.normal.PowerPointCommand;
 import seedu.ecardnomics.deck.Deck;
+import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
-
-import java.io.ByteArrayInputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -124,6 +121,27 @@ class DeckParserTest {
     }
 
     @Test
+    void parseCommand_PptxCommandForceYes_success() {
+        try {
+            assertTrue(deckParser.parseCommand("pptx", "-y") instanceof PowerPointCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
+    void parseCommand_PptxCommandExtraArguments_exceptionThrown() {
+        try {
+            deckParser.parseCommand("pptx", "1");
+            deckParser.parseCommand("pptx", "1 -y");
+            deckParser.parseCommand("pptx", "-y 1");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexFormatException);
+        }
+    }
+
+    @Test
     void parseCommand_HelpCommand_success() throws Exception {
         assertTrue(deckParser.parseCommand("help", "") instanceof HelpCommand);
     }
@@ -147,12 +165,23 @@ class DeckParserTest {
 
     @BeforeEach
     void initialiseDeckParser() {
-        Deck deck = initialiseDeck(2);
-        deckParser = new DeckParser(deck);
+        DeckList deckList = initialiseDeckList(2);
+        Deck deck = initialiseDeck(deckList, 2);
+        deckParser = new DeckParser(deckList, deck);
     }
 
-    Deck initialiseDeck(int size) {
-        Deck deck = new Deck("Pokemon");
+    DeckList initialiseDeckList(int size) {
+        DeckList deckList = new DeckList();
+        for (int i = 1; i <= size; i++) {
+            Deck deck = new Deck(String.format("deck %d", i));
+            deckList.addDeck(deck);
+        }
+        return deckList;
+    }
+
+    Deck initialiseDeck(DeckList deckList, int size) {
+        deckList.addDeck(new Deck("Pokemon"));
+        Deck deck = deckList.getDeck(2);
         for (int i = 1; i <= size; i++) {
             FlashCard flashCard = new FlashCard(String.format("q %d", i), String.format("a %d", i));
             deck.add(flashCard);

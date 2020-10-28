@@ -6,6 +6,8 @@ import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.game.Game;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static seedu.ecardnomics.Main.VERSION_NUMBER;
 
@@ -42,15 +44,19 @@ public class Ui {
     public static final String DECKS_AVAILABLE_LINE =
             "The following decks are available:\n";
     public static final String DELETED_DECK_QUESTION_LINE =
-            "Do you want to delete %1$s deck? [y/n]";
+            "Do you want to delete %1$s deck? [y/n] ";
     public static final String DELETED_DECK_LINE =
             "%1$s has been deleted.";
+    public static final String PPTX_DECK_QUESTION_LINE =
+            "Do you want to print %1$s deck to PowerPoint? [y/n]\n  > ";
+    public static final String PPTX_DECK_LINE =
+            "%1$s has been created as PowerPoint.";
     public static final String INVALID_YN_RESPONSE_LINE =
-            "Response should be 'y' or 'n'!";
+            "Response should be 'y' or 'n'\n  > ";
     private static final String EMPTY_DECK_LINE =
             "Deck is currently empty!";
-    private static final String ALL_TAGS_LINE =
-            "The deck %1$s has been tagged as %2$s ";
+    private static final String NEW_TAGS_LINE =
+            "The deck %1$s has been tagged as: %2$s";
     private static final String REMOVED_TAGS_QUESTION_LINE =
             "Do you want to remove the tag(s) %1$s from %2$s? [y/n]";
     private static final String REMOVED_TAGS_LINE =
@@ -78,6 +84,18 @@ public class Ui {
                     + "Returning to Normal Mode...";
     private static final String GAME_EMPTY_DECK_LINE =
             EMPTY_DECK_LINE + " Please add some flash cards first.";
+    private static final String INVALID_TAGS_LINE =
+            "You entered invalid tag(s)!";
+    private static final String DECKS_HAVING_TAGS_LINE =
+            "The decks having tags you are searching for:";
+    private static final String NO_DECKS_WITH_TAGS_LINE =
+            "There is no decks having the tags you are looking for.";
+
+    public static final String QUESTION = "Question ";
+    public static final String ANSWER = "Answer";
+    public static final String CREATE_NEW_FILE_ERROR_LINE = "Error creating new file - ";
+    public static final String WRITE_TO_FILE_ERROR_LINE = "Error writing for file";
+    public static final String FILE_NOT_FOUND_ERROR_LINE = " not found or file currently open";
 
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
@@ -92,6 +110,8 @@ public class Ui {
     public static final String HELP = "help";
     public static final String TAG = "tag";
     public static final String UNTAG = "untag";
+    public static final String PPTX = "pptx";
+    public static final String SEARCH = "search";
 
     public static final String VERSION_CMD = "--version";
 
@@ -103,6 +123,7 @@ public class Ui {
     public static final String DASH_LINES = "------------------------------------------------------------";
 
     public static Scanner in = new Scanner(System.in);
+    private static Logger logger = Logger.getLogger("UiLogger");
 
     /**
      * Reads user input from command line.
@@ -238,15 +259,15 @@ public class Ui {
      * Displays an index list of FlashCards in the deck.
      *
      * @param deck deck to display
-     * @param type optional <code>/ans</code> to display answers
+     * @param isQuestionOnly print question only if true, question and answer otherwise
      */
-    public static void printDeck(Deck deck, String type) {
+    public static void printDeck(Deck deck, boolean isQuestionOnly) {
         String deckMessage = "";
-        if (deck.toString(type).trim().equals("")) {
+        if (deck.toString(isQuestionOnly).trim().equals("")) {
             deckMessage += EMPTY_DECK_LINE;
         } else {
-            deckMessage += LIST_FLASHCARDS_LINE + deck.getName() + "\n"
-                    + deck.toString(type);
+            deckMessage += LIST_FLASHCARDS_LINE + deck.getName() + System.lineSeparator()
+                    + deck.toString(isQuestionOnly);
         }
         printMessage(deckMessage);
     }
@@ -287,8 +308,11 @@ public class Ui {
      * @param deck in new Deck added
      */
     public static void printNewDeck(Deck deck) {
-        printMessage(NEW_DECK_CREATED_LINE + deck.getName()
-                + deck.getTag());
+        String tagsOfNewDeck = deck.getTagString();
+        if (!tagsOfNewDeck.isEmpty()) {
+            tagsOfNewDeck = " | Tag(s): " + tagsOfNewDeck;
+        }
+        printMessage(NEW_DECK_CREATED_LINE + deck.getName() + tagsOfNewDeck);
     }
 
     /**
@@ -319,12 +343,31 @@ public class Ui {
     }
 
     /**
+     * Confirms the deck the user wants to print to PowerPoint.
+     *
+     * @param pptxDeckName name of the pptx deck
+     */
+    public static void printPptxDeckQuestion(String pptxDeckName) {
+        System.out.print(String.format(PPTX_DECK_QUESTION_LINE, pptxDeckName));
+    }
+
+    /**
+     * Prints the name of the deck to be printed to PowerPoint.
+     *
+     * @param pptxDeckName name of the pptx deck
+     */
+    public static void printDeckPptxLine(String pptxDeckName) {
+        printMessage(String.format(PPTX_DECK_LINE, pptxDeckName));
+    }
+
+    /**
      * Prints the update question lines for a flashcard.
      *
      * @param flashCard for which the question should be updated.
      */
     public static void printUpdateQuestionLine(FlashCard flashCard) {
-        System.out.println(flashCard.toString("question"));
+        // No offset since printing from start of line.
+        System.out.println(flashCard.toString(true, 0));
         System.out.println(NEW_QUESTION_LINE);
         printPrompt();
     }
@@ -335,11 +378,18 @@ public class Ui {
      * @param flashCard for which the answer should be updated.
      */
     public static void printUpdateAnswerLine(FlashCard flashCard) {
-        System.out.println(flashCard.toString("answer"));
+        // No offset since printing from start of line.
+        System.out.println(flashCard.toString(false, 0));
         System.out.println(NEW_ANSWER_LINE);
         printPrompt();
     }
 
+    /**
+     * Prints line informing updated flashcards.
+     *
+     * @param hasNewQ boolean parameter indicating new Question provided
+     * @param hasNewA boolean parameter indicating new Answer providid
+     */
     public static void printFlashCardUpdatedLine(boolean hasNewQ, boolean hasNewA) {
         if (hasNewQ && hasNewA) {
             System.out.println(QNA_UPDATED_LINE);
@@ -358,7 +408,7 @@ public class Ui {
      * Prints a line prompting user to enter only 'y' or 'n'.
      */
     public static void printInvalidYorNResponse() {
-        System.out.println(INVALID_YN_RESPONSE_LINE);
+        System.out.print(INVALID_YN_RESPONSE_LINE);
     }
 
     public static void printVersionNumber() {
@@ -380,6 +430,10 @@ public class Ui {
         printPrompt();
     }
 
+    public static void printGameEmptyDeckLine() {
+        System.out.println(GAME_EMPTY_DECK_LINE);
+    }
+
     public static void printAnswerGameMode(String answer) {
         System.out.println("A: " + answer);
     }
@@ -388,20 +442,53 @@ public class Ui {
         System.out.println(DONE_GAME_LINE);
     }
 
-    public  static void printTags(String name, String tags) {
-        System.out.println(String.format(ALL_TAGS_LINE, name, tags));
+    /**
+     * Prints the new tags added to the deck.
+     *
+     * @param name the name of the deck
+     * @param newTags the tag(s) will be added to the deck
+     */
+    public static void printNewTags(String name, String[] newTags) {
+        String tagString = formStringOfTags(newTags);
+        printMessage(String.format(NEW_TAGS_LINE, name, tagString));
     }
 
+    /**
+     * Prints out warning about invalid tags provided.
+     */
+    public static void printInvalidTagsLine() {
+        logger.log(Level.WARNING, "User did not supply valid tags.");
+        printMessage(INVALID_TAGS_LINE);
+    }
+
+    /**
+     * Prints confirmation question before tag removal.
+     *
+     * @param deckName the name of the deck having tags being removed
+     * @param tags the tags will be removed
+     */
     public static void printRemovedTagsQuestion(String deckName, String[] tags) {
         String removedTags = formStringOfTags(tags);
         System.out.println(String.format(REMOVED_TAGS_QUESTION_LINE, removedTags, deckName));
     }
 
+    /**
+     * Prints the tags that are removed from the specified deck.
+     *
+     * @param deckName the name of the deck having removed tags
+     * @param tags tags were removed
+     */
     public static void printTagsRemovedLine(String deckName, String[] tags) {
         String removedTags = formStringOfTags(tags);
         System.out.println(String.format(REMOVED_TAGS_LINE, removedTags, deckName));
     }
 
+    /**
+     * Forms a String of provided tags.
+     *
+     * @param tags tags to be formed to String
+     * @return a String of tags
+     */
     public static String formStringOfTags(String[] tags) {
         String stringOfTags = "";
 
@@ -414,7 +501,99 @@ public class Ui {
         return stringOfTags;
     }
 
-    public static void printGameEmptyDeckLine() {
-        System.out.println(GAME_EMPTY_DECK_LINE);
+    /**
+     * Checks y or n response from user.
+     *
+     * @return Ui.Y if user enters confirms, otherwise Ui.N
+     */
+    private static String checkYorNResponse() {
+        logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
+        String response;
+        do {
+            response = readUserInput();
+            assert response != null : "response should not be null";
+            switch (response.trim()) {
+            case Y:
+                response = Y;
+                break;
+            case N:
+                response = N;
+                break;
+            default:
+                logger.log(Level.INFO, "User entered response other than 'y' or 'n'");
+                logger.log(Level.INFO, "Re-prompting...");
+                printInvalidYorNResponse();
+            }
+        } while (!response.trim().equals(Y) && !response.trim().equals(N));
+        assert (response.equals(Y) || response.equals(N)) : "Response should be y/n";
+        return response;
     }
+
+    /**
+     * Prepares a deck for being deleted.
+     *
+     * @param deckName String representing the index of the deck in deckList
+     * @return true if delete is confirmed, otherwise false
+     */
+    public static boolean getDeletedDeckConfirmation(String deckName) {
+        logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
+        printDashLines();
+        printDeletedDeckQuestion(deckName);
+
+        String response = checkYorNResponse();
+        assert (response.equals(Y) || response.equals(N)) : "response should be y/n";
+
+        switch (response) {
+        case Y:
+            printDeckDeletedLine(deckName);
+            printDashLines();
+            return true;
+        case N:
+            //
+            break;
+        default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
+            //
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether the user want to remove the tags specified
+     * from the deck specified.
+     *
+     * @param tags String[] representing the tags be removed
+     * @param deckName String representing the index of the deck of the tags
+     * @return true if the removal is confirmed, otherwise false
+     */
+    public static boolean getRemovedTagsConfirmation(String[] tags, String deckName) {
+        printDashLines();
+        printRemovedTagsQuestion(deckName, tags);
+        String response = checkYorNResponse();
+        assert (response.equals(Y) || response.equals(N)) : "response should be y/n";
+
+        switch (response) {
+        case Y:
+            printTagsRemovedLine(deckName, tags);
+            printDashLines();
+            return true;
+        case N:
+            //
+            break;
+        default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
+            //
+        }
+        return false;
+
+    }
+
+    public static void printSearchDecksLine(String decksHavingTags) {
+        if (decksHavingTags.isEmpty()) {
+            printMessage(NO_DECKS_WITH_TAGS_LINE);
+        } else {
+            printMessage(DECKS_HAVING_TAGS_LINE + decksHavingTags);
+        }
+    }
+
 }

@@ -18,6 +18,12 @@ public class Deck {
         tags = new ArrayList<>();
     }
 
+    /**
+     * Constructors with tags parameter.
+     *
+     * @param name the name of the new deck
+     * @param tags tags of the new deck
+     */
     public Deck(String name, ArrayList<String> tags) {
         assert (name != null && !name.isEmpty()) : "A deck requires a name.";
         this.name = name;
@@ -35,13 +41,17 @@ public class Deck {
         return name;
     }
 
-    public String getTag() {
+    public String getTagString() {
         String tagString = "";
         for (int j = 0; j < tags.size(); j++) {
             tagString += tags.get(j);
             tagString += " ";
         }
         return tagString;
+    }
+
+    public ArrayList<String> getTag() {
+        return tags;
     }
 
     public void addTag(String[] newTags) {
@@ -117,23 +127,25 @@ public class Deck {
 
     @Override
     public String toString() {
-        String output = name + ":\n";
-        for (int i = 0; i < deck.size(); i++) {
-            output += (i + 1) + ". " + deck.get(i).toString();
-            if (i != deck.size() - 1) {
-                output += "\n\n";
-            }
-        }
+        String output = name + ":" + System.lineSeparator();
+        output += this.toString(false);
         return output;
     }
 
-    public String toString(String type) {
+    public String toString(boolean isQuestionOnly) {
         String output = "";
         if (this.deck.size() == 0) {
             return output;
         }
+
         for (int i = 0; i < deck.size(); i++) {
-            output += (i + 1) + ". " + deck.get(i).toString(type);
+            String serialNumber = (i + 1) + ". ";
+            // Always print the question.
+            output += serialNumber + deck.get(i).toString(true, serialNumber.length());
+            if (!isQuestionOnly) {
+                // Add in the answer
+                output += System.lineSeparator() + deck.get(i).toString(false, serialNumber.length());
+            }
             if (i != deck.size() - 1) {
                 output += "\n\n";
             }

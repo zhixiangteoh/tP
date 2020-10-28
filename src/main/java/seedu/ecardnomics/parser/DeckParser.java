@@ -12,7 +12,6 @@ import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.deck.UpdateCommand;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VoidCommand;
-import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
@@ -34,7 +33,8 @@ public class DeckParser extends Parser {
     /**
      * Constructor.
      */
-    public DeckParser(Deck deck) {
+    public DeckParser(DeckList deckList, Deck deck) {
+        this.deckList = deckList;
         this.deck = deck;
     }
 
@@ -183,7 +183,10 @@ public class DeckParser extends Parser {
             return new HelpCommand();
         // Start
         case Ui.START:
-            return new NormalParser(Main.deckList).parseCommand(commandWord, arguments);
+            logger.log(Level.INFO, "Starting Game Mode");
+            System.out.println(deckList.getIndexOf(deck));
+            return new NormalParser(Main.deckList).parseCommand(commandWord,
+                    String.valueOf(deckList.getIndexOf(deck) + 1));
         // Add a FlashCard
         case Ui.ADD:
             logger.log(Level.INFO, "Preparing FlashCard to add");
@@ -209,6 +212,11 @@ public class DeckParser extends Parser {
             assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
             String[] newQnA = prepareUpdate(flashCardID);
             return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);
+        // Create PowerPoint
+        case Ui.PPTX:
+            logger.log(Level.INFO, "Printing to PowerPoint");
+            return new NormalParser(Main.deckList).parseCommand(commandWord,
+                    (deckList.getIndexOf(deck) + 1) + " " + arguments);
         default:
             logger.log(Level.WARNING, "returning VoidCommand object");
             return new VoidCommand();

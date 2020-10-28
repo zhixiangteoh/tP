@@ -15,12 +15,13 @@ public class TagCommand extends NormalCommand {
         super(decks);
         assert (index >= 0 && index < decks.size()) : "Index must be within range.";
         this.index = index;
+        assert  (newTags.length != 0) : "Tags must be provided.";
         this.newTags = newTags;
     }
 
     @Override
     public void execute() {
         deckList.getDeck(index).addTag(newTags);
-        Ui.printTags(deckList.getDeck(index).getName(), deckList.getDeck(index).getTag());
+        Ui.printNewTags(deckList.getDeck(index).getName(), newTags);
     }
 }
