@@ -74,32 +74,10 @@ public class NormalParser extends Parser {
         return deckList.getDeck(getIndex(arguments));
     }
 
-    /**
-     * Prepares a deck for being deleted.
-     *
-     * @param index int representing the index of the deck in deckList
-     * @return true if delete is confirmed, otherwise false
-     */
-    private boolean getDeletedDeckConfirmation(int index) {
-        Deck deck = deckList.getDeck(index);
-        logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
-
-        Ui.printDeletedDeckQuestion(deck.getName());
-
-        String response = checkYorNResponse();
-        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
-
-        switch (response) {
-        case Ui.Y:
-            return true;
-        case Ui.N:
-            //
-            break;
-        default:
-            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
-            //
-        }
-        return false;
+    private Command prepareDeleteDeck(String arguments) throws Exception {
+        int deckID = getIndex(arguments);
+        boolean isDeckDeleted = Ui.getDeletedDeckConfirmation(deckList.getDeck(deckID).getName());
+        return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
     }
 
     /**
@@ -127,8 +105,6 @@ public class NormalParser extends Parser {
         String[] newTags = idAndNewTags[1].trim().split(" ");
         return new TagCommand(deckList, deckID, newTags);
     }
-
-
 
     /**
      * Prepares new Tag Command from given arguments.
@@ -316,10 +292,8 @@ public class NormalParser extends Parser {
             return new DecksCommand(deckList);
         // Delete
         case Ui.DELETE:
-            int deckID = getIndex(arguments);
-            logger.log(Level.INFO, "User issued command to delete deck at index " + deckID);
-            boolean isDeckDeleted = Ui.getDeletedDeckConfirmation(deckList.getDeck(deckID).getName());
-            return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
+            logger.log(Level.INFO, "User issued command to delete deck");
+            return prepareDeleteDeck(arguments);
         // Tag
         case Ui.TAG:
             logger.log(Level.INFO, "User issued command to tag a deck.");
