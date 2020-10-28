@@ -45,7 +45,7 @@ public class NormalParser extends Parser {
 
         logger.log(Level.INFO, "Logging method getIndex() in NormalParser.");
         if (!indexString.matches(Ui.DIGITS_REGEX)) {
-            logger.log(Level.WARNING, "User did not enter a valid integer index.");
+            logger.log(Level.WARNING, "User did not enter a valid integer index. string = " + indexString);
             throw new IndexFormatException();
         }
 
@@ -75,8 +75,16 @@ public class NormalParser extends Parser {
     }
 
     private Command prepareDeleteDeck(String arguments) throws Exception {
-        int deckID = getIndex(arguments);
-        boolean isDeckDeleted = Ui.getDeletedDeckConfirmation(deckList.getDeck(deckID).getName());
+        boolean isDeckDeleted;
+        int deckID;
+        if (arguments.contains("-y")) {
+            arguments = arguments.replaceAll("-y", "");
+            deckID = getIndex(arguments);
+            isDeckDeleted = true;
+        } else {
+            deckID = getIndex(arguments);
+            isDeckDeleted = Ui.getDeletedDeckConfirmation(deckList.getDeck(deckID).getName());
+        }
         return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
     }
 
