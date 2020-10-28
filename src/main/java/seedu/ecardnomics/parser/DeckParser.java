@@ -38,27 +38,20 @@ public class DeckParser extends Parser {
         this.deck = deck;
     }
 
-    protected boolean prepareDeletedFlashCard(int flashCardID) {
-        logger.log(Level.INFO, "Retrieving flash card at flash card index");
-        FlashCard flashCard = deck.get(flashCardID);
-        assert flashCard != null : "flash card does not exist!";
+    protected Command prepareDeletedFlashCard(String arguments) throws Exception {
+        int flashCardID;
+        boolean isFlashCardDeleted;
 
-        String response = getDeleteYorNResponse(flashCard);
-        assert response.equals(Ui.Y) || response.equals(Ui.N) : "response not 'Y' or 'N'!";
-
-        switch (response) {
-        case Ui.Y:
-            Ui.printFlashCardDeletedLine(flashCard);
-            Ui.printDashLines();
-            return true;
-        case Ui.N:
-            //
-            break;
-        default:
-            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
-            //
+        if (arguments.contains("-y")) {
+            arguments = arguments.replaceAll("-y", "");
+            flashCardID = getIndex(arguments);
+            isFlashCardDeleted = true;
+        } else {
+            flashCardID = getIndex(arguments);
+            isFlashCardDeleted = Ui.getDeletedFlashCardConfirmation(deck.get(flashCardID).getQuestion());
         }
-        return false;
+        logger.log(Level.INFO, "returning DeleteCommand object");
+        return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
     }
 
     /**
@@ -74,7 +67,7 @@ public class DeckParser extends Parser {
         }
     }
 
-    protected String[] prepareFlashCard(String arguments) throws EmptyInputException {
+    protected Command prepareFlashCard(String arguments) throws EmptyInputException {
         String[] questionAndAnswer = new String[2];
 
         if (arguments.contains("/ans")) {
@@ -107,7 +100,8 @@ public class DeckParser extends Parser {
         Ui.printFlashCardAddedLine();
         Ui.printDashLines();
 
-        return questionAndAnswer;
+        logger.log(Level.INFO, "returning AddCommand object");
+        return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
     }
 
     protected String[] prepareUpdate(int flashCardID) {
@@ -160,31 +154,6 @@ public class DeckParser extends Parser {
         return index;
     }
 
-    protected String getDeleteYorNResponse(FlashCard flashCard) {
-        logger.log(Level.INFO, "Prompting user for 'Y' or 'N' response");
-        String response = "";
-
-        Ui.printDashLines();
-        do {
-            Ui.printDeleteFlashCardLine(flashCard);
-            response = Ui.readUserInput();
-            switch (response.trim()) {
-            case Ui.Y:
-                response = Ui.Y;
-                break;
-            case Ui.N:
-                response = Ui.N;
-                break;
-            default:
-                logger.log(Level.INFO, "User entered response other than 'Y' or 'N'");
-                Ui.printInvalidYorNResponse();
-                logger.log(Level.INFO, "Re-prompting...");
-            }
-        } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
-        assert response.length() == 1 : "response is not 'Y' or 'N'!";
-        return response;
-    }
-
     @Override
     protected Command parseCommand(String commandWord, String arguments)
             throws Exception {
@@ -214,9 +183,7 @@ public class DeckParser extends Parser {
         // Add a FlashCard
         case Ui.ADD:
             logger.log(Level.INFO, "Preparing FlashCard to add");
-            String[] questionAndAnswer = prepareFlashCard(arguments);
-            logger.log(Level.INFO, "returning AddCommand object");
-            return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
+            return prepareFlashCard(arguments);
         // List all FlashCards
         case Ui.LIST:
             logger.log(Level.INFO, "returning ListCommand object");
@@ -224,15 +191,11 @@ public class DeckParser extends Parser {
         // Delete a FlashCard
         case Ui.DELETE:
             logger.log(Level.INFO, "Preparing FlashCard to delete");
-            int flashCardID = getIndex(arguments);
-            assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
-            boolean isFlashCardDeleted = prepareDeletedFlashCard(flashCardID);
-            logger.log(Level.INFO, "returning DeleteCommand object");
-            return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
+            return prepareDeletedFlashCard(arguments);
         // Update a FlashCard
         case Ui.UPDATE:
             logger.log(Level.INFO, "Preparing FlashCard to update");
-            flashCardID = getIndex(arguments);
+            int flashCardID = getIndex(arguments);
             assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
             String[] newQnA = prepareUpdate(flashCardID);
             return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);

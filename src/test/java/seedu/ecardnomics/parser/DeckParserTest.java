@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
 import seedu.ecardnomics.command.deck.AddCommand;
+import seedu.ecardnomics.command.deck.DeleteCommand;
 import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.ExitCommand;
@@ -80,10 +81,10 @@ class DeckParserTest {
         assertTrue(deckParser.parseCommand("list", "") instanceof ListCommand);
     }
 
-    //@Test
-    //void parseCommand_DeleteCommand_success() throws Exception {
-    //assertTrue(deckParser.parseCommand("delete", "1") instanceof DeleteCommand);
-    //}
+    @Test
+    void parseCommand_DeleteCommand_success() throws Exception {
+        assertTrue(deckParser.parseCommand("delete", "1 -y") instanceof DeleteCommand);
+    }
 
     @Test
     void parseCommand_DeleteCommandNoIndex_exceptionThrown() {
