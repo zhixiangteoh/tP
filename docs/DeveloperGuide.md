@@ -50,7 +50,6 @@ and `DeckParser` for printing the appropriate output when required.
 3. This command will be executed by the Main class.
 4. The command execution then can affect the Model (e.g. creating a new deck)
 
-#### Parsers
 #### Commands
 
 ![DG-Design Commands UML](./images-dg/DG-Design-Commands.png?raw=true "Commands UML Class Diagram")
@@ -187,7 +186,17 @@ parameter `offset` instead of hardcoding `offset` to be
 listing flashcards. As a result, flashcards with different number of
 digits in the index will be misaligned when listing flashcards.
 
-### Tags and Filtering (Trang)
+### Tags for grouping and searching decks
+The purpose of this feature is to provide a mean to group the decks based on their subjects
+and search for relevant decks related to one or more relevant subjects in a robust way. Each created deck will
+tagged to their respective field.
+
+![DG-Implementation-Features-TagArchitecture](./images-dg/TagFeature-UML.png?raw=true)
+
+The user can also modify to tags of the decks by using tag or untag command, and uses search by tag to find
+a group of decks he/she is interested in.
+
+![DG-Implementation-Features-TagSequence](./images-dg/Tag.png?raw=true)
 
 ### Saving to text file (Wayne)
 
