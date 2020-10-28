@@ -47,31 +47,6 @@ public class GameParser extends Parser {
         return index;
     }
 
-    public String getInclExclYorNResponse() {
-        String response = "";
-
-        Ui.printDashLines();
-        do {
-            Ui.printIncludeExcludeLine();
-            response = Ui.readUserInput();
-            Ui.printDashLines();
-            switch (response.trim()) {
-            case Ui.Y:
-                response = Ui.Y;
-                break;
-            case Ui.N:
-                response = Ui.N;
-                break;
-            default:
-                logger.log(Level.INFO, "User entered response other than 'Y' or 'N'");
-                Ui.printInvalidYorNResponse();
-                logger.log(Level.INFO, "Re-prompting...");
-            }
-        } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
-        assert response.length() == 1 : "response is not 'Y' or 'N'!";
-        return response;
-    }
-
     @Override
     protected Command parseCommand(String commandWord, String arguments) {
 

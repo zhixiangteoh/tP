@@ -40,21 +40,21 @@ public class GameEngine {
             }
             Ui.printAnswerGameMode(flashCard.getAnswer());
             try {
-                Ui.printAttemptFeedback(checkResponse(command, flashCard));
+                Ui.printAttemptFeedback(checkAttempt(command, flashCard));
             } catch (Exception e) {
                 e.getMessage();
             }
-            command = update(getInclExclYorNResponse(), flashCard, command);
+            command = update(Ui.getInclExclConfirmation(), flashCard, command);
 
         } while (!isTerminate(command) && !isNoMoreCards());
 
         return command;
     }
 
-    Command update(String response, FlashCard flashCard, Command command) {
+    Command update(boolean isResponseY, FlashCard flashCard, Command command) {
         assert !isTerminate(command) : "Command is either `done` or `exit` when it shouldn't be!";
 
-        updateRetestStore(response, flashCard);
+        updateRetestStore(isResponseY, flashCard);
 
         if (storage.deque.isEmpty()) {
             if (storage.retestStore.isEmpty()) {
@@ -73,22 +73,16 @@ public class GameEngine {
         storage.refreshRetestStore();
     }
 
-    void updateRetestStore(String response, FlashCard flashCard) {
-        switch (response) {
-        // include
-        case Ui.Y:
+    void updateRetestStore(boolean response, FlashCard flashCard) {
+        if (response) {
             if (!storage.retestStore.contains(flashCard)) {
                 storage.retestStore.add(flashCard);
             }
-            break;
-        // exclude
-        case Ui.N:
+        } else {
+
             if (!storage.retestStore.contains(flashCard)) {
                 storage.retestStore.remove(flashCard);
             }
-            break;
-        default:
-            //
         }
     }
 
@@ -100,17 +94,13 @@ public class GameEngine {
         Ui.printGameQuestion(flashCard.getQuestion());
     }
 
-    String getInclExclYorNResponse() {
-        return gameParser.getInclExclYorNResponse();
-    }
-
     Command getAttempt() {
         String userInput = Ui.readUserInput();
         Command command = gameParser.parse(userInput);
         return command;
     }
 
-    double checkResponse(Command command, FlashCard flashCard) throws Exception {
+    double checkAttempt(Command command, FlashCard flashCard) throws Exception {
         if (!(command instanceof GameResponseCommand)) {
             throw new Exception();
         }
