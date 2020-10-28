@@ -19,65 +19,68 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     - [Format](#format)
     - [Examples](#examples)
   + [Tag an existing deck: `tag`](#tag-an-existing-deck--tag-)
-    - [Format](#format-19)
-    - [Examples](#examples-19)
-  + [Untag an existing tag: `untag`](#untag-an-existing-tag--untag-)
-    - [Format](#format-20)
-    - [Examples](#examples-20) 
-  + [Search decks by tag: `search`](#search-decks-by-tag-search-)
-    - [Format](#format-21)
-    - [Examples](#examples-21)
-  + [Display all decks: `decks`](#display-all-decks---decks-)
     - [Format](#format-1)
     - [Examples](#examples-1)
-  + [Delete an existing deck: `delete`](#delete-an-existing-deck---delete-)
+  + [Untag an existing tag: `untag`](#untag-an-existing-tag--untag-)
     - [Format](#format-2)
-    - [Examples](#examples-2)
-  + [Deck Mode: `edit`](#deck-mode---edit-)
+    - [Examples](#examples-2) 
+  + [Search decks by tag: `search`](#search-decks-by-tag-search-)
     - [Format](#format-3)
     - [Examples](#examples-3)
-  + [Game Mode: `start`](#game-mode---start-)
+  + [Display all decks: `decks`](#display-all-decks---decks-)
     - [Format](#format-4)
     - [Examples](#examples-4)
-  + [Print to PowerPoint: `pptx``](#print-an-existing-deck-to-a-powerpoint-file-pptx)
+  + [Delete an existing deck: `delete`](#delete-an-existing-deck---delete-)
     - [Format](#format-5)
     - [Examples](#examples-5)
-  + [Viewing help in Normal Mode: `help`](#viewing-help-in-normal-mode---help-)
+  + [Deck Mode: `edit`](#deck-mode---edit-)
+    - [Format](#format-6)
     - [Examples](#examples-6)
+  + [Game Mode: `start`](#game-mode---start-)
+    - [Format](#format-7)
+    - [Examples](#examples-7)
+  + [Print to PowerPoint: `pptx``](#print-an-existing-deck-to-a-powerpoint-file-pptx)
+    - [Format](#format-8)
+    - [Examples](#examples-8)
+  + [Viewing help in Normal Mode: `help`](#viewing-help-in-normal-mode---help-)
+    - [Examples](#examples-9)
 * [Features - Deck Mode](#features---deck-mode)
   + [Add a flashcard: `add`](#add-a-flashcard---add-)
-    - [Format](#format-6)
-    - [Examples](#examples-7)
-  + [List all the flashcards in the deck: `list`](#list-all-the-flashcards-in-the-deck---list-)
-    - [Format](#format-7)
-    - [Examples](#examples-8)
-  + [Delete an existing Flash Card: `delete`](#delete-an-existing-flash-card---delete-)
-    - [Format](#format-8)
-    - [Examples](#examples-9)
-  + [Game Mode: `start`](#game-mode---start--1)
     - [Format](#format-9)
     - [Examples](#examples-10)
-  + [Print to PowerPoint: `pptx`](#print-current-deck-to-a-powerpoint-file-pptx)
+  + [List all the flashcards in the deck: `list`](#list-all-the-flashcards-in-the-deck---list-)
     - [Format](#format-10)
     - [Examples](#examples-11)
-  + [Exits Deck Mode: `done`](#exits-deck-mode---done-)
+  + [Delete an existing Flash Card: `delete`](#delete-an-existing-flash-card---delete-)
+    - [Format](#format-11)
     - [Examples](#examples-12)
+  + [Update an existing Flash Card: `update`](#update-an-existing-flash-card---update-)
+    -[Format](#format-12)
+    -[Examples] (#examples-13)
+  + [Game Mode: `start`](#game-mode---start--1)
+    - [Format](#format-13)
+    - [Examples](#examples-14)
+  + [Print to PowerPoint: `pptx`](#print-current-deck-to-a-powerpoint-file-pptx)
+    - [Format](#format-14)
+    - [Examples](#examples-15)
+  + [Exits Deck Mode: `done`](#exits-deck-mode---done-)
+    - [Examples](#examples-16)
   + [Viewing help in Deck Mode: `help`](#viewing-help-in-deck-mode---help-)
-    - [Examples](#examples-13)
+    - [Examples](#examples-17)
 * [Features - Game Mode](#features---game-mode)
   + [Gameplay](#gameplay)
-    - [Examples](#examples-14)
+    - [Examples](#examples-18)
   + [Exits Game Mode: `done`](#exits-game-mode---done-)
-    - [Examples](#examples-15)
+    - [Examples](#examples-19)
   + [Viewing help in Game Mode: `help`](#viewing-help-in-game-mode---help-)
-    - [Examples](#examples-16)
+    - [Examples](#examples-20)
 * [Features - Print to PowerPoint](#features---print-to-powerpoint)
   + [Create New PowerPoint](#create-new-powerpoint-based-on-the-selected-deck-pptx)
 * [Features - Anywhere](#features---anywhere)
   + [Exits the program: `exit`](#exits-the-program---exit-)
-    - [Examples](#examples-17)
+    - [Examples](#examples-21)
   + [Shows release version: `--version`](#shows-release-version-----version-)
-    - [Examples](#examples-18)
+    - [Examples](#examples-22)
 * [FAQ](#faq)
   + [Game Mode](#game-mode)
 * [Command Summary](#command-summary)
@@ -121,7 +124,7 @@ Words in `<>` are parameters or additional input to be supplied by the user.
 Commented-out lines `//` represent system output by the program.
 
 > Example:
-> ```java 
+> ``` 
 > add
 > // Enter question: <question description>
 > // Enter answer: <question answer or explanation>
@@ -155,7 +158,7 @@ create <name of deck> [/tag <tag1> [<tag2>/]]
 
 #### Examples
 
-```java
+```
 [Normal]
   > create market-failure
 // New deck created: market-failure
@@ -231,13 +234,13 @@ Displays an enumerated list of all the decks available to the user. The `decks` 
 
 #### Format
 
-```java
+```
 decks
 ```
 
 #### Examples
 
-```java
+```
 [Normal]
   > decks
 // The following decks are available:
@@ -254,7 +257,7 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
  
 #### Format
 
-```java
+```
 [Normal]
   > delete <index of deck>
 // Do you want to delete `name of deck`? [y/n] <y/n>
@@ -264,9 +267,16 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
 > Note: `name of deck` is a placeholder for the actual name of the deck corresponding to the index entered. The second
 > line will only be displayed if the user entered y at the prompt for <y/n>.
 
+One-line format:
+```
+  > delete <index of deck> -y
+```
+This command forces the delete of the deck at index `<index of deck>`.
+
 #### Examples
 
-```java
+Deciding not to delete:
+```
 [Normal]
   > delete 1
 // Do you want to delete market-failure? [y/n] n
@@ -274,7 +284,8 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
   > 
 ```
 
-```java
+Confirming a delete:
+```
 [Normal]
   > delete 2
 // Do you want to delete perfect competition? [y/n] y
@@ -283,7 +294,8 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
   >
 ```
 
-```java
+Entering an invalid response:
+```
 [Normal]
   > delete 1
 // Do you want to delete market-failure? [y/n] not_y_or_n
@@ -301,14 +313,14 @@ Enters the Deck Mode to edit an existing deck. The `edit` command expects one ar
  
 #### Format
 
-```java
+```
 [Normal]
   > edit <index of deck>
 ```
 
 #### Examples
 
-```java
+```
 [Normal]
   > edit 1
 // ------------------------------------------------------------
@@ -416,7 +428,7 @@ Displays the list of all commands in Normal Mode.
 
 #### Examples
 
-```java
+```
 [Normal]
   > help
 // ------------------------------------------------------------
@@ -449,6 +461,10 @@ add
 // Enter answer: <question answer or explanation>
 ```
  
+Equivalent One-line format:
+```
+  > add <question description> /ans <question answer or explanation>
+```
 
 #### Examples
 
@@ -505,7 +521,7 @@ to show all the questions, and their respective answers.
 ```
 
 #### Examples
-
+List without answers:
 ```java
 [Deck - market-failure]
   > list
@@ -520,6 +536,7 @@ to show all the questions, and their respective answers.
 // ------------------------------------------------------------
 ```
 
+List with answers:
 ```java
 [Deck - market-failure]
   > list /ans
@@ -527,15 +544,16 @@ to show all the questions, and their respective answers.
 // You are now viewing deck: market-failure
 // ------------------------------------------------------------
 // 1. Question: define market failure
-//    Answer:   Market failure is the economic situation defined 
-//    by an inefficient distribution of goods and services
-//    in the free market
+//    Answer:   Market failure is the economic situation
+//              defined by an inefficient distribution of goods
+//              and services in the free market
 // 
 // 2. Question: What is a public good?
 //    Answer:   A good which are non-rival and non-excludable
 // 
 // 3. Question: What is a merit good?
-//    Answer:   A good that people underestimates the benefits of
+//    Answer:   A good that people underestimates the benefits
+//              of
 // ------------------------------------------------------------
 ```
 
@@ -570,7 +588,15 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 > Note: `name of deck` is a placeholder for the name of the current deck. The second
 > line will only be displayed if the user entered y at the prompt for <y/n>.
 
+One-line format:
+```
+  > delete <index of FlashCard> -y
+```
+This command forces the delete of the Flashcard at index `<index of FlashCard>`.
+
 #### Examples
+
+Deciding not to delete:
 ```java
 [Deck - market-failure]
   > delete 1
@@ -580,6 +606,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 // ------------------------------------------------------------
 ```
 
+Confirming a delete:
 ```java
 [Deck - market-failure]
   > delete 2
@@ -589,6 +616,110 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 // ------------------------------------------------------------
 // The following flash card has been deleted:
 //   'What is a public good?'
+// ------------------------------------------------------------
+```
+
+Entering an invalid response:
+```
+[Deck - market failure]
+  > delete 2
+// Do you want to delete the following flash card? [y/n]?
+//   'What is a public good?'?
+  > definitely
+// Response should be 'y' or 'n'!
+// Do you want to delete Define market failure? [y/n]?
+  > y
+// ------------------------------------------------------------
+// The following flash card has been deleted:
+//   'What is a public good?'
+// ------------------------------------------------------------
+```
+
+### Update an existing Flash Card: `update`
+
+Updates the question and answer fields of a  specified flashcard
+in the deck.
+The `update` command expects no initial arguments.
+The current question and answer are displayed.
+Then, the user is prompted to specify the new details of the flashcard.
+
+#### Format
+```
+[Deck - `name`]
+  > update <index of flashcard>
+// Question: `Current Question`
+// New Question:
+    > <new question>
+// Answer:   `Current Answer`
+// New Answer:
+    > <new answer>
+```
+> Note: `name` is a placeholder for the actual name of the deck that is being edited.
+> `Current Question` and `Current Answer` are placeholders for the original question
+> and answer of the flashcard.
+
+If a blank line is supplied as the new detail, then the detail is unchanged.
+
+#### Examples
+
+Updating both the question and answer:
+```
+[Deck - market failure]
+  > update 1
+// Question: Define market failure
+// New Question:
+  > What is the difference between free-loading and free-riding?
+// Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
+// New Answer:
+  > Free-loading gives a benefit to the free-loader but there is a cost to the people taken advantage of.
+    Free-riding is an advantage to the free-rider without imposing a cost on others or society.
+// ------------------------------------------------------------
+// Question and answer updated.
+// ------------------------------------------------------------
+```
+
+Updating question only:
+```
+[Deck - market failure]
+  > update 1
+// Question: Define market failure
+// New Question:
+  > Define Market Failure
+// Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
+// New Answer:
+  > 
+// ------------------------------------------------------------
+// Question updated.
+// ------------------------------------------------------------
+```
+
+Updating answer only:
+```
+[Deck - market failure]
+  > update 1
+// Question: Define market failure
+// New Question:
+  > 
+// Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
+// New Answer: Economic situation where distribution of goods and services in the free market is inefficient
+  > Economic situation where distribution of goods and services in the free market is inefficient
+// ------------------------------------------------------------
+// Answer updated.
+// ------------------------------------------------------------
+```
+
+No updates:
+```
+[Deck - market failure]
+  > update 1
+// Question: Define market failure
+// New Question:
+  > 
+// Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
+// New Answer: Economic situation where distribution of goods and services in the free market is inefficient
+  > 
+// ------------------------------------------------------------
+// Original question and answer retained.
 // ------------------------------------------------------------
 ```
 
@@ -957,6 +1088,7 @@ Shows release version from anywhere in the program.
 // Q: What is market-failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > 
+>>>>>>> 429309550e9b48eed8cfca922df8d0c27452898a
 ```
 
 ## FAQ
