@@ -61,25 +61,49 @@ public class DeckParser extends Parser {
         return false;
     }
 
-    protected String[] prepareFlashCard() throws EmptyInputException {
-        String[] questionAndAnswer = new String[2];
-        Ui.printAddFlashCardLine(deck);
-        Ui.printEnterQuestionLine();
-        questionAndAnswer[0] = Ui.readUserInput();
-        logger.log(Level.INFO, "Reading user input for question");
-        if (questionAndAnswer[0].trim().length() == 0) {
+    /**
+     * Verify that a String is contains meaningful contents.
+     *
+     * @param field String to be verified
+     * @throws EmptyInputException if string is empty after trim
+     */
+    private void verifyStringField(String field) throws EmptyInputException {
+        if (field.trim().length() == 0) {
             logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for question");
             throw new EmptyInputException();
         }
-        Ui.printEnterAnswerLine();
-        questionAndAnswer[1] = Ui.readUserInput();
-        logger.log(Level.INFO, "Reading user input for answer");
-        if (questionAndAnswer[1].trim().length() == 0) {
-            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for answer");
-            throw new EmptyInputException();
+    }
+
+    protected String[] prepareFlashCard(String arguments) throws EmptyInputException {
+        String[] questionAndAnswer = new String[2];
+
+        if (arguments.contains("/ans")) {
+            questionAndAnswer = arguments.split("/ans");
+            verifyStringField(questionAndAnswer[0]);
+        } else if (!arguments.trim().isEmpty()) {
+            // Valid question provided but not answer
+            Ui.printAddFlashCardLine(deck);
+            Ui.printEnterAnswerLine();
+            questionAndAnswer[1] = Ui.readUserInput();
+            logger.log(Level.INFO, "Reading user input for answer");
+        } else {
+            // Ask for both question and answer
+            Ui.printAddFlashCardLine(deck);
+            Ui.printEnterQuestionLine();
+            questionAndAnswer[0] = Ui.readUserInput();
+            logger.log(Level.INFO, "Reading user input for question");
+            verifyStringField(questionAndAnswer[0]);
+
+            Ui.printEnterAnswerLine();
+            questionAndAnswer[1] = Ui.readUserInput();
+            logger.log(Level.INFO, "Reading user input for answer");
         }
+        verifyStringField(questionAndAnswer[1]);
+
         assert questionAndAnswer[0].length() > 0 : "question field empty!";
         assert questionAndAnswer[1].length() > 0 : "answer field empty!";
+
+        Ui.printDashLines();
         Ui.printFlashCardAddedLine();
         Ui.printDashLines();
 
@@ -190,7 +214,7 @@ public class DeckParser extends Parser {
         // Add a FlashCard
         case Ui.ADD:
             logger.log(Level.INFO, "Preparing FlashCard to add");
-            String[] questionAndAnswer = prepareFlashCard();
+            String[] questionAndAnswer = prepareFlashCard(arguments);
             logger.log(Level.INFO, "returning AddCommand object");
             return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
         // List all FlashCards

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
+import seedu.ecardnomics.command.deck.AddCommand;
 import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.ExitCommand;
@@ -69,10 +70,10 @@ class DeckParserTest {
         assertTrue(deckParser.parseCommand("done", "") instanceof DoneEditCommand);
     }
 
-    // @Test
-    //void parseCommand_AddCommand_success() throws Exception {
-    //assertTrue(deckParser.parseCommand("add", "") instanceof AddCommand);
-    //}
+    @Test
+    void parseCommand_AddCommand_oneLine_success() throws Exception {
+        assertTrue(deckParser.parseCommand("add", "qn /ans ans") instanceof AddCommand);
+    }
 
     @Test
     void parseCommand_ListCommand_success() throws Exception {
