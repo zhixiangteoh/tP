@@ -147,7 +147,6 @@ Creates a new deck of flashcards. The `create` command expects one argument spec
 
 #### Format
 
-
 Create deck without tags:
 ```java
 create <name of deck>
@@ -267,6 +266,12 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
 
 > Note: `name of deck` is a placeholder for the actual name of the deck corresponding to the index entered. The second
 > line will only be displayed if the user entered y at the prompt for <y/n>.
+
+One-line format:
+```
+  > delete <index of deck> -y
+```
+This command forces the delete of the deck at index `<index of deck>`.
 
 #### Examples
 
@@ -456,6 +461,10 @@ add
 // Enter answer: <question answer or explanation>
 ```
  
+Equivalent One-line format:
+```
+  > add <question description> /ans <question answer or explanation>
+```
 
 #### Examples
 
@@ -579,6 +588,12 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 > Note: `name of deck` is a placeholder for the name of the current deck. The second
 > line will only be displayed if the user entered y at the prompt for <y/n>.
 
+One-line format:
+```
+  > delete <index of FlashCard> -y
+```
+This command forces the delete of the Flashcard at index `<index of FlashCard>`.
+
 #### Examples
 
 Deciding not to delete:
@@ -638,7 +653,6 @@ Then, the user is prompted to specify the new details of the flashcard.
 // Answer:   `Current Answer`
 // New Answer:
     > <new answer>
-// The flashcard has been updated.
 ```
 > Note: `name` is a placeholder for the actual name of the deck that is being edited.
 > `Current Question` and `Current Answer` are placeholders for the original question
@@ -659,7 +673,9 @@ Updating both the question and answer:
 // New Answer:
   > Free-loading gives a benefit to the free-loader but there is a cost to the people taken advantage of.
     Free-riding is an advantage to the free-rider without imposing a cost on others or society.
+// ------------------------------------------------------------
 // Question and answer updated.
+// ------------------------------------------------------------
 ```
 
 Updating question only:
@@ -672,7 +688,9 @@ Updating question only:
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer:
   > 
+// ------------------------------------------------------------
 // Question updated.
+// ------------------------------------------------------------
 ```
 
 Updating answer only:
@@ -685,7 +703,9 @@ Updating answer only:
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > Economic situation where distribution of goods and services in the free market is inefficient
+// ------------------------------------------------------------
 // Answer updated.
+// ------------------------------------------------------------
 ```
 
 No updates:
@@ -698,7 +718,9 @@ No updates:
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > 
+// ------------------------------------------------------------
 // Original question and answer retained.
+// ------------------------------------------------------------
 ```
 
 ### Game Mode: `start`
