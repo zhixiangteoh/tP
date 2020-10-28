@@ -164,8 +164,7 @@ public class UiTest {
 
     @Test
     void printRemovedTagsQuestion_StringArrayOfTagsAndDeckName_question() {
-        String expectedOutput = "Do you want to remove the tag(s) Beginner, Year2 from Micro-Economics? [y/n]"
-                + System.lineSeparator();
+        String expectedOutput = "Do you want to remove the tag(s) Beginner, Year2 from Micro-Economics? [y/n] ";
         String[] removedTagsArray = {"Beginner", "Year2"};
         printRemovedTagsQuestion("Micro-Economics", removedTagsArray);
         assertEquals(expectedOutput, outContent.toString());
