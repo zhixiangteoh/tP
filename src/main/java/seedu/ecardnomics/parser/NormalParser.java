@@ -74,6 +74,13 @@ public class NormalParser extends Parser {
         return deckList.getDeck(getIndex(arguments));
     }
 
+    /**
+     * Prepares an instance of DeleteDeckCommand from given arguments.
+     *
+     * @param arguments String that contains the user arguments for the delete command
+     * @return DeleteDeckCommand that can be executed to delete the deck.
+     * @throws Exception if index is invalid or no index is supplied.
+     */
     private Command prepareDeleteDeck(String arguments) throws Exception {
         boolean isDeckDeleted;
         int deckID;
@@ -169,72 +176,13 @@ public class NormalParser extends Parser {
         }
     }
 
-    /**
-     * Checks y or n response from user.
-     *
-     * @return Ui.Y if user enters confirms, otherwise Ui.N
-     */
-    private String checkYorNResponse() {
-        logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
-
-        String response = "";
-
-        do {
-            response = Ui.readUserInput();
-            assert response != null : "response should not be null";
-            switch (response.trim()) {
-            case Ui.Y:
-                response = Ui.Y;
-                break;
-            case Ui.N:
-                response = Ui.N;
-                break;
-            default:
-                logger.log(Level.INFO, "User entered response other than 'y' or 'n'");
-                logger.log(Level.INFO, "Re-prompting...");
-                Ui.printInvalidYorNResponse();
-            }
-        } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
-        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "Response should be y/n";
-        return response;
-    }
-
-
-    /**
-     * Get confirmation from user on whether to print deck to PowerPoint.
-     *
-     * @param index int representing the index of the deck in deckList
-     * @return true if delete is confirmed, otherwise false
-     */
-    private boolean getPptxDeckConfirmation(int index) {
-        Deck deck = deckList.getDeck(index);
-        logger.log(Level.INFO, "Logging method getPptxDeckConfirmation() in NormalParser.");
-
-        Ui.printPptxDeckQuestion(deck.getName());
-
-        String response = checkYorNResponse();
-        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
-
-        switch (response) {
-        case Ui.Y:
-            return true;
-        case Ui.N:
-            //
-            break;
-        default:
-            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
-            //
-        }
-        return false;
-    }
-
     private PowerPointCommand preparePptxDeck(String arguments) throws Exception {
         if (arguments.contains("-y")) {
             arguments = arguments.replaceAll("-y", "");
             return new PowerPointCommand(deckList, prepareDeck(arguments), true);
         }
         int deckID = getIndex(arguments);
-        boolean isPptxCreated = getPptxDeckConfirmation(deckID);
+        boolean isPptxCreated = Ui.getPptxDeckConfirmation(deckList.getDeck(deckID).getName());
         return new PowerPointCommand(deckList, deckList.getDeck(deckID), isPptxCreated);
     }
 

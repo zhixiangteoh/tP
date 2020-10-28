@@ -596,4 +596,30 @@ public class Ui {
         }
     }
 
+    /**
+     * Get confirmation from user on whether to print deck to PowerPoint.
+     *
+     * @param deckName name of deck to be printed to PowerPoint
+     * @return true if delete is confirmed, otherwise false
+     */
+    public static boolean getPptxDeckConfirmation(String deckName) {
+        logger.log(Level.INFO, "Logging method getPptxDeckConfirmation() in NormalParser.");
+
+        Ui.printPptxDeckQuestion(deckName);
+
+        String response = Ui.checkYorNResponse();
+        assert (response.equals(Ui.Y) || response.equals(Ui.N)) : "response should be y/n";
+
+        switch (response) {
+        case Ui.Y:
+            return true;
+        case Ui.N:
+            //
+            break;
+        default:
+            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
+            //
+        }
+        return false;
+    }
 }
