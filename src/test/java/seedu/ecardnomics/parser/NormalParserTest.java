@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 import seedu.ecardnomics.command.VersionCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.ExitCommand;
+import seedu.ecardnomics.command.normal.DeleteDeckCommand;
+import seedu.ecardnomics.command.normal.EditCommand;
 import seedu.ecardnomics.command.normal.CreateCommand;
 import seedu.ecardnomics.command.normal.DecksCommand;
-import seedu.ecardnomics.command.normal.EditCommand;
-import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.command.normal.PowerPointCommand;
+import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
@@ -121,10 +122,10 @@ class NormalParserTest {
         assertTrue(normalParser.parseCommand("decks", "") instanceof DecksCommand);
     }
 
-    //@Test
-    //void parseCommand_DeleteDeckCommand_success() throws Exception {
-    //assertTrue(normalParser.parseCommand("delete", "1") instanceof DeleteDeckCommand);
-    //}
+    @Test
+    void parseCommand_DeleteDeckCommand_force_success() throws Exception {
+        assertTrue(normalParser.parseCommand("delete", "1 -y") instanceof DeleteDeckCommand);
+    }
 
     @Test
     void parseCommand_DeleteDeckCommandNoIndex_exceptionThrown() {

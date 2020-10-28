@@ -275,20 +275,20 @@ public class Ui {
     /**
      * Displays the delete FlashCard line.
      *
-     * @param flashCard FlashCard to delete
+     * @param question The question of the FlashCard to delete
      */
-    public static void printDeleteFlashCardLine(FlashCard flashCard) {
-        System.out.print(DELETE_FLASHCARD_LINE + YN_LINE + "\n  '" + flashCard.getQuestion() + "`\n");
+    public static void printDeleteFlashCardLine(String question) {
+        System.out.print(DELETE_FLASHCARD_LINE + YN_LINE + "?\n  '" + question + "`\n");
         printPrompt();
     }
 
     /**
      * Displays the FlashCard deleted line.
      *
-     * @param flashCard deleted FlashCard
+     * @param question The question of the FlashCard to delete
      */
-    public static void printFlashCardDeletedLine(FlashCard flashCard) {
-        System.out.println(FLASHCARD_DELETED_LINE + flashCard.getQuestion() + "'");
+    public static void printFlashCardDeletedLine(String question) {
+        System.out.println(FLASHCARD_DELETED_LINE + question + "'");
     }
 
     /**
@@ -504,10 +504,10 @@ public class Ui {
     /**
      * Checks y or n response from user.
      *
-     * @return Ui.Y if user enters confirms, otherwise Ui.N
+     * @return true if user enters confirms, otherwise false
      */
-    private static String checkYorNResponse() {
-        logger.log(Level.INFO, "Logging method checkYorNResponse() in NormalParser.");
+    private static boolean checkYorNResponse() {
+        logger.log(Level.INFO, "Logging method checkYorNResponse() in Ui.");
         String response;
         do {
             response = readUserInput();
@@ -526,36 +526,41 @@ public class Ui {
             }
         } while (!response.trim().equals(Y) && !response.trim().equals(N));
         assert (response.equals(Y) || response.equals(N)) : "Response should be y/n";
-        return response;
+        return response.equals(Y);
     }
 
     /**
-     * Prepares a deck for being deleted.
+     * Get confirmation for deleting a deck.
      *
      * @param deckName String representing the index of the deck in deckList
      * @return true if delete is confirmed, otherwise false
      */
     public static boolean getDeletedDeckConfirmation(String deckName) {
-        logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in NormalParser.");
+        logger.log(Level.INFO, "Logging method getDeletedDeckConfirmation() in Ui.");
         printDashLines();
         printDeletedDeckQuestion(deckName);
 
-        String response = checkYorNResponse();
-        assert (response.equals(Y) || response.equals(N)) : "response should be y/n";
-
-        switch (response) {
-        case Y:
+        boolean isConfirmed = checkYorNResponse();
+        if (isConfirmed) {
             printDeckDeletedLine(deckName);
             printDashLines();
-            return true;
-        case N:
-            //
-            break;
-        default:
-            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
-            //
         }
-        return false;
+
+        return isConfirmed;
+    }
+
+    public static boolean getDeletedFlashCardConfirmation(String question) {
+        logger.log(Level.INFO, "Logging method getDeletedFlashCardConfirmation() in Ui.");
+        printDashLines();
+        Ui.printDeleteFlashCardLine(question);
+
+        boolean isConfirmed = checkYorNResponse();
+        if (isConfirmed) {
+            Ui.printFlashCardDeletedLine(question);
+            Ui.printDashLines();
+        }
+
+        return isConfirmed;
     }
 
     /**
@@ -569,23 +574,14 @@ public class Ui {
     public static boolean getRemovedTagsConfirmation(String[] tags, String deckName) {
         printDashLines();
         printRemovedTagsQuestion(deckName, tags);
-        String response = checkYorNResponse();
-        assert (response.equals(Y) || response.equals(N)) : "response should be y/n";
+        boolean isConfirmed = checkYorNResponse();
 
-        switch (response) {
-        case Y:
+        if (isConfirmed) {
             printTagsRemovedLine(deckName, tags);
             printDashLines();
-            return true;
-        case N:
-            //
-            break;
-        default:
-            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
-            //
         }
-        return false;
 
+        return isConfirmed;
     }
 
     public static void printSearchDecksLine(String decksHavingTags) {
@@ -596,4 +592,15 @@ public class Ui {
         }
     }
 
+    /**
+     * Get confirmation from user on whether to print deck to PowerPoint.
+     *
+     * @param deckName name of deck to be printed to PowerPoint
+     * @return true if delete is confirmed, otherwise false
+     */
+    public static boolean getPptxDeckConfirmation(String deckName) {
+        logger.log(Level.INFO, "Logging method getPptxDeckConfirmation() in Ui.");
+        Ui.printPptxDeckQuestion(deckName);
+        return checkYorNResponse();
+    }
 }

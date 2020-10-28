@@ -38,55 +38,73 @@ public class DeckParser extends Parser {
         this.deck = deck;
     }
 
-    protected boolean prepareDeletedFlashCard(int flashCardID) {
-        logger.log(Level.INFO, "Retrieving flash card at flash card index");
-        FlashCard flashCard = deck.get(flashCardID);
-        assert flashCard != null : "flash card does not exist!";
+    protected Command prepareDeletedFlashCard(String arguments) throws Exception {
+        int flashCardID;
+        boolean isFlashCardDeleted;
 
-        String response = getDeleteYorNResponse(flashCard);
-        assert response.equals(Ui.Y) || response.equals(Ui.N) : "response not 'Y' or 'N'!";
-
-        switch (response) {
-        case Ui.Y:
-            Ui.printFlashCardDeletedLine(flashCard);
-            Ui.printDashLines();
-            return true;
-        case Ui.N:
-            //
-            break;
-        default:
-            logger.log(Level.SEVERE, "Response should only be either 'Y' or 'N' here");
-            //
+        if (arguments.contains("-y")) {
+            arguments = arguments.replaceAll("-y", "");
+            flashCardID = getIndex(arguments);
+            isFlashCardDeleted = true;
+        } else {
+            flashCardID = getIndex(arguments);
+            isFlashCardDeleted = Ui.getDeletedFlashCardConfirmation(deck.get(flashCardID).getQuestion());
         }
-        return false;
+        logger.log(Level.INFO, "returning DeleteCommand object");
+        return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
     }
 
-    protected String[] prepareFlashCard() throws EmptyInputException {
-        String[] questionAndAnswer = new String[2];
-        Ui.printAddFlashCardLine(deck);
-        Ui.printEnterQuestionLine();
-        questionAndAnswer[0] = Ui.readUserInput();
-        logger.log(Level.INFO, "Reading user input for question");
-        if (questionAndAnswer[0].trim().length() == 0) {
+    /**
+     * Verify that a String is contains meaningful contents.
+     *
+     * @param field String to be verified
+     * @throws EmptyInputException if string is empty after trim
+     */
+    private void verifyStringField(String field) throws EmptyInputException {
+        if (field.trim().length() == 0) {
             logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for question");
             throw new EmptyInputException();
         }
-        Ui.printEnterAnswerLine();
-        questionAndAnswer[1] = Ui.readUserInput();
-        logger.log(Level.INFO, "Reading user input for answer");
-        if (questionAndAnswer[1].trim().length() == 0) {
-            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for answer");
-            throw new EmptyInputException();
+    }
+
+    protected Command prepareFlashCard(String arguments) throws EmptyInputException {
+        String[] questionAndAnswer = new String[2];
+
+        if (arguments.contains("/ans")) {
+            questionAndAnswer = arguments.split("/ans");
+            verifyStringField(questionAndAnswer[0]);
+        } else if (!arguments.trim().isEmpty()) {
+            // Valid question provided but not answer
+            Ui.printAddFlashCardLine(deck);
+            Ui.printEnterAnswerLine();
+            questionAndAnswer[1] = Ui.readUserInput();
+            logger.log(Level.INFO, "Reading user input for answer");
+        } else {
+            // Ask for both question and answer
+            Ui.printAddFlashCardLine(deck);
+            Ui.printEnterQuestionLine();
+            questionAndAnswer[0] = Ui.readUserInput();
+            logger.log(Level.INFO, "Reading user input for question");
+            verifyStringField(questionAndAnswer[0]);
+
+            Ui.printEnterAnswerLine();
+            questionAndAnswer[1] = Ui.readUserInput();
+            logger.log(Level.INFO, "Reading user input for answer");
         }
+        verifyStringField(questionAndAnswer[1]);
+
         assert questionAndAnswer[0].length() > 0 : "question field empty!";
         assert questionAndAnswer[1].length() > 0 : "answer field empty!";
+
+        Ui.printDashLines();
         Ui.printFlashCardAddedLine();
         Ui.printDashLines();
 
-        return questionAndAnswer;
+        logger.log(Level.INFO, "returning AddCommand object");
+        return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
     }
 
-    protected String[] prepareUpdate(int flashCardID) {
+    protected Command prepareUpdate(int flashCardID) {
         String[] newQnA = new String[2];
         Ui.printUpdateQuestionLine(deck.get(flashCardID));
         newQnA[0] = Ui.readUserInput();
@@ -110,9 +128,10 @@ public class DeckParser extends Parser {
         }
         assert newQnA[0].length() > 0 : "question field empty!";
         assert newQnA[1].length() > 0 : "answer field empty!";
+        Ui.printDashLines();
         Ui.printFlashCardUpdatedLine(hasNewQ, hasNewA);
         Ui.printDashLines();
-        return newQnA;
+        return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);
     }
 
     @Override
@@ -134,31 +153,6 @@ public class DeckParser extends Parser {
             throw new FlashCardRangeException();
         }
         return index;
-    }
-
-    protected String getDeleteYorNResponse(FlashCard flashCard) {
-        logger.log(Level.INFO, "Prompting user for 'Y' or 'N' response");
-        String response = "";
-
-        Ui.printDashLines();
-        do {
-            Ui.printDeleteFlashCardLine(flashCard);
-            response = Ui.readUserInput();
-            switch (response.trim()) {
-            case Ui.Y:
-                response = Ui.Y;
-                break;
-            case Ui.N:
-                response = Ui.N;
-                break;
-            default:
-                logger.log(Level.INFO, "User entered response other than 'Y' or 'N'");
-                Ui.printInvalidYorNResponse();
-                logger.log(Level.INFO, "Re-prompting...");
-            }
-        } while (!response.trim().equals(Ui.Y) && !response.trim().equals(Ui.N));
-        assert response.length() == 1 : "response is not 'Y' or 'N'!";
-        return response;
     }
 
     @Override
@@ -190,9 +184,7 @@ public class DeckParser extends Parser {
         // Add a FlashCard
         case Ui.ADD:
             logger.log(Level.INFO, "Preparing FlashCard to add");
-            String[] questionAndAnswer = prepareFlashCard();
-            logger.log(Level.INFO, "returning AddCommand object");
-            return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
+            return prepareFlashCard(arguments);
         // List all FlashCards
         case Ui.LIST:
             logger.log(Level.INFO, "returning ListCommand object");
@@ -200,18 +192,13 @@ public class DeckParser extends Parser {
         // Delete a FlashCard
         case Ui.DELETE:
             logger.log(Level.INFO, "Preparing FlashCard to delete");
-            int flashCardID = getIndex(arguments);
-            assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
-            boolean isFlashCardDeleted = prepareDeletedFlashCard(flashCardID);
-            logger.log(Level.INFO, "returning DeleteCommand object");
-            return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
+            return prepareDeletedFlashCard(arguments);
         // Update a FlashCard
         case Ui.UPDATE:
             logger.log(Level.INFO, "Preparing FlashCard to update");
-            flashCardID = getIndex(arguments);
+            int flashCardID = getIndex(arguments);
             assert flashCardID >= LOWEST_POSSIBLE_INDEX : "flash card ID less than lowest possible flash card index!";
-            String[] newQnA = prepareUpdate(flashCardID);
-            return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);
+            return prepareUpdate(flashCardID);
         // Create PowerPoint
         case Ui.PPTX:
             logger.log(Level.INFO, "Printing to PowerPoint");
