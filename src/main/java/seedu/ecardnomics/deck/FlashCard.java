@@ -94,6 +94,7 @@ public class FlashCard {
         String[] words = isQuestion ? question.split(" ") : answer.split(" ");
         int lineLength = Ui.DASH_LINES.length();
         int usableLength = lineLength - offset;
+        assert usableLength > 0 : "Otherwise we cannot print anything.";
 
         int currentLength = 0;
         for (String word : words) {
