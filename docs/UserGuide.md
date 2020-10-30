@@ -81,6 +81,7 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     - [Examples](#examples-21)
   + [Shows release version: `--version`](#shows-release-version-----version-)
     - [Examples](#examples-22)
+* [Features - (Proposed) Text Encryption and Decryption](#features---text-encryption-and-decryption)
 * [FAQ](#faq)
   + [Game Mode](#game-mode)
 * [Command Summary](#command-summary)
@@ -1027,8 +1028,9 @@ but in Deck Mode, there is no need to specify the deck index.
 Has the option to skip confirmation prompt using `-y` suffix.
 
 For details, check out:
-[Normal Mode PowerPoint](#print-an-existing-deck-to-a-powerpoint-file-pptx)
-[Deck Mode PowerPoint](#print-current-deck-to-a-powerpoint-file-pptx)
+
+* [Normal Mode PowerPoint](#print-an-existing-deck-to-a-powerpoint-file-pptx)
+* [Deck Mode PowerPoint](#print-current-deck-to-a-powerpoint-file-pptx)
 
 
 ## Features - Anywhere
@@ -1088,8 +1090,9 @@ Shows release version from anywhere in the program.
 // Q: What is market-failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > 
->>>>>>> 429309550e9b48eed8cfca922df8d0c27452898a
 ```
+
+## Features - (Proposed) Encryption and Decryption
 
 ## FAQ
 
@@ -1108,7 +1111,7 @@ Shows release version from anywhere in the program.
   >
 ```
 
-**A**: Escape the command using punctuations, e.g. `\exit` or `"exit"`.
+**A**: Escape the command using punctuations, e.g. `\done` or `"done"`.
 
 ```java
 // Q: What is the command to exit Game Mode or Deck Mode?
