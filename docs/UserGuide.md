@@ -164,6 +164,12 @@ create <name of deck> [/tag <tag1> [<tag2>/]]
   > create market-failure
 // New deck created: market-failure
 ```
+```
+[Normal]
+  > create market-failure /tag beginner
+// New deck created: market-failure | Tag(s): beginner 
+```
+
 ### Tag an existing deck: `tag`
 
 Adds a tag to an existing deck of flashcards. The `tag` command expects one argument specifying the name of the deck
