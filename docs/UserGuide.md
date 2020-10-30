@@ -78,6 +78,7 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     - [Examples](#examples-17)
   + [Shows release version: `--version`](#shows-release-version-----version-)
     - [Examples](#examples-18)
+* [Features - (Proposed) Text Encryption and Decryption](#features---text-encryption-and-decryption)
 * [FAQ](#faq)
   + [Game Mode](#game-mode)
 * [Command Summary](#command-summary)
@@ -959,6 +960,8 @@ Shows release version from anywhere in the program.
   > 
 ```
 
+## Features - (Proposed) Encryption and Decryption
+
 ## FAQ
 
 ### Game Mode
@@ -976,7 +979,7 @@ Shows release version from anywhere in the program.
   >
 ```
 
-**A**: Escape the command using punctuations, e.g. `\exit` or `"exit"`.
+**A**: Escape the command using punctuations, e.g. `\done` or `"done"`.
 
 ```java
 // Q: What is the command to exit Game Mode or Deck Mode?
