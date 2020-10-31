@@ -1,6 +1,5 @@
 package seedu.ecardnomics.storage;
 
-import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
@@ -14,12 +13,15 @@ import java.util.Scanner;
 public class Storage {
     public static final String FILE_PATH = "./data/deckList.txt";
     public static final String FOLDER_PATH = "./data";
+    public static final String DIVIDER =
+            "================================================================================";
     public static final String DECK_INDEX_REGEX = "deck\\s\\|\\s\\d+";
     public static final String DECK_NAME_REGEX = "name\\s\\|\\s.+";
     public static final String TAGS_REGEX = "tags\\s\\|\\s.+";
     public static final String SIZE_REGEX = "size\\s\\|\\s\\d+";
     public static final String QUESTION_REGEX = "Q\\s\\|\\s.+";
     public static final String ANSWER_REGEX = "A\\s\\|\\s.+";
+    public static final String DIVIDER_REGEX = "={10,}";
 
     public DeckList load(DeckList deckList) {
         File folder = new File(FOLDER_PATH);
@@ -73,6 +75,8 @@ public class Storage {
                 String question = null;
                 if (line.matches(QUESTION_REGEX)) {
                     question = line.substring(4);
+                } else if (line.matches(DIVIDER_REGEX)) {
+                    break;
                 } else {
                     continue;
                 }
@@ -80,6 +84,8 @@ public class Storage {
                 String answer = null;
                 if (line.matches(ANSWER_REGEX)) {
                     answer = line.substring(4);
+                } else if (line.matches(DIVIDER_REGEX)) {
+                    break;
                 } else {
                     continue;
                 }
@@ -87,13 +93,14 @@ public class Storage {
                 deck.add(flashCard);
             }
             deckList.addDeck(deck);
-            scanner.nextLine();
         }
         return deckList;
     }
 
     public void write(DeckList deckList) throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH);
+        fw.write(DIVIDER);
+        fw.write(System.lineSeparator());
 
         for (int i = 0; i < deckList.size(); i++) {
             Deck deck = deckList.getDeck(i);
@@ -111,7 +118,7 @@ public class Storage {
                 fw.write("A | " + deck.get(j).getAnswer());
                 fw.write(System.lineSeparator());
             }
-            fw.write("================================================================================");
+            fw.write(DIVIDER);
             fw.write(System.lineSeparator());
         }
         fw.close();
