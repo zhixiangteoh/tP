@@ -9,13 +9,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Storage {
     public static final String FILE_PATH = "./data/deckList.txt";
     public static final String FOLDER_PATH = "./data";
+    public static final String DECK_INDEX_REGEX = "deck\\s\\|\\s\\d+";
+    public static final String DECK_NAME_REGEX = "name\\s\\|\\s.+";
+    public static final String TAGS_REGEX = "tags\\s\\|\\s.+";
+    public static final String SIZE_REGEX = "size\\s\\|\\s\\d+";
+    public static final String QUESTION_REGEX = "Q\\s\\|\\s.+";
+    public static final String ANSWER_REGEX = "A\\s\\|\\s.+";
 
     public DeckList load(DeckList deckList) {
         File folder = new File(FOLDER_PATH);
@@ -35,22 +39,50 @@ public class Storage {
 
         while (scanner.hasNext()) {
             line = scanner.nextLine();
-            int deckIndex = Integer.parseInt(line.substring(7));
+            if (line.matches(DECK_INDEX_REGEX)) {
+                int deckIndex = Integer.parseInt(line.substring(7));
+            } else {
+                continue;
+            }
             line = scanner.nextLine();
-            String deckName = line.substring(7);
-            Deck deck = new Deck(deckName);
+            String deckName = null;
+            Deck deck = null;
+            if (line.matches(DECK_NAME_REGEX)) {
+                deckName = line.substring(7);
+                deck = new Deck(deckName);
+            } else {
+                continue;
+            }
             line = scanner.nextLine();
-            line = line.substring(line.indexOf("|") + 2);
-            String[] tags = line.split(" | ");
-            deck.addTag(tags);
+            if (line.matches(TAGS_REGEX)) {
+                line = line.substring(line.indexOf("|") + 2);
+                String[] tags = line.split(" | ");
+                deck.addTag(tags);
+            } else {
+                continue;
+            }
             line = scanner.nextLine();
-            int deckSize = Integer.parseInt(line.substring(7));
-
+            int deckSize = 0;
+            if (line.matches(SIZE_REGEX)) {
+                deckSize = Integer.parseInt(line.substring(7));
+            } else {
+                continue;
+            }
             for (int i = 0; i < deckSize; i++) {
                 line = scanner.nextLine();
-                String question = line.substring(4);
+                String question = null;
+                if (line.matches(QUESTION_REGEX)) {
+                    question = line.substring(4);
+                } else {
+                    continue;
+                }
                 line = scanner.nextLine();
-                String answer = line.substring(4);
+                String answer = null;
+                if (line.matches(ANSWER_REGEX)) {
+                    answer = line.substring(4);
+                } else {
+                    continue;
+                }
                 FlashCard flashCard = new FlashCard(question, answer);
                 deck.add(flashCard);
             }

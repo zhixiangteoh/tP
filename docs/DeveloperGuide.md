@@ -102,6 +102,25 @@ components.
 
 ### Storage
 
+#### Loading the deckList data
+
+![Storage Sequence Diagram](./images-dg/Storage.png?raw=true "load Storage sequence diagram")
+
+**API**: [seedu/ecardnomics/storage](https://github.com/AY2021S1-CS2113-T14-2/tp/blob/master/src/main/java/seedu/ecardnomics/storage)
+
+Storage of this application uses basic `.txt` read and write functions.  
+Upon start of the program, the application checks whether there is a `./data` folder and creates one is there isn't.  
+Then, it reads from the storage file `deckList.txt` line by line to create:
+* new **`Deck`**
+* new **`FlashCard`**
+
+and adds them to the current `deckList` passed into the *`load`* method call.
+
+#### Writing the deckList data
+
+Similarly, for writing the data into `.txt` file, the Storage will loop through all the current `Decks` and their
+current `FlashCards` and write them in a specific format in the text file in the `./data` folder.
+
 ## Implementation - Features
 
 ### Print to PowerPoint SlideShow
@@ -197,8 +216,6 @@ The user can also modify to tags of the decks by using tag or untag command, and
 a group of decks he/she is interested in.
 
 ![DG-Implementation-Features-TagSequence](./images-dg/Tag.png?raw=true)
-
-### Saving to text file (Wayne)
 
 ### Game Mode
 
