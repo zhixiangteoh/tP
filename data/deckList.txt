@@ -1,6 +1,6 @@
 deck | 0
 name | Micro-Economics
-tags | Economics | EC1301 
+tags | Economics | EC1301
 size | 5
 Q | What is the Law of demand?
 A | When the price of a good rises, the quantity of the good demanded will fall, ceteris paribus.
@@ -10,12 +10,12 @@ Q | What is price elasticity of demand?
 A | Percentage change in quantity demanded caused by a 1 percent change in price.
 Q | What is price elasticity of supply?
 A | Percentage change in quantity supplied caused by a 1 percent change in price.
-Q | What is Market Failure? 
+Q | What is Market Failure?
 A | Market failure is the economic situation defined by an inefficient distribution of goods and services in the free market.
 ================================================================================
 deck | 1
 name | Macro-Economics
-tags | Economics | EC1301 
+tags | Economics | EC1301
 size | 6
 Q | What are ways GDP can be calculated?
 A | Three ways: Expenditure approach, Value-addedd approach and Factor payments approach.
@@ -32,7 +32,7 @@ A | Unemployment arising from changes in production over the business cycle.
 ================================================================================
 deck | 2
 name | Object-oriented Programming
-tags | Computer Science | CS2113 
+tags | Computer Science | CS2113
 size | 3
 Q | What are the programming paradigms based on OODP?
 A | Abstraction, Polymorphism, Inheritence, Encapsulation
