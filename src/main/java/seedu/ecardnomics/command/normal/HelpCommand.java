@@ -25,7 +25,7 @@ public class HelpCommand extends NormalCommand {
             + "  help                                        Show this output.\n"
             + "\n"
             + "Options:\n"
-            + "  --version      Show version.";
+            + "  --version                                   Show version.";
 
     public HelpCommand() {
         super();
