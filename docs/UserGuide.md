@@ -39,7 +39,7 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
   + [Game Mode: `start`](#game-mode---start-)
     - [Format](#format-4)
     - [Examples](#examples-4)
-  + [Print to PowerPoint: `pptx``](#print-an-existing-deck-to-a-powerpoint-file-pptx)
+  + [Print to PowerPoint: `pptx`](#print-an-existing-deck-to-a-powerpoint-file-pptx)
     - [Format](#format-5)
     - [Examples](#examples-5)
   + [Viewing help in Normal Mode: `help`](#viewing-help-in-normal-mode---help-)
@@ -100,16 +100,16 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
 ### Running the program
 
 Open your command line or terminal and navigate to the folder (e.g., `~/downloads`) where you downloaded the jar file
-. Then simply run the command `java -jar tp.jar`:
+. Then simply run the command `java -jar ecardnomics.jar`:
 
 ```batch
 $ cd ~/downloads
 $ ls 
-tp.jar
-$ java -jar tp.jar
+ecardnomics.jar
+$ java -jar ecardnomics.jar
 ```
 
-> Note: You can also run eCardnomics by double clicking the `tp.jar` file directly.
+> Note: You can also run eCardnomics by double clicking the `ecardnomics.jar` file directly.
 
 ### Guide format
 
@@ -423,17 +423,22 @@ Displays the list of all commands in Normal Mode.
 // ------------------------------------------------------------
 // eCardnomics.
 // Normal Mode.
-// 
+//
 // Usage:
-//  create         Creates a new deck of flash cards.
-//  decks          Lists all available decks.
-//  edit <ix>      Enter Deck Mode for editing the deck at list index <ix>.
-//  delete <ix>    Deletes the deck at list index <ix> from list of decks.
-//  exit           Exits the program.
-//  help           Show this output.
+//   create <nm>   [/tag <tag1> [<tag2> ...]]    Creates a new deck of flash cards, named <nm>.
+//   decks                                       Lists all available decks.
+//   edit   <ix>                                 Enter Deck Mode for editing the deck at list index <ix>.
+//   start  <ix>                                 Enter Game Mode for deck at list index <ix>! Do your best!
+//   delete <ix>   [-y]                          Deletes the deck at list index <ix> from list of decks.
+//   pptx   <ix>   [-y]                          Creates a PowerPoint slides based on the deck at list index <ix>.
+//   tag    <ix>   /tag <tag1> [<tag2> ...]      Tags the deck at list index <ix>, with 1 or more tags.
+//   untag  <ix>   /tag <tag1> [<tag2> ...]      Untags specified <tag>s of the deck at list index <ix>.
+//   search <tag1> [<tag2> ...]                  Search deck list for decks tagged with specified <tag>s.
+//   exit                                        Exits the program.
+//   help                                        Show this output.
 //
 // Options:
-//  --version      Show version.
+//   --version      Show version.
 // ------------------------------------------------------------
 ```
 
@@ -716,15 +721,17 @@ Displays the list of all commands in Deck Mode.
 // Deck Mode.
 // 
 // Usage:
-//  add            Adds a new flash card to the current deck.
-//  list [/ans]    Lists all flash cards in the current deck, optionally with answers.
-//  delete <ix>    Deletes the flash card at list index <ix> from the current deck.
-//  done           Exits from Deck Mode and returns to Normal Mode.
-//  exit           Exits the program.
-//  help           Show this output.
+//   add         [<qn> /ans <ans>]    Adds a new flash card to the current deck.
+//   list        [/ans]               Lists all flash cards in the current deck, optionally with answers.
+//   delete <ix> [-y]                 Deletes the flash card at list index <ix> from the current deck.
+//   pptx        [-y]                 Creates a PowerPoint slides based on the current deck.
+//   start                            Enter Game Mode for this deck! Do your best!
+//   done                             Exits from Deck Mode and returns to Normal Mode.
+//   exit                             Exits the program.
+//   help                             Show this output.
 //
 // Options:
-//  --version      Show version.
+//   --version      Show version.
 // ------------------------------------------------------------
 ```
 
@@ -998,6 +1005,9 @@ Shows release version from anywhere in the program.
 |Action|Format|Example|
 |------|------|-------|
 |Create deck|`create <nm>`|`create market-failure`|
+|Tag deck|`tag <ix> /tag <tag1> [<tag2> ...]`|`tag 1 /tag important final-exam`|
+|Untag deck|`untag <ix> /tag <tag1> [<tag2> ...]`|`untag 1 /tag important`|
+|Search by tag(s)|`search <tag1> [<tag2> ...]`|`search final-exam important`|
 |Display decks|`decks`||
 |Delete deck|`delete <ix>`|`delete 1`|
 |Enter Deck Mode|`edit <ix>`|`edit 1`|
