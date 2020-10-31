@@ -178,7 +178,6 @@ public class DeckParser extends Parser {
         // Start
         case Ui.START:
             logger.log(Level.INFO, "Starting Game Mode");
-            System.out.println(deckList.getIndexOf(deck));
             return new NormalParser(Main.deckList).parseCommand(commandWord,
                     String.valueOf(deckList.getIndexOf(deck) + 1));
         // Add a FlashCard
