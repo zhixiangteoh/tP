@@ -71,9 +71,15 @@ public class DeckParser extends Parser {
         String[] questionAndAnswer = new String[2];
 
         if (arguments.contains("/ans")) {
-            questionAndAnswer = arguments.split("/ans");
+            // Split by the first /ans only
+            questionAndAnswer = arguments.split("/ans", 2);
+            // Expect a qn and ans
+            if (questionAndAnswer.length != 2) {
+                throw new EmptyInputException();
+            }
             verifyStringField(questionAndAnswer[0]);
         } else if (!arguments.trim().isEmpty()) {
+            questionAndAnswer[0] = arguments.trim();
             // Valid question provided but not answer
             Ui.printAddFlashCardLine(deck);
             Ui.printEnterAnswerLine();
