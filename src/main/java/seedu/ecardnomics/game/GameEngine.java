@@ -44,16 +44,14 @@ public class GameEngine {
             } catch (Exception e) {
                 e.getMessage();
             }
-            command = update(Ui.getInclExclConfirmation(), flashCard, command);
+            command = update(Ui.getInclExclConfirmation(), flashCard);
 
         } while (!isTerminate(command) && !isNoMoreCards());
 
         return command;
     }
 
-    Command update(boolean isResponseY, FlashCard flashCard, Command command) {
-        assert !isTerminate(command) : "Command is either `done` or `exit` when it shouldn't be!";
-
+    Command update(boolean isResponseY, FlashCard flashCard) {
         updateRetestStore(isResponseY, flashCard);
 
         if (storage.deque.isEmpty()) {
@@ -75,14 +73,7 @@ public class GameEngine {
 
     void updateRetestStore(boolean response, FlashCard flashCard) {
         if (response) {
-            if (!storage.retestStore.contains(flashCard)) {
-                storage.retestStore.add(flashCard);
-            }
-        } else {
-
-            if (!storage.retestStore.contains(flashCard)) {
-                storage.retestStore.remove(flashCard);
-            }
+            storage.retestStore.add(flashCard);
         }
     }
 
@@ -100,10 +91,9 @@ public class GameEngine {
         return command;
     }
 
-    double checkAttempt(Command command, FlashCard flashCard) throws Exception {
-        if (!(command instanceof GameResponseCommand)) {
-            throw new Exception();
-        }
+    double checkAttempt(Command command, FlashCard flashCard) {
+        assert command instanceof GameResponseCommand : "command not instance of GameResponseCommand!";
+
         String attempt = ((GameResponseCommand) command).getAttempt();
         String answer = flashCard.getAnswer();
 
