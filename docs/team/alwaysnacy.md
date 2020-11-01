@@ -1,5 +1,5 @@
 
-# Liau Kai Jie - Project Portfolio Page
+# Huynh Thi Thu Trang - Project Portfolio Page
 
 ## Overview
 

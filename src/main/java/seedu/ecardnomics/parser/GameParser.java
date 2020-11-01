@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 public class GameParser extends Parser {
     public Deck deck;
-    private static Logger logger = Logger.getLogger("DeckParserLogger");
+    private static Logger logger = Logger.getLogger("GameParserLogger");
 
     /**
      * Constructor.

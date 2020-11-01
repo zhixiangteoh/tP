@@ -2,6 +2,7 @@ package seedu.ecardnomics.parser;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import seedu.ecardnomics.command.VersionCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.command.deck.DoneEditCommand;
 import seedu.ecardnomics.command.deck.AddCommand;
@@ -10,6 +11,7 @@ import seedu.ecardnomics.command.deck.ListCommand;
 import seedu.ecardnomics.command.deck.HelpCommand;
 import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.normal.PowerPointCommand;
+import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
@@ -146,6 +148,39 @@ class DeckParserTest {
     @Test
     void parseCommand_HelpCommand_success() throws Exception {
         assertTrue(deckParser.parseCommand("help", "") instanceof HelpCommand);
+    }
+
+    @Test
+    void parseCommand_StartCommandArgumentsSpacePadded_success() {
+        try {
+            assertTrue(deckParser.parseCommand("start", "") instanceof StartCommand);
+            assertTrue(deckParser.parseCommand("start", "\t") instanceof StartCommand);
+            assertTrue(deckParser.parseCommand("start", "\n") instanceof StartCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
+    void parseCommand_StartCommandRandomArguments_success() {
+        try {
+            assertTrue(deckParser.parseCommand("start", "1") instanceof StartCommand);
+            assertTrue(deckParser.parseCommand("start", "\t1") instanceof StartCommand);
+            assertTrue(deckParser.parseCommand("start", "\n1") instanceof StartCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
+    void parseCommand_VersionCommandAnyArguments_success() {
+        try {
+            assertTrue(deckParser.parseCommand("--version", "1") instanceof VersionCommand);
+            assertTrue(deckParser.parseCommand("--version", "\t1") instanceof VersionCommand);
+            assertTrue(deckParser.parseCommand("--version", "\n hdkljfashdfs\t\t") instanceof VersionCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
     }
 
     @Test

@@ -1,5 +1,5 @@
 
-# Liau Kai Jie - Project Portfolio Page
+# Wayne Wang - Project Portfolio Page
 
 ## Overview
 

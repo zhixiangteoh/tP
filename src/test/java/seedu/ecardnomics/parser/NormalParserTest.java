@@ -11,6 +11,7 @@ import seedu.ecardnomics.command.normal.CreateCommand;
 import seedu.ecardnomics.command.normal.DecksCommand;
 import seedu.ecardnomics.command.normal.PowerPointCommand;
 import seedu.ecardnomics.command.normal.HelpCommand;
+import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.DeckRangeException;
@@ -177,10 +178,61 @@ class NormalParserTest {
         }
     }
 
+    @Test
+    void parseCommand_StartCommandValidArgumentsSpacePadded_success() {
+        try {
+            assertTrue(normalParser.parseCommand("start", "1") instanceof StartCommand);
+            assertTrue(normalParser.parseCommand("start", "     1  ") instanceof StartCommand);
+            assertTrue(normalParser.parseCommand("start", "\t1\n") instanceof StartCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
+    void parseCommand_StartCommandNoIndex_exceptionThrown() {
+        try {
+            normalParser.parseCommand("start", "");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexFormatException);
+        }
+    }
+
+    @Test
+    void parseCommand_StartCommandTooHighRangeIndex_exceptionThrown() {
+        try {
+            normalParser.parseCommand("start", "3");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof DeckRangeException);
+        }
+    }
+
+    // @Test
+    // void parseCommand_StartCommandTooLowRangeIndex_exceptionThrown() {
+    //     try {
+    //         normalParser.parseCommand("start", "-1");
+    //         fail();
+    //     } catch (Exception e) {
+    //         assertTrue(e instanceof DeckRangeException);
+    //     }
+    // }
 
     @Test
     void parseCommand_HelpCommand_success() throws Exception {
         assertTrue(normalParser.parseCommand("help", "") instanceof HelpCommand);
+    }
+
+    @Test
+    void parseCommand_VersionCommandAnyArguments_success() {
+        try {
+            assertTrue(normalParser.parseCommand("--version", "1") instanceof VersionCommand);
+            assertTrue(normalParser.parseCommand("--version", "\t1") instanceof VersionCommand);
+            assertTrue(normalParser.parseCommand("--version", "\n hdkljfashdfs\t\t") instanceof VersionCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
     }
 
     @Test
