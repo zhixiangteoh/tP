@@ -154,7 +154,7 @@ create <name of deck>
 ```
 Create deck with tag(s):
 ```java
-create <name of deck> [/tag <tag1> [<tag2>/]]
+create <name of deck> [/tag <tag1> [<tag2>]]
 ```
 
 #### Examples
@@ -230,10 +230,12 @@ search <tag1> [<tag2>]
 ```java
 [Normal]
   > search beginner
-// The dacks having tags you are searching for:
+// The decks having tags you are searching for:
 // 2. Micro-economics
 // 4. Macro-economics
 ```
+
+> Notice how the original deck index is displayed.
 
 ### Display all decks: `decks`
 
@@ -251,7 +253,6 @@ decks
 [Normal]
   > decks
 // The following decks are available:
-// Decks:
 // 1. market-failure
 // 2. perfect competition
 // 3. externalities
@@ -305,7 +306,7 @@ Entering an invalid response:
 ```
 [Normal]
   > delete 1
-// Do you want to delete market-failure? [y/n] not_y_or_n
+// Do you want to delete market-failure? [y/n] no way
 // Response should be 'y' or 'n'!
 // Do you want to delete market-failure? [y/n] y
 // market-failure has been deleted.
@@ -383,12 +384,11 @@ You can add the option `-y` to create the PowerPoint without any further prompt.
 #### Format
 
 ```java
-------------------------------------------------------------
+// ------------------------------------------------------------
 [Deck - `name of deck`]
   > pptx <index of deck>
-// Do you want to print `name of deck` deck to PowerPoint? [y/n]
-//   > yes
-// Response should be 'y' or 'n'
+// Do you want to print `name of deck` deck to PowerPoint? [y/n] yes
+// Response should be 'y' or 'n'!
 //   > y
 // ------------------------------------------------------------
 // `name of deck` has been created as PowerPoint.
@@ -396,7 +396,7 @@ You can add the option `-y` to create the PowerPoint without any further prompt.
 ```
 
 ```java
-------------------------------------------------------------
+// ------------------------------------------------------------
 [Deck - `name of deck`]
   > pptx <index of deck> -y
 // ------------------------------------------------------------
@@ -420,7 +420,7 @@ You can add the option `-y` to create the PowerPoint without any further prompt.
 ```
 
 ```java
-------------------------------------------------------------
+// ------------------------------------------------------------
 [Deck - Micro-Economics]
   > pptx 1 -y
 // ------------------------------------------------------------
@@ -468,7 +468,7 @@ format of card entry is displayed. Then, the user is prompted to specify the det
 
 #### Format
 ```java
-add
+  > add
 // Enter question: <question description>
 // Enter answer: <question answer or explanation>
 ```
@@ -481,7 +481,7 @@ Equivalent One-line format:
 #### Examples
 
 ```java
-// [Deck - market failure]
+[Deck - market failure]
      > add 
 // Enter question: <question description>
 // ------------------------------------------------------------
@@ -579,18 +579,16 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 ```java
 [Deck - `name of deck`]
   > delete 1
-// Do you want to delete the following flash card? [y/n]
-//   '<question 1>'
-  > n
+// Do you want to delete the following flash card? [y/n] ?
+//   '<question 1>' n
 // ------------------------------------------------------------
 ```
 
 ```java
 [Deck - `name of deck`]
   > delete 2
-// Do you want to delete the following flash card? [y/n]?
-//   '<question 2>'? 
-  > y
+// Do you want to delete the following flash card? [y/n] ?
+//   '<question 2>' y
 // ------------------------------------------------------------
 // The following flash card has been deleted:
 //   '<question 2>'
@@ -613,34 +611,34 @@ Deciding not to delete:
 [Deck - market-failure]
   > delete 1
 // Do you want to delete the following flash card? [y/n]
-//   `define market failure?`
-  > n
+//   `define market failure?` n
 // ------------------------------------------------------------
+[Deck - market-failure]
+  > 
 ```
 
 Confirming a delete:
 ```java
 [Deck - market-failure]
   > delete 2
-// Do you want to delete the following flash card? [y/n]?
-//   'What is a public good?'? 
-  > y
+// Do you want to delete the following flash card? [y/n] ?
+//   'What is a public good?' y
 // ------------------------------------------------------------
 // The following flash card has been deleted:
 //   'What is a public good?'
 // ------------------------------------------------------------
+[Deck - market-failure]
+  > 
 ```
 
 Entering an invalid response:
-```
+```java
 [Deck - market failure]
   > delete 2
-// Do you want to delete the following flash card? [y/n]?
-//   'What is a public good?'?
-  > definitely
+// Do you want to delete the following flash card? [y/n] ?
+//   'What is a public good?' definitely
 // Response should be 'y' or 'n'!
-// Do you want to delete Define market failure? [y/n]?
-  > y
+//   > y
 // ------------------------------------------------------------
 // The following flash card has been deleted:
 //   'What is a public good?'
@@ -649,11 +647,9 @@ Entering an invalid response:
 
 ### Update an existing Flash Card: `update`
 
-Updates the question and answer fields of a  specified flashcard
-in the deck.
-The `update` command expects no initial arguments.
-The current question and answer are displayed.
-Then, the user is prompted to specify the new details of the flashcard.
+Updates the question and answer fields of a  specified flashcard in the deck. The `update` command expects no initial
+ arguments. The current question and answer are displayed. Then, the user is prompted to specify the new details of
+  the flashcard.
 
 #### Format
 ```
@@ -783,20 +779,17 @@ You can add the option `-y` to create the PowerPoint without any further prompt.
 #### Format
 
 ```java
-------------------------------------------------------------
 [Deck - `name of deck`]
   > pptx
-// Do you want to print `name of deck` deck to PowerPoint? [y/n]
-//   > yes
-// Response should be 'y' or 'n'
-//   > y
+// Do you want to print `name of deck` deck to PowerPoint? [y/n] <y/n>
 // ------------------------------------------------------------
 // `name of deck` has been created as PowerPoint.
 // ------------------------------------------------------------
 ```
 
+> Above displays the result for the case when user enters `y`.
+
 ```java
-------------------------------------------------------------
 [Deck - `name of deck`]
   > pptx -y
 // ------------------------------------------------------------
@@ -807,11 +800,9 @@ You can add the option `-y` to create the PowerPoint without any further prompt.
 #### Examples
 
 ```java
-------------------------------------------------------------
 [Deck - Micro-Economics]
   > pptx
-// Do you want to print Micro-Economics deck to PowerPoint? [y/n]
-//   > yes
+// Do you want to print Micro-Economics deck to PowerPoint? [y/n] yes
 // Response should be 'y' or 'n'
 //   > y
 // ------------------------------------------------------------
@@ -820,7 +811,6 @@ You can add the option `-y` to create the PowerPoint without any further prompt.
 ```
 
 ```java
-------------------------------------------------------------
 [Deck - Micro-Economics]
   > pptx -y
 // ------------------------------------------------------------
