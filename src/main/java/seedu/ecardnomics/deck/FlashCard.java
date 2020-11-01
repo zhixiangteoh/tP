@@ -58,10 +58,10 @@ public class FlashCard {
         this.question = question;
     }
 
-
+    /* Would not recommend using this method unless there is no offset to be printed before QN_LABEL */
     public String toString() {
-        return QN_LABEL + formatResponse(true, QN_LABEL.length()) + System.lineSeparator()
-                + ANS_LABEL + formatResponse(false, ANS_LABEL.length());
+        return QN_LABEL + Ui.prettyPrintFormatter(question, QN_LABEL.length()) + System.lineSeparator()
+                + ANS_LABEL + Ui.prettyPrintFormatter(answer, ANS_LABEL.length());
     }
 
     /**
@@ -75,58 +75,11 @@ public class FlashCard {
      * @return String for displaying question if isQuestion, answer otherwise
      */
     public String toString(boolean isQuestion, int offset) {
-        String label = isQuestion ? QN_LABEL : ANS_LABEL;
-        String padding = isQuestion ? "" : " ".repeat(offset);
-        return padding + label + formatResponse(isQuestion, offset + label.length());
-    }
-
-    /**
-     * Format the question or answer response string to properly wrap around the end
-     * of each line. The response will occupy the area between offset and
-     * Ui.DASH_LINES.length().
-     *
-     * @param isQuestion indicates whether the detail to format is question or answer
-     * @param offset Number of characters from the start of the line
-     * @return String that stores the formatted question or answer
-     */
-    private String formatResponse(boolean isQuestion, int offset) {
-        String result = "";
-        String[] words = isQuestion ? question.split(" ") : answer.split(" ");
-        int lineLength = Ui.DASH_LINES.length();
-        int usableLength = lineLength - offset;
-        assert usableLength > 0 : "Otherwise we cannot print anything.";
-
-        int currentLength = 0;
-        for (String word : words) {
-            // Handle the case where a word is too long to print on one line
-            if (word.length() > usableLength) {
-                // Find number of characters that can be printed on current line
-                int remainLength = usableLength - currentLength;
-                result += word.substring(0, remainLength);
-                String leftover = word.substring(remainLength);
-                // Separate the word into parts that can fit in a line
-                while (leftover.length() > usableLength) {
-                    result += System.lineSeparator() + " ".repeat(offset)
-                            + leftover.substring(0, usableLength);
-                    leftover = leftover.substring(usableLength);
-                }
-                // Place remainder of word into line and continue
-                result += System.lineSeparator() + " ".repeat(offset) + leftover + " ";
-                currentLength = leftover.length() + 1;
-                continue;
-            }
-            currentLength += word.length();
-            if (currentLength > usableLength) {
-                // Repeat enough spaces so that text is aligned to usable area.
-                result += System.lineSeparator() + " ".repeat(offset) + word;
-                currentLength = word.length();
-            } else {
-                result += word;
-            }
-            result += " ";
-            // Account for the " " after the word.
-            ++currentLength;
+        if (isQuestion) {
+            return QN_LABEL + Ui.prettyPrintFormatter(question, offset + QN_LABEL.length());
+        } else {
+            return " ".repeat(offset) + ANS_LABEL
+                    + Ui.prettyPrintFormatter(answer, offset + ANS_LABEL.length());
         }
-        return result.trim();
     }
 }
