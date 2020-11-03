@@ -122,6 +122,12 @@ public class Ui {
     public static final String N = "n";
     public static final String DASH_LINES = "------------------------------------------------------------";
 
+    public static final String LOGO1 = "        ___              _                       _           ";
+    public static final String LOGO2 = "  ___  / __\\__ _ _ __ __| |_ __   ___  _ __ ___ (_) ___ ___  ";
+    public static final String LOGO3 = " / _ \\/ /  / _` | '__/ _` | '_ \\ / _ \\| '_ ` _ \\| |/ __/ __|";
+    public static final String LOGO4 = "|  __/ /__| (_| | | | (_| | | | | (_) | | | | | | | (__\\__ \\";
+    public static final String LOGO5 = " \\___\\____/\\__,_|_|  \\__,_|_| |_|\\___/|_| |_| |_|_|\\___|___/";
+
     public static Scanner in = new Scanner(System.in);
     private static Logger logger = Logger.getLogger("UiLogger");
 
@@ -134,7 +140,9 @@ public class Ui {
         return in.nextLine();
     }
 
-    /** Displays dash line. */
+    /**
+     * Displays dash line.
+     */
     public static void printDashLines() {
         System.out.println(DASH_LINES);
     }
@@ -148,6 +156,15 @@ public class Ui {
         printDashLines();
         System.out.println(message);
         printDashLines();
+    }
+
+    public static void printLogo() {
+        System.out.println(LOGO1);
+        System.out.println(LOGO2);
+        System.out.println(LOGO3);
+        System.out.println(LOGO4);
+        System.out.println(LOGO5);
+        System.out.println("");
     }
 
     /**
@@ -206,7 +223,10 @@ public class Ui {
      * Displays the greeting message.
      */
     public static void printGreeting() {
-        printMessage(GREETING_LINES);
+        printDashLines();
+        printLogo();
+        System.out.println(GREETING_LINES);
+        printDashLines();
     }
 
     /**
@@ -258,7 +278,7 @@ public class Ui {
     /**
      * Displays an index list of FlashCards in the deck.
      *
-     * @param deck deck to display
+     * @param deck           deck to display
      * @param isQuestionOnly print question only if true, question and answer otherwise
      */
     public static void printDeck(Deck deck, boolean isQuestionOnly) {
@@ -449,7 +469,7 @@ public class Ui {
     /**
      * Prints the new tags added to the deck.
      *
-     * @param name the name of the deck
+     * @param name    the name of the deck
      * @param newTags the tag(s) will be added to the deck
      */
     public static void printNewTags(String name, String[] newTags) {
@@ -469,7 +489,7 @@ public class Ui {
      * Prints confirmation question before tag removal.
      *
      * @param deckName the name of the deck having tags being removed
-     * @param tags the tags will be removed
+     * @param tags     the tags will be removed
      */
     public static void printRemovedTagsQuestion(String deckName, String[] tags) {
         String removedTags = formStringOfTags(tags);
@@ -480,7 +500,7 @@ public class Ui {
      * Prints the tags that are removed from the specified deck.
      *
      * @param deckName the name of the deck having removed tags
-     * @param tags tags were removed
+     * @param tags     tags were removed
      */
     public static void printTagsRemovedLine(String deckName, String[] tags) {
         String removedTags = formStringOfTags(tags);
@@ -571,7 +591,7 @@ public class Ui {
      * Checks whether the user want to remove the tags specified
      * from the deck specified.
      *
-     * @param tags String[] representing the tags be removed
+     * @param tags     String[] representing the tags be removed
      * @param deckName String representing the index of the deck of the tags
      * @return true if the removal is confirmed, otherwise false
      */
