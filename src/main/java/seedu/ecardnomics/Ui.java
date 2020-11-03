@@ -123,8 +123,8 @@ public class Ui {
     public static final String N = "n";
     public static final String DASH_LINES = "------------------------------------------------------------";
 
-    public static final String LOGO1 = "        ___              _                       _           ";
-    public static final String LOGO2 = "  ___  / __\\__ _ _ __ __| |_ __   ___  _ __ ___ (_) ___ ___  ";
+    public static final String LOGO1 = "        ___              _                       _";
+    public static final String LOGO2 = "  ___  / __\\__ _ _ __ __| |_ __   ___  _ __ ___ (_) ___ ___";
     public static final String LOGO3 = " / _ \\/ /  / _` | '__/ _` | '_ \\ / _ \\| '_ ` _ \\| |/ __/ __|";
     public static final String LOGO4 = "|  __/ /__| (_| | | | (_| | | | | (_) | | | | | | | (__\\__ \\";
     public static final String LOGO5 = " \\___\\____/\\__,_|_|  \\__,_|_| |_|\\___/|_| |_| |_|_|\\___|___/";
