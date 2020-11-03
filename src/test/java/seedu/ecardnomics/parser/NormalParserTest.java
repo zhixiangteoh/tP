@@ -26,13 +26,13 @@ class NormalParserTest {
     NormalParser normalParser;
 
     @Test
-    void getIndex_validIndex_success() throws IndexFormatException, DeckRangeException {
+    void getIndex_validIndex_success() throws Exception {
         assertEquals(0, normalParser.getIndex("1"));
         assertEquals(1, normalParser.getIndex("2"));
     }
 
     @Test
-    void getIndex_validIndexSpacePadded_success() throws IndexFormatException, DeckRangeException {
+    void getIndex_validIndexSpacePadded_success() throws Exception {
         assertEquals(0, normalParser.getIndex(" 1"));
         assertEquals(0, normalParser.getIndex("\t1"));
         assertEquals(1, normalParser.getIndex("2\t"));

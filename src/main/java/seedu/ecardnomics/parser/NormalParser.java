@@ -21,6 +21,7 @@ import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.NoSeparatorException;
+import seedu.ecardnomics.exceptions.NumberTooBigException;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -39,17 +40,24 @@ public class NormalParser extends Parser {
     }
 
     @Override
-    protected int getIndex(String arguments) throws IndexFormatException, DeckRangeException {
+    protected int getIndex(String arguments) throws IndexFormatException,
+            DeckRangeException, NumberTooBigException {
 
-        String indexString = arguments.trim();
+        arguments = arguments.trim();
 
         logger.log(Level.INFO, "Logging method getIndex() in NormalParser.");
-        if (!indexString.matches(Ui.DIGITS_REGEX)) {
-            logger.log(Level.WARNING, "User did not enter a valid integer index. string = " + indexString);
+
+        if (!arguments.matches(Ui.DIGITS_REGEX)) {
+            logger.log(Level.WARNING, "User did not enter a valid integer index. string = " + arguments);
             throw new IndexFormatException();
         }
 
-        int index = Integer.parseInt(indexString) - INDEX_OFFSET;
+        int index;
+        try {
+            index = Integer.parseInt(arguments) - INDEX_OFFSET;
+        } catch (NumberFormatException e) {
+            throw new NumberTooBigException();
+        }
 
         if ((index >= deckList.size()) || (index < LOWEST_POSSIBLE_INDEX)) {
             logger.log(Level.WARNING, "User did not enter an index in the valid range.");
@@ -68,9 +76,7 @@ public class NormalParser extends Parser {
      * @throws IndexFormatException if arguments is not a digit
      * @throws DeckRangeException if index obtained from arguments is not in range
      */
-    private Deck prepareDeck(String arguments)
-            throws IndexFormatException, DeckRangeException {
-
+    private Deck prepareDeck(String arguments) throws Exception {
         return deckList.getDeck(getIndex(arguments));
     }
 

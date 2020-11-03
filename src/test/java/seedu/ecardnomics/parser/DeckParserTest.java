@@ -26,13 +26,13 @@ class DeckParserTest {
     DeckParser deckParser;
 
     @Test
-    void getIndex_validIndex_success() throws IndexFormatException, FlashCardRangeException {
+    void getIndex_validIndex_success() throws Exception {
         assertEquals(0, deckParser.getIndex("1"));
         assertEquals(1, deckParser.getIndex("2"));
     }
 
     @Test
-    void getIndex_validIndexSpacePadded_success() throws IndexFormatException, FlashCardRangeException {
+    void getIndex_validIndexSpacePadded_success() throws Exception {
         assertEquals(0, deckParser.getIndex(" 1"));
         assertEquals(0, deckParser.getIndex("\t1"));
         assertEquals(1, deckParser.getIndex("2\t"));
