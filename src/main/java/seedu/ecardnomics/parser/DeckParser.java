@@ -18,6 +18,7 @@ import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.exceptions.EmptyInputException;
+import seedu.ecardnomics.exceptions.NumberTooBigException;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -141,7 +142,8 @@ public class DeckParser extends Parser {
     }
 
     @Override
-    protected int getIndex(String arguments) throws IndexFormatException, FlashCardRangeException {
+    protected int getIndex(String arguments) throws IndexFormatException,
+            FlashCardRangeException, NumberTooBigException {
 
         arguments = arguments.trim();
 
@@ -152,7 +154,12 @@ public class DeckParser extends Parser {
 
         assert arguments.length() > 0 : "arguments empty!";
 
-        int index = Integer.parseInt(arguments) - INDEX_OFFSET;
+        int index;
+        try {
+            index = Integer.parseInt(arguments) - INDEX_OFFSET;
+        } catch (NumberFormatException e) {
+            throw new NumberTooBigException();
+        }
 
         if (index >= deck.size() || index < LOWEST_POSSIBLE_INDEX) {
             logger.log(Level.WARNING, "Flash card index larger than total number of cards");

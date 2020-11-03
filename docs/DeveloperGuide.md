@@ -18,8 +18,17 @@ The **Architecture Diagram** given above explains the high-level design of the F
 * `Storage` Reads and writes data from and to a text file.
 
 #### How to **components** interact with one another
+The following **Sequence Diagram** shows how the components interact for a basic `create <deck name>` command where a new deck is created and added in to the `Deck List`.
+
 ![Sequence Diagram](images-dg/Sequence%20Diagram.png)
-The **Sequence Diagram** above shows how the components interact for a basic `create <deck name>` command where a new deck is created and added in to the `Deck List`.
+The sequence shown is as follows:
+* The **`Main`** instance runs and calls the *`readUserInput()`*  of **`Ui`**. The function waits for the user to key in one line of input 
+and then returns that input as a String to **`Main`**. **`Main`** calls *`parse`* of which creates a new **`CreateCommand`** and this is returned to **`Main`**. 
+This section will be explained in details in the `Parser` section later on.
+**`Main`** then calls for *`execute()`*  of the *`CreateCommand`* that calls *`addDeck()`* of **`DeckList`** and subsequently  *`printNewDeck()`* 
+of **`Ui`** which prints the output to the user. 
+Finally, **`Main`** calls *`write()`* of **`Storage`** to write the updated Deck List to the text file.
+
 
 ### User Interface
 
@@ -132,7 +141,10 @@ The `PowerPointCommand` is parsed by `NormalParser` but the "Print to PowerPoint
 and Deck Mode. 
 
 The following diagram shows how the `PowerPointCommand`'s `execute()` calls the `createNewPowerPoint()` method of `PowerPoint`.
-![PPTX Sequence Diagram](images-dg/DG-PPTX-Sequence-Diagram.png)
+*`execute()`* first checks if the whether `isPptxCreated` is `true` and only creates the PowerPoint if so. This is necessary as 
+the user might have input the command `pptx` but when prompt for confirmation, they input `n` which means no, but the parser will 
+still output a **`PowerPointCommand`** except with the element `isPptxCreated` as `false` and thus, when executed, nothing happens.
+![PPTX Sequence Diagram](images-dg/PPTX-Sequence-Diagram.png)
 
 The `newIntroSlide()`, `newSlide()` and `exportSlide()` method of `PowerPoint` uses a third party library - Apache POI 
 to create new slides, populate them with the questions and answers from the deck and finally print them out to a new PowerPoint
