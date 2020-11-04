@@ -4,8 +4,7 @@
 
 Flash Card manager for Economics students on Command Line.
 
-See also: [User Guide](./UserGuide.md) | [Releases](https://github.com/AY2021S1-CS2113-T14-2/tp/releases) | [Team
- Project Portfolio Page](./AboutUs.md)
+See also: [User Guide](./UserGuide.md) | [Releases](https://github.com/AY2021S1-CS2113-T14-2/tp/releases) | [Team Project Portfolio Page](./AboutUs.md)
 
 ## Contents
 
