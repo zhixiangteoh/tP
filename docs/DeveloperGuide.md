@@ -34,21 +34,20 @@ Finally, **`Main`** calls *`write()`* of **`Storage`** to write the updated Deck
 
 **API**: [seedu/ecardnomics/Ui.java](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/Ui.java)
 
-The UI contains String constants that represent the outputs
-that the application is defined to produce.
+The **`Ui`** contains String constants that represent the outputs that the application is defined to produce.
 
-The `UI` component has two main purposes:
+The **`Ui`** component has two main purposes:
 * Reading user input from the console.
 * Printing program output to the console.
 
-Reading of user input is done using the method `readUserInput()`
-which reads one line of user input. The other methods within `UI` are
+Reading of user input is done using the method *`readUserInput()`*
+which reads one line of user input. The other methods within **`Ui`** are
 called when a specific output needs to be printed.
 
-The `UI` component passes the user input to the `NormalParser` and
-`DeckParser` components that will extract the relevant information.
-The `UI` component provides its printing methods to `NormalParser`
-and `DeckParser` for printing the appropriate output when required.
+The **`Ui`** component passes the user input to the **`NormalParser`**, **`DeckParser`** and
+**`GameParser`** components that will extract the relevant information.
+The **`Ui`** component provides its printing methods to **`NormalParser`**, **`DeckParser`**
+and **`GameParser`** for printing the appropriate output when required.
 
 ### Logic
 #### Overall Logic
@@ -95,19 +94,18 @@ The `Parser` classes play important roles in execution of specific commands, e.g
 **API**: [seedu/ecardnomics/deck](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/deck)
 
 The Deck Model component is made up of three parts:
-* `DeckList`
-* `Deck`
-* `FlashCard`
+* **`DeckList`**
+* **`Deck`**
+* **`FlashCard`**
 
-The `FlashCard` component represents a flashcard, storing question
-and answer data. The `Deck` represents a collection of flashcards
-related by a common topic. The `DeckList` represents the collection
-of all the `Deck` objects that the user has.
+The **`FlashCard`** component represents a flashcard, storing question
+and answer data. The **`Deck`** represents a collection of flashcards
+related by a common topic. The **`DeckList`** represents the collection
+of all the **`Deck`** objects that the user has.
 
-Only the `Command` components can modify the `DeckList`, `Deck` and
-`FlashCard` components. However, `Ui`, `DeckParser` and `NormalParser`
-are able to read data from the `DeckList`, `Deck` and `FlashCard`
-components.
+Only the **`Command`** components can modify the **`DeckList`**, **`Deck`** and
+**`FlashCard`** components. However, **`Ui`**, **`DeckParser`** and **`NormalParser`**
+are able to read data from the **`DeckList`**, **`Deck`** and **`FlashCard`** components.
 
 ### Storage
 
