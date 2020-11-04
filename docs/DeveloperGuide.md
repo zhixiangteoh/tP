@@ -160,14 +160,12 @@ The following are the Classes/ Enum of the third part package `org.apache.poi.xs
 * `XSLFTextParagraph` - Class representing a paragraph of text within a shape
 * `XSLFTextRun` - Class representing the properties of the text within a paragraph
 
-### Pretty Printing (Wei Siew)
+### Pretty Printing
 
-The purpose of this feature is to improve the readability of the
-question and answer fields of a flashcard for the user. Without this
-feature, long question and answer fields will follow the default
-wrapping style of the console. When words are truncated unnecessarily,
-it is going to be distracting and annoying for students trying to
-study. We illustrate the problem in the following example:
+The purpose of this feature is to improve the readability of the command line text output for the user, in particular,
+the question and answer fields of a flashcard . Without this feature, long text outputs would follow the default 
+wrapping style of the console. When words are truncated unnecessarily, it is going to be distracting and annoying
+for students trying to study. We illustrate the problem with the following example:
 ```
 This is a long question (or maybe answer) field. Suppose tha
 t our console is 60 characters wide, we see that the word "t
@@ -175,27 +173,29 @@ hat" was truncated in the first line and again in the second
 line.
 ```
 In this section, we define the following terms:
-* `lineLength` is the maximum number of characters on a line,
-set to be equal to Ui.DASH_LINES.length(). This is also the number of
-characters between the start of line and end of line.
-* `label` can be "Question: " or "Answer:   " and is used to indicate
-whether a field is the question or answer of the flashcard.
-* `usableLength` is the number of characters that can be used for
-printing a field. This is also the number of characters between the end
-of `label` and end of line.
+* `lineLength` is the maximum number of characters on a line, set to be equal to `Ui.DASH_LINES.length()`. This is
+also the number of characters between the start of line and end of line.
+* `offset` is the number of characters after the start of the line before the target string will be printed.
+* `usableLength` is the number of characters that can be used for printing the output. 
+This is `Ui.DASH_LINES.length() - offset`.
 
-The following sequence diagram illustrates the call to the
-`toString(boolean isQuestion, int offset)` method of a `FlashCard`
-object.
+The *`prettyPrintFormatter(String target, int offset)`* static method of the **`Ui`** class takes as argument the
+target string to be formatted for printing as well as the offset. The formatted String is returned to the caller for
+printing. This is illustrated in the following sequence diagram:
 
 ![DG-Implementation-Features-PP-Sequence](./images-dg/PP-Sequence.png?raw=true)
 
-The `offset` parameter specifies the number of characters already
-printed on the line before the flashcard field will be printed.
-The `offset` is used by the `formatResponse()` method to determine
-`usableLength`.
+>Note:
+>
+> The lifeline on the left represents the calling method that requires a formatted string.
+> The *`printMethod()`* is a placeholder for any of the printing methods of **`Ui`** class.
+> The call to *`System.out.println`* is omitted. 
+> Minimal notation is used for the return of control to the calling method.
 
-`formatResponse()` places as many words as possible on each line until
+The `offset` parameter specifies the number of characters already
+printed on the line before the target string will be printed.
+
+*`prettyPrintFormatter()`* places as many words as possible on each line until
 the next word does not fit within the `usableLength` of the current
 line. This word is therefore placed on the next line and the process
 repeats until all the words have been formatted into the response. If
@@ -203,10 +203,7 @@ the  length of a single word exceeds the `usableLength`, the word is
 split across multiple lines to prevent the program from looping
 infinitely as it would never be able to fit the word on any line.
 
-Take note that infinite loops can still occur if
-* formatResponse() is called with offset >= `lineLength` or
-* toString(boolean, int) is called with offset >= `lineLength` - length
-of `label`
+Take note that infinite loops can still occur if *`prettyPrintFormatter()`* is called with offset >= `lineLength`
 
 #### Design Consideration:
 
