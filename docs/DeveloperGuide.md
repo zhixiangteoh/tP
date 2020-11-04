@@ -1,5 +1,46 @@
 # Developer Guide
 
+## Introduction
+
+Flash Card manager for Economics students on Command Line.
+
+See also: [User Guide](./UserGuide.md) | [Releases](https://github.com/AY2021S1-CS2113-T14-2/tp/releases) | [Team
+ Project Portfolio Page](./AboutUs.md)
+
+## Contents
+
+- [Design](#design)
+  * [Application Architecture](#application-architecture)
+    + [How the components interact with one another](#how-the-components-interact-with-one-another)
+  * [User Interface](#user-interface)
+  * [Logic](#logic)
+    + [Overall Logic](#overall-logic)
+    + [Commands](#commands)
+      - [Overview](#overview)
+      - [Mode-specific commands](#mode-specific-commands)
+      - [Command sequence](#command-sequence)
+  * [Deck Model](#deck-model)
+  * [Storage](#storage)
+    + [Loading the deckList data](#loading-the-decklist-data)
+    + [Writing the deckList data](#writing-the-decklist-data)
+  * [Exceptions](#exceptions)
+- [Implementation - Features](#implementation---features)
+  * [Print to PowerPoint SlideShow](#print-to-powerpoint-slideshow)
+  * [Pretty Printing (Wei Siew)](#pretty-printing--wei-siew-)
+    + [Design Consideration:](#design-consideration-)
+  * [Tags for grouping and searching decks](#tags-for-grouping-and-searching-decks)
+  * [Game Mode](#game-mode)
+    + [General Architecture](#general-architecture)
+    + [Example Use Case](#example-use-case)
+    + [Sequential Flow](#sequential-flow)
+- [Product scope](#product-scope)
+  * [Target user profile](#target-user-profile)
+  * [Value proposition](#value-proposition)
+- [User Stories](#user-stories)
+- [Non-Functional Requirements](#non-functional-requirements)
+- [Glossary](#glossary)
+- [Instructions for manual testing](#instructions-for-manual-testing)
+
 ## Design
 
 ### Application Architecture
@@ -17,7 +58,7 @@ The **Architecture Diagram** given above explains the high-level design of the F
     * `Deck List` : A complete list of all the `Deck`s in memory.
 * `Storage` Reads and writes data from and to a text file.
 
-#### How to **components** interact with one another
+#### How the components interact with one another
 The following **Sequence Diagram** shows how the components interact for a basic `create <deck name>` command where a new deck is created and added in to the `Deck List`.
 
 ![Sequence Diagram](images-dg/Sequence%20Diagram.png)
@@ -41,34 +82,36 @@ The `UI` component has two main purposes:
 * Reading user input from the console.
 * Printing program output to the console.
 
-Reading of user input is done using the method `readUserInput()`
+Reading of user input is done using the method *`readUserInput()`*
 which reads one line of user input. The other methods within `UI` are
 called when a specific output needs to be printed.
 
-The `UI` component passes the user input to the `NormalParser` and
-`DeckParser` components that will extract the relevant information.
-The `UI` component provides its printing methods to `NormalParser`
-and `DeckParser` for printing the appropriate output when required.
+The `UI` component passes the user input to the **`NormalParser`** and
+**`DeckParser`** components that will extract the relevant information.
+The `UI` component provides its printing methods to **`NormalParser`**
+and **`DeckParser`** for printing the appropriate output when required.
 
 ### Logic
+
 #### Overall Logic
 ![DG-Overall Logic UML](./images-dg/Logic-DG.png?raw=true "Overall Logic Diagram")
 
-1. The overall logic component consists of the Parser class and Command class.
-2. The Parser parses the user input and creates the respective Command object.
-3. This command will be executed by the Main class.
+1. The overall logic component consists of the **`Parser`** class and **`Command`** class.
+2. The **`Parser`** parses the user input and creates the respective **`Command`** object.
+3. This command will be executed by the **`Main`** class.
 4. The command execution then can affect the Model (e.g. creating a new deck)
 
 #### Commands
 
-![DG-Design Commands UML](./images-dg/DG-Design-Commands.png?raw=true "Commands UML Class Diagram")
+##### Overview
 
-**API**: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu
-/ecardnomics/command)
+![DG-Design Commands UML](./images-dg/DG-Design-Commands-UML.png?raw=true "Commands UML Class Diagram")
 
-Commands are primarily classified into three categories, `NormalCommand`, `DeckCommand`, and `GameCommand`,
+**API**: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/command)
+
+Commands are primarily classified into three categories, **`NormalCommand`**, **`DeckCommand`**, and **`GameCommand`**,
  corresponding to the application's Normal, Deck, and Game Modes, respectively. All three are abstract children
-  derived from the overarching abstract class `Command`. The basis `Command` class is defined as such:
+  derived from the overarching abstract class **`Command`**. The basis **`Command`** class is defined as such:
    
 ```java
 public abstract class Command {
@@ -76,17 +119,45 @@ public abstract class Command {
 }
 ```
 
-It only requires that all derived children implement the `execute()` method. The only two classes not belonging to
- individual modes are `ExitCommand` and `VoidCommand`. The former is so that users can call the command `exit` from
-  anywhere in the application, while the latter is a catch-all "command" for all erroneous commands a user enters. 
+It only requires that all derived children implement the *`execute()`* method. The only two classes not belonging to
+ individual modes are **`ExitCommand`** and **`VoidCommand`**. The former is so that users can call the command `exit`
+  from anywhere in the application, while the latter is a catch-all "command" for all erroneous commands a user
+  enters.
+
+##### Mode-specific commands
+
+The specific commands defined within the different Modes are shown below; one can simply substitute the `Normal Mode
+ Commands`, `Game Mode Commands` and `Deck Mode Commands` components in the above UML class diagram with the
+  corresponding `Command` classes, with all of the classes inheriting from the corresponding abstract classes, and
+   being associated (with arrows pointing towards) with the corresponding `Parser` classes.
    
-The `Parser` classes play important roles in execution of specific commands, e.g. `CreateCommand`, because
+![DG-Design Commands Breakdown](./images-dg/DG-Design-Commands-Breakdown.png?raw=true "Commands Components Breakdown")
+
+Notice that the same `StartCommand` class above is indicated as being in both Normal Mode and Deck Mode. While the
+ diagram does not explain this phenomenon fully, the idea is there: that `start` is a command that can be run from
+  within Deck Mode, but that its implementation is passed to `NormalParser` to be handled as a Normal Mode command
+  . More specifically, within the specification of `DeckParser`'s `parseCommand()` method, the case of command word
+   being parsed as `start` will in turn call `NormalParser`'s `parseCommand()` method, supplementing it with
+    `DeckParser`'s Deck class field object as the `arguments` String. 
+
+##### Command sequence
+
+The **`Parser`** classes play important roles in execution of specific commands, e.g. **`CreateCommand`**, because
  they define methods that check and ensure the conformity of user input to the commands' expected input. Below is a
-  sequence diagram showcasing this interaction, for execution of a `CreateCommand`, e.g. `create
+  sequence diagram showcasing this interaction, for execution of a **`CreateCommand`**, e.g. `create
    microeconomics`:
   
 ![DG-Design CreateCommand Sequence UML](./images-dg/DG-Design-Sequence-Diagram.png?raw=true "CreateCommand UML
  Sequence Diagram")
+ 
+Here, `parse()` first splits the user input `create microeconomics` into two strings, "create" and "microeconomics",
+ the command word and command arguments respectively. Then within the `parseCommand()` call in `NormalParser`, a
+ dedicated method to create a new deck based on the argument string "microeconomics", `prepareNewDeck()`, is called
+ . A new `Deck` object is returned to the same `parseCommand()` call and used to create the new `CreateCommand
+ ` object, which is then propagated back to `Main` (not shown here) that called `parse()`.
+ 
+> Note that the `CreateCommand` object is not marked as deleted in the above diagram because its lifeline does not
+> really end until its `execute()` method has been called from `Main`, using `Main`'s `executeCommand()`.
 
 ### Deck Model
 
@@ -129,6 +200,23 @@ and adds them to the current `deckList` passed into the *`load`* method call.
 
 Similarly, for writing the data into `.txt` file, the Storage will loop through all the current `Decks` and their
 current `FlashCards` and write them in a specific format in the text file in the `./data` folder.
+
+### Exceptions
+
+![DG-Design Exceptions Architecture](./images-dg/DG-Exceptions-Architecture.png?raw=true "Exceptions Architecture
+ Overview")
+
+**API**: [seedu/ecardnomics/exceptions](https://github.com/AY2021S1-CS2113-T14-2/tp/blob/master/src/main/java/seedu/ecardnomics/exceptions)
+
+How to read the diagram above:
+- The font colour of the methods correspond to the fill colour of the Exception classes that they throw; e.g
+., `NormalParser`'s `prepareNewDeck()` method throws `EmptyInputException`
+- Additionally, methods that throw more than one exception will have their colours corresponding to one of the
+ exception classes' fill colours, with the other associations denoted by explicit textual annotation on the
+  association arrows; e.g., `NormalParser`'s `getIndex()` and `prepareDeck()` methods additionally throw
+   `DeckRangeException`, on top of throwing `IndexFormatException`
+- Each Exception class only has one String field unique to the class that holds the Exception message which is
+ printed to the user on encountering the associated erroneous feedback
 
 ## Implementation - Features
 
@@ -233,27 +321,96 @@ a group of decks he/she is interested in.
 
 eCardnomics' quintessential mode. Game Mode can be started from either Normal Mode or Deck Mode. The `start` command
  is parsed by `NormalParser` (see [Commands](#commands)).
- 
+
+#### General Architecture
+
 Game Mode contains two main components: a storage component, `GameStorage`, and a logic component, `GameEngine`. The
  former handles all data structures used by Game Mode, and stores the original deck (`originalDeck`), question pool
   (`deque`), and retest question pool (`retestStore`). The latter executes the main game loop (`runGameLoop()`), and
    interacts with `GameStorage` on package-private basis; i.e., `GameEngine` and `GameStorage` have full mutual
     access as if they were a single class. This is one of the main intentional design decisions.
   
-![DG-Implementation-Features-Game-Mode-Architecture](./images-dg/Game-Mode-Design.png?raw=true "Game Mode
- Architecture Diagram")
+![DG-Implementation-Features-Game-Mode-Architecture](./images-dg/DG-Game-Mode-Architecture-Overview.png?raw=true "Game Mode
+ Architecture Overview")
+
+The schematic below describes the individual responsibilities of the `GameStorage` and `GameEngine` classes (or
+ components) of Game Mode as introduced above, and also two key interactions between the two classes, namely via
+  `GameEngine`'s `update(isResponseY:boolean, flashCard:FlashCard)` and `poseQuestion()` method calls. For
+   context, `poseQuestion()` pops the top flash card off `GameStorage`'s question pool `deque` to display to the user
+   , while `update()` is the `GameEngine` method that adds to the retest question pool `retestStore
+   ` when the user chooses to do so (via `isResponseY == true`). This essentially describes one iteration of
+    `runGameLoop()`; more explanation and a full-blown illustration and sequence are given further below.  
+
+![DG-Implementation-Features-Game-Storage-Game-Engine](./images-dg/DG-Game-Storage-Game-Engine.png?raw=true "Game
+ Mode Game Storage Game Engine")
  
 **See also**: [Gameplay description](./UserGuide.md#gameplay)
 
 The actual "game" aspect of eCardnomics is essentially summarised in the `runGameLoop()` high-level overview above
-. For a textual gameplay description, check out the "See also" link.
+. For a textual gameplay description, check out the "See also" link. 
 
-The following elaborates the execution flow of Game Mode, from after a `start` command has been parsed in Normal Mode:
+#### Example Use Case
 
-![DG-Implementation-Features-Game-Mode-Sequence](./images-dg/Game-Mode-Sequence.png?raw=true "Game Mode UML Sequence
- Diagram")
+For a more contextual use case, consider the following scenario of Econs Wiz attempting the Game Mode for the first
+ deck, `Demand-Supply`, in his deck list.
+
+> Note: Focus on the biggest box in the diagram!
+
+![DG-Implementation-Features-Game-Use-Case](./images-dg/DG-Game-Use-Case.png?raw=true "Game Mode Use Case")
 
 **API**: [seedu/ecardnomics/game](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/game)
+
+Since there are quite a few things going on in this diagram, here are the key takeaways (the last of which arguably
+ the most important):
+- the retest question pool (`retestStore`) is updated upon the user's attempt at each question and response to the
+ prompt to include or exclude the flash card to be displayed again—if `y` then the flash card is added to the
+  `retestStore`
+- whenever the current question pool (`deque`) is emptied, i.e. all flash cards have been popped off and displayed to
+ the user, the retest question pool (`retestStore`) is consulted from which to create a new question pool (`deque`)
+- after a specific question is displayed, it does not appear again (even if the user has chosen to re-encounter the
+ question) until after all other questions in the current question pool (`deque`) have been exhausted 
+
+#### Sequential Flow
+
+For a more formal sequential flow of the inner workings of Game Mode, the following elaborates the execution
+ sequence of Game Mode, from after a `start` command has been parsed in Normal Mode:
+
+![DG-Implementation-Features-Game-Mode-Sequence](./images-dg/DG-Game-Mode-Sequence.png?raw=true "Game Mode UML Sequence
+ Diagram")
+ 
+ In the above diagram the key takeaway is the existence of an *intermediary* `game:Game` object that holds
+  `GameEngine` and `GameStorage` together. In fact, this is the sole purpose of the `Game` class: to hold the
+   current game instance, in a Single-Responsibility-Principle (SRP) and Object-Oriented Programming (OOP) manner. 
+   This intermediary role of the `Game` class is also illustrated in the upper part of the earlier [use case
+    diagram](#example-use-case). Note how it is from this `game` object that the main game loop, run and managed by
+     `GameEngine`, is started.
+ 
+![DG-Implementation-Features-Game-Mode-Sequence-run-game-loop-sd](./images-dg/DG-run-game-loop-sd.png?raw=true "Game
+ Mode UML Sequence Diagram run game loop sd")
+ 
+The main game loop. As with all simple games, this flash card game mode is fundamentally built on the concept of a
+ possibly never-ending game loop with specific end conditions. In this case, the main end condition is explicitly
+  that the `command` object that is parsed and returned upon the `getAttempt()` call (that prompts the user for an
+   answer attempt) is either a `DoneGameCommand` or `ExitCommand`. 
+
+> This is not the *only* end condition, though, because the other important but implicit end scenario is when the
+> question pool is exhausted (i.e., `storage.deque` is empty) **and** the retest question pool (`storage.retestStore
+>`) is empty.
+
+Naturally, the other sequence of special note here is the whole `update()` sequence, and even more specifically the
+ `updateDeque()` call within the `update()` sequence. Notice how `updateDeque()` calls `createRandomisedStack(storage
+ .retestStore)` with the `retestStore` as argument. This essentially creates a new randomised question pool from the
+  retest question pool. 
+  
+Notice how this `updateDeque()` sequence is only called exactly when the `storage.deque` is empty (i.e., when all
+ questions have been popped off the question pool). This is important because it ensures that the user encounters all
+  available questions in the `deque` at least once before the retest questions are later displayed. Cross-check this
+   with the detailed descriptions of the inner workings of the game loop implementation shown in the earlier
+    [architecture](#general-architecture) and [use case](#example-use-case) diagrams.
+  
+Lastly, notice how `refreshRetestStore()` is called at the end of `updateDeque()` to, as its name suggests, clear the
+ retest question pool to get ready to store the next wave of retest questions. This is also covered in the bottom few
+  lines of the `GameEngine` portion of the use case diagram. 
 
 ## Product scope
 
