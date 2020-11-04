@@ -337,7 +337,7 @@ Relevant Pull Requests for DG:
 
 ##### Design - Commands section
 
-![DG-Design Commands UML](../images-dg/DG-Design-Commands.png?raw=true "Commands UML Class Diagram")
+![DG-Design Commands UML](../images-dg/DG-Design-Commands-UML.png?raw=true "Commands UML Class Diagram")
 
 **API**: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu
 /ecardnomics/command)
