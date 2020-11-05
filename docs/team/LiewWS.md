@@ -27,8 +27,32 @@ In v1.0:
 In v2.0:
 * Implemented pretty printing for question and answer when printing flashcards and added JUnit tests
 * Implemneted feature to update flashcards in existing decks and added Junit tests
-* Implemented feature to add and delete flashcards in a sinle line command
+* Implemented feature to add and delete flashcards in a single line command
+
+In v2.1:
+* Refactor the pretty printing method to **`Ui`** so that it can be used for formatting other output.
 
 ##### Contributions to User Guide
 
+* Wrote the section for the Update Command in Deck Mode
+* Added the one-line versions of the commands to add flashcard, delete flashcard and delete deck.
+
 ##### Contributions to Developer Guide
+
+* Described the User Interface and Deck Model under the Design section.
+* Explained the Pretty Printing feature under the Implementation-Features section.
+
+##### Contributions to team-based tasks
+
+* Set-up the GitHub team organisation.
+
+##### Review/mentoring contributions
+
+Reviewed and provided recommendations for [this](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/94)
+major pull request by Zhixiang.
+
+##### Contributions beyond the project team
+
+* Reviewed the Developer Guide for [ModTracker](https://github.com/nus-cs2113-AY2021S1/tp/pull/62) and provided
+suggestions for improving UML diagrams.
+* Tested v2.0 of PlanNUS and reported bugs including [this](https://github.com/AY2021S1-CS2113T-F12-1/tp/issues/185).
