@@ -128,16 +128,16 @@ It only requires that all derived children implement the *`execute()`* method. T
 The specific commands defined within the different Modes are shown below; one can simply substitute the `Normal Mode
  Commands`, `Game Mode Commands` and `Deck Mode Commands` components in the above UML class diagram with the
   corresponding `Command` classes, with all of the classes inheriting from the corresponding abstract classes, and
-   being associated (with arrows pointing towards) with the corresponding `Parser` classes.
+   being associated (with arrows pointing towards) with the corresponding **`Parser`** classes.
    
 ![DG-Design Commands Breakdown](./images-dg/DG-Design-Commands-Breakdown.png?raw=true "Commands Components Breakdown")
 
-Notice that the same `StartCommand` class above is indicated as being in both Normal Mode and Deck Mode. While the
+Notice that the same **`StartCommand`** class above is indicated as being in both Normal Mode and Deck Mode. While the
  diagram does not explain this phenomenon fully, the idea is there: that `start` is a command that can be run from
-  within Deck Mode, but that its implementation is passed to `NormalParser` to be handled as a Normal Mode command
-  . More specifically, within the specification of `DeckParser`'s `parseCommand()` method, the case of command word
-   being parsed as `start` will in turn call `NormalParser`'s `parseCommand()` method, supplementing it with
-    `DeckParser`'s Deck class field object as the `arguments` String. 
+  within Deck Mode, but that its implementation is passed to **`NormalParser`** to be handled as a Normal Mode command
+  . More specifically, within the specification of **`DeckParser`**'s *`parseCommand()`* method, the case of command
+   word being parsed as `start` will in turn call **`NormalParser`**'s *`parseCommand()`* method, supplementing it with
+    **`DeckParser`**'s Deck class field object as the `arguments` String. 
 
 ##### Command sequence
 
@@ -149,14 +149,14 @@ The **`Parser`** classes play important roles in execution of specific commands,
 ![DG-Design CreateCommand Sequence UML](./images-dg/DG-Design-Sequence-Diagram.png?raw=true "CreateCommand UML
  Sequence Diagram")
  
-Here, `parse()` first splits the user input `create microeconomics` into two strings, "create" and "microeconomics",
- the command word and command arguments respectively. Then within the `parseCommand()` call in `NormalParser`, a
- dedicated method to create a new deck based on the argument string "microeconomics", `prepareNewDeck()`, is called
- . A new `Deck` object is returned to the same `parseCommand()` call and used to create the new `CreateCommand
- ` object, which is then propagated back to `Main` (not shown here) that called `parse()`.
+Here, *`parse()`* first splits the user input `create microeconomics` into two strings, "create" and "microeconomics",
+ the command word and command arguments respectively. Then within the *`parseCommand()`* call in **`NormalParser`**, a
+ dedicated method to create a new deck based on the argument string "microeconomics", *`prepareNewDeck()`*, is called
+ . A new **`Deck`** object is returned to the same *`parseCommand()`* call and used to create the new 
+ **`CreateCommand`** object, which is then propagated back to `Main` (not shown here) that called `parse()`.
  
-> Note that the `CreateCommand` object is not marked as deleted in the above diagram because its lifeline does not
-> really end until its `execute()` method has been called from `Main`, using `Main`'s `executeCommand()`.
+> Note that the **`CreateCommand`** object is not marked as deleted in the above diagram because its lifeline does not
+> really end until its *`execute()`* method has been called from **`Main`**, using **`Main`**'s *`executeCommand()`*.
 
 ### Deck Model
 
@@ -209,11 +209,11 @@ current `FlashCards` and write them in a specific format in the text file in the
 
 How to read the diagram above:
 - The font colour of the methods correspond to the fill colour of the Exception classes that they throw; e.g
-., `NormalParser`'s `prepareNewDeck()` method throws `EmptyInputException`
+., **`NormalParser`**s *`prepareNewDeck()`* method throws **`EmptyInputException`**
 - Additionally, methods that throw more than one exception will have their colours corresponding to one of the
  exception classes' fill colours, with the other associations denoted by explicit textual annotation on the
-  association arrows; e.g., `NormalParser`'s `getIndex()` and `prepareDeck()` methods additionally throw
-   `DeckRangeException`, on top of throwing `IndexFormatException`
+  association arrows; e.g., **`NormalParser`**'s *`getIndex()`* and *`prepareDeck()`* methods additionally throw
+   **`DeckRangeException`**, on top of throwing **`IndexFormatException`**
 - Each Exception class only has one String field unique to the class that holds the Exception message which is
  printed to the user on encountering the associated erroneous feedback
 
@@ -319,33 +319,33 @@ a group of decks he/she is interested in.
 ### Game Mode
 
 eCardnomics' quintessential mode. Game Mode can be started from either Normal Mode or Deck Mode. The `start` command
- is parsed by `NormalParser` (see [Commands](#commands)).
+ is parsed by **`NormalParser`** (see [Commands](#commands)).
 
 #### General Architecture
 
-Game Mode contains two main components: a storage component, `GameStorage`, and a logic component, `GameEngine`. The
+Game Mode contains two main components: a storage component, **`GameStorage`**, and a logic component, **`GameEngine`**. The
  former handles all data structures used by Game Mode, and stores the original deck (`originalDeck`), question pool
-  (`deque`), and retest question pool (`retestStore`). The latter executes the main game loop (`runGameLoop()`), and
-   interacts with `GameStorage` on package-private basis; i.e., `GameEngine` and `GameStorage` have full mutual
+  (`deque`), and retest question pool (`retestStore`). The latter executes the main game loop (*`runGameLoop()`*), and
+   interacts with **`GameStorage`** on package-private basis; i.e., **`GameEngine`** and **`GameStorage`** have full mutual
     access as if they were a single class. This is one of the main intentional design decisions.
   
 ![DG-Implementation-Features-Game-Mode-Architecture](./images-dg/DG-Game-Mode-Architecture-Overview.png?raw=true "Game Mode
  Architecture Overview")
 
-The schematic below describes the individual responsibilities of the `GameStorage` and `GameEngine` classes (or
+The schematic below describes the individual responsibilities of the **`GameStorage`** and **`GameEngine`** classes (or
  components) of Game Mode as introduced above, and also two key interactions between the two classes, namely via
-  `GameEngine`'s `update(isResponseY:boolean, flashCard:FlashCard)` and `poseQuestion()` method calls. For
-   context, `poseQuestion()` pops the top flash card off `GameStorage`'s question pool `deque` to display to the user
-   , while `update()` is the `GameEngine` method that adds to the retest question pool `retestStore
-   ` when the user chooses to do so (via `isResponseY == true`). This essentially describes one iteration of
-    `runGameLoop()`; more explanation and a full-blown illustration and sequence are given further below.  
+  **`GameEngine`**'s *`update(isResponseY:boolean, flashCard:FlashCard)`* and *`poseQuestion()`* method calls. For
+   context, *`poseQuestion()`* pops the top flash card off **`GameStorage`**'s question pool **`deque`** to display to the user
+   , while *`update()`* is the **`GameEngine`** method that adds to the retest question pool `retestStore` 
+   when the user chooses to do so (via `isResponseY == true`). This essentially describes one iteration of
+   *`runGameLoop()`*; more explanation and a full-blown illustration and sequence are given further below.  
 
 ![DG-Implementation-Features-Game-Storage-Game-Engine](./images-dg/DG-Game-Storage-Game-Engine.png?raw=true "Game
  Mode Game Storage Game Engine")
  
 **See also**: [Gameplay description](./UserGuide.md#gameplay)
 
-The actual "game" aspect of eCardnomics is essentially summarised in the `runGameLoop()` high-level overview above
+The actual "game" aspect of eCardnomics is essentially summarised in the *`runGameLoop()`* high-level overview above
 . For a textual gameplay description, check out the "See also" link. 
 
 #### Example Use Case
@@ -378,38 +378,38 @@ For a more formal sequential flow of the inner workings of Game Mode, the follow
  Diagram")
  
  In the above diagram the key takeaway is the existence of an *intermediary* `game:Game` object that holds
-  `GameEngine` and `GameStorage` together. In fact, this is the sole purpose of the `Game` class: to hold the
+  **`GameEngine`** and **`GameStorage`** together. In fact, this is the sole purpose of the **`Game`** class: to hold the
    current game instance, in a Single-Responsibility-Principle (SRP) and Object-Oriented Programming (OOP) manner. 
-   This intermediary role of the `Game` class is also illustrated in the upper part of the earlier [use case
+   This intermediary role of the **`Game`** class is also illustrated in the upper part of the earlier [use case
     diagram](#example-use-case). Note how it is from this `game` object that the main game loop, run and managed by
-     `GameEngine`, is started.
+     **`GameEngine`**, is started.
  
 ![DG-Implementation-Features-Game-Mode-Sequence-run-game-loop-sd](./images-dg/DG-run-game-loop-sd.png?raw=true "Game
  Mode UML Sequence Diagram run game loop sd")
  
 The main game loop. As with all simple games, this flash card game mode is fundamentally built on the concept of a
  possibly never-ending game loop with specific end conditions. In this case, the main end condition is explicitly
-  that the `command` object that is parsed and returned upon the `getAttempt()` call (that prompts the user for an
-   answer attempt) is either a `DoneGameCommand` or `ExitCommand`. 
+  that the `command` object that is parsed and returned upon the *`getAttempt()`* call (that prompts the user for an
+   answer attempt) is either a **`DoneGameCommand`** or **`ExitCommand`**. 
 
-> This is not the *only* end condition, though, because the other important but implicit end scenario is when the
+> This is not the **only** end condition, though, because the other important but implicit end scenario is when the
 > question pool is exhausted (i.e., `storage.deque` is empty) **and** the retest question pool (`storage.retestStore
 >`) is empty.
 
-Naturally, the other sequence of special note here is the whole `update()` sequence, and even more specifically the
- `updateDeque()` call within the `update()` sequence. Notice how `updateDeque()` calls `createRandomisedStack(storage
- .retestStore)` with the `retestStore` as argument. This essentially creates a new randomised question pool from the
-  retest question pool. 
+Naturally, the other sequence of special note here is the whole *`update()`* sequence, and even more specifically the
+ *`updateDeque()`* call within the *`update()`* sequence. Notice how *`updateDeque()`* calls 
+ *`createRandomisedStack(storage.retestStore)`* with the `retestStore` as argument. This essentially creates a new
+  randomised question pool from the retest question pool. 
   
-Notice how this `updateDeque()` sequence is only called exactly when the `storage.deque` is empty (i.e., when all
+Notice how this *`updateDeque()`* sequence is only called exactly when the `storage.deque` is empty (i.e., when all
  questions have been popped off the question pool). This is important because it ensures that the user encounters all
   available questions in the `deque` at least once before the retest questions are later displayed. Cross-check this
    with the detailed descriptions of the inner workings of the game loop implementation shown in the earlier
     [architecture](#general-architecture) and [use case](#example-use-case) diagrams.
   
-Lastly, notice how `refreshRetestStore()` is called at the end of `updateDeque()` to, as its name suggests, clear the
- retest question pool to get ready to store the next wave of retest questions. This is also covered in the bottom few
-  lines of the `GameEngine` portion of the use case diagram. 
+Lastly, notice how *`refreshRetestStore()`* is called at the end of *`updateDeque()`* to, as its name suggests, clear
+ the retest question pool to get ready to store the next wave of retest questions. This is also covered in the bottom
+  few lines of the **`GameEngine`** portion of the use case diagram. 
 
 ## Product scope
 
