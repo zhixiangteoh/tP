@@ -74,21 +74,20 @@ Finally, **`Main`** calls *`write()`* of **`Storage`** to write the updated Deck
 
 **API**: [seedu/ecardnomics/Ui.java](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/Ui.java)
 
-The UI contains String constants that represent the outputs
-that the application is defined to produce.
+The **`Ui`** contains String constants that represent the outputs that the application is defined to produce.
 
-The `UI` component has two main purposes:
+The **`Ui`** component has two main purposes:
 * Reading user input from the console.
 * Printing program output to the console.
 
 Reading of user input is done using the method *`readUserInput()`*
-which reads one line of user input. The other methods within `UI` are
+which reads one line of user input. The other methods within **`Ui`** are
 called when a specific output needs to be printed.
 
-The `UI` component passes the user input to the **`NormalParser`** and
-**`DeckParser`** components that will extract the relevant information.
-The `UI` component provides its printing methods to **`NormalParser`**
-and **`DeckParser`** for printing the appropriate output when required.
+The **`Ui`** component passes the user input to the **`NormalParser`**, **`DeckParser`** and
+**`GameParser`** components that will extract the relevant information.
+The **`Ui`** component provides its printing methods to **`NormalParser`**, **`DeckParser`**
+and **`GameParser`** for printing the appropriate output when required.
 
 ### Logic
 
@@ -165,19 +164,18 @@ Here, `parse()` first splits the user input `create microeconomics` into two str
 **API**: [seedu/ecardnomics/deck](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/deck)
 
 The Deck Model component is made up of three parts:
-* `DeckList`
-* `Deck`
-* `FlashCard`
+* **`DeckList`**
+* **`Deck`**
+* **`FlashCard`**
 
-The `FlashCard` component represents a flashcard, storing question
-and answer data. The `Deck` represents a collection of flashcards
-related by a common topic. The `DeckList` represents the collection
-of all the `Deck` objects that the user has.
+The **`FlashCard`** component represents a flashcard, storing question
+and answer data. The **`Deck`** represents a collection of flashcards
+related by a common topic. The **`DeckList`** represents the collection
+of all the **`Deck`** objects that the user has.
 
-Only the `Command` components can modify the `DeckList`, `Deck` and
-`FlashCard` components. However, `Ui`, `DeckParser` and `NormalParser`
-are able to read data from the `DeckList`, `Deck` and `FlashCard`
-components.
+Only the **`Command`** components can modify the **`DeckList`**, **`Deck`** and
+**`FlashCard`** components. However, **`Ui`**, **`DeckParser`** and **`NormalParser`**
+are able to read data from the **`DeckList`**, **`Deck`** and **`FlashCard`** components.
 
 ### Storage
 
@@ -247,14 +245,12 @@ The following are the Classes/ Enum of the third part package `org.apache.poi.xs
 * `XSLFTextParagraph` - Class representing a paragraph of text within a shape
 * `XSLFTextRun` - Class representing the properties of the text within a paragraph
 
-### Pretty Printing (Wei Siew)
+### Pretty Printing
 
-The purpose of this feature is to improve the readability of the
-question and answer fields of a flashcard for the user. Without this
-feature, long question and answer fields will follow the default
-wrapping style of the console. When words are truncated unnecessarily,
-it is going to be distracting and annoying for students trying to
-study. We illustrate the problem in the following example:
+The purpose of this feature is to improve the readability of the command line text output for the user, in particular,
+the question and answer fields of a flashcard . Without this feature, long text outputs would follow the default 
+wrapping style of the console. When words are truncated unnecessarily, it is going to be distracting and annoying
+for students trying to study. We illustrate the problem with the following example:
 ```
 This is a long question (or maybe answer) field. Suppose tha
 t our console is 60 characters wide, we see that the word "t
@@ -262,27 +258,29 @@ hat" was truncated in the first line and again in the second
 line.
 ```
 In this section, we define the following terms:
-* `lineLength` is the maximum number of characters on a line,
-set to be equal to Ui.DASH_LINES.length(). This is also the number of
-characters between the start of line and end of line.
-* `label` can be "Question: " or "Answer:   " and is used to indicate
-whether a field is the question or answer of the flashcard.
-* `usableLength` is the number of characters that can be used for
-printing a field. This is also the number of characters between the end
-of `label` and end of line.
+* `lineLength` is the maximum number of characters on a line, set to be equal to `Ui.DASH_LINES.length()`. This is
+also the number of characters between the start of line and end of line.
+* `offset` is the number of characters after the start of the line before the target string will be printed.
+* `usableLength` is the number of characters that can be used for printing the output. 
+This is `Ui.DASH_LINES.length() - offset`.
 
-The following sequence diagram illustrates the call to the
-`toString(boolean isQuestion, int offset)` method of a `FlashCard`
-object.
+The *`prettyPrintFormatter(String target, int offset)`* static method of the **`Ui`** class takes as argument the
+target string to be formatted for printing as well as the offset. The formatted String is returned to the caller for
+printing. This is illustrated in the following sequence diagram:
 
 ![DG-Implementation-Features-PP-Sequence](./images-dg/PP-Sequence.png?raw=true)
 
-The `offset` parameter specifies the number of characters already
-printed on the line before the flashcard field will be printed.
-The `offset` is used by the `formatResponse()` method to determine
-`usableLength`.
+>Note:
+>
+> The lifeline on the left represents the calling method that requires a formatted string.
+> The *`printMethod()`* is a placeholder for any of the printing methods of **`Ui`** class.
+> The call to *`System.out.println`* is omitted. 
+> Minimal notation is used for the return of control to the calling method.
 
-`formatResponse()` places as many words as possible on each line until
+The `offset` parameter specifies the number of characters already
+printed on the line before the target string will be printed.
+
+*`prettyPrintFormatter()`* places as many words as possible on each line until
 the next word does not fit within the `usableLength` of the current
 line. This word is therefore placed on the next line and the process
 repeats until all the words have been formatted into the response. If
@@ -290,10 +288,7 @@ the  length of a single word exceeds the `usableLength`, the word is
 split across multiple lines to prevent the program from looping
 infinitely as it would never be able to fit the word on any line.
 
-Take note that infinite loops can still occur if
-* formatResponse() is called with offset >= `lineLength` or
-* toString(boolean, int) is called with offset >= `lineLength` - length
-of `label`
+Take note that infinite loops can still occur if *`prettyPrintFormatter()`* is called with offset >= `lineLength`
 
 #### Design Consideration:
 
