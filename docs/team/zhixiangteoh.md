@@ -74,35 +74,6 @@ game
 Here, I tried as much as possible to incorporate the Single Responsibility Principle, both within the `game` classes
  and the SRP-ness of the existing classes.
 
-### Contributions to the UG
-
-Mainly [Introduction](https://ay2021s1-cs2113-t14-2.github.io/tp/UserGuide.html#introduction), v1.0 Normal Mode
- commands, [Features - Game Mode](https://ay2021s1-cs2113-t14-2.github.io/tp/UserGuide.html#features---game-mode), [Command Summary](https://ay2021s1-cs2113-t14-2.github.io/tp/UserGuide.html#command-summary).
-
-* Introduction
-* Contents
-* [v1.0 Normal Mode commands](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/57)
-* some v1.0 Deck Mode commands
-* [`help` commands](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/156)
-* `start` commands
-* [Game Mode commands and gameplay description](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/100)
-* Anywhere Mode
-* FAQ
-* Command Summary
-
-### Contributions to the DG
-
-Mainly [Commands section](https://ay2021s1-cs2113-t14-2.github.io/tp/DeveloperGuide.html#commands) and 
-[Exceptions section](https://ay2021s1-cs2113-t14-2.github.io/tp/DeveloperGuide.html#exceptions) under Design, 
-and [Game Mode section](https://ay2021s1-cs2113-t14-2.github.io/tp/DeveloperGuide.html#game-mode) under Features. 
-
-Relevant Pull Requests for DG:
-
-* Commands [v2.0](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/89), [v2.1](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/166)
-* [Exceptions](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/166)
-* Game Mode [v2.0](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/104), [v2.1](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/166)
-* [Trivial](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/105)
-
 ### Contributions to team-based tasks
 
 Some examples:
@@ -131,132 +102,23 @@ Notable posts/responses posted in forum:
 * [Comments on others' forum posts](https://github.com/nus-cs2113-AY2021S1/forum/issues?q=is%3Aissue+is%3Aclosed+zhixiangteoh)
 * [Peer Evaluation-Dry Run on `Scheduler--;`](https://github.com/zhixiangteoh/ped/issues)
 
+### Contributions to the UG
+
+Mainly [Introduction](https://ay2021s1-cs2113-t14-2.github.io/tp/UserGuide.html#introduction), v1.0 Normal Mode
+ commands, [Features - Game Mode](https://ay2021s1-cs2113-t14-2.github.io/tp/UserGuide.html#features---game-mode), [Command Summary](https://ay2021s1-cs2113-t14-2.github.io/tp/UserGuide.html#command-summary).
+
+* Introduction
+* Contents
+* [v1.0 Normal Mode commands](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/57)
+* some v1.0 Deck Mode commands
+* [`help` commands](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/156)
+* `start` commands
+* [Game Mode commands and gameplay description](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/100)
+* Anywhere Mode
+* FAQ
+* Command Summary
+
 ### UG Extracts
-
-#### Guide format
-
-Words in `<>` are parameters or additional input to be supplied by the user. 
-
-> Example: `edit <index>`
-> 
-> Here, `index` is a parameter supplied by the user, in this case to specify a deck index to enter edit mode for.
-
-Commented-out lines `//` represent system output by the program.
-
-> Example:
-> ``` 
-> add
-> // Enter question: <question description>
-> // Enter answer: <question answer or explanation>
-> ```
-> Notice how `<question description>` is still commented out but still represents user input. In other words
->, `<>` can be thought of as being delimiters in output representation across this guide.
-
-Words in square brackets `[]` represent optional input parameters.
-
-> Example: list [/ans]
-
-#### v1.0 Normal Mode commands example - `create`
-
-##### Create a new deck: `create`
-
-Creates a new deck of flashcards. The `create` command expects one argument specifying the name of the deck to be
- created.
-
-##### Format
-
-Create deck without tags:
-```java
-create <name of deck>
-```
-Create deck with tag(s):
-```java
-create <name of deck> [/tag <tag1> [<tag2>]]
-```
-
-##### Examples
-
-```
-[Normal]
-  > create market-failure
-// New deck created: market-failure
-```
-```
-[Normal]
-  > create market-failure /tag beginner
-// New deck created: market-failure | Tag(s): beginner 
-```
-
-#### v1.0 Deck Mode commands example - `add`
-
-##### Add a flashcard: `add`
-Adds a flashcard to the end of the current deck. The `add` command expects no initial arguments. Instructions and 
-format of card entry is displayed. Then, the user is prompted to specify the details of the flashcard to be added.
-
-##### Format
-```java
-  > add
-// Enter question: <question description>
-// Enter answer: <question answer or explanation>
-```
-
-##### Examples
-
-```java
-[Deck - market failure]
-     > add 
-// Enter question: <question description>
-// ------------------------------------------------------------
-// You are now adding a FlashCard to: market failure
-// ------------------------------------------------------------
-// Enter question:
-     > define market failure
-// Enter answer:
-     > Market failure is the economic situation defined by an inefficient distribution of goods 
-and services in the free market
-// FlashCard successfully added! 
-// ------------------------------------------------------------ 
-```
-
-#### v2.0 Deck Mode commands - `start`
-
-##### Game Mode: `start`
-
-Starts Game Mode for the current deck. 
- 
-> The `start` command can also be entered from within Normal Mode.
- 
-##### Format
-
-```java
-[Deck - market-failure]
-  > start
-```
-
-##### Examples
-
-```java
-// You are now in Deck Mode, editing: [1] market-failure
-// ------------------------------------------------------------
-[Deck - market-failure]
-  > ...
-// ...
-// ------------------------------------------------------------
-[Deck - market-failure]
-  > start
-// ------------------------------------------------------------
-// Welcome to Game Mode!
-//
-// In this mode, you test your knowledge against...
-// ... 
-//                                      ...Have fun!
-//
-// Game Mode is started for: [1] market-failure
-// ------------------------------------------------------------
-// Q: What is market failure?
-//   Enter your attempt below (or `done`, `exit`, `help`):
-  >
-```
 
 #### Features - Game Mode
 
@@ -308,121 +170,26 @@ Then, the correct answer is displayed, and our 'advanced' algorithm scores the u
 // ------------------------------------------------------------
 // Q: What is price elasticity of demand?
 //   Enter your attempt below (or `done`, `exit`, `help`):
-  > I don't know.
-// A: Percentage change in quantity demanded caused by a 1 percent change in price.
-// The % match between your answer and the actual answer is: 0.00
-// ------------------------------------------------------------
-// Do you want to re-attempt this question later? [y/n]
-  > y
-// ------------------------------------------------------------
-// Q: What is the Law of demand?
-//   Enter your attempt below (or `done`, `exit`, `help`):
-  > Quantity of good demanded fall when price of good rises.
-// A: When the price of a good rises, the quantity of the good demanded will fall, ceteris paribus.
-// The % match between your answer and the actual answer is: 58.82
-// ------------------------------------------------------------
-// Do you want to re-attempt this question later? [y/n]
-  > n
-// ------------------------------------------------------------
-// Q: What is price elasticity of supply?
-//   Enter your attempt below (or `done`, `exit`, `help`):
-  > Percentage change in quantity supplied for a 1 percent price change
-// A: Percentage change in quantity supplied caused by a 1 percent change in price.
-// The % match between your answer and the actual answer is: 84.62
-// ------------------------------------------------------------
-// Do you want to re-attempt this question later? [y/n]
-  > n
-// ------------------------------------------------------------
-// Q: What is price elasticity of demand?
-//   Enter your attempt below (or `done`, `exit`, `help`):
-  > Percentage change in quantity demanded for a 1 percent price change.
-// A: Percentage change in quantity demanded caused by a 1 percent change in price.
-// The % match between your answer and the actual answer is: 84.62
-// ------------------------------------------------------------
-// Do you want to re-attempt this question later? [y/n]
-  > n
-// ------------------------------------------------------------
-// Q: What is the Law of supply?
-//   Enter your attempt below (or `done`, `exit`, `help`):
-  > Price of a good increases, the quantity supplied increases, ceteris paribus.
-// A: When the price of a good increases, the quantity supplied increases, ceteris paribus.
-// The % match between your answer and the actual answer is: 92.31
-// ------------------------------------------------------------
-// Do you want to re-attempt this question later? [y/n]
-  > n
-// ------------------------------------------------------------
-// You have completed all the flash cards in this deck!
-// Returning to Normal Mode...
-// ------------------------------------------------------------
-// You are back in Normal Mode
-// ------------------------------------------------------------
-[Normal]
-  >
+  > 
 ```
+### Contributions to the DG
+
+Mainly [Commands section](https://ay2021s1-cs2113-t14-2.github.io/tp/DeveloperGuide.html#commands) and 
+[Exceptions section](https://ay2021s1-cs2113-t14-2.github.io/tp/DeveloperGuide.html#exceptions) under Design, 
+and [Game Mode section](https://ay2021s1-cs2113-t14-2.github.io/tp/DeveloperGuide.html#game-mode) under Features. 
+
+Relevant Pull Requests for DG:
+
+* Commands [v2.0](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/89), [v2.1](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/166)
+* [Exceptions](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/166)
+* Game Mode [v2.0](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/104), [v2.1](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/166)
+* [Trivial](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/105)
 
 ### DG Extracts
 
-#### Design - Commands section
-
-##### Overview
-
-![DG-Design Commands UML](../images-dg/DG-Design-Commands-UML.png?raw=true "Commands UML Class Diagram")
-
-**API**: [seedu.ecardnomics/command](https://github.com/AY2021S1-CS2113-T14-2/tp/tree/master/src/main/java/seedu/ecardnomics/command)
-
-Commands are primarily classified into three categories, **`NormalCommand`**, **`DeckCommand`**, and **`GameCommand`**,
- corresponding to the application's Normal, Deck, and Game Modes, respectively. All three are abstract children
-  derived from the overarching abstract class **`Command`**. The basis **`Command`** class is defined as such:
-   
-```java
-public abstract class Command {
-    public abstract void execute();
-}
-```
-
-It only requires that all derived children implement the *`execute()`* method. The only two classes not belonging to
- individual modes are **`ExitCommand`** and **`VoidCommand`**. The former is so that users can call the command `exit`
-  from anywhere in the application, while the latter is a catch-all "command" for all erroneous commands a user
-  enters.
-
-##### Mode-specific commands
-
-The specific commands defined within the different Modes are shown below; one can simply substitute the `Normal Mode
- Commands`, `Game Mode Commands` and `Deck Mode Commands` components in the above UML class diagram with the
-  corresponding `Command` classes, with all of the classes inheriting from the corresponding abstract classes, and
-   being associated (with arrows pointing towards) with the corresponding `Parser` classes.
-   
-![DG-Design Commands Breakdown](../images-dg/DG-Design-Commands-Breakdown.png?raw=true "Commands Components Breakdown")
-
-Notice that the same `StartCommand` class above is indicated as being in both Normal Mode and Deck Mode. While the
- diagram does not explain this phenomenon fully, the idea is there: that `start` is a command that can be run from
-  within Deck Mode, but that its implementation is passed to `NormalParser` to be handled as a Normal Mode command
-  . More specifically, within the specification of `DeckParser`'s `parseCommand()` method, the case of command word
-   being parsed as `start` will in turn call `NormalParser`'s `parseCommand()` method, supplementing it with
-    `DeckParser`'s Deck class field object as the `arguments` String. 
-
-##### Command sequence
-
-The **`Parser`** classes play important roles in execution of specific commands, e.g. **`CreateCommand`**, because
- they define methods that check and ensure the conformity of user input to the commands' expected input. Below is a
-  sequence diagram showcasing this interaction, for execution of a **`CreateCommand`**, e.g. `create
-   microeconomics`:
-  
-![DG-Design CreateCommand Sequence UML](../images-dg/DG-Design-Sequence-Diagram.png?raw=true "CreateCommand UML
- Sequence Diagram")
- 
-Here, `parse()` first splits the user input `create microeconomics` into two strings, "create" and "microeconomics",
- the command word and command arguments respectively. Then within the `parseCommand()` call in `NormalParser`, a
- dedicated method to create a new deck based on the argument string "microeconomics", `prepareNewDeck()`, is called
- . A new `Deck` object is returned to the same `parseCommand()` call and used to create the new `CreateCommand
- ` object, which is then propagated back to `Main` (not shown here) that called `parse()`.
- 
-> Note that the `CreateCommand` object is not marked as deleted in the above diagram because its lifeline does not
-> really end until its `execute()` method has been called from `Main`, using `Main`'s `executeCommand()`.
-
 #### Design - Exceptions section
 
-![DG-Design Exceptions Architecture](./images-dg/DG-Exceptions-Architecture.png?raw=true "Exceptions Architecture
+![DG-Design Exceptions Architecture](../images-dg/DG-Exceptions-Architecture.png?raw=true "Exceptions Architecture
  Overview")
 
 **API**: [seedu/ecardnomics/exceptions](https://github.com/AY2021S1-CS2113-T14-2/tp/blob/master/src/main/java/seedu/ecardnomics/exceptions)
@@ -439,36 +206,14 @@ How to read the diagram above:
 
 #### Feature Implementation - Game Mode
 
-eCardnomics' quintessential mode. Game Mode can be started from either Normal Mode or Deck Mode. The `start` command
- is parsed by `NormalParser` (see [Commands](#commands)).
-
 #### General Architecture
-
-Game Mode contains two main components: a storage component, `GameStorage`, and a logic component, `GameEngine`. The
- former handles all data structures used by Game Mode, and stores the original deck (`originalDeck`), question pool
-  (`deque`), and retest question pool (`retestStore`). The latter executes the main game loop (`runGameLoop()`), and
-   interacts with `GameStorage` on package-private basis; i.e., `GameEngine` and `GameStorage` have full mutual
-    access as if they were a single class. This is one of the main intentional design decisions.
   
 ![DG-Implementation-Features-Game-Mode-Architecture](../images-dg/DG-Game-Mode-Architecture-Overview.png?raw=true
  "Game Mode
  Architecture Overview")
 
-The schematic below describes the individual responsibilities of the `GameStorage` and `GameEngine` classes (or
- components) of Game Mode as introduced above, and also two key interactions between the two classes, namely via
-  `GameEngine`'s `update(isResponseY:boolean, flashCard:FlashCard)` and `poseQuestion()` method calls. For
-   context, `poseQuestion()` pops the top flash card off `GameStorage`'s question pool `deque` to display to the user
-   , while `update()` is the `GameEngine` method that adds to the retest question pool `retestStore
-   ` when the user chooses to do so (via `isResponseY == true`). This essentially describes one iteration of
-    `runGameLoop()`; more explanation and a full-blown illustration and sequence are given further below.  
-
 ![DG-Implementation-Features-Game-Storage-Game-Engine](../images-dg/DG-Game-Storage-Game-Engine.png?raw=true "Game
  Mode Game Storage Game Engine")
- 
-**See also**: [Gameplay description](../UserGuide.md#gameplay)
-
-The actual "game" aspect of eCardnomics is essentially summarised in the `runGameLoop()` high-level overview above
-. For a textual gameplay description, check out the "See also" link. 
 
 #### Example Use Case
 
