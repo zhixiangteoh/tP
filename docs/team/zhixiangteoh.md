@@ -5,10 +5,6 @@
 eCardnomics is a **desktop flashcard application to quickly create, manage, and access new flashcards via a Command
  Line Interface (CLI)**. eCardnomics is targeted at economics students in Junior College in Singapore, and aims to
  enhance students’ study experience as an efficient and handy aid for active recall. 
-
-The application is structured in an inherently organised manner, with three different main modes and clear actions
- within each mode. Students create and tag decks of flash cards in Normal Mode, add individual flash cards in Deck
-  Mode, and test their mastery of the flash card material in Game Mode. 
   
 The main goals of this application are to help students store and segment their economics subject syllabus into
  different decks, consolidate bite-sized information within each topic by way of flash cards, and offer a fun
@@ -66,17 +62,17 @@ In v2.0, I implemented the [Game Mode feature](https://github.com/AY2021S1-CS211
     
 So the resulting `game` package is structured as such:
 
-> `game`
->   > `Game`
->   
->   > `GameEngine`
->   >   > `runGameLoop()`, `update()`
->
->   > `GameStorage`
->   >   > `Deck originalDeck`, `ArrayDeque<FlashCard> deque`, `ArrayList<FlashCard> retestStore`
+```
+game 
+  | Game
+  | GameEngine
+     | runGameLoop(), update()
+  | GameStorage
+     | originalDeck, deque, retestStore
+```
 
 Here, I tried as much as possible to incorporate the Single Responsibility Principle, both within the `game` classes
-, as well as preserving the SRP-ness of the existing classes.
+ and the SRP-ness of the existing classes.
 
 ### Contributions to the UG
 
@@ -133,6 +129,7 @@ Notable posts/responses posted in forum:
 
 * [Generating markdown table of contents](https://github.com/nus-cs2113-AY2021S1/forum/issues/108)
 * [Comments on others' forum posts](https://github.com/nus-cs2113-AY2021S1/forum/issues?q=is%3Aissue+is%3Aclosed+zhixiangteoh)
+* [Peer Evaluation-Dry Run on `Scheduler--;`](https://github.com/zhixiangteoh/ped/issues)
 
 ### UG Extracts
 
