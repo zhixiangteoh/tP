@@ -39,26 +39,13 @@ In v1.0, I split the work with Wayne in implementing the Deck Mode commands. Spe
 * [HelpCommand](https://github.com/AY2021S1-CS2113-T14-2/tp/commit/622e584ff2847c15877375fd05a3c7db60bc9858)
 
 `DeleteCommand` required me to implement a `y/n` prompt method for the `Ui` class, to be used by `DeckParser`, which
- was later used by all commands in the application that utilise `y/n` prompts. Below is an example of the user-interface appearance of the `y/n` prompt:
-  
-```java
-[Deck - market failure]
-  > delete 2
-// Do you want to delete the following flash card? [y/n] ?
-//   'What is a public good?' definitely
-// Response should be 'y' or 'n'!
-//   > y
-// ------------------------------------------------------------
-// The following flash card has been deleted:
-//   'What is a public good?'
-// ------------------------------------------------------------
-```
+ was later used by all commands in the application that utilise `y/n` prompts. [Example of the user-interface of the
+  `y/n` prompt](../UserGuide.md#examples-4).
 
-In v2.0, I implemented the [Game Mode feature](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/94). For this, our team originally thought it would be just another command
- implemented as part of Normal Mode or Deck Mode, but I felt it deserved its own mode, and would better fit into the
-  design and architecture of the application, as well as the semantics of the Game Mode. Thus I created a separate
-   package, [`game`](), and parser class `GameParser` for Game Mode, with the `game` package abstracting away the
-    entire Game Mode implementation from the rest of the application.
+In v2.0, I implemented the [Game Mode feature](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/94). For this, our
+ team originally thought it would be just another command implemented as part of Normal Mode or Deck Mode, but I felt
+  it deserved its own mode. I created a separate package, [`game`](), and parser class `GameParser` for Game Mode
+  , with the `game` package abstracting away the entire Game Mode implementation from the rest of the application.
     
 So the resulting `game` package is structured as such:
 
@@ -92,11 +79,12 @@ Some examples:
 Some examples:
 
 * Reviewed and merged about 5-10 Pull Requests by other teammates
-* [Authored](https://github.com/AY2021S1-CS2113-T14-2/tp/pulls?q=is%3Apr+is%3Aclosed+author%3Azhixiangteoh+) over 24 Pull Requests
+* [Authored](https://github.com/AY2021S1-CS2113-T14-2/tp/pulls?q=is%3Apr+is%3Aclosed+author%3Azhixiangteoh+) over 30
+ Pull Requests
 
 ### Contributions beyond the project team
 
-Notable posts/responses posted in forum:
+Notable posts/responses posted in forum, and peer software testing:
 
 * [Generating markdown table of contents](https://github.com/nus-cs2113-AY2021S1/forum/issues/108)
 * [Comments on others' forum posts](https://github.com/nus-cs2113-AY2021S1/forum/issues?q=is%3Aissue+is%3Aclosed+zhixiangteoh)
@@ -153,25 +141,6 @@ Then, the correct answer is displayed, and our 'advanced' algorithm scores the u
   > start
 ```
 
-* Play!
-
-```java
-// ...
-// Game Mode is started for: [1] Micro-Economics
-// ------------------------------------------------------------
-// Q: What is the Law of supply?
-//   Enter your attempt below (or `done`, `exit`, `help`):
-   > Price of good increases, quantity supplied increases.
-// A: When the price of a good increases, the quantity supplied increases, ceteris paribus.
-// The % match between your answer and the actual answer is: 53.85
-// ------------------------------------------------------------
-// Do you want to re-attempt this question later? [y/n]
-  > y
-// ------------------------------------------------------------
-// Q: What is price elasticity of demand?
-//   Enter your attempt below (or `done`, `exit`, `help`):
-  > 
-```
 ### Contributions to the DG
 
 Mainly [Commands section](https://ay2021s1-cs2113-t14-2.github.io/tp/DeveloperGuide.html#commands) and 
@@ -189,30 +158,15 @@ Relevant Pull Requests for DG:
 
 #### Design - Exceptions section
 
-![DG-Design Exceptions Architecture](../images-dg/DG-Exceptions-Architecture.png?raw=true "Exceptions Architecture
- Overview")
-
-**API**: [seedu/ecardnomics/exceptions](https://github.com/AY2021S1-CS2113-T14-2/tp/blob/master/src/main/java/seedu/ecardnomics/exceptions)
-
-How to read the diagram above:
-- The font colour of the methods correspond to the fill colour of the Exception classes that they throw; e.g
-., `NormalParser`'s `prepareNewDeck()` method throws `EmptyInputException`
-- Additionally, methods that throw more than one exception will have their colours corresponding to one of the
- exception classes' fill colours, with the other associations denoted by explicit textual annotation on the
-  association arrows; e.g., `NormalParser`'s `getIndex()` and `prepareDeck()` methods additionally throw
-   `DeckRangeException`, on top of throwing `IndexFormatException`
-- Each Exception class only has one String field unique to the class that holds the Exception message which is
- printed to the user on encountering the associated erroneous feedback
-
 #### Feature Implementation - Game Mode
 
 #### General Architecture
   
-![DG-Implementation-Features-Game-Mode-Architecture](../images-dg/DG-Game-Mode-Architecture-Overview.png?raw=true
+[DG-Implementation-Features-Game-Mode-Architecture](../images-dg/DG-Game-Mode-Architecture-Overview.png?raw=true
  "Game Mode
  Architecture Overview")
 
-![DG-Implementation-Features-Game-Storage-Game-Engine](../images-dg/DG-Game-Storage-Game-Engine.png?raw=true "Game
+[DG-Implementation-Features-Game-Storage-Game-Engine](../images-dg/DG-Game-Storage-Game-Engine.png?raw=true "Game
  Mode Game Storage Game Engine")
 
 #### Example Use Case
@@ -251,7 +205,7 @@ For a more formal sequential flow of the inner workings of Game Mode, the follow
     diagram](#example-use-case). Note how it is from this `game` object that the main game loop, run and managed by
      `GameEngine`, is started.
  
-![DG-Implementation-Features-Game-Mode-Sequence-run-game-loop-sd](../images-dg/DG-run-game-loop-sd.png?raw=true "Game
+[DG-Implementation-Features-Game-Mode-Sequence-run-game-loop-sd](../images-dg/DG-run-game-loop-sd.png?raw=true "Game
  Mode UML Sequence Diagram run game loop sd")
  
 The main game loop. As with all simple games, this flash card game mode is fundamentally built on the concept of a
