@@ -31,6 +31,7 @@ In v2.0:
 
 In v2.1:
 * Refactor the pretty printing method to **`Ui`** so that it can be used for formatting other output.
+* Implement logging to file to replace the printing of log to console output.
 
 ##### Contributions to User Guide
 
@@ -41,10 +42,12 @@ In v2.1:
 
 * Described the User Interface and Deck Model under the Design section.
 * Explained the Pretty Printing feature under the Implementation-Features section.
+* Documented some non-functional requirements and manual testing steps. 
 
 ##### Contributions to team-based tasks
 
 * Set-up the GitHub team organisation.
+* Compiled some FAQs into the User Guide.
 
 ##### Review/mentoring contributions
 

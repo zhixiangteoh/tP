@@ -1151,11 +1151,11 @@ Shows release version from anywhere in the program.
 ### General
 **Q**: Why are some of the output (e.g. questions and answer) aligned to the dashed lines but not others (like help).
 
-**A**: Question and answers could possibly be very long and could take up multiple lines. They are also important
-information for economics students trying to study. We would not want some inconsistent wrapping scheme distracting
-users from focusing on their flashcard contents. For other output with fixed lengths that slightly exceed the dashed
-lines, the readability is not realy affected and once could even say that having all the information on a single line 
-is more readable.
+**A**: Question and answers could possibly be very long and could take up multiple lines. These are also important
+information that the economics students are trying to study. We would not want an inconsistent wrapping scheme
+distracting users from focusing on the contents of the flashcards. For other output with fixed lengths that
+slightly exceed the dashed lines, the readability is not really affected and one could even say that having all
+the information on a single line is more readable.
 
 **Q**: Help command can be typed anywhere but is not found in the "Anywhere" section of this document. Why?
 
