@@ -17,13 +17,17 @@ import seedu.ecardnomics.command.normal.UntagCommand;
 import seedu.ecardnomics.command.normal.SearchCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
+import seedu.ecardnomics.exceptions.BothOcAndCsException;
 import seedu.ecardnomics.exceptions.ColorsNotAvailException;
+import seedu.ecardnomics.exceptions.CsIndexFormatException;
+import seedu.ecardnomics.exceptions.CsIndexRangeException;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.InvalidOptionsException;
 import seedu.ecardnomics.exceptions.NoSeparatorException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.powerpoint.PowerPoint;
 import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.ArrayList;
@@ -40,6 +44,7 @@ import org.beryx.awt.color.ColorFactory;
 public class NormalParser extends Parser {
     DeckList deckList;
     private static LogStorage logger = new LogStorage("NormalParserLogger");
+    public static final int HIGHEST_CS_INDEX = 9;
 
     /** Constructor. */
     public NormalParser(DeckList deckList) {
@@ -189,16 +194,51 @@ public class NormalParser extends Parser {
         }
     }
 
+    protected int getCsIndex(String arguments) throws CsIndexFormatException,
+            CsIndexRangeException {
+
+        arguments = arguments.trim();
+
+        logger.log(Level.INFO, "Logging method getIndex() in NormalParser.");
+
+        if (!arguments.matches(Ui.DIGITS_REGEX)) {
+            logger.log(Level.WARNING, "User did not enter a valid integer index. string = " + arguments);
+            throw new CsIndexFormatException();
+        }
+
+        int index;
+        try {
+            index = Integer.parseInt(arguments) - INDEX_OFFSET;
+        } catch (NumberFormatException e) {
+            throw new CsIndexFormatException();
+        }
+
+        if (index > HIGHEST_CS_INDEX || index < LOWEST_POSSIBLE_INDEX) {
+            logger.log(Level.WARNING, "User did not enter an index in the valid range for -cs.");
+            throw new CsIndexRangeException();
+        }
+
+        return index;
+    }
+
     private PowerPointCommand preparePptxDeck(String arguments) throws Exception {
         Color bgColor = null;
         Color txtColor = null;
 
         boolean isPptxCreated = false;
+        boolean bothOCandCS = false;
         boolean colorInvalid = false;
+        boolean colorSchemeInvalid = false;
+
+        Exception csException = null;
 
         if (arguments.contains("-y")) {
             arguments = arguments.replaceAll("-y", "").trim();
             isPptxCreated = true;
+        }
+
+        if (arguments.contains("-oc") && arguments.contains("-cs")) {
+            bothOCandCS = true;
         }
 
         if (arguments.contains("-oc")) {
@@ -225,6 +265,33 @@ public class NormalParser extends Parser {
             arguments = arguments.replaceAll(Ui.ORIGINAL_COLORS_REGEX, dashOrEnd).trim();
         }
 
+        if (arguments.contains("-cs")) {
+            String dashOrEnd = "";
+            Pattern pattern = Pattern.compile(Ui.COLOR_SCHEME_REGEX);
+            Matcher matcher = pattern.matcher(arguments);
+            if (matcher.find()) {
+                String numArg = matcher.group(1);
+                dashOrEnd = matcher.group(2);
+
+                int colorSchemeIndex = 0;
+
+                try {
+                    colorSchemeIndex = getCsIndex(numArg);
+                } catch (Exception e) {
+                    csException = e;
+                    colorSchemeInvalid = true;
+                }
+
+                int[] bgColorRgb = PowerPoint.COLOR_SCHEMES[colorSchemeIndex][0];
+                int[] txtColorRgb = PowerPoint.COLOR_SCHEMES[colorSchemeIndex][1];
+
+                bgColor = new Color(bgColorRgb[0], bgColorRgb[1], bgColorRgb[2]);
+                txtColor = new Color(txtColorRgb[0], txtColorRgb[1], txtColorRgb[2]);
+
+                arguments = arguments.replaceAll(Ui.COLOR_SCHEME_REGEX, dashOrEnd).trim();
+            }
+        }
+
         if (arguments.contains("-")) {
             throw new InvalidOptionsException();
         }
@@ -232,8 +299,16 @@ public class NormalParser extends Parser {
         int deckID = getIndex(arguments);
         Deck deck = deckList.getDeck(deckID);
 
+        if (bothOCandCS) {
+            throw new BothOcAndCsException();
+        }
+
         if (colorInvalid) {
             throw new ColorsNotAvailException();
+        }
+
+        if (colorSchemeInvalid) {
+            throw csException;
         }
 
         if (!isPptxCreated) {

@@ -119,8 +119,8 @@ public class Ui {
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
     public static final String PUNC_REGEX = "\\p{Punct}";
-    public static final String ORIGINAL_COLORS_REGEX = "-oc\\s+(\\w+)\\s+(\\w+)(\\s-|$)";
-    public static final String COLOR_SCHEME_REGEX = "-cs\\s(\\d+)(\\s-|$)";
+    public static final String ORIGINAL_COLORS_REGEX = "-oc\\s+(\\w+)\\s+(\\w+)\\s*(-|$)";
+    public static final String COLOR_SCHEME_REGEX = "-cs\\s(\\S+)\\s*(-|$)";
 
     public static final String Y = "y";
     public static final String N = "n";
