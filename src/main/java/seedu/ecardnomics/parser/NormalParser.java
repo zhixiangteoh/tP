@@ -1,6 +1,5 @@
 package seedu.ecardnomics.parser;
 
-import org.apache.commons.math3.analysis.function.Log;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
@@ -103,8 +102,8 @@ public class NormalParser extends Parser {
     private Command prepareDeleteDeck(String arguments) throws Exception {
         boolean isDeckDeleted;
         int deckID;
-        if (arguments.contains("-y")) {
-            arguments = arguments.replaceAll("-y", "");
+        if (arguments.contains(Ui.FORCE_YES_OPT)) {
+            arguments = arguments.replaceAll(Ui.FORCE_YES_OPT, "");
             deckID = getIndex(arguments);
             isDeckDeleted = true;
         } else {
@@ -170,7 +169,7 @@ public class NormalParser extends Parser {
     /**
      * Creates a new deck for adding to deckList.
      *
-     * @param arguments String that represents the nae of deck to be created
+     * @param arguments String that represents the name of deck to be created
      * @return Reference to the deck created
      * @throws EmptyInputException if no name is supplied for the deck
      */
@@ -195,6 +194,13 @@ public class NormalParser extends Parser {
         }
     }
 
+    /**
+     * Gets the index for the -cs option in pptx command.
+     * @param arguments String representing the user input for the index
+     * @return int representing the index for the the color scheme chosen
+     * @throws CsIndexFormatException when format of index is not an integer
+     * @throws CsIndexRangeException when the index integer is not within the range [1,10], number of cs available
+     */
     protected int getCsIndex(String arguments) throws CsIndexFormatException,
             CsIndexRangeException {
 
@@ -222,6 +228,12 @@ public class NormalParser extends Parser {
         return index;
     }
 
+    /**
+     * Prepares the PowerPoint command when the user input is pptx.
+     * @param arguments String representing the arguments of user input
+     * @return PowerPointCommand to be executed in the Main
+     * @throws Exception when arguments (index and options) are not valid
+     */
     private PowerPointCommand preparePptxDeck(String arguments) throws Exception {
         Color bgColor = null;
         Color txtColor = null;
@@ -233,16 +245,16 @@ public class NormalParser extends Parser {
 
         Exception csException = null;
 
-        if (arguments.contains("-y")) {
-            arguments = arguments.replaceAll("-y", "").trim();
+        if (arguments.contains(Ui.FORCE_YES_OPT)) {
+            arguments = arguments.replaceAll(Ui.FORCE_YES_OPT, "").trim();
             isPptxCreated = true;
         }
 
-        if (arguments.contains("-oc") && arguments.contains("-cs")) {
+        if (arguments.contains(Ui.ORIGINAL_COLOR_OPT) && arguments.contains(Ui.COLOR_SCHEME_OPT)) {
             bothOCandCS = true;
         }
 
-        if (arguments.contains("-oc")) {
+        if (arguments.contains(Ui.ORIGINAL_COLOR_OPT)) {
             String dashOrEnd = "";
 
             Pattern pattern = Pattern.compile(Ui.ORIGINAL_COLORS_REGEX);
@@ -266,7 +278,7 @@ public class NormalParser extends Parser {
             arguments = arguments.replaceAll(Ui.ORIGINAL_COLORS_REGEX, dashOrEnd).trim();
         }
 
-        if (arguments.contains("-cs")) {
+        if (arguments.contains(Ui.COLOR_SCHEME_OPT)) {
             String dashOrEnd = "";
             Pattern pattern = Pattern.compile(Ui.COLOR_SCHEME_REGEX);
             Matcher matcher = pattern.matcher(arguments);

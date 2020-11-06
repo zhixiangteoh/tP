@@ -14,6 +14,7 @@ import static seedu.ecardnomics.Main.VERSION_NUMBER;
 
 public class Ui {
 
+    // Output lines to users
     public static final String GREETING_LINES =
             "Hello! Welcome to eCardnomics,\n"
                     + "your one stop Flash Cards solution";
@@ -98,6 +99,7 @@ public class Ui {
     public static final String WRITE_TO_FILE_ERROR_LINE = "Error writing for file";
     public static final String FILE_NOT_FOUND_ERROR_LINE = " not found or file currently open";
 
+    // Commands
     public static final String EXIT = "exit";
     public static final String EDIT = "edit";
     public static final String START = "start";
@@ -115,6 +117,11 @@ public class Ui {
     public static final String SEARCH = "search";
 
     public static final String VERSION_CMD = "--version";
+
+    // Options
+    public static final String FORCE_YES_OPT = "-y";
+    public static final String COLOR_SCHEME_OPT = "-cs";
+    public static final String ORIGINAL_COLOR_OPT = "-oc";
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
