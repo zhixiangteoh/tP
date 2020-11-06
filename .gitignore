@@ -14,5 +14,5 @@ src/main/resources/docs/
 bin/
 
 ACTUAL.TXT
-data/deckList.txt
+log
 

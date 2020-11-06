@@ -19,9 +19,9 @@ import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.NoAlphaNumericInputException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Parser for commands supplied in Deck Mode.
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class DeckParser extends Parser {
     public Deck deck;
     public DeckList deckList;
-    private static Logger logger = Logger.getLogger("DeckParserLogger");
+    private static LogStorage logger = new LogStorage("DeckParserLogger");
 
     /**
      * Constructor.

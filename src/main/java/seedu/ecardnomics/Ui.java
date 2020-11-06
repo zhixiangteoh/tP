@@ -4,10 +4,10 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.game.Game;
+import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.Scanner;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static seedu.ecardnomics.Main.VERSION_NUMBER;
 
@@ -131,7 +131,7 @@ public class Ui {
     public static final String LOGO5 = " \\___\\____/\\__,_|_|  \\__,_|_| |_|\\___/|_| |_| |_|_|\\___|___/";
 
     public static Scanner in = new Scanner(System.in);
-    private static Logger logger = Logger.getLogger("UiLogger");
+    private static LogStorage logger = new LogStorage("UiLogger");
 
     /**
      * Reads user input from command line.
@@ -451,7 +451,8 @@ public class Ui {
     }
 
     public static void printGameQuestion(String question) {
-        System.out.println("Q: " + question);
+        final String label = "Q: ";
+        System.out.println(label + prettyPrintFormatter(question, label.length()));
         System.out.println(ENTER_ATTEMPT_LINE);
         printPrompt();
     }
@@ -461,7 +462,8 @@ public class Ui {
     }
 
     public static void printAnswerGameMode(String answer) {
-        System.out.println("A: " + answer);
+        final String label = "A: ";
+        System.out.println(label + prettyPrintFormatter(answer, label.length()));
     }
 
     public static void printDoneGameMessage() {

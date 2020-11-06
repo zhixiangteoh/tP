@@ -12,13 +12,13 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GameParser extends Parser {
     public Deck deck;
-    private static Logger logger = Logger.getLogger("GameParserLogger");
+    private static LogStorage logger = new LogStorage("GameParserLogger");
 
     /**
      * Constructor.
