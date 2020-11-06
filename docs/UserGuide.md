@@ -485,13 +485,19 @@ Equivalent One-line format:
 ```
   > add <question description> /ans <question answer or explanation>
 ```
+>If `/ans` is not supplied, `<question description>` is stored and the user is prompted for the answer.
+>
+>If `<question description>` is empty, the input is invalid and the error message 
+>```
+>"Input shouldn't be empty! Returning..."
+>```
+>is shown.
 
 #### Examples
 
 ```java
 [Deck - market failure]
      > add 
-// Enter question: <question description>
 // ------------------------------------------------------------
 // You are now adding a FlashCard to: market failure
 // ------------------------------------------------------------

@@ -1,5 +1,6 @@
 package seedu.ecardnomics.parser;
 
+import org.apache.commons.math3.analysis.function.Log;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
