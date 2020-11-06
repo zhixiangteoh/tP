@@ -22,16 +22,33 @@ public class PowerPoint {
     private Deck deck;
     private XMLSlideShow pptx = new XMLSlideShow();
     private XSLFSlideMaster defaultMaster = pptx.getSlideMasters().get(0);
+    private Color bgColor;
+    private Color textColor;
+
+
     public static final String PPTX_DIR = "pptx/";
     public static final String PPTX_EXT = ".pptx";
 
+
     public PowerPoint(Deck deck) {
         this.deck = deck;
+        bgColor = Color.white;
+        textColor = Color.black;
     }
+
+    public PowerPoint(Deck deck, Color bgColor, Color textColor) {
+        this.deck = deck;
+        this.bgColor = bgColor;
+        this.textColor = textColor;
+    }
+
 
     private void newIntroSlide() {
         XSLFSlideLayout layout = defaultMaster.getLayout(SlideLayout.TITLE);
         XSLFSlide slide = pptx.createSlide(layout);
+
+        slide.getBackground().setFillColor(bgColor);
+
         XSLFTextShape title = slide.getPlaceholder(0);
         XSLFTextShape subtitle = slide.getPlaceholder(1);
         slide.removeShape(subtitle);
@@ -42,7 +59,7 @@ public class PowerPoint {
         XSLFTextRun r = p.addNewTextRun();
 
         r.setText(deck.getName());
-        r.setFontColor(Color.black);
+        r.setFontColor(textColor);
         r.setFontSize(60.);
     }
 
@@ -60,14 +77,14 @@ public class PowerPoint {
         XSLFTextRun r = p.addNewTextRun();
 
         r.setText(titleText);
-        r.setFontColor(Color.black);
+        r.setFontColor(textColor);
         r.setFontSize(50.);
 
         p = object.addNewTextParagraph();
         r = p.addNewTextRun();
 
         r.setText(text);
-        r.setFontColor(Color.black);
+        r.setFontColor(textColor);
         r.setFontSize(40.);
     }
 

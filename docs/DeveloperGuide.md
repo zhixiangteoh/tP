@@ -282,7 +282,7 @@ Flashcard application that allows students to quickly create new flashcards and 
 |v2.0|organised student|have my notes be stored in a systematic way|retrieve them quickly and easily|
 |v2.0|student|have a system that can categorise material into different topics|quickly revise all the content for a topic when studying for an exam|
 |v2.0|hardworking student|have a studying system that can help me memorise content in a non-traditional manner|remember all the facts during an exam through active recall|
-
+|v2.0|busy student|have my notes available outside of CLI|study while on the go and not waste any time
 ## Non-Functional Requirements
 
 {Give non-functional requirements}

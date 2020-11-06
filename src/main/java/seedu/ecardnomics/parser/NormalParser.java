@@ -1,5 +1,6 @@
 package seedu.ecardnomics.parser;
 
+import org.beryx.awt.color.ColorFactory;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
@@ -17,15 +18,20 @@ import seedu.ecardnomics.command.normal.UntagCommand;
 import seedu.ecardnomics.command.normal.SearchCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
+import seedu.ecardnomics.exceptions.ColorsNotAvailException;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.exceptions.InvalidOptionsException;
 import seedu.ecardnomics.exceptions.NoSeparatorException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Parser for commands supplied in Normal Mode.
@@ -183,13 +189,61 @@ public class NormalParser extends Parser {
     }
 
     private PowerPointCommand preparePptxDeck(String arguments) throws Exception {
+        Color bgColor = null;
+        Color txtColor = null;
+
+        boolean isPptxCreated = false;
+        boolean colorInvalid = false;
+
         if (arguments.contains("-y")) {
-            arguments = arguments.replaceAll("-y", "");
-            return new PowerPointCommand(deckList, prepareDeck(arguments), true);
+            arguments = arguments.replaceAll("-y", "").trim();
+            isPptxCreated = true;
         }
+
+        if (arguments.contains("-oc")) {
+            String dashOrEnd = "";
+
+            Pattern pattern = Pattern.compile(Ui.ORIGINAL_COLORS_REGEX);
+            Matcher matcher = pattern.matcher(arguments);
+
+
+            if (matcher.find()) {
+                String bgColorString = matcher.group(1);
+                String txtColorString = matcher.group(2);
+                dashOrEnd = matcher.group(3);
+
+                try {
+                    bgColor = ColorFactory.valueOf(bgColorString);
+                    txtColor = ColorFactory.valueOf(txtColorString);
+
+                } catch (IllegalArgumentException e) {
+                    colorInvalid = true;
+                }
+            }
+
+            arguments = arguments.replaceAll(Ui.ORIGINAL_COLORS_REGEX, dashOrEnd).trim();
+        }
+
+        if (arguments.contains("-")) {
+            throw new InvalidOptionsException();
+        }
+
         int deckID = getIndex(arguments);
-        boolean isPptxCreated = Ui.getPptxDeckConfirmation(deckList.getDeck(deckID).getName());
-        return new PowerPointCommand(deckList, deckList.getDeck(deckID), isPptxCreated);
+        Deck deck = deckList.getDeck(deckID);
+
+        if (colorInvalid) {
+            throw new ColorsNotAvailException();
+        }
+
+        if (!isPptxCreated) {
+            isPptxCreated = Ui.getPptxDeckConfirmation(deck.getName());
+        }
+        if (bgColor != null && txtColor != null) {
+            return new PowerPointCommand(deckList, deck, isPptxCreated, bgColor, txtColor);
+
+        }
+
+        return new PowerPointCommand(deckList, deck, isPptxCreated);
     }
 
     private Command prepareSearchCommand(String arguments) throws EmptyInputException {

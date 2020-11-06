@@ -1140,7 +1140,7 @@ Shows release version from anywhere in the program.
 |Delete deck|`delete <ix>`|`delete 1`|
 |Enter Deck Mode|`edit <ix>`|`edit 1`|
 |Enter Game Mode|`start <ix>`|`start 1`|
-|Create PowerPoint|`pptx <ix> [-y]`|`pptx 1`|
+|Create PowerPoint|`pptx <ix> [-y] [-oc <bg index> <txt index>] [-cs <cs index>]`|`pptx 1`|
 |Help|`help`||
 
 ### Deck Mode
