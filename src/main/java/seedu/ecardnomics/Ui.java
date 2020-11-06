@@ -118,6 +118,7 @@ public class Ui {
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
     public static final String NEGATIVE_NUM_REGEX = "-\\d+";
+    public static final String PUNC_REGEX = "\\p{Punct}";
 
     public static final String Y = "y";
     public static final String N = "n";
