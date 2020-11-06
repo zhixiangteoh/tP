@@ -101,24 +101,33 @@ public class GameEngine {
     }
 
     double getMatchPercentage(String attempt, String answer) {
-        String[] attemptArray = attempt.replaceAll("\\p{Punct}","").split(" ");
-        String[] answerArray = answer.replaceAll("\\p{Punct}","").split(" ");
+        String[] attemptArray = attempt.replaceAll(Ui.PUNC_REGEX,"").split(" ");
+        String[] answerArray = answer.replaceAll(Ui.PUNC_REGEX,"").split(" ");
         int answerLength = answerArray.length;
+        if (answerLength <= 1 && !isValidAnswer(answerArray)) {
+            return 0;
+        }
         int matchCount = 0;
         for (String word1 : answerArray) {
             for (String word2: attemptArray) {
-                if (word2.equalsIgnoreCase(word1)) {
+                if (word2.trim().equalsIgnoreCase(word1.trim())) {
                     matchCount++;
                     break;
                 }
             }
         }
 
-        if (answerLength == 0) {
-            return 0;
-        }
         assert matchCount <= answerLength : "matchCount > answerLength!";
         return (double) matchCount / answerLength * 100;
+    }
+
+    boolean isValidAnswer(String[] answerArray) {
+        for (String word : answerArray) {
+            if (!word.isBlank()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     Command forceDoneGame() {

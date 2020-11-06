@@ -12,7 +12,10 @@ import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.game.Game;
 import seedu.ecardnomics.parser.DeckParser;
 import seedu.ecardnomics.parser.NormalParser;
+import seedu.ecardnomics.storage.LogStorage;
 import seedu.ecardnomics.storage.Storage;
+
+import java.io.IOException;
 
 /**
  * Main Class for eCardnomics - Flash Card Manager Command Line Program.
@@ -122,12 +125,13 @@ public class Main {
      */
     public static void main(String[] args) {
         deckList = storage.load(deckList);
+
         runNormalMode();
 
         try {
             storage.write(Main.deckList);
-        } catch (Exception e) {
-            System.out.println("Unable to write file...");
+        } catch (IOException e) {
+            Ui.printMessage("Unable to write file...");
         }
     }
 }

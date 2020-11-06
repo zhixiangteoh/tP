@@ -16,12 +16,12 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
-import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.exceptions.EmptyInputException;
+import seedu.ecardnomics.exceptions.NoAlphaNumericInputException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Parser for commands supplied in Deck Mode.
@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class DeckParser extends Parser {
     public Deck deck;
     public DeckList deckList;
-    private static Logger logger = Logger.getLogger("DeckParserLogger");
+    private static LogStorage logger = new LogStorage("DeckParserLogger");
 
     /**
      * Constructor.
@@ -55,20 +55,29 @@ public class DeckParser extends Parser {
         return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
     }
 
+    private boolean containsNoAlphaNumerics(String field) {
+        String puncRemovedField = field.replaceAll(Ui.PUNC_REGEX, "");
+        return puncRemovedField.isBlank();
+    }
+
     /**
      * Verify that a String is contains meaningful contents.
      *
      * @param field String to be verified
      * @throws EmptyInputException if string is empty after trim
      */
-    private void verifyStringField(String field) throws EmptyInputException {
+    private void verifyStringField(String field) throws EmptyInputException, NoAlphaNumericInputException {
         if (field.trim().length() == 0) {
-            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for question");
+            logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for field");
             throw new EmptyInputException();
+        }
+        if (containsNoAlphaNumerics(field.trim())) {
+            logger.log(Level.WARNING, "User entered no alphanumeric characters as field!");
+            throw new NoAlphaNumericInputException();
         }
     }
 
-    protected Command prepareFlashCard(String arguments) throws EmptyInputException {
+    protected Command prepareFlashCard(String arguments) throws EmptyInputException, NoAlphaNumericInputException {
         String[] questionAndAnswer = new String[2];
 
         if (arguments.contains("/ans")) {
@@ -102,6 +111,8 @@ public class DeckParser extends Parser {
 
         assert questionAndAnswer[0].length() > 0 : "question field empty!";
         assert questionAndAnswer[1].length() > 0 : "answer field empty!";
+        assert !containsNoAlphaNumerics(questionAndAnswer[0]) : "question field nonsensical!";
+        assert !containsNoAlphaNumerics(questionAndAnswer[1]) : "question field nonsensical!";
 
         Ui.printDashLines();
         Ui.printFlashCardAddedLine();

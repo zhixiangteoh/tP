@@ -119,8 +119,20 @@ class GameEngineTest {
     }
 
     @Test
+    void getMatchPercentage_completeMatchSpacePaddedMatchedWords_success() {
+        double match = engine.getMatchPercentage("this  \t\t is   an    answer.", "this is an answer");
+        assertEquals(100.0, match);
+    }
+
+    @Test
     void getMatchPercentage_zeroMatchSpacePunctuationPadded_success() {
         double match = engine.getMatchPercentage("completely wrong.!` -_+=)(*&^%$#@!", "this is an answer   .");
+        assertEquals(0.0, match);
+    }
+
+    @Test
+    void getMatchPercentage_punctuationAnswerZeroMatch_success() {
+        double match = engine.getMatchPercentage("!@#//...    . %^*()", "!@#//...    . %^*()");
         assertEquals(0.0, match);
     }
 

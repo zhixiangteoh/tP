@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.storage.LogStorage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
