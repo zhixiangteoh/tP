@@ -1,6 +1,5 @@
 package seedu.ecardnomics.parser;
 
-import org.beryx.awt.color.ColorFactory;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
@@ -25,20 +24,22 @@ import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.InvalidOptionsException;
 import seedu.ecardnomics.exceptions.NoSeparatorException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.storage.LogStorage;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import java.awt.Color;
+import org.beryx.awt.color.ColorFactory;
 
 /**
  * Parser for commands supplied in Normal Mode.
  */
 public class NormalParser extends Parser {
     DeckList deckList;
-    private static Logger logger = Logger.getLogger("NormalParserLogger");
+    private static LogStorage logger = new LogStorage("NormalParserLogger");
 
     /** Constructor. */
     public NormalParser(DeckList deckList) {

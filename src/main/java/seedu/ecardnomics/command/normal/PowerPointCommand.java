@@ -10,8 +10,6 @@ public class PowerPointCommand extends NormalCommand {
     Deck deck;
     PowerPoint pptx;
     boolean isPpptxCreated;
-    Color bgColor;
-    Color txtColor;
 
     /** Constructor. */
     public PowerPointCommand(DeckList deckList, Deck deck, boolean isPpptxCreated) {

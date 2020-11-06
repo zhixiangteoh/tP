@@ -1,13 +1,14 @@
 package seedu.ecardnomics;
 
+import org.apache.commons.math3.analysis.function.Log;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.game.Game;
+import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.Scanner;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static seedu.ecardnomics.Main.VERSION_NUMBER;
 
@@ -117,8 +118,9 @@ public class Ui {
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
+    public static final String PUNC_REGEX = "\\p{Punct}";
     public static final String ORIGINAL_COLORS_REGEX = "-oc\\s+(\\w+)\\s+(\\w+)(\\s-|$)";
-    public static final String COLOR_SCHEME_REGEX = "-cs\\s(\\d+)(\\s-)|$";
+    public static final String COLOR_SCHEME_REGEX = "-cs\\s(\\d+)(\\s-|$)";
 
     public static final String Y = "y";
     public static final String N = "n";
@@ -131,7 +133,7 @@ public class Ui {
     public static final String LOGO5 = " \\___\\____/\\__,_|_|  \\__,_|_| |_|\\___/|_| |_| |_|_|\\___|___/";
 
     public static Scanner in = new Scanner(System.in);
-    private static Logger logger = Logger.getLogger("UiLogger");
+    public static LogStorage logger = new LogStorage("UiLogger");
 
     /**
      * Reads user input from command line.
