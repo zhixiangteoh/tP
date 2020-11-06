@@ -1,5 +1,6 @@
 package seedu.ecardnomics;
 
+import org.apache.commons.math3.analysis.function.Log;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
@@ -117,8 +118,9 @@ public class Ui {
 
     //Regex
     public static final String DIGITS_REGEX = "\\d+";
-    public static final String NEGATIVE_NUM_REGEX = "-\\d+";
     public static final String PUNC_REGEX = "\\p{Punct}";
+    public static final String ORIGINAL_COLORS_REGEX = "-oc\\s+(\\w+)\\s+(\\w+)\\s*(-|$)";
+    public static final String COLOR_SCHEME_REGEX = "-cs\\s(\\S+)\\s*(-|$)";
 
     public static final String Y = "y";
     public static final String N = "n";

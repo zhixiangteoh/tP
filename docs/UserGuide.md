@@ -379,6 +379,12 @@ Prints an existing deck to a new PowerPoint file named `<deck name>.pptx` in `pp
 The `pptx` command expects one argument specifying the deck index for which to enter Deck Mode.
 You can add the option `-y` to create the PowerPoint without any further prompt.
 
+#### Colors for background and text options
+To select the color for background and text, you can either select from one of the 10 default color schemes
+using `-cs <index>` or choose your own background and text colors using `-oc <bg color> <txt color>`. 
+You can only choose *either* and **not both** options to select color.
+More details about the colors for original colors and color schemes available can be found [below](#features---print-to-powerpoint) 
+ 
  > The `pptx` command can also be entered from within Deck Mode, without the need for deck index.
 
 #### Format
@@ -435,7 +441,7 @@ Displays the list of all commands in Normal Mode.
 
 #### Examples
 
-```
+```java
 [Normal]
   > help
 // ------------------------------------------------------------
@@ -449,6 +455,8 @@ Displays the list of all commands in Normal Mode.
 //   start  <ix>                                 Enter Game Mode for deck at list index <ix>! Do your best!
 //   delete <ix>   [-y]                          Deletes the deck at list index <ix> from list of decks.
 //   pptx   <ix>   [-y]                          Creates a PowerPoint slides based on the deck at list index <ix>.
+//   pptx   <ix>   [-y] [-cs <index |            Creates a PowerPoint slides based on the current deck.
+//                 -oc <bg color> <txt color>]  
 //   tag    <ix>   /tag <tag1> [<tag2> ...]      Tags the deck at list index <ix>, with 1 or more tags.
 //   untag  <ix>   /tag <tag1> [<tag2> ...]      Untags specified <tag>s of the deck at list index <ix>.
 //   search <tag1> [<tag2> ...]                  Search deck list for decks tagged with specified <tag>s.
@@ -780,6 +788,12 @@ Starts Game Mode for the current deck.
 Prints the current deck to a new PowerPoint file named `<deck name>.pptx` in `pptx/` folder.
 You can add the option `-y` to create the PowerPoint without any further prompt.
 
+#### Colors for background and text options
+To select the color for background and text, you can either select from one of the 10 default color schemes
+using `-cs <index>` or choose your own background and text colors using `-oc <bg color> <txt color>`. 
+You can only choose *either* and **not both** options to select color.
+More details about the colors for original colors and color schemes available can be found [below](#features---print-to-powerpoint)
+
 > The `pptx` command can also be entered from within Normal Mode.
  
 #### Format
@@ -854,14 +868,15 @@ Displays the list of all commands in Deck Mode.
 // Deck Mode.
 // 
 // Usage:
-//   add         [<qn> /ans <ans>]    Adds a new flash card to the current deck.
-//   list        [/ans]               Lists all flash cards in the current deck, optionally with answers.
-//   delete <ix> [-y]                 Deletes the flash card at list index <ix> from the current deck.
-//   pptx        [-y]                 Creates a PowerPoint slides based on the current deck.
-//   start                            Enter Game Mode for this deck! Do your best!
-//   done                             Exits from Deck Mode and returns to Normal Mode.
-//   exit                             Exits the program.
-//   help                             Show this output.
+//   add         [<qn> /ans <ans>]          Adds a new flash card to the current deck.
+//   list        [/ans]                     Lists all flash cards in the current deck, optionally with answers.
+//   delete <ix> [-y]                       Deletes the flash card at list index <ix> from the current deck.
+//   pptx        [-y] [-cs <index |         Creates a PowerPoint slides based on the current deck.
+//               -oc <bg color> <txt color>]  
+//   start                                  Enter Game Mode for this deck! Do your best!
+//   done                                   Exits from Deck Mode and returns to Normal Mode.
+//   exit                                   Exits the program.
+//   help                                   Show this output.
 //
 // Options:
 //   --version      Show version.
@@ -1035,11 +1050,37 @@ Displays the list of all commands in Game Mode.
 Can be done from both Normal Mode and Deck Mode. In Normal Mode, a deck index is required, 
 but in Deck Mode, there is no need to specify the deck index.
 Has the option to skip confirmation prompt using `-y` suffix.
+There is also the option to select both the background and text colors. There are 10 default color schemes that the 
+user can choose from using the option `-cs 1`. [See below for the default color schemes](#default-color-schemes)
+There is also the option to choose your own colors for background and text from the provided colors using the option
+`-oc <bg color> <txt color>`. [See below for the colors available](#original-colors-available)
 
 For details, check out:
 
 * [Normal Mode PowerPoint](#print-an-existing-deck-to-a-powerpoint-file-pptx)
 * [Deck Mode PowerPoint](#print-current-deck-to-a-powerpoint-file-pptx)
+
+#### Default Color Schemes
+The following is the default schemes that are available and their respective index.
+[Default Color Schemes](images-ug/PPTX-Default-Color-Schemes.png)
+
+
+#### Original Colors available
+Soome of the colors include:
+* Red
+* Blue
+* Yellow
+* Green
+* Black
+* White
+* Purple
+* Violet
+* Pink 
+* Navy
+* Gray
+
+The complete list of colors can be found at [here] (https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html)
+
 
 
 ## Features - Anywhere
@@ -1146,7 +1187,7 @@ Shows release version from anywhere in the program.
 |Delete deck|`delete <ix>`|`delete 1`|
 |Enter Deck Mode|`edit <ix>`|`edit 1`|
 |Enter Game Mode|`start <ix>`|`start 1`|
-|Create PowerPoint|`pptx <ix> [-y]`|`pptx 1`|
+|Create PowerPoint|`pptx <ix> [-y] [-oc <bg color> <txt color>] [-cs <cs index>]`|`pptx 1`|
 |Help|`help`||
 
 ### Deck Mode

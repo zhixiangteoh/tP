@@ -22,16 +22,45 @@ public class PowerPoint {
     private Deck deck;
     private XMLSlideShow pptx = new XMLSlideShow();
     private XSLFSlideMaster defaultMaster = pptx.getSlideMasters().get(0);
+    private Color bgColor;
+    private Color textColor;
+
+    public static final int[][][] COLOR_SCHEMES = {
+            {{26,81,144}, {162, 162, 161}}, // Turkish Sea and Silver
+            {{161, 57, 66}, {189, 128, 56}}, // Gold and Scarlet
+            {{255, 231, 122}}, {{44, 95, 45}}, // Yellow and Green
+            {{4, 30, 66}}, {{175, 234, 220}}, // Sailor Blue and Mint
+            {{16, 24, 32}}, {{242, 170, 76}}, // Black and Orange
+            {{255, 214, 98}}, {{0, 83, 156}}, // Aspen Gold and Princess Blue
+            {{28, 28, 27}}, {{206, 74, 126}}, // Nebulosity and Pink Yarrow
+            {{110, 110, 109}}, {{250, 208, 201}}, // Charcoal Gray and Pink Salt
+            {{173, 223, 173}}, {{44, 95, 45}}, // Moss Green and Forest Green
+            {{250, 235, 239}},{{46, 62, 128}} // Pink and Navy
+    };
+
     public static final String PPTX_DIR = "pptx/";
     public static final String PPTX_EXT = ".pptx";
 
+
     public PowerPoint(Deck deck) {
         this.deck = deck;
+        bgColor = Color.white;
+        textColor = Color.black;
     }
+
+    public PowerPoint(Deck deck, Color bgColor, Color textColor) {
+        this.deck = deck;
+        this.bgColor = bgColor;
+        this.textColor = textColor;
+    }
+
 
     private void newIntroSlide() {
         XSLFSlideLayout layout = defaultMaster.getLayout(SlideLayout.TITLE);
         XSLFSlide slide = pptx.createSlide(layout);
+
+        slide.getBackground().setFillColor(bgColor);
+
         XSLFTextShape title = slide.getPlaceholder(0);
         XSLFTextShape subtitle = slide.getPlaceholder(1);
         slide.removeShape(subtitle);
@@ -42,7 +71,7 @@ public class PowerPoint {
         XSLFTextRun r = p.addNewTextRun();
 
         r.setText(deck.getName());
-        r.setFontColor(Color.black);
+        r.setFontColor(textColor);
         r.setFontSize(60.);
     }
 
@@ -60,14 +89,14 @@ public class PowerPoint {
         XSLFTextRun r = p.addNewTextRun();
 
         r.setText(titleText);
-        r.setFontColor(Color.black);
+        r.setFontColor(textColor);
         r.setFontSize(50.);
 
         p = object.addNewTextParagraph();
         r = p.addNewTextRun();
 
         r.setText(text);
-        r.setFontColor(Color.black);
+        r.setFontColor(textColor);
         r.setFontSize(40.);
     }
 
