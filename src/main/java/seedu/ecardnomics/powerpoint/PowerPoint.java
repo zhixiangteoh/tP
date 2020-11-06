@@ -28,14 +28,14 @@ public class PowerPoint {
     public static final int[][][] COLOR_SCHEMES = {
             {{26,81,144}, {162, 162, 161}}, // Turkish Sea and Silver
             {{161, 57, 66}, {189, 128, 56}}, // Gold and Scarlet
-            {{255, 231, 122}}, {{44, 95, 45}}, // Yellow and Green
-            {{4, 30, 66}}, {{175, 234, 220}}, // Sailor Blue and Mint
-            {{16, 24, 32}}, {{242, 170, 76}}, // Black and Orange
-            {{255, 214, 98}}, {{0, 83, 156}}, // Aspen Gold and Princess Blue
-            {{28, 28, 27}}, {{206, 74, 126}}, // Nebulosity and Pink Yarrow
-            {{110, 110, 109}}, {{250, 208, 201}}, // Charcoal Gray and Pink Salt
-            {{173, 223, 173}}, {{44, 95, 45}}, // Moss Green and Forest Green
-            {{250, 235, 239}},{{46, 62, 128}} // Pink and Navy
+            {{255, 231, 122}, {44, 95, 45}}, // Yellow and Green
+            {{4, 30, 66}, {175, 234, 220}}, // Sailor Blue and Mint
+            {{16, 24, 32}, {242, 170, 76}}, // Black and Orange
+            {{255, 214, 98}, {0, 83, 156}}, // Aspen Gold and Princess Blue
+            {{28, 28, 27}, {206, 74, 126}}, // Nebulosity and Pink Yarrow
+            {{110, 110, 109}, {250, 208, 201}}, // Charcoal Gray and Pink Salt
+            {{173, 223, 173}, {44, 95, 45}}, // Moss Green and Forest Green
+            {{250, 235, 239},{46, 62, 128}} // Pink and Navy
     };
 
     public static final String PPTX_DIR = "pptx/";
