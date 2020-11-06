@@ -1062,7 +1062,7 @@ For details, check out:
 
 #### Default Color Schemes
 The following is the default schemes that are available and their respective index.
-[Default Color Schemes](images-ug/PPTX-Default-Color-Schemes.png)
+![Default Color Schemes](images-ug/PPTX-Default-Color-Schemes.png)
 
 
 #### Original Colors available
