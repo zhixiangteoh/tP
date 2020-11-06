@@ -15,8 +15,10 @@ import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.exceptions.NoAlphaNumericInputException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -60,6 +62,63 @@ class DeckParserTest {
             fail();
         } catch (Exception e) {
             assertEquals((new IndexFormatException()).getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    void prepareFlashCard_oneLinerEmptyInputQuestion_EmptyInputExceptionThrown() {
+        try {
+            assertEquals(1, deckParser.prepareFlashCard("      /ans some answer"));
+            // question input checked first
+            assertEquals(1, deckParser.prepareFlashCard("      /ans !@#"));
+        } catch (Exception e) {
+            assertEquals(new EmptyInputException().getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    void prepareFlashCard_oneLinerEmptyInputAnswerValidQuestion_EmptyInputExceptionThrown() {
+        try {
+            // question input checked first
+            assertEquals(1, deckParser.prepareFlashCard("some question /ans     "));
+        } catch (Exception e) {
+            assertEquals(new EmptyInputException().getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    void prepareFlashCard_oneLinerNoAlphaNumericQuestion_NoAlphaNumericExceptionThrown() {
+        try {
+            assertEquals(1, deckParser.prepareFlashCard("!@#.. /ans some answer"));
+            // question input checked first
+            assertEquals(1, deckParser.prepareFlashCard("!@#.. /      "));
+        } catch (Exception e) {
+            assertEquals(new NoAlphaNumericInputException().getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    void prepareFlashCard_oneLinerNoAlphaNumericAnswerValidQuestion_NoAlphaNumericExceptionThrown() {
+        try {
+            // question input checked first
+            assertEquals(1, deckParser.prepareFlashCard("some question /ans !@#.."));
+        } catch (Exception e) {
+            assertEquals(new NoAlphaNumericInputException().getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    void prepareFlashCard_oneLinerInValidAnswerInvalidQuestion_questionDependentExceptionsThrown() {
+        try {
+            // question input checked first
+            // throws EmptyInputException
+            assertEquals(1, deckParser.prepareFlashCard("     /ans !@#.."));
+            // throws NoAlphaNumericException
+            assertEquals(1, deckParser.prepareFlashCard("!@#. /ans      "));
+        } catch (EmptyInputException eie) {
+            assertEquals(new EmptyInputException().getMessage(), eie.getMessage());
+        } catch (NoAlphaNumericInputException nae) {
+            assertEquals(new NoAlphaNumericInputException().getMessage(), nae.getMessage());
         }
     }
 

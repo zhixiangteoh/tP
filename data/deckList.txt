@@ -2,7 +2,7 @@
 deck | 0
 name | Micro-Economics
 tags | Economics | EC1301 
-size | 6
+size | 5
 Q | What is the Law of demand?
 A | When the price of a good rises, the quantity of the good demanded will fall, ceteris paribus.
 Q | What is the Law of supply?

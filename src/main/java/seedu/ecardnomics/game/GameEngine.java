@@ -101,8 +101,8 @@ public class GameEngine {
     }
 
     double getMatchPercentage(String attempt, String answer) {
-        String[] attemptArray = attempt.replaceAll("\\p{Punct}","").split(" ");
-        String[] answerArray = answer.replaceAll("\\p{Punct}","").split(" ");
+        String[] attemptArray = attempt.replaceAll(Ui.PUNC_REGEX,"").split(" ");
+        String[] answerArray = answer.replaceAll(Ui.PUNC_REGEX,"").split(" ");
         int answerLength = answerArray.length;
         if (answerLength <= 1 && !isValidAnswer(answerArray)) {
             return 0;
