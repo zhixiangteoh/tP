@@ -4,11 +4,10 @@
 ## Overview
 
 eCardnomics is a **desktop flashcard application to quickly create, manage, and access new flashcards via a Command
-Line Interface (CLI)**. While it is mainly targeted at Junior College economics students, eCardnomics can be used
-by anyone who would need to keep track of large amounts of *text-based* information. This is facilitated by the 
-capabilities to group similar flashcards into decks and tag decks to provide a summary of the information contained
-in the deck. Furthermore, the game mode and the feature of exporting decks into powerpoint allow review of the 
-help theinformation to user to memorize the text data.
+Line Interface (CLI)**. The main target audience of this application is Junior College students studying economics.
+The main functionality stores text based flash cards in decks and displays them to the user upon request.
+There are also added features such as a gamde mode and exporting to powerpoint slides. 
+The goal of this application is to help the user memorize their flash cards to study better.
 
 ### Summary of Contributions
 
