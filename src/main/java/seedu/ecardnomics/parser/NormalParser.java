@@ -1,5 +1,6 @@
 package seedu.ecardnomics.parser;
 
+import org.apache.commons.math3.analysis.function.Log;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.command.Command;
 import seedu.ecardnomics.command.ExitCommand;
@@ -22,17 +23,17 @@ import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.NoSeparatorException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Parser for commands supplied in Normal Mode.
  */
 public class NormalParser extends Parser {
     DeckList deckList;
-    private static Logger logger = Logger.getLogger("NormalParserLogger");
+    private static LogStorage logger = new LogStorage("NormalParserLogger");
 
     /** Constructor. */
     public NormalParser(DeckList deckList) {
