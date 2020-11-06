@@ -83,10 +83,12 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     + [Examples](#examples-21)
 - [Features - (Proposed) Encryption and Decryption](#features---proposed-encryption-and-decryption)
 - [FAQ](#faq)
+  * [General](#general)
+  * [Deck Mode](#deck-mode)
   * [Game Mode](#game-mode)
 - [Command Summary](#command-summary)
-  * [Normal Mode](#normal-mode)
-  * [Deck Mode](#deck-mode)
+  * [Normal Mode](#normal-mode-1)
+  * [Deck Mode](#deck-mode-1)
   * [Game Mode](#game-mode-1)
   * [Anywhere](#anywhere)
 
@@ -125,7 +127,7 @@ Words in `<>` are parameters or additional input to be supplied by the user.
 Commented-out lines `//` represent system output by the program.
 
 > Example:
-> ``` 
+> ```java
 > add
 > // Enter question: <question description>
 > // Enter answer: <question answer or explanation>
@@ -159,12 +161,12 @@ create <name of deck> [/tag <tag1> [<tag2>]]
 
 #### Examples
 
-```
+```java
 [Normal]
   > create market-failure
 // New deck created: market-failure
 ```
-```
+```java
 [Normal]
   > create market-failure /tag beginner
 // New deck created: market-failure | Tag(s): beginner 
@@ -243,13 +245,13 @@ Displays an enumerated list of all the decks available to the user. The `decks` 
 
 #### Format
 
-```
+```java
 decks
 ```
 
 #### Examples
 
-```
+```java
 [Normal]
   > decks
 // The following decks are available:
@@ -265,7 +267,7 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
  
 #### Format
 
-```
+```java
 [Normal]
   > delete <index of deck>
 // Do you want to delete `name of deck`? [y/n] <y/n>
@@ -284,7 +286,7 @@ This command forces the delete of the deck at index `<index of deck>`.
 #### Examples
 
 Deciding not to delete:
-```
+```java
 [Normal]
   > delete 1
 // Do you want to delete market-failure? [y/n] n
@@ -293,7 +295,7 @@ Deciding not to delete:
 ```
 
 Confirming a delete:
-```
+```java
 [Normal]
   > delete 2
 // Do you want to delete perfect competition? [y/n] y
@@ -303,7 +305,7 @@ Confirming a delete:
 ```
 
 Entering an invalid response:
-```
+```java
 [Normal]
   > delete 1
 // Do you want to delete market-failure? [y/n] no way
@@ -321,14 +323,14 @@ Enters the Deck Mode to edit an existing deck. The `edit` command expects one ar
  
 #### Format
 
-```
+```java
 [Normal]
   > edit <index of deck>
 ```
 
 #### Examples
 
-```
+```java
 [Normal]
   > edit 1
 // ------------------------------------------------------------
@@ -482,13 +484,13 @@ format of card entry is displayed. Then, the user is prompted to specify the det
 ```
  
 Equivalent One-line format:
-```
+```java
   > add <question description> /ans <question answer or explanation>
 ```
 >If `/ans` is not supplied, `<question description>` is stored and the user is prompted for the answer.
 >
 >If `<question description>` is empty, the input is invalid and the error message 
->```
+>```java
 >"Input shouldn't be empty! Returning..."
 >```
 >is shown.
@@ -613,7 +615,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 > line will only be displayed if the user entered y at the prompt for <y/n>.
 
 One-line format:
-```
+```java
   > delete <index of FlashCard> -y
 ```
 This command forces the delete of the Flashcard at index `<index of FlashCard>`.
@@ -666,7 +668,7 @@ Updates the question and answer fields of a  specified flashcard in the deck. Th
   the flashcard.
 
 #### Format
-```
+```java
 [Deck - `name`]
   > update <index of flashcard>
 // Question: `Current Question`
@@ -685,7 +687,7 @@ If a blank line is supplied as the new detail, then the detail is unchanged.
 #### Examples
 
 Updating both the question and answer:
-```
+```java
 [Deck - market failure]
   > update 1
 // Question: Define market failure
@@ -701,7 +703,7 @@ Updating both the question and answer:
 ```
 
 Updating question only:
-```
+```java
 [Deck - market failure]
   > update 1
 // Question: Define market failure
@@ -716,7 +718,7 @@ Updating question only:
 ```
 
 Updating answer only:
-```
+```java
 [Deck - market failure]
   > update 1
 // Question: Define market failure
@@ -731,7 +733,7 @@ Updating answer only:
 ```
 
 No updates:
-```
+```java
 [Deck - market failure]
   > update 1
 // Question: Define market failure
@@ -1145,6 +1147,38 @@ Shows release version from anywhere in the program.
 ## Features - (Proposed) Encryption and Decryption
 
 ## FAQ
+
+### General
+**Q**: Why are some of the output (e.g. questions and answer) aligned to the dashed lines but not others (like help).
+
+**A**: Question and answers could possibly be very long and could take up multiple lines. They are also important
+information for economics students trying to study. We would not want some inconsistent wrapping scheme distracting
+users from focusing on their flashcard contents. For other output with fixed lengths that slightly exceed the dashed
+lines, the readability is not realy affected and once could even say that having all the information on a single line 
+is more readable.
+
+**Q**: Help command can be typed anywhere but is not found in the "Anywhere" section of this document. Why?
+
+**A**:  Anywhere section is for generic commands that have same effect regardless of user's location within
+application. help commands are unique and distinct across different modes, which explains the decision to place
+it within each mode, rather than within the "Anywhere" section.
+
+### Deck Mode
+
+**Q**: Can my answer contain "/ans"?
+
+**A**: Yes, just type it in the same way as any other one-line add command:
+
+```java
+> add My Question /ans /ans
+```
+Alternatively, `add` and `add My Question` also work since the answer will be read separately.
+
+**Q**: Why is a single line update command not provided?
+
+**A**: When updating the information on a flashcard, it is important to view the previous contents of the flashcard
+to determine the correct new information to update the flashcard. Therefore, it is unlikely that there will be a
+useful scenario for a single line update command.
 
 ### Game Mode
 
