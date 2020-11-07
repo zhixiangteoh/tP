@@ -835,8 +835,6 @@ More details about the colors for original colors and color schemes available ca
 > The `pptx` command can also be entered from within Normal Mode.
  
 #### Format
-``
-
 ```java
 [Deck - 'name of deck']
   > pptx
@@ -857,6 +855,7 @@ More details about the colors for original colors and color schemes available ca
 //   black background and white text
 // --------------------------------------------------------------------------------
 ```
+
 ```java
 [Deck - 'name of deck']
   > pptx -y -cs <index of cs>
@@ -1160,7 +1159,7 @@ The following is the default schemes that are available and their respective ind
 
 
 #### Original Colors available
-Soome of the colors include:
+Some of the colors include:
 * Red
 * Blue
 * Yellow
