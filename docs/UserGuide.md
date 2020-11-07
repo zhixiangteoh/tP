@@ -391,46 +391,82 @@ More details about the colors for original colors and color schemes available ca
 
 ```java
 // ------------------------------------------------------------
-[Deck - `name of deck`]
+[Normal]
   > pptx <index of deck>
 // Do you want to print `name of deck` deck to PowerPoint? [y/n] yes
 // Response should be 'y' or 'n'!
 //   > y
 // ------------------------------------------------------------
-// `name of deck` has been created as PowerPoint.
+// 'name of deck' has been created as PowerPoint with default,
+//   black background and white text
 // ------------------------------------------------------------
 ```
 
 ```java
 // ------------------------------------------------------------
-[Deck - `name of deck`]
+[Normal]
   > pptx <index of deck> -y
 // ------------------------------------------------------------
-// `name of deck` has been created as PowerPoint.
+// 'name of deck' been created as PowerPoint with default,
+//   black background and white text
+// ------------------------------------------------------------
+```
+```java
+[Normal]
+  > pptx <index of deck> -y -cs <index of cs>
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with <bg color> background and <txt color> text
+// ------------------------------------------------------------
+```
+
+```java
+[Normal]
+  > pptx <index of deck> -y -oc <bg color> <txt color>
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Original Colors,
+//   with <bg color> background and <txt color> text
 // ------------------------------------------------------------
 ```
 
 #### Examples
-
 ```java
-------------------------------------------------------------
-[Deck - Micro-Economics]
+[Normal]
   > pptx 1
-// Do you want to print Micro-Economics deck to PowerPoint? [y/n]
-//   > yes
-// Response should be 'y' or 'n'
+// Do you want to print `name of deck` deck to PowerPoint? [y/n] yes
+// Response should be 'y' or 'n'!
 //   > y
 // ------------------------------------------------------------
-// Micro-Economics has been created as PowerPoint.
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint with default,
+//   black background and white text
 // ------------------------------------------------------------
 ```
 
 ```java
-// ------------------------------------------------------------
-[Deck - Micro-Economics]
+[Normal]
   > pptx 1 -y
 // ------------------------------------------------------------
-// Micro-Economics has been created as PowerPoint.
+// Micro-Economics has been created as PowerPoint with default,
+//   black background and white text
+// ------------------------------------------------------------
+```
+
+```java
+[Normal]
+  > pptx 1 -y -cs 1
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with steelblue background and silver text
+// ------------------------------------------------------------
+```
+
+```java
+[Normal]
+  > pptx 1 -y -oc lightblue darkred
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Original Colors,
+//   with lightblue background and darkred text
 // ------------------------------------------------------------
 ```
 
@@ -797,23 +833,43 @@ More details about the colors for original colors and color schemes available ca
 > The `pptx` command can also be entered from within Normal Mode.
  
 #### Format
+``
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > pptx
-// Do you want to print `name of deck` deck to PowerPoint? [y/n] <y/n>
+// Do you want to print 'name of deck' deck to PowerPoint? [y/n] yes
+// Response should be 'y' or 'n'!
+//   > y
 // ------------------------------------------------------------
-// `name of deck` has been created as PowerPoint.
+// 'name of deck' has been created as PowerPoint with default,
+//   black background and white text
 // ------------------------------------------------------------
 ```
 
-> Above displays the result for the case when user enters `y`.
-
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > pptx -y
 // ------------------------------------------------------------
-// `name of deck` has been created as PowerPoint.
+// 'name of deck' been created as PowerPoint with default,
+//   black background and white text
+// ------------------------------------------------------------
+```
+```java
+[Deck - 'name of deck']
+  > pptx -y -cs <index of cs>
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with <bg color> background and <txt color> text
+// ------------------------------------------------------------
+```
+
+```java
+[Deck - 'name of deck']
+  > pptx -y -oc <bg color> <txt color>
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Original Colors,
+//   with <bg color> background and <txt color> text
 // ------------------------------------------------------------
 ```
 
@@ -821,12 +877,11 @@ More details about the colors for original colors and color schemes available ca
 
 ```java
 [Deck - Micro-Economics]
-  > pptx
-// Do you want to print Micro-Economics deck to PowerPoint? [y/n] yes
-// Response should be 'y' or 'n'
-//   > y
+  > pptx 
+// Do you want to print Micro-Economics deck to PowerPoint? [y/n] y
 // ------------------------------------------------------------
-// Micro-Economics has been created as PowerPoint.
+// Micro-Economics has been created as PowerPoint with default,
+//   black background and white text.
 // ------------------------------------------------------------
 ```
 
@@ -834,9 +889,30 @@ More details about the colors for original colors and color schemes available ca
 [Deck - Micro-Economics]
   > pptx -y
 // ------------------------------------------------------------
-// Micro-Economics has been created as PowerPoint.
+// Micro-Economics has been created as PowerPoint with default,
+//   black background and white text.
 // ------------------------------------------------------------
 ```
+
+```java
+[Deck - Micro-Economics]
+  > pptx -y -cs 1
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with steelblue background and silver text.
+// ------------------------------------------------------------
+```
+
+```java
+[Deck - Micro-Economics]
+  > pptx -y -oc lightblue darkred
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Original Colors,
+//   with lightblue background and darkred text.
+// ------------------------------------------------------------
+```
+
+
 
 ### Exits Deck Mode: `done`
 
@@ -1055,6 +1131,22 @@ user can choose from using the option `-cs 1`. [See below for the default color 
 There is also the option to choose your own colors for background and text from the provided colors using the option
 `-oc <bg color> <txt color>`. [See below for the colors available](#original-colors-available)
 
+#### Example
+The following is an example of the slides printed out after the following command.
+```java
+[Deck - Micro-Economics]
+  > pptx -y -cs 1
+// ------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with steelblue background and silver text.
+// ------------------------------------------------------------
+```
+
+##### Output
+![PPTX Example](images-ug/PPTX-Example.png)
+
+
+
 For details, check out:
 
 * [Normal Mode PowerPoint](#print-an-existing-deck-to-a-powerpoint-file-pptx)
@@ -1079,7 +1171,7 @@ Soome of the colors include:
 * Navy
 * Gray
 
-The complete list of colors can be found at [here] (https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html)
+The complete list of colors can be found [here](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html)
 
 
 
