@@ -17,7 +17,18 @@ import seedu.ecardnomics.command.normal.UntagCommand;
 import seedu.ecardnomics.command.normal.SearchCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
-import seedu.ecardnomics.exceptions.*;
+import seedu.ecardnomics.exceptions.BothOcAndCsException;
+import seedu.ecardnomics.exceptions.ColorsNotAvailException;
+import seedu.ecardnomics.exceptions.CsIndexFormatException;
+import seedu.ecardnomics.exceptions.CsIndexRangeException;
+import seedu.ecardnomics.exceptions.DeckRangeException;
+import seedu.ecardnomics.exceptions.EmptyInputException;
+import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.exceptions.InvalidOptionsException;
+import seedu.ecardnomics.exceptions.NoSeparatorException;
+import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.exceptions.DuplicateDeckException;
+import seedu.ecardnomics.exceptions.MultipleLabelInputException;
 import seedu.ecardnomics.powerpoint.PowerPoint;
 import seedu.ecardnomics.storage.LogStorage;
 
@@ -43,13 +54,13 @@ public class NormalParser extends Parser {
     }
 
     /**
-     * Check whether the index input from users is valid
+     * Check whether the index input from users is valid.
      *
      * @param arguments Argument from user input which is index
      * @return the index from user if it is valid
-     * @throws IndexFormatException
-     * @throws DeckRangeException
-     * @throws NumberTooBigException
+     * @throws IndexFormatException if index input is not a number
+     * @throws DeckRangeException if index is out of range
+     * @throws NumberTooBigException if the index is too big
      */
     @Override
     protected int getIndex(String arguments) throws IndexFormatException,

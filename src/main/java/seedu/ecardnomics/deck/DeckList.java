@@ -64,7 +64,7 @@ public class DeckList {
     }
 
     /**
-     * Returns the names of all decks in the deck list in ArrayList
+     * Returns the names of all decks in the deck list in ArrayList.
      *
      * @return ArrayList
      */
