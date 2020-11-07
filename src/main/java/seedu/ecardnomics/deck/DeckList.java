@@ -20,6 +20,7 @@ public class DeckList {
      */
     public void addDeck(Deck deck) {
         assert deck != null : "Do not add null object to list.";
+        assert !deckList.contains(deck.getName()) : "The deck list has duplicate decks.";
         deckList.add(deck);
     }
 
@@ -53,10 +54,28 @@ public class DeckList {
         return deckList.get(index);
     }
 
+    /**
+     * Returns the ArrayList of all decks available in the deck list.
+     *
+     * @return an ArrayList
+     */
     public ArrayList<Deck> getAllDecks() {
         return deckList;
     }
 
+    /**
+     * Returns the names of all decks in the deck list in ArrayList.
+     *
+     * @return ArrayList
+     */
+    public ArrayList<String> getAllNames() {
+        ArrayList<String> deckNameOfDecks = new ArrayList<>();
+        for (Deck deck: deckList) {
+            deckNameOfDecks.add(deck.getName());
+        }
+
+        return deckNameOfDecks;
+    }
 
     /**
      * Returns index of deck in deck list.
@@ -69,11 +88,24 @@ public class DeckList {
         return deckList.indexOf(deck);
     }
 
+    /**
+     * Returns a string including index and name, tag of all the deck available.
+     *
+     * @return A String representing index, name and tag
+     */
     @Override
     public String toString() {
         String output = "";
+        String offset = "   ";
         for (int i = 0; i < deckList.size(); i++) {
+            if (offset.length() <= (i / 10 + 2)) {
+                offset += " ";
+            }
             output += (i + 1) + ". " + deckList.get(i).getName();
+            if (deckList.get(i).getTag().size() !=  0) {
+                output += "\n";
+                output += offset + "Tags: " + deckList.get(i).getTagString();
+            }
             if (i != deckList.size() - 1) {
                 output += "\n";
             }

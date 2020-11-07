@@ -45,7 +45,9 @@ public class Deck {
         String tagString = "";
         for (int j = 0; j < tags.size(); j++) {
             tagString += tags.get(j);
-            tagString += " ";
+            if (j < tags.size() - 1) {
+                tagString += " | ";
+            }
         }
         return tagString;
     }
@@ -56,7 +58,9 @@ public class Deck {
 
     public void addTag(String[] newTags) {
         for (String tag: newTags) {
-            tags.add(tag);
+            if (!tags.contains(tag)) {
+                tags.add(tag);
+            }
         }
     }
 

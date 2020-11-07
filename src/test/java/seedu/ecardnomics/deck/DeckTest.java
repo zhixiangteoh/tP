@@ -84,7 +84,7 @@ class DeckTest {
         tags.add("anime");
         tags.add("unreal");
         Deck deck = initialiseDeck(2, tags);
-        String expectedOutput = "anime unreal ";
+        String expectedOutput = "anime | unreal";
         assertEquals(expectedOutput, deck.getTagString());
     }
 

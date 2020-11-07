@@ -17,8 +17,7 @@ public class Storage {
             "================================================================================";
     public static final String DECK_INDEX_REGEX = "deck\\s\\|\\s\\d+";
     public static final String DECK_NAME_REGEX = "name\\s\\|\\s.+";
-    public static final String TAGS_REGEX = "tags\\s\\|\\s.+";
-    public static final String SIZE_REGEX = "size\\s\\|\\s\\d+";
+    public static final String TAGS_REGEX = "tags\\s\\|.+";
     public static final String QUESTION_REGEX = "Q\\s\\|\\s.+";
     public static final String ANSWER_REGEX = "A\\s\\|\\s.+";
     public static final String DIVIDER_REGEX = "={10,}";
@@ -57,20 +56,18 @@ public class Storage {
             }
             line = scanner.nextLine();
             if (line.matches(TAGS_REGEX)) {
-                line = line.substring(line.indexOf("|") + 2);
-                String[] tags = line.split(" | ");
-                deck.addTag(tags);
+                line = line.substring(line.indexOf("|") + 2).trim();
+                if (!line.isBlank()) {
+                    String[] tags = line.split("\\|");
+                    for (int i = 0; i < tags.length; i++) {
+                        tags[i] = tags[i].trim();
+                    }
+                    deck.addTag(tags);
+                }
             } else {
                 continue;
             }
-            line = scanner.nextLine();
-            int deckSize = 0;
-            if (line.matches(SIZE_REGEX)) {
-                deckSize = Integer.parseInt(line.substring(7));
-            } else {
-                continue;
-            }
-            for (int i = 0; i < deckSize; i++) {
+            while (scanner.hasNext()) {
                 line = scanner.nextLine();
                 String question = null;
                 if (line.matches(QUESTION_REGEX)) {
@@ -109,8 +106,6 @@ public class Storage {
             fw.write("name | " + deck.getName());
             fw.write(System.lineSeparator());
             fw.write("tags | " + deck.getTagString());
-            fw.write(System.lineSeparator());
-            fw.write("size | " + deck.size());
             fw.write(System.lineSeparator());
             for (int j = 0; j < deck.size(); j++) {
                 fw.write("Q | " + deck.get(j).getQuestion());

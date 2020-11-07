@@ -25,7 +25,7 @@ See also: [User Guide](./UserGuide.md) | [Releases](https://github.com/AY2021S1-
   * [Exceptions](#exceptions)
 - [Implementation - Features](#implementation---features)
   * [Print to PowerPoint SlideShow](#print-to-powerpoint-slideshow)
-  * [Pretty Printing (Wei Siew)](#pretty-printing--wei-siew-)
+  * [Pretty Printing](#pretty-printing--wei-siew-)
     + [Design Consideration:](#design-consideration-)
   * [Tags for grouping and searching decks](#tags-for-grouping-and-searching-decks)
   * [Game Mode](#game-mode)
@@ -290,15 +290,6 @@ infinitely as it would never be able to fit the word on any line.
 
 Take note that infinite loops can still occur if *`prettyPrintFormatter()`* is called with offset >= `lineLength`
 
-#### Design Consideration:
-
-In order to maximize `usableLength`,
-`toString(boolean isQuestion, int offset)` is designed to take
-parameter `offset` instead of hardcoding `offset` to be
-`"2147483647. ".length()` which is the maximum possible index when
-listing flashcards. As a result, flashcards with different number of
-digits in the index will be misaligned when listing flashcards.
-
 ### Tags for grouping and searching decks
 The purpose of this feature is to provide a mean to group the decks based on their subjects
 and search for relevant decks related to one or more relevant subjects in a robust way. Each created deck will
@@ -434,9 +425,14 @@ Flashcard application that allows students to quickly create new flashcards and 
 |v2.0|student|have a system that can categorise material into different topics|quickly revise all the content for a topic when studying for an exam|
 |v2.0|hardworking student|have a studying system that can help me memorise content in a non-traditional manner|remember all the facts during an exam through active recall|
 |v2.0|busy student|have my notes available outside of CLI|study while on the go and not waste any time
+
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+* The program should not attempt to save user data to disk if it is not given permission by the user.
+* The program should work on a machine that has Java 11 installed.
+* The error messages should be easy to understand even if the reader does not have knowledge about programming.
+* The program should not terminate unexpectedly.
+* The program is not expected to guarantee that modifications to data file will be during execution will be retained.
 
 ## Glossary
 
@@ -444,4 +440,16 @@ Flashcard application that allows students to quickly create new flashcards and 
 
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+Starting the program:
+1. Download the `ecardnomics.jar` file and copy it into an empty folder where read, write and execute permissions
+are allowed.
+1. Run the command `java -jar ecardnomics.jar` in a command line terminal to start the program.
+
+Saving data to disk:
+1. After starting the program, the directory "data" should be created.
+   1. After program terminates, verify that the file "data/deckList" exists and contains the data supplied during
+   program execution.
+1. During execution, the directory "log" should be created.
+1. If a pptx command is executed, the "pptx" directory should be created.
+   1. After the command is executed, verfiy that "pptx/<file name>" exists for the deck that was converted to
+   PowerPoint format.
