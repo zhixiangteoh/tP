@@ -21,32 +21,26 @@ class FlashCardTest {
     @Test
     void testToString_default_wrappedLine() {
         String flashCardString = "Question: "
-                + "Ok, long question let's goooooooo! Ahhhhhhhhhhhhh. " + System.lineSeparator()
-                + LABEL_PAD + "Make this question veryyyyyy longggg!" + System.lineSeparator()
-                + "Answer:   " + "Ahhhhhhhhhhhhhhhhhhhhhhhh!!!!!!!!!!!!!! Get an "
-                + System.lineSeparator()
-                + LABEL_PAD + "even longer answer. How many lines will this "
-                + System.lineSeparator()
-                + LABEL_PAD + "answer span? I do not know. Maybe we can get it to "
-                + System.lineSeparator()
-                + LABEL_PAD + "three lines? Perhaps. Anyway span reminds me of "
-                + System.lineSeparator()
-                + LABEL_PAD + "linear algebra.";
+                + "Ok, long question let's goooooooo! Ahhhhhhhhhhhhh. Make this question " + System.lineSeparator()
+                + LABEL_PAD + "veryyyyyy longggg!" + System.lineSeparator()
+                + "Answer:   " + "Ahhhhhhhhhhhhhhhhhhhhhhhh!!!!!!!!!!!!!! Get an even longer answer. How "
+                + System.lineSeparator() + LABEL_PAD
+                + "many lines will this answer span? I do not know. Maybe we can get it "
+                + System.lineSeparator() + LABEL_PAD
+                + "to three lines? Perhaps. Anyway span reminds me of linear algebra.";
         assertEquals(flashCardString, longFlashCard.toString());
     }
 
     @Test
     void testToString_default_wrapLongWord() {
-        String flashCardString = "Question: Do you have " + System.lineSeparator()
-                + LABEL_PAD + "Pneumonoultramicroscopicsilicovolcanoconiosis?"
+        String flashCardString = "Question: Do you have Pneumonoultramicroscopicsilicovolcanoconiosis?"
                 + System.lineSeparator() + "Answer:   Try to enter the loop so create an answer with "
-                + System.lineSeparator() + LABEL_PAD + "more than 2 lines: "
-                + "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + System.lineSeparator() + LABEL_PAD
-                + "aaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhh" + System.lineSeparator()
-                + LABEL_PAD + "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
-                + System.lineSeparator() + LABEL_PAD + "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
-                + "hhhhhhhhhhhhhhhhhhh" + System.lineSeparator() + LABEL_PAD
-                + "hhhhhhhhhhhhhSaveMeeeeeeeeeeeeeeee";
+                + "more than 2 lines: Aaaa" + System.lineSeparator() + LABEL_PAD
+                + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhhhhhhhhhhhhhhhhh"
+                + System.lineSeparator() + LABEL_PAD + "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+                + "hhhhhhhhhhhhh" + System.lineSeparator() + LABEL_PAD
+                + "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhSaveMeeeeeeeeeeeeeee"
+                + System.lineSeparator() + LABEL_PAD + "e";
         assertEquals(flashCardString, longWordFlashCard.toString());
     }
 
@@ -61,17 +55,13 @@ class FlashCardTest {
     @Test
     void testToString_withType_wrappedLine() {
         String flashCardQn = "Question: "
-                + "Ok, long question let's goooooooo! Ahhhhhhhhhhhhh. " + System.lineSeparator()
-                + LABEL_PAD + "Make this question veryyyyyy longggg!";
+                + "Ok, long question let's goooooooo! Ahhhhhhhhhhhhh. Make this question " + System.lineSeparator()
+                + LABEL_PAD + "veryyyyyy longggg!";
         String flashCardAns = "Answer:   "
-                + "Ahhhhhhhhhhhhhhhhhhhhhhhh!!!!!!!!!!!!!! Get an " + System.lineSeparator()
-                + LABEL_PAD + "even longer answer. How many lines will this "
+                + "Ahhhhhhhhhhhhhhhhhhhhhhhh!!!!!!!!!!!!!! Get an even longer answer. How " + System.lineSeparator()
+                + LABEL_PAD + "many lines will this answer span? I do not know. Maybe we can get it "
                 + System.lineSeparator()
-                + LABEL_PAD + "answer span? I do not know. Maybe we can get it to "
-                + System.lineSeparator()
-                + LABEL_PAD + "three lines? Perhaps. Anyway span reminds me of "
-                + System.lineSeparator()
-                + LABEL_PAD + "linear algebra.";
+                + LABEL_PAD + "to three lines? Perhaps. Anyway span reminds me of linear algebra.";
         assertEquals(flashCardQn, longFlashCard.toString(true, 0));
         assertEquals(flashCardAns, longFlashCard.toString(false, 0));
     }
@@ -80,16 +70,17 @@ class FlashCardTest {
     void testToString_withType_wrapLongWord() {
         String largeSerialNumber = Integer.MAX_VALUE + ". ";
         String indexPad = " ".repeat(largeSerialNumber.length());
-        String flashCardQn = largeSerialNumber + "Question: Do you have Pneumonoultramicroscopicsi"
-                + System.lineSeparator() + indexPad + LABEL_PAD + "licovolcanoconiosis?";
-        String flashCardAns = indexPad + "Answer:   Try to enter the loop so create an "
-                + System.lineSeparator() + indexPad + LABEL_PAD + "answer with more than 2 lines: Aaaaaaa"
-                + System.lineSeparator() + indexPad + LABEL_PAD + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                + System.lineSeparator() + indexPad + LABEL_PAD + "aaaaaaaaaahhhhhhhhhhhhhhhhhhhhhhhhhhhh"
-                + System.lineSeparator() + indexPad + LABEL_PAD + "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
-                + System.lineSeparator() + indexPad + LABEL_PAD + "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
-                + System.lineSeparator() + indexPad + LABEL_PAD + "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhSav"
-                + System.lineSeparator() + indexPad + LABEL_PAD + "eMeeeeeeeeeeeeeeee";
+        String flashCardQn = largeSerialNumber + "Question: Do you have "
+                + "Pneumonoultramicroscopicsilicovolcanoconiosis?";
+        String flashCardAns = indexPad + "Answer:   Try to enter the loop so create an answer with more than 2 "
+                + System.lineSeparator() + indexPad + LABEL_PAD + "lines: Aaaaaaa"
+                + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                + System.lineSeparator() + indexPad + LABEL_PAD + "aaaahhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+                + "hhhhhhhhhhhhhhhhhhhhhhhhh"
+                + System.lineSeparator() + indexPad + LABEL_PAD + "hhhhhhhhhhhhhhhhhhhhhhhhhh"
+                + "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+                + System.lineSeparator() + indexPad + LABEL_PAD + "hhhhhhhhhhhhhhhhhhhhhhhhhhhSav"
+                + "eMeeeeeeeeeeeeeeee";
         assertEquals(flashCardQn, largeSerialNumber
                 + longWordFlashCard.toString(true, largeSerialNumber.length()));
         assertEquals(flashCardAns, longWordFlashCard.toString(false, largeSerialNumber.length()));
