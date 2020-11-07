@@ -154,7 +154,7 @@ public class DeckParser extends Parser {
     }
 
     protected Command prepareListCommand(String arguments) throws InvalidListCommandException {
-        if (arguments.trim().equals("/ans")) {
+        if (arguments.trim().equals("/ans") || arguments.trim().isBlank()) {
             return new ListCommand(deck, arguments);
         }
         throw new InvalidListCommandException();
