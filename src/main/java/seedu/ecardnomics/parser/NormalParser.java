@@ -29,7 +29,6 @@ import seedu.ecardnomics.exceptions.NoSeparatorException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
 import seedu.ecardnomics.powerpoint.ColorOption;
 import seedu.ecardnomics.exceptions.DuplicateDeckException;
-import seedu.ecardnomics.exceptions.MultipleLabelInputException;
 import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.ArrayList;
@@ -286,7 +285,7 @@ public class NormalParser extends Parser {
      * @return PowerPointCommand to be executed in the Main
      * @throws Exception when arguments (index and options) are not valid
      */
-    private PowerPointCommand preparePptxDeck(String arguments) throws Exception {
+    private PowerPointCommand preparePptxCommand(String arguments) throws Exception {
         Color bgColor = null;
         Color txtColor = null;
         String bgColorString = "";
@@ -466,7 +465,7 @@ public class NormalParser extends Parser {
         // Create new PowerPoint
         case Ui.PPTX:
             logger.log(Level.INFO, "User issued command to create a PowerPoint.");
-            return preparePptxDeck(arguments);
+            return preparePptxCommand(arguments);
         // Search
         case Ui.SEARCH:
             logger.log(Level.INFO, "User issued command to search for decks.");

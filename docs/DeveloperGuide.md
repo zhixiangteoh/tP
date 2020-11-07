@@ -245,6 +245,18 @@ The following are the Classes/ Enum of the third part package `org.apache.poi.xs
 * `XSLFTextParagraph` - Class representing a paragraph of text within a shape
 * `XSLFTextRun` - Class representing the properties of the text within a paragraph
 
+
+The 3 modes of Color Selection, `DEFAULT`, `COLOR_SCHEME` and `ORIGINAL_COLOR` are stored in the enum `ColorOption`.
+
+Each instance of `PowerPoint` has an element of the enum `ColorOption`, `colorOpt`, which decides which of the outputs 
+to print back to the user. `colorOpt` takes on the different values depending on which constructor is used to create the 
+`PowerPoint` instance.
+* `PowerPoint(deck)` - `DEFAULT`
+* `PowerPoint(deck, csIndex)` - `COLOR_SCHEME`
+* `PowerPoint(deck, bgColorString, txtColorString, bgColor, txtColor)` - `ORIGINAL_COLOR`
+
+
+
 ### Pretty Printing
 
 The purpose of this feature is to improve the readability of the command line text output for the user, in particular,
