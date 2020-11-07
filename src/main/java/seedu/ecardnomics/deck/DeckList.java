@@ -53,10 +53,23 @@ public class DeckList {
         return deckList.get(index);
     }
 
+    /**
+     * Returns the ArrayList of all decks available in the deck list.
+     *
+     * @return an ArrayList
+     */
     public ArrayList<Deck> getAllDecks() {
         return deckList;
     }
 
+    public ArrayList<String> getAllNames() {
+        ArrayList<String> deckNameOfDecks = new ArrayList<>();
+        for (Deck deck: deckList) {
+            deckNameOfDecks.add(deck.getName());
+        }
+
+        return deckNameOfDecks;
+    }
 
     /**
      * Returns index of deck in deck list.
@@ -69,6 +82,11 @@ public class DeckList {
         return deckList.indexOf(deck);
     }
 
+    /**
+     * Returns a string including index and name of all the deck available.
+     *
+     * @return A String
+     */
     @Override
     public String toString() {
         String output = "";

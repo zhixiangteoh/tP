@@ -17,16 +17,7 @@ import seedu.ecardnomics.command.normal.UntagCommand;
 import seedu.ecardnomics.command.normal.SearchCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
-import seedu.ecardnomics.exceptions.BothOcAndCsException;
-import seedu.ecardnomics.exceptions.ColorsNotAvailException;
-import seedu.ecardnomics.exceptions.CsIndexFormatException;
-import seedu.ecardnomics.exceptions.CsIndexRangeException;
-import seedu.ecardnomics.exceptions.DeckRangeException;
-import seedu.ecardnomics.exceptions.EmptyInputException;
-import seedu.ecardnomics.exceptions.IndexFormatException;
-import seedu.ecardnomics.exceptions.InvalidOptionsException;
-import seedu.ecardnomics.exceptions.NoSeparatorException;
-import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.exceptions.*;
 import seedu.ecardnomics.powerpoint.PowerPoint;
 import seedu.ecardnomics.storage.LogStorage;
 
@@ -51,6 +42,15 @@ public class NormalParser extends Parser {
         this.deckList = deckList;
     }
 
+    /**
+     * Check whether the index input from users is valid
+     *
+     * @param arguments Argument from user input which is index
+     * @return the index from user if it is valid
+     * @throws IndexFormatException
+     * @throws DeckRangeException
+     * @throws NumberTooBigException
+     */
     @Override
     protected int getIndex(String arguments) throws IndexFormatException,
             DeckRangeException, NumberTooBigException {
@@ -172,18 +172,28 @@ public class NormalParser extends Parser {
      * @param arguments String that represents the name of deck to be created
      * @return Reference to the deck created
      * @throws EmptyInputException if no name is supplied for the deck
+     * @throws DuplicateDeckException if duplicated name is entered
      */
-    private Deck prepareNewDeck(String arguments) throws EmptyInputException {
+    private Deck prepareNewDeck(String arguments) throws EmptyInputException, DuplicateDeckException {
         logger.log(Level.INFO, "Logging method prepareNewDeck() in NormalParser.");
         if (arguments.trim().isEmpty()) {
             logger.log(Level.WARNING, "User did not supply name when creating a new deck.");
             throw new EmptyInputException();
         }
 
+        if (deckList.getAllNames().contains(arguments.trim())) {
+            throw new DuplicateDeckException();
+        }
+
         if (arguments.contains("/tag")) {
             ArrayList<String> tagsList = new ArrayList<>();
             String[] nameAndTags = arguments.split("/tag", 2);
             String name = nameAndTags[0].trim();
+
+            if (deckList.getAllNames().contains(name)) {
+                throw new DuplicateDeckException();
+            }
+
             String[] tags = nameAndTags[1].trim().split(" ");
             for (String tag: tags) {
                 tagsList.add(tag.trim());
