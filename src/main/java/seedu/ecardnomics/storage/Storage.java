@@ -58,7 +58,7 @@ public class Storage {
             line = scanner.nextLine();
             if (line.matches(TAGS_REGEX)) {
                 line = line.substring(line.indexOf("|") + 2);
-                String[] tags = line.split(" | ");
+                String[] tags = line.split("|");
                 deck.addTag(tags);
             } else {
                 continue;

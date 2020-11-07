@@ -211,7 +211,6 @@ public class NormalParser extends Parser {
         ArrayList<String> tagsList = new ArrayList<>();
         assert (arguments.contains("/tag ")) : "User did enter tag label.";
         String[] nameAndTags = arguments.split("/tag ", 2);
-        System.out.println(nameAndTags.length);
 
         if (nameAndTags.length != 2) {
             throw new EmptyInputException();
@@ -232,9 +231,9 @@ public class NormalParser extends Parser {
         }
         String[] tags = nameAndTags[1].trim().split(" ");
         for (String tag: tags) {
-            if (tag.equals("/tag")) {
-                throw new MultipleLabelInputException();
-            }
+//            if (tag.equals("/tag")) {
+//                throw new MultipleLabelInputException();
+//            }
             tagsList.add(tag.trim());
         }
         return new Deck(name, tagsList);
