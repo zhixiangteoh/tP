@@ -20,6 +20,7 @@ public class DeckList {
      */
     public void addDeck(Deck deck) {
         assert deck != null : "Do not add null object to list.";
+        assert !deckList.contains(deck.getName()) : "The deck list has duplicate decks.";
         deckList.add(deck);
     }
 
@@ -62,6 +63,11 @@ public class DeckList {
         return deckList;
     }
 
+    /**
+     * Returns the names of all decks in the deck list in ArrayList
+     *
+     * @return ArrayList
+     */
     public ArrayList<String> getAllNames() {
         ArrayList<String> deckNameOfDecks = new ArrayList<>();
         for (Deck deck: deckList) {

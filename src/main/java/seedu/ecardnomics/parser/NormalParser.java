@@ -174,7 +174,7 @@ public class NormalParser extends Parser {
      * @throws EmptyInputException if no name is supplied for the deck
      * @throws DuplicateDeckException if duplicated name is entered
      */
-    private Deck prepareNewDeck(String arguments) throws EmptyInputException, DuplicateDeckException {
+    private Deck prepareNewDeck(String arguments) throws Exception {
         logger.log(Level.INFO, "Logging method prepareNewDeck() in NormalParser.");
         if (arguments.trim().isEmpty()) {
             logger.log(Level.WARNING, "User did not supply name when creating a new deck.");
@@ -185,23 +185,45 @@ public class NormalParser extends Parser {
             throw new DuplicateDeckException();
         }
 
-        if (arguments.contains("/tag")) {
-            ArrayList<String> tagsList = new ArrayList<>();
-            String[] nameAndTags = arguments.split("/tag", 2);
-            String name = nameAndTags[0].trim();
-
-            if (deckList.getAllNames().contains(name)) {
-                throw new DuplicateDeckException();
-            }
-
-            String[] tags = nameAndTags[1].trim().split(" ");
-            for (String tag: tags) {
-                tagsList.add(tag.trim());
-            }
-            return new Deck(name, tagsList);
+        String argumentsWithSpace = arguments + " ";
+        if (argumentsWithSpace.contains("/tag ")) {
+            return prepareNewDeckWithTags(argumentsWithSpace);
         } else {
             return new Deck(arguments);
         }
+    }
+
+    private Deck prepareNewDeckWithTags(String arguments) throws Exception {
+        ArrayList<String> tagsList = new ArrayList<>();
+        assert (arguments.contains("/tag ")) : "User did enter tag label.";
+        String[] nameAndTags = arguments.split("/tag ", 2);
+        System.out.println(nameAndTags.length);
+
+        if (nameAndTags.length != 2) {
+            throw new EmptyInputException();
+        }
+
+        assert (nameAndTags.length == 2) : "Input should contain name and tags.";
+
+        String name = nameAndTags[0].trim();
+        if (name.isEmpty()) {
+            throw new EmptyInputException();
+        }
+        if (deckList.getAllNames().contains(name)) {
+            throw new DuplicateDeckException();
+        }
+
+        if (nameAndTags[1].trim().isEmpty()) {
+            throw new EmptyInputException();
+        }
+        String[] tags = nameAndTags[1].trim().split(" ");
+        for (String tag: tags) {
+            if (tag.equals("/tag")) {
+                throw new MultipleLabelInputException();
+            }
+            tagsList.add(tag.trim());
+        }
+        return new Deck(name, tagsList);
     }
 
     /**
