@@ -121,7 +121,9 @@ public class NormalParser extends Parser {
      * @throws Exception if index is invalid or empty arguments
      */
     private Command prepareTagCommand(String arguments) throws Exception {
-        String[] idAndNewTags = arguments.split("/tag");
+        String argumentsWithSpace = arguments + " ";
+        String[] idAndNewTags = argumentsWithSpace.split("/tag", 2);
+
         if (idAndNewTags.length < 2) {
             logger.log(Level.WARNING, "User did not provide /tag when adding tag.");
             throw new NoSeparatorException();
@@ -147,7 +149,8 @@ public class NormalParser extends Parser {
      * @throws Exception if index is invalid or empty arguments
      */
     private Command prepareUntagCommand(String arguments) throws Exception {
-        String[] idAndRemovedTags = arguments.split("/tag");
+        String argumentsWithSpace = arguments + " ";
+        String[] idAndRemovedTags = argumentsWithSpace.split("/tag ", 2);
 
         if (idAndRemovedTags.length < 2) {
             logger.log(Level.WARNING, "User did not provide /tag when removing tags.");

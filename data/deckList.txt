@@ -42,3 +42,8 @@ A | Access level modifiers determine whether other classes can use a particular 
 Q | How do you represent for and while loops in a sequence diagram?
 A | Using the "loop" notation.
 ================================================================================
+deck | 3
+name | Tang /cd c
+tags | 
+size | 0
+================================================================================
