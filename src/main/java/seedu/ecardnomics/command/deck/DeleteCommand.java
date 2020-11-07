@@ -1,5 +1,6 @@
 package seedu.ecardnomics.command.deck;
 
+import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.deck.Deck;
 
 public class DeleteCommand extends DeckCommand {

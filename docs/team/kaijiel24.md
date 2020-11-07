@@ -19,8 +19,7 @@ the original answer at the same time. The program prompts the user on whether to
 game. 
 
 ### Summary of Contributions
-The following are the basic and additional features that I have worked on:
-Basic features
+v1.0:
 * Run Normal mode and run Deck mode in Main
 * Normal Parser 
 * Deck Parser
@@ -30,13 +29,41 @@ Basic features
 * Getting index from user input to be used in commands which require an index (such as `delete`, `edit`,`tag`)
 * Handling Exceptions for user input index (such as number too big, index format error)
 
-Additional features
+v2.0
 * Powerpoint command 
     * This feature allows the user to print any deck to a PowerPoint Slide (.pptx file)
     * The target for this could be students who wish to use the flash cards they have created on other platforms such
         their mobile phones or test themselves outside of the CLI. 
     * This command can be called from both Normal mode (need to specify which deck to use) and Deck mode (do not 
-        need to specify, automatically uses the current deck)
-* 'Force Yes' option for commands that have prompt for confirmation (such as `delete` and `ppt`)
+        need to specify, automatically uses the current deck).
+  
+* 'Force Yes' option for commands that have prompt for confirmation (such as `delete` and `pptx`)
     * This feature allows fast-typist to directly enter a one-line command by adding the option `-y` after the commands
         to by pass the prompt, and to be more efficient in their use of the program.
+        
+v2.1
+* Powerpoint command choose text and background color
+    * Added two options to `pptx` command that allows user to choose their preferred background and text color for the 
+        PowerPoint slides that are created. 
+        * Default *Color Schemes* `-cs` 
+            * If the user does not know what specific colors to use, this option gives provides 
+                the 10 default color combinations to choose from.
+            * The 10 color combinations can be found in [User Guide](../UserGuide.md#default-color-schemes).
+            * The color combinations selected complement each other so that the user can have an easy time reading the
+                text while keeping things interesting (away from a simple black on white background).
+            * The format for the option is `-cs  <index of color scheme>`
+            * There are exceptions thrown if the index is either not within the range [1,10], `CsIndexRangeException` or 
+                not in the correct format, `CsIndexFormatException`.
+        * *Original Color* selection 
+            * If the user has a specific color combination preference, this option allows provides the flexibility to 
+                create a truly unique PowerPoint slide.
+            * There are up to 148 different colours to choose from which can be found at this [site](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html#ALICEBLUE)
+            * The format for this option is `-oc bg color> <txt color>`
+            * There is an exception thrown, `ColorsNotAvailException` when the at least one of the colors chosen is not 
+                a valid color.
+        
+    * In each command, only either of the options can be used to select the colors so if both options are included 
+        at the same time, there will be an exception thrown, `BothCsAndOcException`.
+    * Any other options entered starting with `-` will trigger the exception, `InvalidOptionException`.
+    
+    

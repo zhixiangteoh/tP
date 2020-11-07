@@ -53,6 +53,13 @@ public class DeckParser extends Parser {
             isFlashCardDeleted = Ui.getDeletedFlashCardConfirmation(deck.get(flashCardID).getQuestion());
         }
         logger.log(Level.INFO, "returning DeleteCommand object");
+
+        if (isFlashCardDeleted) {
+            Ui.printFlashCardDeletedLine(deck.get(flashCardID).getQuestion());
+        }
+
+        Ui.printDashLines();
+
         return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
     }
 

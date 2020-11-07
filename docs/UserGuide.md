@@ -333,9 +333,9 @@ Enters the Deck Mode to edit an existing deck. The `edit` command expects one ar
 ```java
 [Normal]
   > edit 1
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are now in Deck Mode, editing: [1] market-failure
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Deck - market-failure]
   >
 ```
@@ -361,7 +361,7 @@ Starts Game Mode for an existing deck. The `start` command expects one argument 
 ```java
 [Normal]
   > start 1
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Welcome to Game Mode!
 //
 // In this mode, you test your knowledge against...
@@ -369,7 +369,7 @@ Starts Game Mode for an existing deck. The `start` command expects one argument 
 //                                      ...Have fun!
 //
 // Game Mode is started for: [1] market-failure
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is market failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   >
@@ -392,48 +392,84 @@ More details about the colors for original colors and color schemes available ca
 #### Format
 
 ```java
-// ------------------------------------------------------------
-[Deck - `name of deck`]
+// --------------------------------------------------------------------------------
+[Normal]
   > pptx <index of deck>
 // Do you want to print `name of deck` deck to PowerPoint? [y/n] yes
 // Response should be 'y' or 'n'!
 //   > y
-// ------------------------------------------------------------
-// `name of deck` has been created as PowerPoint.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// 'name of deck' has been created as PowerPoint with default,
+//   black background and white text
+// --------------------------------------------------------------------------------
 ```
 
 ```java
-// ------------------------------------------------------------
-[Deck - `name of deck`]
+// --------------------------------------------------------------------------------
+[Normal]
   > pptx <index of deck> -y
-// ------------------------------------------------------------
-// `name of deck` has been created as PowerPoint.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// 'name of deck' been created as PowerPoint with default,
+//   black background and white text
+// --------------------------------------------------------------------------------
+```
+```java
+[Normal]
+  > pptx <index of deck> -y -cs <index of cs>
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with <bg color> background and <txt color> text
+// --------------------------------------------------------------------------------
+```
+
+```java
+[Normal]
+  > pptx <index of deck> -y -oc <bg color> <txt color>
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Original Colors,
+//   with <bg color> background and <txt color> text
+// --------------------------------------------------------------------------------
 ```
 
 #### Examples
-
 ```java
-------------------------------------------------------------
-[Deck - Micro-Economics]
+[Normal]
   > pptx 1
-// Do you want to print Micro-Economics deck to PowerPoint? [y/n]
-//   > yes
-// Response should be 'y' or 'n'
+// Do you want to print `name of deck` deck to PowerPoint? [y/n] yes
+// Response should be 'y' or 'n'!
 //   > y
-// ------------------------------------------------------------
-// Micro-Economics has been created as PowerPoint.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint with default,
+//   black background and white text
+// --------------------------------------------------------------------------------
 ```
 
 ```java
-// ------------------------------------------------------------
-[Deck - Micro-Economics]
+[Normal]
   > pptx 1 -y
-// ------------------------------------------------------------
-// Micro-Economics has been created as PowerPoint.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint with default,
+//   black background and white text
+// --------------------------------------------------------------------------------
+```
+
+```java
+[Normal]
+  > pptx 1 -y -cs 1
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with steelblue background and silver text
+// --------------------------------------------------------------------------------
+```
+
+```java
+[Normal]
+  > pptx 1 -y -oc lightblue darkred
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Original Colors,
+//   with lightblue background and darkred text
+// --------------------------------------------------------------------------------
 ```
 
 
@@ -446,7 +482,7 @@ Displays the list of all commands in Normal Mode.
 ```java
 [Normal]
   > help
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // eCardnomics.
 // Normal Mode.
 //
@@ -467,7 +503,7 @@ Displays the list of all commands in Normal Mode.
 //
 // Options:
 //   --version      Show version.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ## Features - Deck Mode
@@ -500,16 +536,16 @@ Equivalent One-line format:
 ```java
 [Deck - market failure]
      > add 
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are now adding a FlashCard to: market failure
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Enter question:
      > define market failure
 // Enter answer:
      > Market failure is the economic situation defined by an inefficient distribution of goods 
 and services in the free market
 // FlashCard successfully added! 
-// ------------------------------------------------------------ 
+// -------------------------------------------------------------------------------- 
 ```
 
 ### List all the flashcards in the deck: `list`
@@ -520,23 +556,23 @@ to show all the questions, and their respective answers.
 ```java
 [Deck - `name of deck`]
   > list
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are now viewing deck: `name of deck`
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // 1. Question: <question 1>
 // 
 // 2. Question: <question 2>
 //
 // 3. Question: <question 3>
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ```java
 [Deck - `name of deck`]
   > list /ans
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are now viewing deck: `name of deck`
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // 1. Question: <question 1>
 //    Answer:   <answer 1>
 //
@@ -545,7 +581,7 @@ to show all the questions, and their respective answers.
 //
 // 3. Question: <question 3>
 //    Answer:   <answer 3>
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 #### Examples
@@ -553,24 +589,24 @@ List without answers:
 ```java
 [Deck - market-failure]
   > list
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are now viewing deck: market-failure
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // 1. Question: define market failure
 //
 // 2. Question: What is a public good?
 //
 // 3. Question: What is a merit good?
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 List with answers:
 ```java
 [Deck - market-failure]
   > list /ans
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are now viewing deck: market-failure
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // 1. Question: define market failure
 //    Answer:   Market failure is the economic situation
 //              defined by an inefficient distribution of goods
@@ -582,7 +618,7 @@ List with answers:
 // 3. Question: What is a merit good?
 //    Answer:   A good that people underestimates the benefits
 //              of
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ### Delete an existing Flash Card: `delete`
@@ -597,7 +633,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
   > delete 1
 // Do you want to delete the following flash card? [y/n] ?
 //   '<question 1>' n
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ```java
@@ -605,10 +641,10 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
   > delete 2
 // Do you want to delete the following flash card? [y/n] ?
 //   '<question 2>' y
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // The following flash card has been deleted:
 //   '<question 2>'
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 > Note: `name of deck` is a placeholder for the name of the current deck. The second
@@ -628,7 +664,7 @@ Deciding not to delete:
   > delete 1
 // Do you want to delete the following flash card? [y/n]
 //   `define market failure?` n
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Deck - market-failure]
   > 
 ```
@@ -639,10 +675,10 @@ Confirming a delete:
   > delete 2
 // Do you want to delete the following flash card? [y/n] ?
 //   'What is a public good?' y
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // The following flash card has been deleted:
 //   'What is a public good?'
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Deck - market-failure]
   > 
 ```
@@ -655,10 +691,10 @@ Entering an invalid response:
 //   'What is a public good?' definitely
 // Response should be 'y' or 'n'!
 //   > y
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // The following flash card has been deleted:
 //   'What is a public good?'
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ### Update an existing Flash Card: `update`
@@ -697,9 +733,9 @@ Updating both the question and answer:
 // New Answer:
   > Free-loading gives a benefit to the free-loader but there is a cost to the people taken advantage of.
     Free-riding is an advantage to the free-rider without imposing a cost on others or society.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Question and answer updated.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 Updating question only:
@@ -712,9 +748,9 @@ Updating question only:
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer:
   > 
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Question updated.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 Updating answer only:
@@ -727,9 +763,9 @@ Updating answer only:
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > Economic situation where distribution of goods and services in the free market is inefficient
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Answer updated.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 No updates:
@@ -742,9 +778,9 @@ No updates:
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > 
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Original question and answer retained.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ### Game Mode: `start`
@@ -764,14 +800,14 @@ Starts Game Mode for the current deck.
 
 ```java
 // You are now in Deck Mode, editing: [1] market-failure
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Deck - market-failure]
   > ...
 // ...
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Deck - market-failure]
   > start
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Welcome to Game Mode!
 //
 // In this mode, you test your knowledge against...
@@ -779,7 +815,7 @@ Starts Game Mode for the current deck.
 //                                      ...Have fun!
 //
 // Game Mode is started for: [1] market-failure
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is market failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   >
@@ -799,46 +835,86 @@ More details about the colors for original colors and color schemes available ca
 > The `pptx` command can also be entered from within Normal Mode.
  
 #### Format
+``
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > pptx
-// Do you want to print `name of deck` deck to PowerPoint? [y/n] <y/n>
-// ------------------------------------------------------------
-// `name of deck` has been created as PowerPoint.
-// ------------------------------------------------------------
+// Do you want to print 'name of deck' deck to PowerPoint? [y/n] yes
+// Response should be 'y' or 'n'!
+//   > y
+// --------------------------------------------------------------------------------
+// 'name of deck' has been created as PowerPoint with default,
+//   black background and white text
+// --------------------------------------------------------------------------------
 ```
 
-> Above displays the result for the case when user enters `y`.
+```java
+[Deck - 'name of deck']
+  > pptx -y
+// --------------------------------------------------------------------------------
+// 'name of deck' been created as PowerPoint with default,
+//   black background and white text
+// --------------------------------------------------------------------------------
+```
+```java
+[Deck - 'name of deck']
+  > pptx -y -cs <index of cs>
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with <bg color> background and <txt color> text
+// --------------------------------------------------------------------------------
+```
 
 ```java
-[Deck - `name of deck`]
-  > pptx -y
-// ------------------------------------------------------------
-// `name of deck` has been created as PowerPoint.
-// ------------------------------------------------------------
+[Deck - 'name of deck']
+  > pptx -y -oc <bg color> <txt color>
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Original Colors,
+//   with <bg color> background and <txt color> text
+// --------------------------------------------------------------------------------
 ```
 
 #### Examples
 
 ```java
 [Deck - Micro-Economics]
-  > pptx
-// Do you want to print Micro-Economics deck to PowerPoint? [y/n] yes
-// Response should be 'y' or 'n'
-//   > y
-// ------------------------------------------------------------
-// Micro-Economics has been created as PowerPoint.
-// ------------------------------------------------------------
+  > pptx 
+// Do you want to print Micro-Economics deck to PowerPoint? [y/n] y
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint with default,
+//   black background and white text.
+// --------------------------------------------------------------------------------
 ```
 
 ```java
 [Deck - Micro-Economics]
   > pptx -y
-// ------------------------------------------------------------
-// Micro-Economics has been created as PowerPoint.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint with default,
+//   black background and white text.
+// --------------------------------------------------------------------------------
 ```
+
+```java
+[Deck - Micro-Economics]
+  > pptx -y -cs 1
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with steelblue background and silver text.
+// --------------------------------------------------------------------------------
+```
+
+```java
+[Deck - Micro-Economics]
+  > pptx -y -oc lightblue darkred
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Original Colors,
+//   with lightblue background and darkred text.
+// --------------------------------------------------------------------------------
+```
+
+
 
 ### Exits Deck Mode: `done`
 
@@ -849,9 +925,9 @@ Returns to Normal Mode.
 ```java
 [Deck - market-failure]
   > done
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are back in Normal Mode
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Normal]
   >
 ```
@@ -865,7 +941,7 @@ Displays the list of all commands in Deck Mode.
 ```java
 [Deck - market-failure]
   > help
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // eCardnomics.
 // Deck Mode.
 // 
@@ -882,7 +958,7 @@ Displays the list of all commands in Deck Mode.
 //
 // Options:
 //   --version      Show version.
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ## Features - Game Mode
@@ -904,7 +980,7 @@ Then, the correct answer is displayed, and our 'advanced' algorithm scores the u
 ```java
 [Deck - Micro-Economics]
   > list
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are now viewing deck: Micro-Economics
 // 1. Question: What is the Law of demand?
 // 
@@ -913,7 +989,7 @@ Then, the correct answer is displayed, and our 'advanced' algorithm scores the u
 // 3. Question: What is price elasticity of demand?
 //
 // 4. Question: What is price elasticity of supply?
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Deck - Micro-Economics]
   > start
 ```
@@ -923,66 +999,66 @@ Then, the correct answer is displayed, and our 'advanced' algorithm scores the u
 ```java
 // ...
 // Game Mode is started for: [1] Micro-Economics
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is the Law of supply?
 //   Enter your attempt below (or `done`, `exit`, `help`):
    > Price of good increases, quantity supplied increases.
 // A: When the price of a good increases, the quantity supplied increases, ceteris paribus.
 // The % match between your answer and the actual answer is: 53.85
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Do you want to re-attempt this question later? [y/n]
   > y
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is price elasticity of demand?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > I don't know.
 // A: Percentage change in quantity demanded caused by a 1 percent change in price.
 // The % match between your answer and the actual answer is: 0.00
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Do you want to re-attempt this question later? [y/n]
   > y
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is the Law of demand?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > Quantity of good demanded fall when price of good rises.
 // A: When the price of a good rises, the quantity of the good demanded will fall, ceteris paribus.
 // The % match between your answer and the actual answer is: 58.82
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Do you want to re-attempt this question later? [y/n]
   > n
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is price elasticity of supply?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > Percentage change in quantity supplied for a 1 percent price change
 // A: Percentage change in quantity supplied caused by a 1 percent change in price.
 // The % match between your answer and the actual answer is: 84.62
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Do you want to re-attempt this question later? [y/n]
   > n
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is price elasticity of demand?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > Percentage change in quantity demanded for a 1 percent price change.
 // A: Percentage change in quantity demanded caused by a 1 percent change in price.
 // The % match between your answer and the actual answer is: 84.62
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Do you want to re-attempt this question later? [y/n]
   > n
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is the Law of supply?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > Price of a good increases, the quantity supplied increases, ceteris paribus.
 // A: When the price of a good increases, the quantity supplied increases, ceteris paribus.
 // The % match between your answer and the actual answer is: 92.31
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Do you want to re-attempt this question later? [y/n]
   > n
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You have completed all the flash cards in this deck!
 // Returning to Normal Mode...
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are back in Normal Mode
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Normal]
   >
 ```
@@ -995,13 +1071,13 @@ Returns to Normal Mode.
 
 ```java
 // ...
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is market-failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > done
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are back in Normal Mode
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Normal]
   > 
 ```
@@ -1014,11 +1090,11 @@ Displays the list of all commands in Game Mode.
 
 ```java
 // ...
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is market-failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > help
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // eCardnomics.
 // Game Mode.
 //
@@ -1040,7 +1116,7 @@ Displays the list of all commands in Game Mode.
 // Finally, we will ask if you think you got it right. If you did not, the
 // question will be inserted back into the question pool, and you will get a 
 // chance to attempt it again!
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is market-failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > 
@@ -1056,6 +1132,22 @@ There is also the option to select both the background and text colors. There ar
 user can choose from using the option `-cs 1`. [See below for the default color schemes](#default-color-schemes)
 There is also the option to choose your own colors for background and text from the provided colors using the option
 `-oc <bg color> <txt color>`. [See below for the colors available](#original-colors-available)
+
+#### Example
+The following is an example of the slides printed out after the following command.
+```java
+[Deck - Micro-Economics]
+  > pptx -y -cs 1
+// --------------------------------------------------------------------------------
+// Micro-Economics has been created as PowerPoint using Color Scheme,
+//   with steelblue background and silver text.
+// --------------------------------------------------------------------------------
+```
+
+##### Output
+![PPTX Example](images-ug/PPTX-Example.png)
+
+
 
 For details, check out:
 
@@ -1081,7 +1173,7 @@ Soome of the colors include:
 * Navy
 * Gray
 
-The complete list of colors can be found at [here] (https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html)
+The complete list of colors can be found [here](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html)
 
 
 
@@ -1098,28 +1190,28 @@ Can be entered from any mode, anywhere in the program.
 ```java
 [Normal]
   > exit
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Bye! Hope to see you again soon!
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ```java
 [Deck - market-failure]
   > exit
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Bye! Hope to see you again soon!
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ```java
 ...
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is market-failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > exit
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Bye! Hope to see you again soon!
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 ```
 
 ### Shows release version: `--version`
@@ -1132,13 +1224,13 @@ Shows release version from anywhere in the program.
 
 ```java
 // ...
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is market-failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > --version
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Version: 2.0
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // Q: What is market-failure?
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > 
@@ -1188,9 +1280,9 @@ useful scenario for a single line update command.
 // Q: What is the command to exit Game Mode or Deck Mode?
 //   Enter your attempt below (or `done`, `exit`, or `help`):
   > done
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // You are back in Normal Mode
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 [Normal]
   >
 ```
@@ -1203,7 +1295,7 @@ useful scenario for a single line update command.
   > "done"
 // A: done
 // The % match between your answer and the actual answer is: 100.00
-// ------------------------------------------------------------
+// --------------------------------------------------------------------------------
 // ...
 ```
 

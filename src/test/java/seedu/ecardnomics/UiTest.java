@@ -118,8 +118,9 @@ public class UiTest {
     @Test
     void printNewDeck_newDeckName_deckName() {
 
-        String expectedOutput =  "------------------------------------------------------------" + System.lineSeparator()
-                + "New deck created: Pokemon" + System.lineSeparator()
+        String expectedOutput =  "------------------------------------------------------------"
+                + "--------------------" + System.lineSeparator()
+                + "New deck created: Pokemon" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
         printNewDeck(new Deck("Pokemon"));
         assertEquals(expectedOutput, outContent.toString());
@@ -145,8 +146,9 @@ public class UiTest {
 
     @Test
     void printNewTags_none_newTagsLine() {
-        String expectedOutput = "------------------------------------------------------------" + System.lineSeparator()
-                + "The deck Pokemon has been tagged as: Anime, Unreal" + System.lineSeparator()
+        String expectedOutput = "------------------------------------------------------------"
+                + "--------------------" + System.lineSeparator()
+                + "The deck Pokemon has been tagged as: Anime, Unreal" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
         String[] newTagsArray = {"Anime", "Unreal"};
         printNewTags("Pokemon", newTagsArray);
@@ -155,8 +157,9 @@ public class UiTest {
 
     @Test
     void printInvalidTagsLine_none_warning() {
-        String expectedOutput = "------------------------------------------------------------" + System.lineSeparator()
-                + "You entered invalid tag(s)!" + System.lineSeparator()
+        String expectedOutput = "------------------------------------------------------------"
+                + "--------------------" + System.lineSeparator()
+                + "You entered invalid tag(s)!" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
         printInvalidTagsLine();
         assertEquals(expectedOutput, outContent.toString());
@@ -211,8 +214,10 @@ public class UiTest {
 
     @Test
     void printSearchDecksLine_emptyString_NoDecksLine() {
-        String expectedOutput = "------------------------------------------------------------" + System.lineSeparator()
-                + "There is no decks having the tags you are looking for." + System.lineSeparator()
+        String expectedOutput = "------------------------------------------------------------"
+                + "--------------------" + System.lineSeparator()
+                + "There is no decks having the tags you are looking for."
+                + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
         printSearchDecksLine("");
         assertEquals(expectedOutput, outContent.toString());
@@ -220,10 +225,11 @@ public class UiTest {
 
     @Test
     void printSearchDecksLine_stringOfMatchedDecks_decksListings() {
-        String expectedOutput = "------------------------------------------------------------" + System.lineSeparator()
+        String expectedOutput = "------------------------------------------------------------"
+                + "--------------------" + System.lineSeparator()
                 + "The decks having tags you are searching for:"
                 + "\n1. Micro-Economics"
-                + "\n3. Object-oriented Programming" + System.lineSeparator()
+                + "\n3. Object-oriented Programming" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
         String input = "\n1. Micro-Economics\n3. Object-oriented Programming";
         printSearchDecksLine(input);

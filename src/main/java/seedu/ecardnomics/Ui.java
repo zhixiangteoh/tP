@@ -5,6 +5,7 @@ import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
 import seedu.ecardnomics.game.Game;
+import seedu.ecardnomics.powerpoint.ColorOption;
 import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.Scanner;
@@ -51,8 +52,12 @@ public class Ui {
             "%1$s has been deleted.";
     public static final String PPTX_DECK_QUESTION_LINE =
             "Do you want to print %1$s deck to PowerPoint? [y/n] ";
-    public static final String PPTX_DECK_LINE =
-            "%1$s has been created as PowerPoint.";
+    public static final String PPTX_DECK_DEFAULT_LINE =
+            "%s has been created as PowerPoint with default,\n  black background and white text.";
+    public static final String PPTX_DECK_CS_LINE =
+            "%s has been created as PowerPoint using Color Scheme,\n  with %s background and %s text.";
+    public static final String PPTX_DECK_OC_LINE =
+            "%s has been created as PowerPoint using Original Colors,\n  with %s background and %s text.";
     public static final String INVALID_YN_RESPONSE_LINE =
             "Response should be 'y' or 'n'\n  > ";
     private static final String EMPTY_DECK_LINE =
@@ -131,7 +136,9 @@ public class Ui {
 
     public static final String Y = "y";
     public static final String N = "n";
-    public static final String DASH_LINES = "------------------------------------------------------------";
+    public static final String DASH_LINES = "------------------------------------------------------------"
+            + "--------------------";
+
 
     public static final String LOGO1 = "        ___              _                       _";
     public static final String LOGO2 = "  ___  / __\\__ _ _ __ __| |_ __   ___  _ __ ___ (_) ___ ___";
@@ -386,8 +393,21 @@ public class Ui {
      *
      * @param pptxDeckName name of the pptx deck
      */
-    public static void printDeckPptxLine(String pptxDeckName) {
-        printMessage(String.format(PPTX_DECK_LINE, pptxDeckName));
+    public static void printDeckPptxLine(String pptxDeckName, String bgColor, String txtColor, ColorOption colorOpt) {
+        switch (colorOpt) {
+        case DEFAULT:
+            printMessage(String.format(PPTX_DECK_DEFAULT_LINE, pptxDeckName));
+            break;
+        case COLOR_SCHEME:
+            printMessage(String.format(PPTX_DECK_CS_LINE, pptxDeckName, bgColor, txtColor));
+            break;
+        case ORGINAL_COLOR:
+            printMessage(String.format(PPTX_DECK_OC_LINE, pptxDeckName, bgColor, txtColor));
+            break;
+        default:
+            //
+            break;
+        }
     }
 
     /**
@@ -577,13 +597,7 @@ public class Ui {
         printDashLines();
         printDeletedDeckQuestion(deckName);
 
-        boolean isConfirmed = checkYorNResponse();
-        if (isConfirmed) {
-            printDeckDeletedLine(deckName);
-            printDashLines();
-        }
-
-        return isConfirmed;
+        return checkYorNResponse();
     }
 
     public static boolean getDeletedFlashCardConfirmation(String question) {
@@ -591,13 +605,7 @@ public class Ui {
         printDashLines();
         Ui.printDeleteFlashCardLine(question);
 
-        boolean isConfirmed = checkYorNResponse();
-        if (isConfirmed) {
-            Ui.printFlashCardDeletedLine(question);
-            Ui.printDashLines();
-        }
-
-        return isConfirmed;
+        return checkYorNResponse();
     }
 
     /**

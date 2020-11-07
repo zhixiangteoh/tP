@@ -20,12 +20,21 @@ public class PowerPointCommand extends NormalCommand {
         this.isPpptxCreated = isPpptxCreated;
     }
 
-    /** Constructor. */
-    public PowerPointCommand(DeckList deckList, Deck deck, boolean isPpptxCreated, Color bgColor, Color txtColor) {
+    public PowerPointCommand(DeckList deckList, Deck deck, boolean isPpptxCreated, int csIndex) {
         super(deckList);
         assert deck != null : "Do not operate on a null reference.";
         this.deck = deck;
-        pptx = new PowerPoint(deck, bgColor, txtColor);
+        pptx = new PowerPoint(deck, csIndex);
+        this.isPpptxCreated = isPpptxCreated;
+    }
+
+    /** Constructor. */
+    public PowerPointCommand(DeckList deckList, Deck deck, boolean isPpptxCreated, String bgColorString,
+                             String txtColorString, Color bgColor, Color txtColor) {
+        super(deckList);
+        assert deck != null : "Do not operate on a null reference.";
+        this.deck = deck;
+        pptx = new PowerPoint(deck, bgColorString, txtColorString, bgColor, txtColor);
         this.isPpptxCreated = isPpptxCreated;
     }
 

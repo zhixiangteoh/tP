@@ -8,6 +8,7 @@ import org.apache.poi.xslf.usermodel.XSLFSlideMaster;
 import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
 import org.apache.poi.xslf.usermodel.XSLFTextShape;
+import org.beryx.awt.color.ColorFactory;
 import seedu.ecardnomics.Ui;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.FlashCard;
@@ -22,20 +23,23 @@ public class PowerPoint {
     private Deck deck;
     private XMLSlideShow pptx = new XMLSlideShow();
     private XSLFSlideMaster defaultMaster = pptx.getSlideMasters().get(0);
+    private String bgColorString;
+    private String txtColorString;
     private Color bgColor;
-    private Color textColor;
+    private Color txtColor;
+    private ColorOption colorOpt;
 
-    public static final int[][][] COLOR_SCHEMES = {
-            {{26,81,144}, {162, 162, 161}}, // Turkish Sea and Silver
-            {{161, 57, 66}, {189, 128, 56}}, // Gold and Scarlet
-            {{255, 231, 122}, {44, 95, 45}}, // Yellow and Green
-            {{4, 30, 66}, {175, 234, 220}}, // Sailor Blue and Mint
-            {{16, 24, 32}, {242, 170, 76}}, // Black and Orange
-            {{255, 214, 98}, {0, 83, 156}}, // Aspen Gold and Princess Blue
-            {{28, 28, 27}, {206, 74, 126}}, // Nebulosity and Pink Yarrow
-            {{110, 110, 109}, {250, 208, 201}}, // Charcoal Gray and Pink Salt
-            {{173, 223, 173}, {44, 95, 45}}, // Moss Green and Forest Green
-            {{250, 235, 239},{46, 62, 128}} // Pink and Navy
+    public static final String[][] COLOR_SCHEMES = {
+            {"steelblue", "silver"},
+            {"goldenrod", "crimson"},
+            {"navy", "turquoise"},
+            {"black", "orange"},
+            {"black", "deeppink"},
+            {"grey", "pink"},
+            {"pink", "navy"},
+            {"lightyellow", "seagreen"},
+            {"maroon", "peachpuff"},
+            {"azure", "darkgreen"}
     };
 
     public static final String PPTX_DIR = "pptx/";
@@ -44,14 +48,30 @@ public class PowerPoint {
 
     public PowerPoint(Deck deck) {
         this.deck = deck;
-        bgColor = Color.white;
-        textColor = Color.black;
+        bgColorString = "white";
+        txtColorString = "black";
+        bgColor = ColorFactory.valueOf("white");
+        txtColor = ColorFactory.valueOf("black");
+        colorOpt = ColorOption.DEFAULT;
     }
 
-    public PowerPoint(Deck deck, Color bgColor, Color textColor) {
+    public PowerPoint(Deck deck, int colorScheme) {
         this.deck = deck;
+        bgColorString = COLOR_SCHEMES[colorScheme][0];
+        txtColorString = COLOR_SCHEMES[colorScheme][1];
+        bgColor = ColorFactory.valueOf(COLOR_SCHEMES[colorScheme][0]);
+        txtColor = ColorFactory.valueOf(COLOR_SCHEMES[colorScheme][1]);
+        colorOpt = ColorOption.COLOR_SCHEME;
+    }
+
+    public PowerPoint(Deck deck, String bgColorString, String txtColorSting,
+                      Color bgColor, Color txtColor) {
+        this.deck = deck;
+        this.bgColorString = bgColorString;
+        this.txtColorString = txtColorSting;
         this.bgColor = bgColor;
-        this.textColor = textColor;
+        this.txtColor = txtColor;
+        colorOpt = ColorOption.ORGINAL_COLOR;
     }
 
 
@@ -71,7 +91,7 @@ public class PowerPoint {
         XSLFTextRun r = p.addNewTextRun();
 
         r.setText(deck.getName());
-        r.setFontColor(textColor);
+        r.setFontColor(txtColor);
         r.setFontSize(60.);
     }
 
@@ -89,14 +109,14 @@ public class PowerPoint {
         XSLFTextRun r = p.addNewTextRun();
 
         r.setText(titleText);
-        r.setFontColor(textColor);
+        r.setFontColor(txtColor);
         r.setFontSize(50.);
 
         p = object.addNewTextParagraph();
         r = p.addNewTextRun();
 
         r.setText(text);
-        r.setFontColor(textColor);
+        r.setFontColor(txtColor);
         r.setFontSize(40.);
     }
 
@@ -135,7 +155,7 @@ public class PowerPoint {
                 pptx.write(out);
                 out.close();
                 pptx.close();
-                Ui.printDeckPptxLine(deck.getName());
+                Ui.printDeckPptxLine(deck.getName(), bgColorString, txtColorString, colorOpt);
             } catch (IOException e) {
                 Ui.printMessage(Ui.WRITE_TO_FILE_ERROR_LINE);
             }

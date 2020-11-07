@@ -27,9 +27,9 @@ import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.InvalidOptionsException;
 import seedu.ecardnomics.exceptions.NoSeparatorException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.powerpoint.ColorOption;
 import seedu.ecardnomics.exceptions.DuplicateDeckException;
 import seedu.ecardnomics.exceptions.MultipleLabelInputException;
-import seedu.ecardnomics.powerpoint.PowerPoint;
 import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.ArrayList;
@@ -121,6 +121,13 @@ public class NormalParser extends Parser {
             deckID = getIndex(arguments);
             isDeckDeleted = Ui.getDeletedDeckConfirmation(deckList.getDeck(deckID).getName());
         }
+
+        if (isDeckDeleted) {
+            Ui.printDeckDeletedLine(deckList.getDeck(deckID).getName());
+        }
+
+        Ui.printDashLines();
+
         return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
     }
 
@@ -282,6 +289,10 @@ public class NormalParser extends Parser {
     private PowerPointCommand preparePptxDeck(String arguments) throws Exception {
         Color bgColor = null;
         Color txtColor = null;
+        String bgColorString = "";
+        String txtColorString = "";
+        ColorOption colorOpt = ColorOption.DEFAULT;
+        int colorSchemeIndex = 0;
 
         boolean isPptxCreated = false;
         boolean bothOCandCS = false;
@@ -307,8 +318,8 @@ public class NormalParser extends Parser {
 
 
             if (matcher.find()) {
-                String bgColorString = matcher.group(1);
-                String txtColorString = matcher.group(2);
+                bgColorString = matcher.group(1);
+                txtColorString = matcher.group(2);
                 dashOrEnd = matcher.group(3);
 
                 try {
@@ -320,6 +331,7 @@ public class NormalParser extends Parser {
                 }
             }
 
+            colorOpt = ColorOption.ORGINAL_COLOR;
             arguments = arguments.replaceAll(Ui.ORIGINAL_COLORS_REGEX, dashOrEnd).trim();
         }
 
@@ -331,7 +343,6 @@ public class NormalParser extends Parser {
                 String numArg = matcher.group(1);
                 dashOrEnd = matcher.group(2);
 
-                int colorSchemeIndex = 0;
 
                 try {
                     colorSchemeIndex = getCsIndex(numArg);
@@ -340,12 +351,7 @@ public class NormalParser extends Parser {
                     colorSchemeInvalid = true;
                 }
 
-                int[] bgColorRgb = PowerPoint.COLOR_SCHEMES[colorSchemeIndex][0];
-                int[] txtColorRgb = PowerPoint.COLOR_SCHEMES[colorSchemeIndex][1];
-
-                bgColor = new Color(bgColorRgb[0], bgColorRgb[1], bgColorRgb[2]);
-                txtColor = new Color(txtColorRgb[0], txtColorRgb[1], txtColorRgb[2]);
-
+                colorOpt = ColorOption.COLOR_SCHEME;
                 arguments = arguments.replaceAll(Ui.COLOR_SCHEME_REGEX, dashOrEnd).trim();
             }
         }
@@ -372,9 +378,14 @@ public class NormalParser extends Parser {
         if (!isPptxCreated) {
             isPptxCreated = Ui.getPptxDeckConfirmation(deck.getName());
         }
-        if (bgColor != null && txtColor != null) {
-            return new PowerPointCommand(deckList, deck, isPptxCreated, bgColor, txtColor);
 
+        if (colorOpt == ColorOption.ORGINAL_COLOR) {
+            return new PowerPointCommand(deckList, deck, isPptxCreated, bgColorString, txtColorString,
+                    bgColor, txtColor);
+        }
+
+        if (colorOpt == ColorOption.COLOR_SCHEME) {
+            return new PowerPointCommand(deckList, deck, isPptxCreated, colorSchemeIndex);
         }
 
         return new PowerPointCommand(deckList, deck, isPptxCreated);
