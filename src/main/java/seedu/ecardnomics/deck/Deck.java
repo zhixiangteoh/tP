@@ -56,7 +56,9 @@ public class Deck {
 
     public void addTag(String[] newTags) {
         for (String tag: newTags) {
-            tags.add(tag);
+            if (!tags.contains(tag)) {
+                tags.add(tag);
+            }
         }
     }
 

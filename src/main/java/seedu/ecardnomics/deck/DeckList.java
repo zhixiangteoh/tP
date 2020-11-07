@@ -89,15 +89,23 @@ public class DeckList {
     }
 
     /**
-     * Returns a string including index and name of all the deck available.
+     * Returns a string including index and name, tag of all the deck available.
      *
-     * @return A String
+     * @return A String representing index, name and tag
      */
     @Override
     public String toString() {
         String output = "";
+        String offset = "   ";
         for (int i = 0; i < deckList.size(); i++) {
+            if (offset.length() <= (i / 10 + 2)) {
+                offset += " ";
+            }
             output += (i + 1) + ". " + deckList.get(i).getName();
+            if (deckList.get(i).getTag().size() !=  0) {
+                output += "\n";
+                output += offset + "Tags: " + deckList.get(i).getTagString();
+            }
             if (i != deckList.size() - 1) {
                 output += "\n";
             }
