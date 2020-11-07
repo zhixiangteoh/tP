@@ -27,6 +27,8 @@ import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.InvalidOptionsException;
 import seedu.ecardnomics.exceptions.NoSeparatorException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
+import seedu.ecardnomics.exceptions.DuplicateDeckException;
+import seedu.ecardnomics.exceptions.MultipleLabelInputException;
 import seedu.ecardnomics.powerpoint.PowerPoint;
 import seedu.ecardnomics.storage.LogStorage;
 
@@ -51,6 +53,15 @@ public class NormalParser extends Parser {
         this.deckList = deckList;
     }
 
+    /**
+     * Check whether the index input from users is valid.
+     *
+     * @param arguments Argument from user input which is index
+     * @return the index from user if it is valid
+     * @throws IndexFormatException if index input is not a number
+     * @throws DeckRangeException if index is out of range
+     * @throws NumberTooBigException if the index is too big
+     */
     @Override
     protected int getIndex(String arguments) throws IndexFormatException,
             DeckRangeException, NumberTooBigException {
@@ -121,7 +132,9 @@ public class NormalParser extends Parser {
      * @throws Exception if index is invalid or empty arguments
      */
     private Command prepareTagCommand(String arguments) throws Exception {
-        String[] idAndNewTags = arguments.split("/tag");
+        String argumentsWithSpace = arguments + " ";
+        String[] idAndNewTags = argumentsWithSpace.split("/tag", 2);
+
         if (idAndNewTags.length < 2) {
             logger.log(Level.WARNING, "User did not provide /tag when adding tag.");
             throw new NoSeparatorException();
@@ -147,7 +160,8 @@ public class NormalParser extends Parser {
      * @throws Exception if index is invalid or empty arguments
      */
     private Command prepareUntagCommand(String arguments) throws Exception {
-        String[] idAndRemovedTags = arguments.split("/tag");
+        String argumentsWithSpace = arguments + " ";
+        String[] idAndRemovedTags = argumentsWithSpace.split("/tag ", 2);
 
         if (idAndRemovedTags.length < 2) {
             logger.log(Level.WARNING, "User did not provide /tag when removing tags.");
@@ -172,26 +186,58 @@ public class NormalParser extends Parser {
      * @param arguments String that represents the name of deck to be created
      * @return Reference to the deck created
      * @throws EmptyInputException if no name is supplied for the deck
+     * @throws DuplicateDeckException if duplicated name is entered
      */
-    private Deck prepareNewDeck(String arguments) throws EmptyInputException {
+    private Deck prepareNewDeck(String arguments) throws Exception {
         logger.log(Level.INFO, "Logging method prepareNewDeck() in NormalParser.");
         if (arguments.trim().isEmpty()) {
             logger.log(Level.WARNING, "User did not supply name when creating a new deck.");
             throw new EmptyInputException();
         }
 
-        if (arguments.contains("/tag")) {
-            ArrayList<String> tagsList = new ArrayList<>();
-            String[] nameAndTags = arguments.split("/tag", 2);
-            String name = nameAndTags[0].trim();
-            String[] tags = nameAndTags[1].trim().split(" ");
-            for (String tag: tags) {
-                tagsList.add(tag.trim());
-            }
-            return new Deck(name, tagsList);
+        if (deckList.getAllNames().contains(arguments.trim())) {
+            throw new DuplicateDeckException();
+        }
+
+        String argumentsWithSpace = arguments + " ";
+        if (argumentsWithSpace.contains("/tag ")) {
+            return prepareNewDeckWithTags(argumentsWithSpace);
         } else {
             return new Deck(arguments);
         }
+    }
+
+    private Deck prepareNewDeckWithTags(String arguments) throws Exception {
+        ArrayList<String> tagsList = new ArrayList<>();
+        assert (arguments.contains("/tag ")) : "User did enter tag label.";
+        String[] nameAndTags = arguments.split("/tag ", 2);
+        System.out.println(nameAndTags.length);
+
+        if (nameAndTags.length != 2) {
+            throw new EmptyInputException();
+        }
+
+        assert (nameAndTags.length == 2) : "Input should contain name and tags.";
+
+        String name = nameAndTags[0].trim();
+        if (name.isEmpty()) {
+            throw new EmptyInputException();
+        }
+        if (deckList.getAllNames().contains(name)) {
+            throw new DuplicateDeckException();
+        }
+
+        if (nameAndTags[1].trim().isEmpty()) {
+            throw new EmptyInputException();
+        }
+        String[] tags = nameAndTags[1].trim().split(" ");
+        for (String tag: tags) {
+            if (tag.equals("/tag")) {
+                throw new MultipleLabelInputException();
+            }
+            tagsList.add(tag.trim());
+        }
+        return new Deck(name, tagsList);
     }
 
     /**
