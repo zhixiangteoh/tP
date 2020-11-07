@@ -1,7 +1,7 @@
 ================================================================================
 deck | 0
 name | Micro-Economics
-tags | Economics | EC1301 
+tags | Economics | EC1301
 size | 5
 Q | What is the Law of demand?
 A | When the price of a good rises, the quantity of the good demanded will fall, ceteris paribus.
@@ -16,7 +16,7 @@ A | Market failure is the economic situation defined by an inefficient distribut
 ================================================================================
 deck | 1
 name | Macro-Economics
-tags | Economics | EC1301 
+tags | Economics | EC1301
 size | 6
 Q | What are ways GDP can be calculated?
 A | Three ways: Expenditure approach, Value-addedd approach and Factor payments approach.
@@ -33,7 +33,7 @@ A | Unemployment arising from changes in production over the business cycle.
 ================================================================================
 deck | 2
 name | Object-oriented Programming
-tags | Computer Science | CS2113 
+tags | Computer Science | CS2113
 size | 3
 Q | What are the programming paradigms based on OODP?
 A | Abstraction, Polymorphism, Inheritence, Encapsulation
@@ -41,9 +41,4 @@ Q | What are access modifiers?
 A | Access level modifiers determine whether other classes can use a particular field or invoke a particular method.
 Q | How do you represent for and while loops in a sequence diagram?
 A | Using the "loop" notation.
-================================================================================
-deck | 3
-name | Tang /cd c
-tags | 
-size | 0
 ================================================================================
