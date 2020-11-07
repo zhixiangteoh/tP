@@ -14,9 +14,10 @@ import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
+import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
-import seedu.ecardnomics.exceptions.EmptyInputException;
+import seedu.ecardnomics.exceptions.InvalidListCommandException;
 import seedu.ecardnomics.exceptions.NoAlphaNumericInputException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
 import seedu.ecardnomics.storage.LogStorage;
@@ -152,6 +153,13 @@ public class DeckParser extends Parser {
         return new UpdateCommand(deck, flashCardID, newQnA[0], newQnA[1]);
     }
 
+    protected Command prepareListCommand(String arguments) throws InvalidListCommandException {
+        if (arguments.trim().equals("/ans")) {
+            return new ListCommand(deck, arguments);
+        }
+        throw new InvalidListCommandException();
+    }
+
     @Override
     protected int getIndex(String arguments) throws IndexFormatException,
             FlashCardRangeException, NumberTooBigException {
@@ -211,7 +219,7 @@ public class DeckParser extends Parser {
         // List all FlashCards
         case Ui.LIST:
             logger.log(Level.INFO, "returning ListCommand object");
-            return new ListCommand(deck, arguments);
+            return prepareListCommand(arguments);
         // Delete a FlashCard
         case Ui.DELETE:
             logger.log(Level.INFO, "Preparing FlashCard to delete");
