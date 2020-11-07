@@ -121,6 +121,13 @@ public class NormalParser extends Parser {
             deckID = getIndex(arguments);
             isDeckDeleted = Ui.getDeletedDeckConfirmation(deckList.getDeck(deckID).getName());
         }
+
+        if (isDeckDeleted) {
+            Ui.printDeckDeletedLine(deckList.getDeck(deckID).getName());
+        }
+
+        Ui.printDashLines();
+
         return new DeleteDeckCommand(deckList, deckID, isDeckDeleted);
     }
 

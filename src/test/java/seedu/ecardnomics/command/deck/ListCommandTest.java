@@ -33,8 +33,9 @@ class ListCommandTest {
     @Test
     void execute_emptyDeck_listCommand() {
         String expectedOutput =
-                "------------------------------------------------------------" + System.lineSeparator()
-                + "Deck is currently empty!" + System.lineSeparator()
+                "------------------------------------------------------------"
+                + "--------------------" + System.lineSeparator()
+                + "Deck is currently empty!" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
 
         Deck deck = new Deck("Test");
@@ -46,10 +47,11 @@ class ListCommandTest {
     @Test
     void execute_nonEmptyDeck_ansArgument_listCommand() {
         String expectedOutput =
-                "------------------------------------------------------------" + System.lineSeparator()
+                "------------------------------------------------------------"
+                + "--------------------" + System.lineSeparator()
                 + "You are now viewing deck: Test" + System.lineSeparator()
                 + "1. Question: Test Question" + System.lineSeparator()
-                + "   Answer:   Test Answer" + System.lineSeparator()
+                + "   Answer:   Test Answer" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
 
         Deck deck = new Deck("Test");
@@ -62,9 +64,10 @@ class ListCommandTest {
     @Test
     void execute_nonEmptyDeck_noAnsArgument_listCommand() {
         String expectedOutput =
-                "------------------------------------------------------------" + System.lineSeparator()
+                "------------------------------------------------------------"
+                + "--------------------" + System.lineSeparator()
                 + "You are now viewing deck: Test" + System.lineSeparator()
-                + "1. Question: Test Question" + System.lineSeparator()
+                + "1. Question: Test Question" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
 
         Deck deck = new Deck("Test");

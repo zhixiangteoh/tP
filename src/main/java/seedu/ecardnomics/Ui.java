@@ -136,7 +136,9 @@ public class Ui {
 
     public static final String Y = "y";
     public static final String N = "n";
-    public static final String DASH_LINES = "------------------------------------------------------------";
+    public static final String DASH_LINES = "------------------------------------------------------------"
+            + "--------------------";
+
 
     public static final String LOGO1 = "        ___              _                       _";
     public static final String LOGO2 = "  ___  / __\\__ _ _ __ __| |_ __   ___  _ __ ___ (_) ___ ___";
@@ -595,13 +597,7 @@ public class Ui {
         printDashLines();
         printDeletedDeckQuestion(deckName);
 
-        boolean isConfirmed = checkYorNResponse();
-        if (isConfirmed) {
-            printDeckDeletedLine(deckName);
-            printDashLines();
-        }
-
-        return isConfirmed;
+        return checkYorNResponse();
     }
 
     public static boolean getDeletedFlashCardConfirmation(String question) {
@@ -609,13 +605,7 @@ public class Ui {
         printDashLines();
         Ui.printDeleteFlashCardLine(question);
 
-        boolean isConfirmed = checkYorNResponse();
-        if (isConfirmed) {
-            Ui.printFlashCardDeletedLine(question);
-            Ui.printDashLines();
-        }
-
-        return isConfirmed;
+        return checkYorNResponse();
     }
 
     /**
