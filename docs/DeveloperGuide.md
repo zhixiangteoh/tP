@@ -245,7 +245,6 @@ The following are the Classes/ Enum of the third part package `org.apache.poi.xs
 * `XSLFTextParagraph` - Class representing a paragraph of text within a shape
 * `XSLFTextRun` - Class representing the properties of the text within a paragraph
 
-
 The 3 modes of Color Selection, `DEFAULT`, `COLOR_SCHEME` and `ORIGINAL_COLOR` are stored in the enum `ColorOption`.
 
 Each instance of `PowerPoint` has an element of the enum `ColorOption`, `colorOpt`, which decides which of the outputs 
@@ -254,8 +253,6 @@ to print back to the user. `colorOpt` takes on the different values depending on
 * `PowerPoint(deck)` - `DEFAULT`
 * `PowerPoint(deck, csIndex)` - `COLOR_SCHEME`
 * `PowerPoint(deck, bgColorString, txtColorString, bgColor, txtColor)` - `ORIGINAL_COLOR`
-
-
 
 ### Pretty Printing
 
@@ -323,7 +320,9 @@ eCardnomics' quintessential mode. Game Mode can be started from either Normal Mo
 
 Game Mode contains two main components: a storage component, **`GameStorage`**, and a logic component, **`GameEngine`**. The
  former handles all data structures used by Game Mode, and stores the original deck (`originalDeck`), question pool
-  (`deque`), and retest question pool (`retestStore`). The latter executes the main game loop (*`runGameLoop()`*), and
+  ([`deque`](#glossary)), and retest question pool (`retestStore`). The latter executes the main game loop
+   (*`runGameLoop
+  ()`*), and
    interacts with **`GameStorage`** on package-private basis; i.e., **`GameEngine`** and **`GameStorage`** have full mutual
     access as if they were a single class. This is one of the main intentional design decisions.
   
@@ -457,6 +456,9 @@ deck
 * *[Normal Mode](#command)* - A state of the program that allows the user to modify the list of decks.
 * *[Pretty Printing](#pretty-printing)* - Printing text output that span more than one line in a way that minimizes
 truncating words.
+* *[deque](#general-architecture)* - Pronounced "deck", short for "double-ended queue". In eCardnomics, *deque* is
+  implemented as an [`ArrayDeque`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayDeque.html) and functions as a stack of shuffled flash cards, from which questions are popped
+   off during Game Mode.
 
 ## Instructions for manual testing
 
