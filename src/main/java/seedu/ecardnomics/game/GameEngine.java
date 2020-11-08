@@ -56,6 +56,7 @@ public class GameEngine {
 
         if (storage.deque.isEmpty()) {
             if (storage.retestStore.isEmpty()) {
+                Ui.printMiddleSeparator();
                 Ui.printDoneGameMessage();
                 return forceDoneGame();
             } else {
@@ -63,6 +64,7 @@ public class GameEngine {
             }
         }
 
+        Ui.printMiddleSeparator();
         return null;
     }
 

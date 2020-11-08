@@ -15,6 +15,10 @@ public class DecksCommand extends NormalCommand {
 
     @Override
     public void execute() {
-        Ui.printDeckList(deckList);
+        if (deckList.size() == 0) {
+            Ui.printMessage("There are no decks to list.");
+        } else {
+            Ui.printDeckList(deckList);
+        }
     }
 }

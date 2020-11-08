@@ -138,6 +138,8 @@ public class Ui {
     public static final String N = "n";
     public static final String DASH_LINES = "------------------------------------------------------------"
             + "--------------------";
+    public static final String MIDDLE_SEPARATOR = "                                ----------------                  "
+            + "              ";
 
 
     public static final String LOGO1 = "        ___              _                       _";
@@ -163,6 +165,10 @@ public class Ui {
      */
     public static void printDashLines() {
         System.out.println(DASH_LINES);
+    }
+
+    public static void printMiddleSeparator() {
+        System.out.println(MIDDLE_SEPARATOR);
     }
 
     /**
@@ -429,7 +435,7 @@ public class Ui {
      */
     public static void printUpdateAnswerLine(FlashCard flashCard) {
         // No offset since printing from start of line.
-        System.out.println(flashCard.toString(false, 0));
+        System.out.println(System.lineSeparator() + flashCard.toString(false, 0));
         System.out.println(NEW_ANSWER_LINE);
         printPrompt();
     }

@@ -35,6 +35,20 @@ public class DeckList {
     }
 
     /**
+     * Checks whether a deck with the same deck name is already in the deck.
+     * @param deck reference to deck to be checked
+     * @return boolean
+     */
+    public boolean contains(Deck deck) {
+        for (Deck thisDeck : deckList) {
+            if (thisDeck.getName().equals(deck.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Returns size of current list.
      *
      * @return size of list
