@@ -1302,7 +1302,7 @@ Shows release version from anywhere in the program.
 **Q**: With none-argument command, can it be executed if I type the command with some nonsense
 arguments?
 **Q**: Yes you still can, with this type of command, such as exit or done, the program will only take 
-into account the first word you enter, the rest will be automatically discards.
+into account the first word you enter, the rest will be automatically discarded.
 
 Example:
 ```java

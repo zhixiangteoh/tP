@@ -56,6 +56,11 @@ public class Deck {
         return tags;
     }
 
+    /**
+     * Adds tag to the deck.
+     *
+     * @param newTags an unique ArraList to be added to the deck
+     */
     public void addTag(ArrayList<String> newTags) {
         for (String tag: newTags) {
             if (!tags.contains(tag)) {
