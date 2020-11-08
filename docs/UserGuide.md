@@ -1310,6 +1310,36 @@ the information on a single line is more readable.
 application. help commands are unique and distinct across different modes, which explains the decision to place
 it within each mode, rather than within the "Anywhere" section.
 
+### Storage
+
+**Q**: Can I edit the save file directly to add or remove flashcards and decks?
+
+**A**: Yes, you can! However, there are some constraints when it comes to the format of the txt data file.
+
+Each deck of flashcards should be written in the following format:
+
+```java
+================================================================================
+deck | <deckIndex>
+name | <deckOfName>
+tags | <tags> | <moreTags> | <evenMoreTags>
+Q | <questionStatement>
+A | <answerStatement>
+Q | <anotherQuestionStatement>
+A | <anotherAnswerStatement>
+================================================================================
+```
+
+Note:
+* Each **`Deck`** should be separated by a line of '=' shown above.
+* Each item must be specified with the delimiter " | " with whitespaces on each side.
+* More `tags` are separated by the delimiter " | " as well.
+* **`Decks`** with duplicate deck names will be removed when starting the program.
+* `Questions` and `Answers` cannot be blank and must contain alphanumeric characters.
+* **Should there be any deviance from the specified format, 
+the entire deck with deviant formatting will be lost when starting the program.**
+
+
 ### Normal Mode
 
 **Q**: Can the deck name contain "/tag"?
