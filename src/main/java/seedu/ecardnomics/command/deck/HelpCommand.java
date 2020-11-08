@@ -14,6 +14,7 @@ public class HelpCommand extends DeckCommand {
             + "  list        [/ans]                      Lists all flash cards in the current  \n"
             + "                                            deck, optionally with answers.      \n"
             + "  delete <ix> [-y]                        Deletes the flash card at list index  \n"
+            + "  update <ix>                             Updates the flash card at list index  \n"
             + "                                            <ix> from the current deck.         \n"
             + "  pptx        [-y] [-cs <index> | -oc     Creates a PowerPoint slides based on  \n"
             + "               <bg color> <txt color>]      current deck.                       \n"

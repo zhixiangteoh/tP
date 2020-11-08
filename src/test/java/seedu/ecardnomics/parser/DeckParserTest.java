@@ -15,7 +15,7 @@ import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
-import seedu.ecardnomics.exceptions.EmptyInputException;
+import seedu.ecardnomics.exceptions.EmptyQnAException;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.NoAlphaNumericInputException;
@@ -66,23 +66,23 @@ class DeckParserTest {
     }
 
     @Test
-    void prepareFlashCard_oneLinerEmptyInputQuestion_EmptyInputExceptionThrown() {
+    void prepareFlashCard_oneLinerEmptyInputQuestion_EmptyQnAExceptionThrown() {
         try {
             assertEquals(1, deckParser.prepareFlashCard("      /ans some answer"));
             // question input checked first
             assertEquals(1, deckParser.prepareFlashCard("      /ans !@#"));
         } catch (Exception e) {
-            assertEquals(new EmptyInputException().getMessage(), e.getMessage());
+            assertEquals(new EmptyQnAException().getMessage(), e.getMessage());
         }
     }
 
     @Test
-    void prepareFlashCard_oneLinerEmptyInputAnswerValidQuestion_EmptyInputExceptionThrown() {
+    void prepareFlashCard_oneLinerEmptyInputAnswerValidQuestion_EmptyQnAExceptionThrown() {
         try {
             // question input checked first
             assertEquals(1, deckParser.prepareFlashCard("some question /ans     "));
         } catch (Exception e) {
-            assertEquals(new EmptyInputException().getMessage(), e.getMessage());
+            assertEquals(new EmptyQnAException().getMessage(), e.getMessage());
         }
     }
 
@@ -115,10 +115,39 @@ class DeckParserTest {
             assertEquals(1, deckParser.prepareFlashCard("     /ans !@#.."));
             // throws NoAlphaNumericException
             assertEquals(1, deckParser.prepareFlashCard("!@#. /ans      "));
-        } catch (EmptyInputException eie) {
-            assertEquals(new EmptyInputException().getMessage(), eie.getMessage());
+        } catch (EmptyQnAException eie) {
+            assertEquals(new EmptyQnAException().getMessage(), eie.getMessage());
         } catch (NoAlphaNumericInputException nae) {
             assertEquals(new NoAlphaNumericInputException().getMessage(), nae.getMessage());
+        }
+    }
+
+    @Test
+    void prepareFlashCard_oneLinerValidQuestionContainsAns() throws EmptyQnAException, NoAlphaNumericInputException {
+        assertTrue(deckParser.prepareFlashCard("question with/ans /ans answer") instanceof AddCommand);
+    }
+
+    @Test
+    void prepareFlashCard_oneLinerValidAnswerContainsAns() throws EmptyQnAException, NoAlphaNumericInputException {
+        assertTrue(deckParser.prepareFlashCard("question /ans answer with/ans") instanceof AddCommand);
+        assertTrue(deckParser.prepareFlashCard("question /ans answer /ans") instanceof  AddCommand);
+    }
+
+    @Test
+    void prepareFlashCard_oneLinerEmptyQuestionEmptyAnswer() {
+        try {
+            assertTrue(deckParser.prepareFlashCard("/ans") instanceof AddCommand);
+        } catch (EmptyQnAException ee) {
+            assertEquals(new EmptyQnAException().getMessage(), ee.getMessage());
+        } catch (NoAlphaNumericInputException nae) {
+            assertTrue(!NoAlphaNumericInputException.NO_ALPHANUMERIC_LINE.equals(nae.getMessage()));
+        }
+        try {
+            assertTrue(deckParser.prepareFlashCard("      /ans      ") instanceof  AddCommand);
+        } catch (EmptyQnAException ee) {
+            assertEquals(new EmptyQnAException().getMessage(), ee.getMessage());
+        } catch (NoAlphaNumericInputException nae) {
+            assertTrue(!NoAlphaNumericInputException.NO_ALPHANUMERIC_LINE.equals(nae.getMessage()));
         }
     }
 

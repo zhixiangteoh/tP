@@ -81,7 +81,6 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     + [Examples](#examples-20)
   * [Shows release version: `--version`](#shows-release-version---version)
     + [Examples](#examples-21)
-- [Features - (Proposed) Encryption and Decryption](#features---proposed-encryption-and-decryption)
 - [FAQ](#faq)
   * [General](#general)
   * [Deck Mode](#deck-mode)
@@ -532,6 +531,8 @@ Displays the list of all commands in Deck Mode.
 //   list        [/ans]                      Lists all flash cards in the current  
 //                                             deck, optionally with answers.      
 //   delete <ix> [-y]                        Deletes the flash card at list index  
+//                                             <ix> from the current deck.
+//   update <ix>                             Updates the flash card at list index
 //                                             <ix> from the current deck.         
 //   pptx        [-y] [-cs <index> | -oc     Creates a PowerPoint slides based on  
 //                <bg color> <txt color>]      current deck.                       
@@ -550,6 +551,7 @@ Displays the list of all commands in Deck Mode.
 ### Add a flashcard: `add`
 Adds a flashcard to the end of the current deck. The `add` command expects no initial arguments. Instructions and 
 format of card entry is displayed. Then, the user is prompted to specify the details of the flashcard to be added.
+Duplicate flashcards are allowed.
 
 #### Format
 ```java
@@ -562,13 +564,10 @@ Equivalent One-line format:
 ```java
   > add <question description> /ans <question answer or explanation>
 ```
->If `/ans` is not supplied, `<question description>` is stored and the user is prompted for the answer.
+>The `/ans` option, if supplied, must be separated from the question and answer by spaces.
 >
->If `<question description>` is empty, the input is invalid and the error message 
->```java
->"Input shouldn't be empty! Returning..."
->```
->is shown.
+>If `/ans` option is not supplied correctly, `<question description>` is stored and the user is prompted
+>for the answer.
 
 #### Examples
 
@@ -593,7 +592,7 @@ to show all the questions, and their respective answers.
 
 #### Format
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > list
 // --------------------------------------------------------------------------------
 // You are now viewing deck: `name of deck`
@@ -607,10 +606,10 @@ to show all the questions, and their respective answers.
 ```
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > list /ans
 // --------------------------------------------------------------------------------
-// You are now viewing deck: `name of deck`
+// You are now viewing deck: 'name of deck'
 // --------------------------------------------------------------------------------
 // 1. Question: <question 1>
 //    Answer:   <answer 1>
@@ -668,7 +667,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 #### Format
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > delete 1
 // Do you want to delete the following flash card? [y/n] ?
 //   '<question 1>' n
@@ -676,7 +675,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 ```
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > delete 2
 // Do you want to delete the following flash card? [y/n] ?
 //   '<question 2>' y
@@ -744,11 +743,12 @@ Updates the question and answer fields of a  specified flashcard in the deck. Th
 
 #### Format
 ```java
-[Deck - `name`]
+[Deck - 'name of deck']
   > update <index of flashcard>
 // Question: `Current Question`
 // New Question:
     > <new question>
+//
 // Answer:   `Current Answer`
 // New Answer:
     > <new answer>
@@ -768,6 +768,7 @@ Updating both the question and answer:
 // Question: Define market failure
 // New Question:
   > What is the difference between free-loading and free-riding?
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer:
   > Free-loading gives a benefit to the free-loader but there is a cost to the people taken advantage of.
@@ -784,6 +785,7 @@ Updating question only:
 // Question: Define market failure
 // New Question:
   > Define Market Failure
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer:
   > 
@@ -799,6 +801,7 @@ Updating answer only:
 // Question: Define market failure
 // New Question:
   > 
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > Economic situation where distribution of goods and services in the free market is inefficient
@@ -814,6 +817,7 @@ No updates:
 // Question: Define market failure
 // New Question:
   > 
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > 
@@ -1244,8 +1248,6 @@ Shows release version from anywhere in the program.
   > 
 ```
 
-## Features - (Proposed) Encryption and Decryption
-
 ## FAQ
 
 ### General
@@ -1273,6 +1275,14 @@ it within each mode, rather than within the "Anywhere" section.
 > add My Question /ans /ans
 ```
 Alternatively, `add` and `add My Question` also work since the answer will be read separately.
+
+**Q**: Can my question contain "/ans"?
+
+**A**: Yes. If it is part of another word:
+```java
+> add What is sum/ans? /ans some value
+```
+Otherwise, use `add` without any arguments so that the question is read separately.
 
 **Q**: Why is a single line update command not provided?
 
@@ -1318,7 +1328,7 @@ useful scenario for a single line update command.
 |Untag deck|`untag <ix> /tag <tag1> [<tag2> ...]`|`untag 1 /tag important`|
 |Search by tag(s)|`search <tag1> [<tag2> ...]`|`search final-exam important`|
 |Display decks|`decks`||
-|Delete deck|`delete <ix>`|`delete 1`|
+|Delete deck|`delete <ix> [-y]`|`delete 1`|
 |Enter Deck Mode|`edit <ix>`|`edit 1`|
 |Enter Game Mode|`start <ix>`|`start 1`|
 |Create PowerPoint|`pptx <ix> [-y] [-oc <bg color> <txt color>] [-cs <cs index>]`|`pptx 1`|
@@ -1328,9 +1338,9 @@ useful scenario for a single line update command.
 
 |Action|Format|Example|
 |------|------|-------|
-|Add flash card|`add`||
+|Add flash card|`add [<qn> /ans <ans>]`||
 |List flash cards|`list [/ans]`||
-|Delete flash card|`delete <ix>`|`delete 1`|
+|Delete flash card|`delete <ix> [-y]`|`delete 1`|
 |Update flash card|`update <ix>`|`update 1`|
 |Enter Game Mode|`start`||
 |Create PowerPoint|`pptx [-y]`||

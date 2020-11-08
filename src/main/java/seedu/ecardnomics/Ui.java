@@ -435,7 +435,7 @@ public class Ui {
      */
     public static void printUpdateAnswerLine(FlashCard flashCard) {
         // No offset since printing from start of line.
-        System.out.println(flashCard.toString(false, 0));
+        System.out.println(System.lineSeparator() + flashCard.toString(false, 0));
         System.out.println(NEW_ANSWER_LINE);
         printPrompt();
     }
