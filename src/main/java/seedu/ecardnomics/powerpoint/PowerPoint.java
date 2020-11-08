@@ -45,7 +45,7 @@ public class PowerPoint {
     public static final String PPTX_DIR = "pptx/";
     public static final String PPTX_EXT = ".pptx";
 
-
+    /** Constructor for default printing. */
     public PowerPoint(Deck deck) {
         this.deck = deck;
         bgColorString = "white";
@@ -55,6 +55,7 @@ public class PowerPoint {
         colorOpt = ColorOption.DEFAULT;
     }
 
+    /** Constructor for -cs option. */
     public PowerPoint(Deck deck, int colorScheme) {
         this.deck = deck;
         bgColorString = COLOR_SCHEMES[colorScheme][0];
@@ -64,6 +65,7 @@ public class PowerPoint {
         colorOpt = ColorOption.COLOR_SCHEME;
     }
 
+    /** Constructor for -oc option. */
     public PowerPoint(Deck deck, String bgColorString, String txtColorSting,
                       Color bgColor, Color txtColor) {
         this.deck = deck;
@@ -73,7 +75,6 @@ public class PowerPoint {
         this.txtColor = txtColor;
         colorOpt = ColorOption.ORGINAL_COLOR;
     }
-
 
     private void newIntroSlide() {
         XSLFSlideLayout layout = defaultMaster.getLayout(SlideLayout.TITLE);

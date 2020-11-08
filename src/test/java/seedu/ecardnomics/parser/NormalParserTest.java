@@ -14,9 +14,14 @@ import seedu.ecardnomics.command.normal.HelpCommand;
 import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
+import seedu.ecardnomics.exceptions.BothOcAndCsException;
+import seedu.ecardnomics.exceptions.ColorsNotAvailException;
+import seedu.ecardnomics.exceptions.CsIndexFormatException;
+import seedu.ecardnomics.exceptions.CsIndexRangeException;
 import seedu.ecardnomics.exceptions.DeckRangeException;
 import seedu.ecardnomics.exceptions.EmptyInputException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.exceptions.InvalidOptionsException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -61,6 +66,92 @@ class NormalParserTest {
             fail();
         } catch (Exception e) {
             assertEquals((new IndexFormatException()).getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    void getCsIndex_indexOutOfRange_exceptionThrown() {
+        try {
+            assertEquals(1, normalParser.getCsIndex("11"));
+            assertEquals(1, normalParser.getCsIndex("0"));
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof CsIndexRangeException);
+        }
+    }
+
+    @Test
+    void getCsCsIndex_indexWrongFormat_exceptionThrown() {
+        try {
+            assertEquals(1, normalParser.getCsIndex("-1"));
+            assertEquals(1, normalParser.getCsIndex("blue"));
+            assertEquals(1, normalParser.getIndex(""));
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof CsIndexFormatException);
+        }
+    }
+
+    @Test
+    void preparePptxCommand_forceYes_success() {
+        try {
+            assertTrue(normalParser.preparePptxCommand("1 -y") instanceof PowerPointCommand);
+            assertTrue(normalParser.preparePptxCommand("-y 1") instanceof PowerPointCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
+    void preparePptxCommand_forceYesOriginalColor_success() {
+        try {
+            assertTrue(normalParser.preparePptxCommand("1 -oc blue green -y") instanceof PowerPointCommand);
+            assertTrue(normalParser.preparePptxCommand("1 -y -oc blue green") instanceof PowerPointCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
+    void preparePptxCommand_forceYesColorScheme_success() {
+        try {
+            assertTrue(normalParser.preparePptxCommand("1 -cs 1 -y") instanceof PowerPointCommand);
+            assertTrue(normalParser.preparePptxCommand("1 -y -cs 1") instanceof PowerPointCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
+    void preparePptxCommand_bothOcAndCs_exceptionThrown() {
+        try {
+            normalParser.preparePptxCommand("1 -y -oc green black -cs 1");
+            normalParser.preparePptxCommand("1 -y -cs 1 -oc black green");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof BothOcAndCsException);
+        }
+    }
+
+    @Test
+    void preparePptxCommand_originalColorUnavailableColor_exceptionThrown() {
+        try {
+            normalParser.preparePptxCommand("1 -y -oc green block");
+            normalParser.preparePptxCommand("1 -y -oc block green");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof ColorsNotAvailException);
+        }
+    }
+
+    @Test
+    void preparePptxCommand_invalidOptions_exceptionThrown() {
+        try {
+            normalParser.preparePptxCommand("1 -y -cc green black");
+            normalParser.preparePptxCommand("1 -y -ss 1");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof InvalidOptionsException);
         }
     }
 
@@ -148,25 +239,7 @@ class NormalParserTest {
         }
     }
 
-    @Test
-    void parseCommand_PptxCommand_forceYes_success() {
-        try {
-            assertTrue(normalParser.parseCommand("pptx", "1 -y") instanceof PowerPointCommand);
-            assertTrue(normalParser.parseCommand("pptx", "-y 1") instanceof PowerPointCommand);
-        } catch (Exception e) {
-            System.out.println(" error");
-        }
-    }
 
-    @Test
-    void parseCommand_PptxCommandNoIndex_exceptionThrown() {
-        try {
-            normalParser.parseCommand("pptx", "");
-            fail();
-        } catch (Exception e) {
-            assertTrue(e instanceof IndexFormatException);
-        }
-    }
 
     @Test
     void parseCommand_PptxCommandOutOfRangeIndex_exceptionThrown() {

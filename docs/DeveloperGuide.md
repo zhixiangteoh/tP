@@ -245,14 +245,30 @@ The following are the Classes/ Enum of the third part package `org.apache.poi.xs
 * `XSLFTextParagraph` - Class representing a paragraph of text within a shape
 * `XSLFTextRun` - Class representing the properties of the text within a paragraph
 
+
+#### Color Selection  
 The 3 modes of Color Selection, `DEFAULT`, `COLOR_SCHEME` and `ORIGINAL_COLOR` are stored in the enum `ColorOption`.
 
 Each instance of `PowerPoint` has an element of the enum `ColorOption`, `colorOpt`, which decides which of the outputs 
-to print back to the user. `colorOpt` takes on the different values depending on which constructor is used to create the 
-`PowerPoint` instance.
-* `PowerPoint(deck)` - `DEFAULT`
-* `PowerPoint(deck, csIndex)` - `COLOR_SCHEME`
-* `PowerPoint(deck, bgColorString, txtColorString, bgColor, txtColor)` - `ORIGINAL_COLOR`
+to print back to the user. `NormalParser`'s `preparePptxCommand` create a `PowerPointCommand` instance using different 
+constructors depending on the mode of Color Selection. The `PowerPointCommand` then creates a `PowerPoint` instance with 
+the respective constructor the assigns the respective value of `colorOpt`. Below are the `PowerPointCommand` and 
+`PowerPoint` constructors used in each mode.
+
+![PPTX Color Options Sequence Diagram](images-dg/PPTX-Color-Options-Sequence-Diagram.png)
+
+#### Default
+* Prints PowerPoint Slides with default white background and black text.
+* Instantiated using `PowerPointCommand(deck, deckList, isPptxCreated)` and `PowerPoint(deck)`.
+
+#### Color Scheme
+* Prints PowerPoint Slides with one of the 10 available color schemes that are pre-designed. 
+* Instantiated using`PowerPointCommand(deck, deckList, isPptxCreated, csIndex)` and `PowerPoint(deck, csIndex)` 
+
+#### Original Color 
+* Prints PowerPoint Slides with an Original Color combination that is chosen by the user.
+* Instantiated using `PowerPointCommand(deck, deckList, isPptxCreated, bgColorString, txtColorString, bgColor, txtColor)`
+    and `PowerPoint(deck, bgColorString, txtColorString, bgColor, txtColor)`
 
 ### Pretty Printing
 
@@ -263,7 +279,7 @@ for students trying to study. We illustrate the problem with the following examp
 ```
 This is a long question (or maybe answer) field. Suppose tha
 t our console is 60 characters wide, we see that the word "t
-hat" was truncated in the first line and again in the second
+hat" was truncated i the first line and again in the second
 line.
 ```
 In this section, we define the following terms:
@@ -446,19 +462,25 @@ Flashcard application that allows students to quickly create new flashcards and 
 * The program is not expected to guarantee that modifications to data file will be during execution will be retained.
 
 ## Glossary
-
+* *[Color Selection](#color-selection)* - The options available to select the color for printing to PowerPoint.
+* *[Color Schemes](#color-scheme)* - An option to select color for printing to PowerPoint by selecting on of the 
+    pre-designed color schemes available.
 * *[Deck](#deck-model)* - A collection of flash cards that are related by a common topic.
 * *[DeckList](#deck-model)* - A collection of all the decks owned by the user.
 * *[Deck Mode](#commands)* - A state of the program that allows the user to make changes to the flashcards within the
-deck
+    deck
 * *[Flashcard](#deck-model)* - An object that contains a non-empty question and a non-empty answer.
 * *[Game Mode](#commands)* - A state of the program used for testing if the user recalls the answer on flashcards.
 * *[Normal Mode](#command)* - A state of the program that allows the user to modify the list of decks.
+* *[Original Colors](#original-color)* - An option to select color for printing to PowrePoint by selecting two of the
+    available colors for background and text.
 * *[Pretty Printing](#pretty-printing)* - Printing text output that span more than one line in a way that minimizes
-truncating words.
+    truncating words.
+* *[Print to PowerPoint](#print-to-powerpoint-slideshow)* - Prints an entire deck to a PowerPoint slide (.pptx), using 
+    `pptx` command.
 * *[deque](#general-architecture)* - Pronounced "deck", short for "double-ended queue". In eCardnomics, *deque* is
-  implemented as an [`ArrayDeque`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayDeque.html) and functions as a stack of shuffled flash cards, from which questions are popped
-   off during Game Mode.
+  implemented as an [`ArrayDeque`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayDeque.html) 
+  and functions as a stack of shuffled flash cards, from which questions are popped off during Game Mode.
 
 ## Instructions for manual testing
 
@@ -509,6 +531,28 @@ Searching a deck by tag:
 1. Test case: `search LOL`<br>
    Expected: The search returns no results.
    
+Printing a deck to PowerPoint:
+1. Prerequisite: There exist at least one deck and any PowerPoint with the 'deck name'.pptx is not in use.
+1. Test case: `pptx 1` followed by `y` when prompted <br>
+   Expected: A PowerPoint, 'deck name'.pptx is created with white background and black text.
+1. Test case: `pptx 1 -y` <br>
+   Expected: A PowerPoint, 'deck name'.pptx is created with white background and black text.
+1. Test case: `pptx 1 -y -cs 1` <br>
+   Expected: A PowerPoint, 'deck name'.pptx is created with steelblue background and silver text.
+1. Test case: `pptx 1 -y -oc black red` <br>
+   Expected: A PowerPoint, 'deck name'.pptx is created with black background and red text.
+1. Test case: `pptx 1 -y -cs black red` <br>
+   Expected: No PowerPoint is created. Error message shown.
+1. Test case: `pptx 1 -y -cs 11` <br>
+   Expected: No PowerPoint is created. Error message shown.
+1. Test case: `pptx 1 -y -oc block red` <br>
+   Expected: No PowerPoint is created. Error message shown.
+1. Test case: `pptx 1 -y -cs 1 -oc black red` <br>
+   Expected: No PowerPoint is created. Error message shown.
+1. Test case: `pptx 1 -y -cc 11` <br>
+   Expected: No PowerPoint is created. Error message shown.
+   
+   
 Editing a deck:
 1. Prerequisite: There exists at least one deck.
 1. Test case: `edit 1`<br>
@@ -552,6 +596,8 @@ Updating a flashcard:
    Expected: Listing all decks with `list /ans` shows that the question for the first flashcard is updated.
 1. Test case: `update 1` followed by ' ' and ' ' when prompted<br>
    Expected: Listing all decks with `list /ans` shows that the question for the first flashcard is not updated.
+   
+Printing to 
    
 Saving data to disk:
 1. After starting the program, the directory "data" should be created.
