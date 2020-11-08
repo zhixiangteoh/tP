@@ -824,9 +824,12 @@ No updates:
 
 ### Game Mode: `start`
 
-Starts Game Mode for the current deck. 
- 
+Starts Game Mode for the current deck. Upon completion of Game Mode, user is returned to Normal Mode.
+
 > The `start` command can also be entered from within Normal Mode.
+>
+> Note: typing `done` in Game Mode returns user to Normal Mode, regardless of which mode Game Mode was started from
+>. See [Game Mode `done`](#exits-game-mode-done).
  
 #### Format
 
@@ -979,7 +982,9 @@ Questions are displayed in a randomised order. At each question, the user will:
 
 Then, the correct answer is displayed, and our 'advanced' algorithm scores the user's attempt against the correct
  answer. Finally, the user is given the option to re-attempt the question later. See below for example gamplay.
- 
+
+> Upon completion of deck in Game Mode, user is always returned to **Normal Mode**.
+
 #### Examples
 
 * Start Game Mode (from within Deck Mode)
