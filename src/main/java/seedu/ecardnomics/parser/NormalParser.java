@@ -202,7 +202,8 @@ public class NormalParser extends Parser {
     private ArrayList<String> getUniqueValues(String[] tags) {
         ArrayList<String> uniqueTags = new ArrayList<>();
         for (String tag: tags) {
-            if (!uniqueTags.contains(tag.trim())) {
+            String trimmedTag = tag.trim();
+            if (!uniqueTags.contains(trimmedTag) & !trimmedTag.isEmpty()) {
                 uniqueTags.add(tag.trim());
             }
         }
