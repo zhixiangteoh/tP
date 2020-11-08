@@ -196,7 +196,7 @@ public class NormalParser extends Parser {
         }
 
         int deckID = getIndex(idAndRemovedTags[0]);
-        return new UntagCommand(deckList, deckID, uniqueTags , isYes);
+        return new UntagCommand(deckList, deckID, uniqueTags, isYes);
     }
 
     private ArrayList<String> getUniqueValues(String[] tags) {
@@ -206,7 +206,6 @@ public class NormalParser extends Parser {
                 uniqueTags.add(tag.trim());
             }
         }
-
         return uniqueTags;
     }
 
@@ -254,11 +253,10 @@ public class NormalParser extends Parser {
         if (deckList.getAllNames().contains(name)) {
             throw new DuplicateDeckException();
         }
-
         if (nameAndTags[1].trim().isEmpty()) {
             throw new EmptyInputException();
         }
-        
+
         String[] tags = nameAndTags[1].trim().split(" ");
         ArrayList<String> tagsList = getUniqueValues(tags);
         return new Deck(name, tagsList);
