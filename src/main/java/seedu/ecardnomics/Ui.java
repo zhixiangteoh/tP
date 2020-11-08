@@ -138,6 +138,8 @@ public class Ui {
     public static final String N = "n";
     public static final String DASH_LINES = "------------------------------------------------------------"
             + "--------------------";
+    public static final String MIDDLE_SEPARATOR = "                                ----------------                  "
+            + "              ";
 
 
     public static final String LOGO1 = "        ___              _                       _";
@@ -163,6 +165,10 @@ public class Ui {
      */
     public static void printDashLines() {
         System.out.println(DASH_LINES);
+    }
+
+    public static void printMiddleSeparator() {
+        System.out.println(MIDDLE_SEPARATOR);
     }
 
     /**
