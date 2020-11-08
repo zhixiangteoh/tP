@@ -510,6 +510,7 @@ Displays the list of all commands in Normal Mode.
 ### Add a flashcard: `add`
 Adds a flashcard to the end of the current deck. The `add` command expects no initial arguments. Instructions and 
 format of card entry is displayed. Then, the user is prompted to specify the details of the flashcard to be added.
+Duplicate flashcards are allowed.
 
 #### Format
 ```java
