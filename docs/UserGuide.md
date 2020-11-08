@@ -522,13 +522,10 @@ Equivalent One-line format:
 ```java
   > add <question description> /ans <question answer or explanation>
 ```
->If `/ans` is not supplied, `<question description>` is stored and the user is prompted for the answer.
+>The `/ans` option, if supplied, must be separated from the question and answer by spaces.
 >
->If `<question description>` is empty, the input is invalid and the error message 
->```java
->"Input shouldn't be empty! Returning..."
->```
->is shown.
+>If `/ans` option is not supplied correctly, `<question description>` is stored and the user is prompted
+>for the answer.
 
 #### Examples
 
@@ -1268,6 +1265,14 @@ it within each mode, rather than within the "Anywhere" section.
 ```
 Alternatively, `add` and `add My Question` also work since the answer will be read separately.
 
+**Q**: Can my question contain "/ans"?
+
+**A**: Yes. If it is part of another word:
+```java
+> add What is sum/ans? /ans some value
+```
+Otherwise, use `add` without any arguments so that the question is read separately.
+
 **Q**: Why is a single line update command not provided?
 
 **A**: When updating the information on a flashcard, it is important to view the previous contents of the flashcard
@@ -1312,7 +1317,7 @@ useful scenario for a single line update command.
 |Untag deck|`untag <ix> /tag <tag1> [<tag2> ...]`|`untag 1 /tag important`|
 |Search by tag(s)|`search <tag1> [<tag2> ...]`|`search final-exam important`|
 |Display decks|`decks`||
-|Delete deck|`delete <ix>`|`delete 1`|
+|Delete deck|`delete <ix> [-y]`|`delete 1`|
 |Enter Deck Mode|`edit <ix>`|`edit 1`|
 |Enter Game Mode|`start <ix>`|`start 1`|
 |Create PowerPoint|`pptx <ix> [-y] [-oc <bg color> <txt color>] [-cs <cs index>]`|`pptx 1`|
@@ -1322,9 +1327,9 @@ useful scenario for a single line update command.
 
 |Action|Format|Example|
 |------|------|-------|
-|Add flash card|`add`||
+|Add flash card|`add [<qn> /ans <ans>]`||
 |List flash cards|`list [/ans]`||
-|Delete flash card|`delete <ix>`|`delete 1`|
+|Delete flash card|`delete <ix> [-y]`|`delete 1`|
 |Update flash card|`update <ix>`|`update 1`|
 |Enter Game Mode|`start`||
 |Create PowerPoint|`pptx [-y]`||
