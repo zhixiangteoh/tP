@@ -39,6 +39,8 @@ import java.util.regex.Pattern;
 import java.awt.Color;
 import org.beryx.awt.color.ColorFactory;
 
+import static seedu.ecardnomics.Ui.FORCE_YES_OPT;
+
 /**
  * Parser for commands supplied in Normal Mode.
  */
@@ -112,8 +114,8 @@ public class NormalParser extends Parser {
     private Command prepareDeleteDeck(String arguments) throws Exception {
         boolean isDeckDeleted;
         int deckID;
-        if (arguments.contains(Ui.FORCE_YES_OPT)) {
-            arguments = arguments.replaceAll(Ui.FORCE_YES_OPT, "");
+        if (arguments.contains(FORCE_YES_OPT)) {
+            arguments = arguments.replaceAll(FORCE_YES_OPT, "");
             deckID = getIndex(arguments);
             isDeckDeleted = true;
         } else {
@@ -155,7 +157,8 @@ public class NormalParser extends Parser {
         }
 
         String[] newTags = idAndNewTags[1].trim().split(" ");
-        return new TagCommand(deckList, deckID, newTags);
+
+        return new TagCommand(deckList, deckID, getUniqueValues(newTags));
     }
 
     /**
@@ -168,7 +171,7 @@ public class NormalParser extends Parser {
     private Command prepareUntagCommand(String arguments) throws Exception {
         String argumentsWithSpace = arguments + " ";
         String[] idAndRemovedTags = argumentsWithSpace.split("/tag ", 2);
-
+        boolean isYes = false;
         if (idAndRemovedTags.length < 2) {
             logger.log(Level.WARNING, "User did not provide /tag when removing tags.");
             throw new NoSeparatorException();
@@ -176,14 +179,34 @@ public class NormalParser extends Parser {
         assert (arguments.contains("/tag")) :
                 "tags to be removed are after /tag label";
 
-        int deckID = getIndex(idAndRemovedTags[0]);
         if (idAndRemovedTags[1].trim().isEmpty()) {
             logger.log(Level.WARNING, "User did not supply tags when removing tags.");
             throw new EmptyInputException();
         }
         String[] removedTags = idAndRemovedTags[1].trim().split(" ");
+        ArrayList<String> uniqueTags = getUniqueValues(removedTags);
+        if (uniqueTags.get(uniqueTags.size() - 1).equals(FORCE_YES_OPT)) {
+            isYes = true;
+            uniqueTags.remove(uniqueTags.size() - 1);
+        }
 
-        return new UntagCommand(deckList, deckID, removedTags);
+        if (uniqueTags.isEmpty()) {
+            logger.log(Level.WARNING, "User did not supply tags when removing tags.");
+            throw new EmptyInputException();
+        }
+
+        int deckID = getIndex(idAndRemovedTags[0]);
+        return new UntagCommand(deckList, deckID, uniqueTags, isYes);
+    }
+
+    private ArrayList<String> getUniqueValues(String[] tags) {
+        ArrayList<String> uniqueTags = new ArrayList<>();
+        for (String tag: tags) {
+            if (!uniqueTags.contains(tag.trim())) {
+                uniqueTags.add(tag.trim());
+            }
+        }
+        return uniqueTags;
     }
 
     /**
@@ -214,7 +237,6 @@ public class NormalParser extends Parser {
     }
 
     private Deck prepareNewDeckWithTags(String arguments) throws Exception {
-        ArrayList<String> tagsList = new ArrayList<>();
         assert (arguments.contains("/tag ")) : "User did enter tag label.";
         String[] nameAndTags = arguments.split("/tag ", 2);
 
@@ -231,17 +253,12 @@ public class NormalParser extends Parser {
         if (deckList.getAllNames().contains(name)) {
             throw new DuplicateDeckException();
         }
-
         if (nameAndTags[1].trim().isEmpty()) {
             throw new EmptyInputException();
         }
+
         String[] tags = nameAndTags[1].trim().split(" ");
-        for (String tag: tags) {
-            //if (tag.equals("/tag")) {
-            //   throw new MultipleLabelInputException();
-            //}
-            tagsList.add(tag.trim());
-        }
+        ArrayList<String> tagsList = getUniqueValues(tags);
         return new Deck(name, tagsList);
     }
 
@@ -300,8 +317,8 @@ public class NormalParser extends Parser {
 
         Exception csException = null;
 
-        if (arguments.contains(Ui.FORCE_YES_OPT)) {
-            arguments = arguments.replaceAll(Ui.FORCE_YES_OPT, "").trim();
+        if (arguments.contains(FORCE_YES_OPT)) {
+            arguments = arguments.replaceAll(FORCE_YES_OPT, "").trim();
             isPptxCreated = true;
         }
 

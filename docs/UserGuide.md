@@ -186,6 +186,8 @@ Displays the list of all commands in Normal Mode.
 Creates a new deck of flashcards. The `create` command expects one argument specifying the name of the deck to be
  created.
 
+> Note: Duplicate deck name will not be allowed. And deck name cannot contain "/tag".
+
 #### Format
 
 Create deck without tags:
@@ -199,16 +201,21 @@ create <name of deck> [/tag <tag1> [<tag2>]]
 
 #### Examples
 
+Create deck without tags:
 ```java
 [Normal]
   > create market-failure
 // New deck created: market-failure
 ```
+
+Create deck with tags:
 ```java
 [Normal]
-  > create market-failure /tag beginner
-// New deck created: market-failure | Tag(s): beginner 
+  > create market-failure /tag beginner advanced
+// New deck created: market-failure #Tag: beginner | advanced
 ```
+> Tags' name must be a single word, spaces are used to separate different tags.
+>  Tags' name is case-sensitive and cannot be duplicated.
 
 ### Tag an existing deck: `tag`
 
@@ -221,7 +228,8 @@ Adds a tag to an existing deck of flashcards. The `tag` command expects one argu
 tag <index of deck> /tag <tag1> [<tag2>]
 ```
 > Note: Do `decks` command first to obtain up-to-date index. 
-> Tags' name should not include spaces, spaces are used to separate different tags
+>  Tags' name must be a single word, spaces are used to separate different tags.
+>  Tags' name is case-sensitive and cannot be duplicated.
 
 #### Examples
 
@@ -230,11 +238,17 @@ tag <index of deck> /tag <tag1> [<tag2>]
   > tag 1 /tag beginner
 // The deck market-failure has been tagged as: beginner
 ```
+```java
+[Normal]
+  > tag 1 /tag beginner advanced
+// The deck market-failure has been tagged as: beginner | advanced
+```
 
 ### Untag an existing tag: `untag`
 
 Removes an existing tag from an existing deck of flashcards. The `untag` command expects one argument specifying the 
-name of the deck to remove a deck from. At least one additional argument after /tag specifies tags to be removed from the deck.
+name of the deck to remove a deck from. At least one additional argument after /tag specifies tags 
+to be removed from the deck. User is then further prompted for an input of only either `y` or `n`.
 
 #### Format
 
@@ -243,8 +257,16 @@ untag <index of deck> /tag <tag1> [<tag2>]
 // Do you want to remove the tag <tag1> from <name of deck>? [y/n] y/n
 ```
 > Note: Do `decks` command first to obtain up-to-date index.
-> Tags' name should not include spaces, spaces are used to separate different tags.
-> 
+>  Tags' name must be a single word, spaces are used to separate different tags.
+>  Tags' name is case-sensitive.
+
+One-line untag command:
+
+```java
+untag <index of deck> /tag <tag1> [<tag2>] [-y]
+```
+> Specify -y for confirmation directly. 
+>  To delete an existing -y tag in a deck, type -y twice
 
 #### Examples
 
@@ -253,6 +275,11 @@ untag <index of deck> /tag <tag1> [<tag2>]
   > untag 1 /tag beginner
 // Do you want to remove the tag beginner from market-failure? [y/n] y/n
 // The tag beginner has been removed from the deck market-failure.
+```
+```java
+[Normal]
+  > untag 1 /tag -y -y
+// The tag -y has been removed from the deck market-failure.
 ```
 
 ### Search decks by tag: `search`
@@ -292,10 +319,13 @@ decks
 ```java
 [Normal]
   > decks
-// The following decks are available:
-// 1. market-failure
-// 2. perfect competition
-// 3. externalities
+//The following decks are available:
+//1. Micro-Economics
+//   Tags: Economics | EC1301
+//2. Macro-Economics
+//   Tags: Economics | EC1301
+//3. Object-oriented Programming
+//   Tags: Computer | Science | CS2113
 ```
 
 ### Delete an existing deck: `delete`
@@ -307,7 +337,7 @@ Deletes an existing deck of flashcards. The `delete` command expects one argumen
 
 ```java
 [Normal]
-  > delete <index of deck>
+  > delete <index of deck> [-y]
 // Do you want to delete `name of deck`? [y/n] <y/n>
 // `name of deck` has been deleted.
 ```
@@ -1251,6 +1281,21 @@ Shows release version from anywhere in the program.
 ## FAQ
 
 ### General
+**Q**: With none-argument command, can it be executed if I type the command with some nonsense
+arguments?
+**Q**: Yes you still can, with this type of command, such as exit or done, the program will only take 
+into account the first word you enter, the rest will be automatically discards.
+
+Example:
+```java
+[Deck - Macro-Economics]
+  > done cdcns cndcn
+//--------------------------------------------------------------------------------
+//You are back in Normal Mode
+//--------------------------------------------------------------------------------
+```
+**A**: No. You cannot name your deck with "/tag" word. However, the tag of deck can
+contain "/tag".
 **Q**: Why are some of the output (e.g. questions and answer) aligned to the dashed lines but not others (like help).
 
 **A**: Question and answers could possibly be very long and could take up multiple lines. These are also important
@@ -1264,6 +1309,13 @@ the information on a single line is more readable.
 **A**:  Anywhere section is for generic commands that have same effect regardless of user's location within
 application. help commands are unique and distinct across different modes, which explains the decision to place
 it within each mode, rather than within the "Anywhere" section.
+
+### Normal Mode
+
+**Q**: Can the deck name contain "/tag"?
+
+**A**: No. You cannot name your deck with "/tag" word. However, the tag of deck can
+contain "/tag".
 
 ### Deck Mode
 
