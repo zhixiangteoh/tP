@@ -94,7 +94,8 @@ class DeckTest {
         tags.add("anime");
         tags.add("unreal");
         Deck deck = initialiseDeck(2, tags);
-        String[] newTags = {"for-kids"};
+        ArrayList<String> newTags = new ArrayList<>();
+        newTags.add("for-kids");
         deck.addTag(newTags);
         assertEquals(3, deck.getTag().size());
     }
@@ -106,7 +107,8 @@ class DeckTest {
         tags.add("unreal");
         tags.add("for-kids");
         Deck deck = initialiseDeck(2, tags);
-        String[] removedTags = {"for-kids"};
+        ArrayList<String> removedTags = new ArrayList<>();
+        removedTags.add("for-kids");
         deck.removeTag(removedTags);
         assertEquals(2, deck.getTag().size());
     }

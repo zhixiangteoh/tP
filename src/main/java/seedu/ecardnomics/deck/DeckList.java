@@ -96,21 +96,28 @@ public class DeckList {
     @Override
     public String toString() {
         String output = "";
-        String offset = "   ";
         for (int i = 0; i < deckList.size(); i++) {
-            if (offset.length() <= (i / 10 + 2)) {
-                offset += " ";
-            }
-            output += (i + 1) + ". " + deckList.get(i).getName();
-            if (deckList.get(i).getTag().size() !=  0) {
-                output += "\n";
-                output += offset + "Tags: " + deckList.get(i).getTagString();
-            }
+            output += getNameWithTags(i);
             if (i != deckList.size() - 1) {
                 output += "\n";
             }
         }
 
         return output;
+    }
+
+    public String getNameWithTags(int index) {
+        String nameWithTags = "";
+        String offset = "";
+        while (offset.length() <= (index / 10 + 2)) {
+            offset += " ";
+        }
+        nameWithTags += (index + 1) + ". " + deckList.get(index).getName();
+        if (deckList.get(index).getTag().size() !=  0) {
+            nameWithTags += "\n";
+            nameWithTags += offset + "Tags: " + deckList.get(index).getTagString();
+        }
+
+        return nameWithTags;
     }
 }

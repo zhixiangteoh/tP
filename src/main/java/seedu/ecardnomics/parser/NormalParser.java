@@ -155,7 +155,8 @@ public class NormalParser extends Parser {
         }
 
         String[] newTags = idAndNewTags[1].trim().split(" ");
-        return new TagCommand(deckList, deckID, newTags);
+
+        return new TagCommand(deckList, deckID, getUniqueValues(newTags));
     }
 
     /**
@@ -182,8 +183,18 @@ public class NormalParser extends Parser {
             throw new EmptyInputException();
         }
         String[] removedTags = idAndRemovedTags[1].trim().split(" ");
+        return new UntagCommand(deckList, deckID, getUniqueValues(removedTags));
+    }
 
-        return new UntagCommand(deckList, deckID, removedTags);
+    private ArrayList<String> getUniqueValues (String[] tags) {
+        ArrayList<String> uniqueTags = new ArrayList<>();
+        for (String tag: tags) {
+            if (!uniqueTags.contains(tag.trim())) {
+                uniqueTags.add(tag.trim());
+            }
+        }
+
+        return uniqueTags;
     }
 
     /**

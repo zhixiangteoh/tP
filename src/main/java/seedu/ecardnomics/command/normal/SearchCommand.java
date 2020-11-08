@@ -19,11 +19,17 @@ public class SearchCommand extends NormalCommand {
     @Override
     public void execute() {
         String decksHavingTags = "";
-        ArrayList<Deck> allDecks = deckList.getAllDecks();
+        ArrayList<String> uniqueTagList = new ArrayList<>();
         for (String tag: relevantTags) {
+            if (!uniqueTagList.contains(tag.toLowerCase())) {
+                uniqueTagList.add(tag);
+            }
+        }
+        for (String tag: uniqueTagList) {
             for (int i = 0; i < deckList.size(); i++) {
-                if (allDecks.get(i).getTag().contains(tag)) {
-                    decksHavingTags += "\n" + (i + 1) + ". " + allDecks.get(i).getName();
+                String tagLowerCase = deckList.getDeck(i).getTagString().toLowerCase();
+                if (tagLowerCase.contains(tag.toLowerCase())) {
+                    decksHavingTags += "\n" + deckList.getNameWithTags(i);
                 }
             }
         }

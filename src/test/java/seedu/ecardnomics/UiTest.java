@@ -8,6 +8,7 @@ import seedu.ecardnomics.deck.FlashCard;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.ecardnomics.Ui.printTagsRemovedLine;
@@ -150,7 +151,9 @@ public class UiTest {
                 + "--------------------" + System.lineSeparator()
                 + "The deck Pokemon has been tagged as: Anime, Unreal" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
-        String[] newTagsArray = {"Anime", "Unreal"};
+        ArrayList<String> newTagsArray = new ArrayList<>();
+        newTagsArray.add("Anime");
+        newTagsArray.add("Unreal");
         printNewTags("Pokemon", newTagsArray);
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -159,16 +162,18 @@ public class UiTest {
     void printInvalidTagsLine_none_warning() {
         String expectedOutput = "------------------------------------------------------------"
                 + "--------------------" + System.lineSeparator()
-                + "You entered invalid tag(s)!" + System.lineSeparator() + "--------------------"
+                + "Tag Cons is not in the deck already!" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
-        printInvalidTagsLine();
+        printInvalidTagsLine("Cons");
         assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
     void printRemovedTagsQuestion_StringArrayOfTagsAndDeckName_question() {
         String expectedOutput = "Do you want to remove the tag(s) Beginner, Year2 from Micro-Economics? [y/n] ";
-        String[] removedTagsArray = {"Beginner", "Year2"};
+        ArrayList<String> removedTagsArray = new ArrayList<>();
+        removedTagsArray.add("Beginner");
+        removedTagsArray.add("Year2");
         printRemovedTagsQuestion("Micro-Economics", removedTagsArray);
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -184,8 +189,12 @@ public class UiTest {
 
     @Test
     void formStringOfTags_StringArrayOfTags_aStringOfTags() {
-        String[] arrayStringOfTags = {"Advanced", "Year4", "Finance"};
+        ArrayList<String> arrayStringOfTags = new ArrayList<>();
+        arrayStringOfTags.add("Advanced");
+        arrayStringOfTags.add("Year4");
+        arrayStringOfTags.add("Finance");
         String expectedOutput = "Advanced, Year4, Finance";
+
         String actualOutput = formStringOfTags(arrayStringOfTags);
         assertEquals(expectedOutput, actualOutput);
     }

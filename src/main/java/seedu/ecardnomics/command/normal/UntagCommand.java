@@ -10,14 +10,14 @@ import java.util.ArrayList;
  */
 public class UntagCommand extends NormalCommand {
     private int index;
-    private String[] removedTags;
+    private ArrayList<String> removedTags;
 
     /** Constructor. */
-    public UntagCommand(DeckList decks, int index, String[] removedTags) {
+    public UntagCommand(DeckList decks, int index, ArrayList<String> removedTags) {
         super(decks);
         assert (index >= 0 && index < decks.size()) : "Index must be within range.";
         this.index = index;
-        assert  (removedTags.length != 0) : "Remove tags must be provided.";
+        assert  (removedTags.size() != 0) : "Remove tags must be provided.";
         this.removedTags = removedTags;
     }
 
@@ -40,14 +40,15 @@ public class UntagCommand extends NormalCommand {
      * @param removedTags String[] list tags to be removed
      * @return a boolean value indicating if all the tags exist
      */
-    public boolean checkTagsExist(String[] removedTags) {
+    public boolean checkTagsExist(ArrayList<String> removedTags) {
         boolean isExist = true;
         ArrayList<String> availableTagList = deckList.getDeck(index).getTag();
+        outerLoop:
         for (String removedTag : removedTags) {
             if (!availableTagList.contains(removedTag)) {
                 isExist = false;
-                Ui.printInvalidTagsLine();
-                break;
+                Ui.printInvalidTagsLine(removedTag);
+                break outerLoop;
             }
         }
         return isExist;
