@@ -11,11 +11,11 @@ public class Game {
             + "    1. Try to attempt an answer at the question, by typing at the prompt\n"
             + "    2. Press <enter> (with an empty attempt if you want to do it in your head)\n"
             + System.lineSeparator()
-            + "Then, our 'advanced' algorithms will check your answer and score your answer \n"
-            + "(if any), and display the correct answer for you to check your answer against.\n"
-            + "Finally, we will ask if you think you got it right. If you did not, the\n"
-            + "question will be inserted back into the question pool, and you will get a \n"
-            + "chance to attempt it again!";
+            + "Then, our 'advanced' algorithms will check your answer and score your answer (if\n"
+            + "any), and display the correct answer for you to check your answer against.\n"
+            + "Finally, we will ask if you think you got it right. If you did not, the question\n"
+            + "will be inserted back into the question pool, and you will get a chance to\n"
+            + "attempt it again!";
     public static final String WELCOME_MESSAGE = ""
             + "Welcome to Game Mode!"
             + "\n"
