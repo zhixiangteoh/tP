@@ -21,7 +21,8 @@ public class SearchCommand extends NormalCommand {
         String decksHavingTags = "";
         ArrayList<String> uniqueTagList = new ArrayList<>();
         for (String tag: relevantTags) {
-            if (!uniqueTagList.contains(tag.toLowerCase())) {
+            String lowerCaseTrimmedTag = tag.toLowerCase();
+            if (!uniqueTagList.contains(lowerCaseTrimmedTag) & !lowerCaseTrimmedTag.isEmpty()) {
                 uniqueTagList.add(tag);
             }
         }
