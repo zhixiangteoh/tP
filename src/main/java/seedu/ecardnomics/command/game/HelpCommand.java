@@ -5,6 +5,7 @@ import seedu.ecardnomics.game.Game;
 
 public class HelpCommand extends GameCommand {
     public static final String GAME_HELP = ""
+            // --------------------------------------------------------------------------------
             + "eCardnomics.\n"
             + "Game Mode.\n"
             + "\n"
@@ -18,6 +19,7 @@ public class HelpCommand extends GameCommand {
             + "\n"
             + "Gameplay:\n"
             + Game.GAMEPLAY_MESSAGE;
+            // --------------------------------------------------------------------------------
 
     public HelpCommand() {
         super();

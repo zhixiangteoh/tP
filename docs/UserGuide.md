@@ -155,24 +155,30 @@ Displays the list of all commands in Normal Mode.
 // --------------------------------------------------------------------------------
 // eCardnomics.
 // Normal Mode.
-//
+// 
 // Usage:
-//   create <nm>   [/tag <tag1> [<tag2> ...]]    Creates a new deck of flash cards, named <nm>.
-//   decks                                       Lists all available decks.
-//   edit   <ix>                                 Enter Deck Mode for editing the deck at list index <ix>.
-//   start  <ix>                                 Enter Game Mode for deck at list index <ix>! Do your best!
-//   delete <ix>   [-y]                          Deletes the deck at list index <ix> from list of decks.
-//   pptx   <ix>   [-y]                          Creates a PowerPoint slides based on the deck at list index <ix>.
-//   pptx   <ix>   [-y] [-cs <index |            Creates a PowerPoint slides based on the current deck.
-//                 -oc <bg color> <txt color>]  
-//   tag    <ix>   /tag <tag1> [<tag2> ...]      Tags the deck at list index <ix>, with 1 or more tags.
-//   untag  <ix>   /tag <tag1> [<tag2> ...]      Untags specified <tag>s of the deck at list index <ix>.
-//   search <tag1> [<tag2> ...]                  Search deck list for decks tagged with specified <tag>s.
-//   exit                                        Exits the program.
-//   help                                        Show this output.
-//
+//   create <nm>   [/tag <tag1> [<tag2> ...]]     Creates a new deck of flash cards
+//                                                  named <nm>.                    
+//   decks                                        Lists all available decks.       
+//   edit   <ix>                                  Enter Deck Mode for editing the  
+//                                                  deck at list index <ix>.       
+//   start  <ix>                                  Enter Game Mode for deck at list 
+//                                                  index <ix>! Do your best!      
+//   delete <ix>   [-y]                           Deletes the deck at list index   
+//                                                  <ix> from list of decks.       
+//   pptx   <ix>   [-y] [-cs <index> | -oc        Creates a PowerPoint slides based
+//                  <bg color> <txt color>]         on the deck at list index <ix>.
+//   tag    <ix>   /tag <tag1> [<tag2> ...]       Tags the deck at list index <ix> 
+//                                                  with 1 or more tags.           
+//   untag  <ix>   /tag <tag1> [<tag2> ...]       Untags specified <tag>s of the   
+//                                                  deck at list index <ix>.       
+//   search <tag1> [<tag2> ...]                   Search deck list for decks tagged
+//                                                  with specified <tag>s.         
+//   exit                                         Exits the program.
+//   help                                         Show this output.
+// 
 // Options:
-//   --version      Show version.
+//   --version                                    Show version.
 // --------------------------------------------------------------------------------
 ```
 
@@ -521,18 +527,23 @@ Displays the list of all commands in Deck Mode.
 // Deck Mode.
 // 
 // Usage:
-//   add         [<qn> /ans <ans>]          Adds a new flash card to the current deck.
-//   list        [/ans]                     Lists all flash cards in the current deck, optionally with answers.
-//   delete <ix> [-y]                       Deletes the flash card at list index <ix> from the current deck.
-//   pptx        [-y] [-cs <index |         Creates a PowerPoint slides based on the current deck.
-//               -oc <bg color> <txt color>]  
-//   start                                  Enter Game Mode for this deck! Do your best!
-//   done                                   Exits from Deck Mode and returns to Normal Mode.
-//   exit                                   Exits the program.
-//   help                                   Show this output.
-//
+//   add         [<qn> /ans <ans>]           Adds a new flash card to the current  
+//                                             deck.                               
+//   list        [/ans]                      Lists all flash cards in the current  
+//                                             deck, optionally with answers.      
+//   delete <ix> [-y]                        Deletes the flash card at list index  
+//                                             <ix> from the current deck.         
+//   pptx        [-y] [-cs <index> | -oc     Creates a PowerPoint slides based on  
+//                <bg color> <txt color>]      current deck.                       
+//   start                                   Enter Game Mode for this deck! Do your
+//                                             best!                               
+//   done                                    Exits from Deck Mode and returns to   
+//                                             Normal Mode.                        
+//   exit                                    Exits the program.                    
+//   help                                    Show this output.                     
+// 
 // Options:
-//   --version      Show version.
+//   --version                               Show version.
 // --------------------------------------------------------------------------------
 ```
 
@@ -1074,7 +1085,7 @@ Displays the list of all commands in Game Mode.
 // --------------------------------------------------------------------------------
 // eCardnomics.
 // Game Mode.
-//
+// 
 // Usage:
 //   done           Exits from Game Mode and returns to Normal Mode.
 //   exit           Exits the program.
@@ -1082,13 +1093,13 @@ Displays the list of all commands in Game Mode.
 // 
 // Options:
 //   --version      Show version.
-//
+// 
 // Gameplay:
 // Questions will be displayed in a randomised order. At each question, you can
 //     1. Try to attempt an answer at the question, by typing at the prompt
 //     2. Press <enter> (with an empty attempt if you want to do it in your head)
 // 
-// Then, our 'advanced' algorithms will check your answer and score your answer (if 
+// Then, our 'advanced' algorithms will check your answer and score your answer (if
 // any), and display the correct answer for you to check your answer against.
 // Finally, we will ask if you think you got it right. If you did not, the question
 // will be inserted back into the question pool, and you will get a chance to
