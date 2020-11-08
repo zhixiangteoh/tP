@@ -186,18 +186,20 @@ Displays the list of all commands in Normal Mode.
 Creates a new deck of flashcards. The `create` command expects one argument specifying the name of the deck to be
  created.
 
-> Note: Duplicate deck name will not be allowed. And deck name cannot contain "/tag".
-
 #### Format
 
 Create deck without tags:
 ```java
 create <name of deck>
 ```
+> Note: Duplicate deck name will not be allowed. And deck name cannot contain "/tag".
+
 Create deck with tag(s):
 ```java
 create <name of deck> [/tag <tag1> [<tag2>]]
 ```
+> Tags' name must be a single word, spaces are used to separate different tags.
+>  Tags' name is case-sensitive and cannot be duplicated.
 
 #### Examples
 
@@ -214,8 +216,6 @@ Create deck with tags:
   > create market-failure /tag beginner advanced
 // New deck created: market-failure #Tag: beginner | advanced
 ```
-> Tags' name must be a single word, spaces are used to separate different tags.
->  Tags' name is case-sensitive and cannot be duplicated.
 
 ### Tag an existing deck: `tag`
 
@@ -284,22 +284,27 @@ untag <index of deck> /tag <tag1> [<tag2>] [-y]
 
 ### Search decks by tag: `search`
 
-Searches all the decks containing the specified tag. The `search` command expects at least one argument specifying one 
-or more tags related to the deck. 
+Searches all the decks containing the specified tags. The `search` command expects at least one argument specifying one 
+or more similar tags related to the deck. 
 
 #### Format
 
 ```java
 search <tag1> [<tag2>]
 ```
+> Note: tags in search command are case-insensitive and must be a single word.
+>  Spaces are used to separate different tags.
+
 #### Examples:
 
 ```java
 [Normal]
-  > search beginner
-// The decks having tags you are searching for:
-// 2. Micro-economics
-// 4. Macro-economics
+  > search Economics
+//The decks having tags you are searching for:
+//1. Micro-Economics
+//   Tags: Economics | EC1301
+//2. Macro-Economics
+//   Tags: Economics | EC1301
 ```
 
 > Notice how the original deck index is displayed.
@@ -313,12 +318,25 @@ Displays an enumerated list of all the decks available to the user. The `decks` 
 ```java
 decks
 ```
+> Note: The program will ignore any input following the command separated by spaces.
 
 #### Examples
 
 ```java
 [Normal]
   > decks
+//The following decks are available:
+//1. Micro-Economics
+//   Tags: Economics | EC1301
+//2. Macro-Economics
+//   Tags: Economics | EC1301
+//3. Object-oriented Programming
+//   Tags: Computer | Science | CS2113
+```
+
+```java
+[Normal]
+  > decks thisWillBeIgnored
 //The following decks are available:
 //1. Micro-Economics
 //   Tags: Economics | EC1301
@@ -1296,6 +1314,7 @@ Example:
 ```
 **A**: No. You cannot name your deck with "/tag" word. However, the tag of deck can
 contain "/tag".
+
 **Q**: Why are some of the output (e.g. questions and answer) aligned to the dashed lines but not others (like help).
 
 **A**: Question and answers could possibly be very long and could take up multiple lines. These are also important
@@ -1377,7 +1396,7 @@ useful scenario for a single line update command.
 |------|------|-------|
 |Create deck|`create <nm>`|`create market-failure`|
 |Tag deck|`tag <ix> /tag <tag1> [<tag2> ...]`|`tag 1 /tag important final-exam`|
-|Untag deck|`untag <ix> /tag <tag1> [<tag2> ...]`|`untag 1 /tag important`|
+|Untag deck|`untag <ix> /tag <tag1> [<tag2> ...] [-y]`|`untag 1 /tag important`|
 |Search by tag(s)|`search <tag1> [<tag2> ...]`|`search final-exam important`|
 |Display decks|`decks`||
 |Delete deck|`delete <ix> [-y]`|`delete 1`|
