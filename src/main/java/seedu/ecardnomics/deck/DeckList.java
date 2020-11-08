@@ -36,7 +36,7 @@ public class DeckList {
 
     /**
      * Checks whether a deck with the same deck name is already in the deck.
-     * @param deck
+     * @param deck reference to deck to be checked
      * @return boolean
      */
     public boolean contains(Deck deck) {
