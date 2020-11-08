@@ -348,7 +348,7 @@ public class Ui {
     public static void printNewDeck(Deck deck) {
         String tagsOfNewDeck = deck.getTagString();
         if (!tagsOfNewDeck.isEmpty()) {
-            tagsOfNewDeck = " # Tag(s): " + tagsOfNewDeck;
+            tagsOfNewDeck = " #Tag: " + tagsOfNewDeck;
         }
         printMessage(NEW_DECK_CREATED_LINE + deck.getName() + tagsOfNewDeck);
     }

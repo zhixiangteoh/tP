@@ -39,6 +39,8 @@ import java.util.regex.Pattern;
 import java.awt.Color;
 import org.beryx.awt.color.ColorFactory;
 
+import static seedu.ecardnomics.Ui.FORCE_YES_OPT;
+
 /**
  * Parser for commands supplied in Normal Mode.
  */
@@ -112,8 +114,8 @@ public class NormalParser extends Parser {
     private Command prepareDeleteDeck(String arguments) throws Exception {
         boolean isDeckDeleted;
         int deckID;
-        if (arguments.contains(Ui.FORCE_YES_OPT)) {
-            arguments = arguments.replaceAll(Ui.FORCE_YES_OPT, "");
+        if (arguments.contains(FORCE_YES_OPT)) {
+            arguments = arguments.replaceAll(FORCE_YES_OPT, "");
             deckID = getIndex(arguments);
             isDeckDeleted = true;
         } else {
@@ -169,7 +171,7 @@ public class NormalParser extends Parser {
     private Command prepareUntagCommand(String arguments) throws Exception {
         String argumentsWithSpace = arguments + " ";
         String[] idAndRemovedTags = argumentsWithSpace.split("/tag ", 2);
-
+        boolean isYes = false;
         if (idAndRemovedTags.length < 2) {
             logger.log(Level.WARNING, "User did not provide /tag when removing tags.");
             throw new NoSeparatorException();
@@ -183,7 +185,17 @@ public class NormalParser extends Parser {
             throw new EmptyInputException();
         }
         String[] removedTags = idAndRemovedTags[1].trim().split(" ");
-        return new UntagCommand(deckList, deckID, getUniqueValues(removedTags));
+        ArrayList<String> uniqueTags = getUniqueValues(removedTags);
+        if (uniqueTags.get(uniqueTags.size()-1).equals(FORCE_YES_OPT)) {
+            isYes = true;
+            uniqueTags.remove(uniqueTags.size()-1);
+        }
+
+        if (uniqueTags.isEmpty()) {
+            logger.log(Level.WARNING, "User did not supply tags when removing tags.");
+            throw new EmptyInputException();
+        }
+        return new UntagCommand(deckList, deckID,uniqueTags , isYes);
     }
 
     private ArrayList<String> getUniqueValues (String[] tags) {
@@ -246,13 +258,9 @@ public class NormalParser extends Parser {
         if (nameAndTags[1].trim().isEmpty()) {
             throw new EmptyInputException();
         }
+
         String[] tags = nameAndTags[1].trim().split(" ");
-        for (String tag: tags) {
-            //if (tag.equals("/tag")) {
-            //   throw new MultipleLabelInputException();
-            //}
-            tagsList.add(tag.trim());
-        }
+        tagsList = getUniqueValues(tags);
         return new Deck(name, tagsList);
     }
 
@@ -311,8 +319,8 @@ public class NormalParser extends Parser {
 
         Exception csException = null;
 
-        if (arguments.contains(Ui.FORCE_YES_OPT)) {
-            arguments = arguments.replaceAll(Ui.FORCE_YES_OPT, "").trim();
+        if (arguments.contains(FORCE_YES_OPT)) {
+            arguments = arguments.replaceAll(FORCE_YES_OPT, "").trim();
             isPptxCreated = true;
         }
 
