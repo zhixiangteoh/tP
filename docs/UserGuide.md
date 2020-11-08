@@ -531,6 +531,8 @@ Displays the list of all commands in Deck Mode.
 //   list        [/ans]                      Lists all flash cards in the current  
 //                                             deck, optionally with answers.      
 //   delete <ix> [-y]                        Deletes the flash card at list index  
+//                                             <ix> from the current deck.
+//   update <ix>                             Updates the flash card at list index
 //                                             <ix> from the current deck.         
 //   pptx        [-y] [-cs <index> | -oc     Creates a PowerPoint slides based on  
 //                <bg color> <txt color>]      current deck.                       
