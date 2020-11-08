@@ -179,26 +179,27 @@ public class NormalParser extends Parser {
         assert (arguments.contains("/tag")) :
                 "tags to be removed are after /tag label";
 
-        int deckID = getIndex(idAndRemovedTags[0]);
         if (idAndRemovedTags[1].trim().isEmpty()) {
             logger.log(Level.WARNING, "User did not supply tags when removing tags.");
             throw new EmptyInputException();
         }
         String[] removedTags = idAndRemovedTags[1].trim().split(" ");
         ArrayList<String> uniqueTags = getUniqueValues(removedTags);
-        if (uniqueTags.get(uniqueTags.size()-1).equals(FORCE_YES_OPT)) {
+        if (uniqueTags.get(uniqueTags.size() - 1).equals(FORCE_YES_OPT)) {
             isYes = true;
-            uniqueTags.remove(uniqueTags.size()-1);
+            uniqueTags.remove(uniqueTags.size() - 1);
         }
 
         if (uniqueTags.isEmpty()) {
             logger.log(Level.WARNING, "User did not supply tags when removing tags.");
             throw new EmptyInputException();
         }
-        return new UntagCommand(deckList, deckID,uniqueTags , isYes);
+
+        int deckID = getIndex(idAndRemovedTags[0]);
+        return new UntagCommand(deckList, deckID, uniqueTags , isYes);
     }
 
-    private ArrayList<String> getUniqueValues (String[] tags) {
+    private ArrayList<String> getUniqueValues(String[] tags) {
         ArrayList<String> uniqueTags = new ArrayList<>();
         for (String tag: tags) {
             if (!uniqueTags.contains(tag.trim())) {
@@ -237,7 +238,6 @@ public class NormalParser extends Parser {
     }
 
     private Deck prepareNewDeckWithTags(String arguments) throws Exception {
-        ArrayList<String> tagsList = new ArrayList<>();
         assert (arguments.contains("/tag ")) : "User did enter tag label.";
         String[] nameAndTags = arguments.split("/tag ", 2);
 
@@ -258,9 +258,9 @@ public class NormalParser extends Parser {
         if (nameAndTags[1].trim().isEmpty()) {
             throw new EmptyInputException();
         }
-
+        
         String[] tags = nameAndTags[1].trim().split(" ");
-        tagsList = getUniqueValues(tags);
+        ArrayList<String> tagsList = getUniqueValues(tags);
         return new Deck(name, tagsList);
     }
 
