@@ -81,7 +81,6 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     + [Examples](#examples-20)
   * [Shows release version: `--version`](#shows-release-version---version)
     + [Examples](#examples-21)
-- [Features - (Proposed) Encryption and Decryption](#features---proposed-encryption-and-decryption)
 - [FAQ](#faq)
   * [General](#general)
   * [Deck Mode](#deck-mode)
@@ -554,7 +553,7 @@ to show all the questions, and their respective answers.
 
 #### Format
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > list
 // --------------------------------------------------------------------------------
 // You are now viewing deck: `name of deck`
@@ -568,10 +567,10 @@ to show all the questions, and their respective answers.
 ```
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > list /ans
 // --------------------------------------------------------------------------------
-// You are now viewing deck: `name of deck`
+// You are now viewing deck: 'name of deck'
 // --------------------------------------------------------------------------------
 // 1. Question: <question 1>
 //    Answer:   <answer 1>
@@ -629,7 +628,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 #### Format
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > delete 1
 // Do you want to delete the following flash card? [y/n] ?
 //   '<question 1>' n
@@ -637,7 +636,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 ```
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > delete 2
 // Do you want to delete the following flash card? [y/n] ?
 //   '<question 2>' y
@@ -705,11 +704,12 @@ Updates the question and answer fields of a  specified flashcard in the deck. Th
 
 #### Format
 ```java
-[Deck - `name`]
+[Deck - 'name of deck']
   > update <index of flashcard>
 // Question: `Current Question`
 // New Question:
     > <new question>
+//
 // Answer:   `Current Answer`
 // New Answer:
     > <new answer>
@@ -729,6 +729,7 @@ Updating both the question and answer:
 // Question: Define market failure
 // New Question:
   > What is the difference between free-loading and free-riding?
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer:
   > Free-loading gives a benefit to the free-loader but there is a cost to the people taken advantage of.
@@ -745,6 +746,7 @@ Updating question only:
 // Question: Define market failure
 // New Question:
   > Define Market Failure
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer:
   > 
@@ -760,6 +762,7 @@ Updating answer only:
 // Question: Define market failure
 // New Question:
   > 
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > Economic situation where distribution of goods and services in the free market is inefficient
@@ -775,6 +778,7 @@ No updates:
 // Question: Define market failure
 // New Question:
   > 
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > 
@@ -948,6 +952,7 @@ Displays the list of all commands in Deck Mode.
 //   add         [<qn> /ans <ans>]          Adds a new flash card to the current deck.
 //   list        [/ans]                     Lists all flash cards in the current deck, optionally with answers.
 //   delete <ix> [-y]                       Deletes the flash card at list index <ix> from the current deck.
+//   update <ix>                            Updates the flash card at list index <ix> from the current deck.
 //   pptx        [-y] [-cs <index |         Creates a PowerPoint slides based on the current deck.
 //               -oc <bg color> <txt color>]  
 //   start                                  Enter Game Mode for this deck! Do your best!
@@ -1234,8 +1239,6 @@ Shows release version from anywhere in the program.
 //   Enter your attempt below (or `done`, `exit`, `help`):
   > 
 ```
-
-## Features - (Proposed) Encryption and Decryption
 
 ## FAQ
 
