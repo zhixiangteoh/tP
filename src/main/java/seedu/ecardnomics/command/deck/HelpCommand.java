@@ -13,6 +13,8 @@ public class HelpCommand extends DeckCommand {
             + "answers.\n"
             + "  delete <ix> [-y]                       Deletes the flash card at list index <ix> from the current"
             + " deck.\n"
+            + "  update <ix>                            Update the flash card at list index <ix> from the current"
+            + " deck.\n"
             + "  pptx        [-y] [-cs <index> |        Creates a PowerPoint slides based on the current deck.\n"
             + "              -oc <bg color> <txt color>]\n"
             + "  start                                  Enter Game Mode for this deck! Do your best!\n"
