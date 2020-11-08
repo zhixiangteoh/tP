@@ -147,14 +147,15 @@ public class UiTest {
 
     @Test
     void printNewTags_none_newTagsLine() {
-        String expectedOutput = "------------------------------------------------------------"
-                + "--------------------" + System.lineSeparator()
-                + "The deck Pokemon has been tagged as: Anime | Unreal" + System.lineSeparator() + "--------------------"
-                + "------------------------------------------------------------" + System.lineSeparator();
         ArrayList<String> newTagsArray = new ArrayList<>();
         newTagsArray.add("Anime");
         newTagsArray.add("Unreal");
         printNewTags("Pokemon", newTagsArray);
+        String expectedOutput = "------------------------------------------------------------"
+                + "--------------------" + System.lineSeparator()
+                + "The deck Pokemon has been tagged as: Anime | Unreal" + System.lineSeparator()
+                + "--------------------------------------------------------------------------------"
+                + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
@@ -170,22 +171,22 @@ public class UiTest {
 
     @Test
     void printRemovedTagsQuestion_StringArrayOfTagsAndDeckName_question() {
-        String expectedOutput = "Do you want to remove the tag(s) Beginner | Year2 from Micro-Economics? [y/n] ";
         ArrayList<String> removedTagsArray = new ArrayList<>();
         removedTagsArray.add("Beginner");
         removedTagsArray.add("Year2");
         printRemovedTagsQuestion("Micro-Economics", removedTagsArray);
+        String expectedOutput = "Do you want to remove the tag(s) Beginner | Year2 from Micro-Economics? [y/n] ";
         assertEquals(expectedOutput, outContent.toString());
     }
 
     @Test
     void printTagsRemovedLine_removedTagsAndDeckName_confirmation() {
-        String expectedOutput = "The tag(s) Beginner | Year2 have been removed from the deck Micro-Economics."
-                + System.lineSeparator();
         ArrayList<String> removedTagsArray = new ArrayList<>();
         removedTagsArray.add("Beginner");
         removedTagsArray.add("Year2");
         printTagsRemovedLine("Micro-Economics", removedTagsArray);
+        String expectedOutput = "The tag(s) Beginner | Year2 have been removed from the deck Micro-Economics."
+                + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 
