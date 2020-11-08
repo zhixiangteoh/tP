@@ -81,7 +81,6 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     + [Examples](#examples-20)
   * [Shows release version: `--version`](#shows-release-version---version)
     + [Examples](#examples-21)
-- [Features - (Proposed) Encryption and Decryption](#features---proposed-encryption-and-decryption)
 - [FAQ](#faq)
   * [General](#general)
   * [Deck Mode](#deck-mode)
@@ -142,6 +141,45 @@ Words in square brackets `[]` represent optional input parameters.
 ## Features - Normal Mode
 
 > `[Normal]` is displayed at every command prompt, to indicate that the program is in Normal Mode.
+
+### Viewing help in Normal Mode: `help`
+
+Displays the list of all commands in Normal Mode. 
+
+#### Examples
+
+```java
+[Normal]
+  > help
+// --------------------------------------------------------------------------------
+// eCardnomics.
+// Normal Mode.
+// 
+// Usage:
+//   create <nm>   [/tag <tag1> [<tag2> ...]]     Creates a new deck of flash cards
+//                                                  named <nm>.                    
+//   decks                                        Lists all available decks.       
+//   edit   <ix>                                  Enter Deck Mode for editing the  
+//                                                  deck at list index <ix>.       
+//   start  <ix>                                  Enter Game Mode for deck at list 
+//                                                  index <ix>! Do your best!      
+//   delete <ix>   [-y]                           Deletes the deck at list index   
+//                                                  <ix> from list of decks.       
+//   pptx   <ix>   [-y] [-cs <index> | -oc        Creates a PowerPoint slides based
+//                  <bg color> <txt color>]         on the deck at list index <ix>.
+//   tag    <ix>   /tag <tag1> [<tag2> ...]       Tags the deck at list index <ix> 
+//                                                  with 1 or more tags.           
+//   untag  <ix>   /tag <tag1> [<tag2> ...]       Untags specified <tag>s of the   
+//                                                  deck at list index <ix>.       
+//   search <tag1> [<tag2> ...]                   Search deck list for decks tagged
+//                                                  with specified <tag>s.         
+//   exit                                         Exits the program.
+//   help                                         Show this output.
+// 
+// Options:
+//   --version                                    Show version.
+// --------------------------------------------------------------------------------
+```
 
 ### Create a new deck: `create`
 
@@ -502,45 +540,48 @@ More details about the colors for original colors and color schemes available ca
 // --------------------------------------------------------------------------------
 ```
 
+## Features - Deck Mode
 
-### Viewing help in Normal Mode: `help`
+### Viewing help in Deck Mode: `help`
 
-Displays the list of all commands in Normal Mode. 
+Displays the list of all commands in Deck Mode.
 
 #### Examples
 
 ```java
-[Normal]
+[Deck - market-failure]
   > help
 // --------------------------------------------------------------------------------
 // eCardnomics.
-// Normal Mode.
-//
+// Deck Mode.
+// 
 // Usage:
-//   create <nm>   [/tag <tag1> [<tag2> ...]]    Creates a new deck of flash cards, named <nm>.
-//   decks                                       Lists all available decks.
-//   edit   <ix>                                 Enter Deck Mode for editing the deck at list index <ix>.
-//   start  <ix>                                 Enter Game Mode for deck at list index <ix>! Do your best!
-//   delete <ix>   [-y]                          Deletes the deck at list index <ix> from list of decks.
-//   pptx   <ix>   [-y]                          Creates a PowerPoint slides based on the deck at list index <ix>.
-//   pptx   <ix>   [-y] [-cs <index |            Creates a PowerPoint slides based on the current deck.
-//                 -oc <bg color> <txt color>]  
-//   tag    <ix>   /tag <tag1> [<tag2> ...]      Tags the deck at list index <ix>, with 1 or more tags.
-//   untag  <ix>   /tag <tag1> [<tag2> ...]      Untags specified <tag>s of the deck at list index <ix>.
-//   search <tag1> [<tag2> ...]                  Search deck list for decks tagged with specified <tag>s.
-//   exit                                        Exits the program.
-//   help                                        Show this output.
-//
+//   add         [<qn> /ans <ans>]           Adds a new flash card to the current  
+//                                             deck.                               
+//   list        [/ans]                      Lists all flash cards in the current  
+//                                             deck, optionally with answers.      
+//   delete <ix> [-y]                        Deletes the flash card at list index  
+//                                             <ix> from the current deck.
+//   update <ix>                             Updates the flash card at list index
+//                                             <ix> from the current deck.         
+//   pptx        [-y] [-cs <index> | -oc     Creates a PowerPoint slides based on  
+//                <bg color> <txt color>]      current deck.                       
+//   start                                   Enter Game Mode for this deck! Do your
+//                                             best!                               
+//   done                                    Exits from Deck Mode and returns to   
+//                                             Normal Mode.                        
+//   exit                                    Exits the program.                    
+//   help                                    Show this output.                     
+// 
 // Options:
-//   --version      Show version.
+//   --version                               Show version.
 // --------------------------------------------------------------------------------
 ```
-
-## Features - Deck Mode
 
 ### Add a flashcard: `add`
 Adds a flashcard to the end of the current deck. The `add` command expects no initial arguments. Instructions and 
 format of card entry is displayed. Then, the user is prompted to specify the details of the flashcard to be added.
+Duplicate flashcards are allowed.
 
 #### Format
 ```java
@@ -553,13 +594,10 @@ Equivalent One-line format:
 ```java
   > add <question description> /ans <question answer or explanation>
 ```
->If `/ans` is not supplied, `<question description>` is stored and the user is prompted for the answer.
+>The `/ans` option, if supplied, must be separated from the question and answer by spaces.
 >
->If `<question description>` is empty, the input is invalid and the error message 
->```java
->"Input shouldn't be empty! Returning..."
->```
->is shown.
+>If `/ans` option is not supplied correctly, `<question description>` is stored and the user is prompted
+>for the answer.
 
 #### Examples
 
@@ -584,7 +622,7 @@ to show all the questions, and their respective answers.
 
 #### Format
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > list
 // --------------------------------------------------------------------------------
 // You are now viewing deck: `name of deck`
@@ -598,10 +636,10 @@ to show all the questions, and their respective answers.
 ```
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > list /ans
 // --------------------------------------------------------------------------------
-// You are now viewing deck: `name of deck`
+// You are now viewing deck: 'name of deck'
 // --------------------------------------------------------------------------------
 // 1. Question: <question 1>
 //    Answer:   <answer 1>
@@ -659,7 +697,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 #### Format
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > delete 1
 // Do you want to delete the following flash card? [y/n] ?
 //   '<question 1>' n
@@ -667,7 +705,7 @@ Deletes an existing flashcard from deck. The `delete` command expects one argume
 ```
 
 ```java
-[Deck - `name of deck`]
+[Deck - 'name of deck']
   > delete 2
 // Do you want to delete the following flash card? [y/n] ?
 //   '<question 2>' y
@@ -735,11 +773,12 @@ Updates the question and answer fields of a  specified flashcard in the deck. Th
 
 #### Format
 ```java
-[Deck - `name`]
+[Deck - 'name of deck']
   > update <index of flashcard>
 // Question: `Current Question`
 // New Question:
     > <new question>
+//
 // Answer:   `Current Answer`
 // New Answer:
     > <new answer>
@@ -759,6 +798,7 @@ Updating both the question and answer:
 // Question: Define market failure
 // New Question:
   > What is the difference between free-loading and free-riding?
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer:
   > Free-loading gives a benefit to the free-loader but there is a cost to the people taken advantage of.
@@ -775,6 +815,7 @@ Updating question only:
 // Question: Define market failure
 // New Question:
   > Define Market Failure
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer:
   > 
@@ -790,6 +831,7 @@ Updating answer only:
 // Question: Define market failure
 // New Question:
   > 
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > Economic situation where distribution of goods and services in the free market is inefficient
@@ -805,6 +847,7 @@ No updates:
 // Question: Define market failure
 // New Question:
   > 
+//
 // Answer:   Economic situation defined by inefficient distribution of goods and services in the free market
 // New Answer: Economic situation where distribution of goods and services in the free market is inefficient
   > 
@@ -815,9 +858,12 @@ No updates:
 
 ### Game Mode: `start`
 
-Starts Game Mode for the current deck. 
- 
+Starts Game Mode for the current deck. Upon completion of Game Mode, user is returned to Normal Mode.
+
 > The `start` command can also be entered from within Normal Mode.
+>
+> Note: typing `done` in Game Mode returns user to Normal Mode, regardless of which mode Game Mode was started from
+>. See [Game Mode `done`](#exits-game-mode-done).
  
 #### Format
 
@@ -943,8 +989,6 @@ More details about the colors for original colors and color schemes available ca
 // --------------------------------------------------------------------------------
 ```
 
-
-
 ### Exits Deck Mode: `done`
 
 Returns to Normal Mode.
@@ -961,35 +1005,6 @@ Returns to Normal Mode.
   >
 ```
 
-### Viewing help in Deck Mode: `help`
-
-Displays the list of all commands in Deck Mode.
-
-#### Examples
-
-```java
-[Deck - market-failure]
-  > help
-// --------------------------------------------------------------------------------
-// eCardnomics.
-// Deck Mode.
-// 
-// Usage:
-//   add         [<qn> /ans <ans>]          Adds a new flash card to the current deck.
-//   list        [/ans]                     Lists all flash cards in the current deck, optionally with answers.
-//   delete <ix> [-y]                       Deletes the flash card at list index <ix> from the current deck.
-//   pptx        [-y] [-cs <index |         Creates a PowerPoint slides based on the current deck.
-//               -oc <bg color> <txt color>]  
-//   start                                  Enter Game Mode for this deck! Do your best!
-//   done                                   Exits from Deck Mode and returns to Normal Mode.
-//   exit                                   Exits the program.
-//   help                                   Show this output.
-//
-// Options:
-//   --version      Show version.
-// --------------------------------------------------------------------------------
-```
-
 ## Features - Game Mode
 
 ### Gameplay
@@ -1001,7 +1016,9 @@ Questions are displayed in a randomised order. At each question, the user will:
 
 Then, the correct answer is displayed, and our 'advanced' algorithm scores the user's attempt against the correct
  answer. Finally, the user is given the option to re-attempt the question later. See below for example gamplay.
- 
+
+> Upon completion of deck in Game Mode, user is always returned to **Normal Mode**.
+
 #### Examples
 
 * Start Game Mode (from within Deck Mode)
@@ -1092,6 +1109,46 @@ Then, the correct answer is displayed, and our 'advanced' algorithm scores the u
   >
 ```
 
+### Viewing help in Game Mode: `help`
+
+Displays the list of all commands in Game Mode.
+
+#### Examples
+
+```java
+// ...
+// --------------------------------------------------------------------------------
+// Q: What is market-failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > help
+// --------------------------------------------------------------------------------
+// eCardnomics.
+// Game Mode.
+// 
+// Usage:
+//   done           Exits from Game Mode and returns to Normal Mode.
+//   exit           Exits the program.
+//   help           Show this output.
+// 
+// Options:
+//   --version      Show version.
+// 
+// Gameplay:
+// Questions will be displayed in a randomised order. At each question, you can
+//     1. Try to attempt an answer at the question, by typing at the prompt
+//     2. Press <enter> (with an empty attempt if you want to do it in your head)
+// 
+// Then, our 'advanced' algorithms will check your answer and score your answer (if
+// any), and display the correct answer for you to check your answer against.
+// Finally, we will ask if you think you got it right. If you did not, the question
+// will be inserted back into the question pool, and you will get a chance to
+// attempt it again!
+// --------------------------------------------------------------------------------
+// Q: What is market-failure?
+//   Enter your attempt below (or `done`, `exit`, `help`):
+  > 
+```
+
 ### Exits Game Mode: `done`
 
 Returns to Normal Mode.
@@ -1111,47 +1168,8 @@ Returns to Normal Mode.
   > 
 ```
 
-### Viewing help in Game Mode: `help`
-
-Displays the list of all commands in Game Mode.
-
-#### Examples
-
-```java
-// ...
-// --------------------------------------------------------------------------------
-// Q: What is market-failure?
-//   Enter your attempt below (or `done`, `exit`, `help`):
-  > help
-// --------------------------------------------------------------------------------
-// eCardnomics.
-// Game Mode.
-//
-// Usage:
-//   done           Exits from Game Mode and returns to Normal Mode.
-//   exit           Exits the program.
-//   help           Show this output.
-// 
-// Options:
-//   --version      Show version.
-//
-// Gameplay:
-// Questions will be displayed in a randomised order. At each question, you can
-//     1. Try to attempt an answer at the question, by typing at the prompt
-//     2. Press <enter> (with an empty attempt if you want to do it in your head)
-// 
-// Then, our 'advanced' algorithms will check your answer and score your answer 
-// (if any), and display the correct answer for you to check your answer against.
-// Finally, we will ask if you think you got it right. If you did not, the
-// question will be inserted back into the question pool, and you will get a 
-// chance to attempt it again!
-// --------------------------------------------------------------------------------
-// Q: What is market-failure?
-//   Enter your attempt below (or `done`, `exit`, `help`):
-  > 
-```
-
 ## Features - Print to PowerPoint
+
 ### Create new PowerPoint based on the selected deck: `pptx`
 
 Can be done from both Normal Mode and Deck Mode. In Normal Mode, a deck index is required, 
@@ -1176,8 +1194,6 @@ The following is an example of the slides printed out after the following comman
 ##### Output
 ![PPTX Example](images-ug/PPTX-Example.png)
 
-
-
 For details, check out:
 
 * [Normal Mode PowerPoint](#print-an-existing-deck-to-a-powerpoint-file-pptx)
@@ -1186,7 +1202,6 @@ For details, check out:
 #### Default Color Schemes
 The following is the default schemes that are available and their respective index.
 ![Default Color Schemes](images-ug/PPTX-Default-Color-Schemes.png)
-
 
 #### Original Colors available
 Some of the colors include:
@@ -1203,8 +1218,6 @@ Some of the colors include:
 * Gray
 
 The complete list of colors can be found [here](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html)
-
-
 
 ## Features - Anywhere
 
@@ -1265,8 +1278,6 @@ Shows release version from anywhere in the program.
   > 
 ```
 
-## Features - (Proposed) Encryption and Decryption
-
 ## FAQ
 
 ### General
@@ -1317,6 +1328,14 @@ contain "/tag".
 ```
 Alternatively, `add` and `add My Question` also work since the answer will be read separately.
 
+**Q**: Can my question contain "/ans"?
+
+**A**: Yes. If it is part of another word:
+```java
+> add What is sum/ans? /ans some value
+```
+Otherwise, use `add` without any arguments so that the question is read separately.
+
 **Q**: Why is a single line update command not provided?
 
 **A**: When updating the information on a flashcard, it is important to view the previous contents of the flashcard
@@ -1361,7 +1380,7 @@ useful scenario for a single line update command.
 |Untag deck|`untag <ix> /tag <tag1> [<tag2> ...]`|`untag 1 /tag important`|
 |Search by tag(s)|`search <tag1> [<tag2> ...]`|`search final-exam important`|
 |Display decks|`decks`||
-|Delete deck|`delete <ix>`|`delete 1`|
+|Delete deck|`delete <ix> [-y]`|`delete 1`|
 |Enter Deck Mode|`edit <ix>`|`edit 1`|
 |Enter Game Mode|`start <ix>`|`start 1`|
 |Create PowerPoint|`pptx <ix> [-y] [-oc <bg color> <txt color>] [-cs <cs index>]`|`pptx 1`|
@@ -1371,9 +1390,9 @@ useful scenario for a single line update command.
 
 |Action|Format|Example|
 |------|------|-------|
-|Add flash card|`add`||
+|Add flash card|`add [<qn> /ans <ans>]`||
 |List flash cards|`list [/ans]`||
-|Delete flash card|`delete <ix>`|`delete 1`|
+|Delete flash card|`delete <ix> [-y]`|`delete 1`|
 |Update flash card|`update <ix>`|`update 1`|
 |Enter Game Mode|`start`||
 |Create PowerPoint|`pptx [-y]`||

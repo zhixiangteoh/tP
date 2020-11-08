@@ -25,7 +25,7 @@ See also: [User Guide](./UserGuide.md) | [Releases](https://github.com/AY2021S1-
   * [Exceptions](#exceptions)
 - [Implementation - Features](#implementation---features)
   * [Print to PowerPoint SlideShow](#print-to-powerpoint-slideshow)
-  * [Pretty Printing](#pretty-printing--wei-siew-)
+  * [Pretty Printing](#pretty-printing)
     + [Design Consideration:](#design-consideration-)
   * [Tags for grouping and searching decks](#tags-for-grouping-and-searching-decks)
   * [Game Mode](#game-mode)
@@ -448,7 +448,15 @@ Flashcard application that allows students to quickly create new flashcards and 
 
 ## Glossary
 
-* *glossary item* - Definition
+* *[Deck](#deck-model)* - A collection of flash cards that are related by a common topic.
+* *[DeckList](#deck-model)* - A collection of all the decks owned by the user.
+* *[Deck Mode](#commands)* - A state of the program that allows the user to make changes to the flashcards within the
+deck
+* *[Flashcard](#deck-model)* - An object that contains a non-empty question and a non-empty answer.
+* *[Game Mode](#commands)* - A state of the program used for testing if the user recalls the answer on flashcards.
+* *[Normal Mode](#command)* - A state of the program that allows the user to modify the list of decks.
+* *[Pretty Printing](#pretty-printing)* - Printing text output that span more than one line in a way that minimizes
+truncating words.
 
 ## Instructions for manual testing
 
@@ -457,10 +465,96 @@ Starting the program:
 are allowed.
 1. Run the command `java -jar ecardnomics.jar` in a command line terminal to start the program.
 
+Creating a deck:
+1. Prerequisite: Listing all decks with `decks` does not show any entry 'test deck' or 'tag deck'.
+1. Test case: `create test deck`<br>
+   Expected: Listing all decks with `decks` shows the entry 'test deck'.
+1. Test case: `create test deck` after running the above test<br>
+   Expected: Error message shown. Listing all decks with `decks` shows only one entry 'test deck'.
+1. Test case: `create tag deck /tag test`<br>
+   Expected: Listing all decks with `decks` shows the entry 'tag deck' with tag 'test'.
+   
+Deleting a deck:
+1. Prerequisite: Listing all decks with `decks` shows at least two decks.
+1. Test case: `delete 1` followed by `y` when prompted<br>
+   Expected: First deck deleted from the list.
+1. Test case: `delete 1` followed by `n` when prompted<br>
+   Expected: First deck not deleted from the list.
+1. Test case: `delete 1` followed by any input that is not 'y/n' surrounded with spaces when prompted<br>
+   Expected: First deck not deleted from the list. Error message shown.
+1. Test case: `delete 1 -y`<br>
+   Expected: First deck deleted from the list.
+1. Test case: `delete 0 -y`<br>
+   Expected: No deck deleted from the list. Error message shown.
+   
+Tagging and untagging a deck:
+1. Prerequisite: Listing all decks with `decks` shows at least one deck.
+1. Test case: `tag 1 /tag testing` followed by `y` when prompted<br>
+   Expected: Listing all decks with `decks` shows the first entry with tag 'testing'.
+1. Test case: `tag 1 /tag testing` followed by `n` when prompted<br>
+   Expected: Listing all decks with `decks` shows the first entry without tag 'testing'.
+1. Test case: `untag 1 /tag testing` followed by `y` when prompted<br>
+   Expected: Listing all decks with `decks` shows the first entry without tag 'testing'.
+1. Test case: `tag 1 /tag`<br>
+   Expected: Error message shown.
+1. Test case: `untag 1 /tag`<br>
+   Expected: Error message shown.
+
+Searching a deck by tag:
+1. Prerequisite: There exists at least one deck with tag 'test'. There are no decks with tag 'LOL'.
+1. Test case: `search test`<br>
+   Expected: All decks tagged with 'test' together with their index numbers are shown.
+1. Test case: `search LOL`<br>
+   Expected: The search returns no results.
+   
+Editing a deck:
+1. Prerequisite: There exists at least one deck.
+1. Test case: `edit 1`<br>
+   Expected: Program enters deck mode for the first deck.
+1. Test case: `edit -1`<br>
+   Expected: Program remains in normal mode. Error message shown.
+   
+Adding a flashcard:
+1. Prerequisite: In deck mode.
+1. Test case: `add` followed by 'question' and 'answer' when prompted<br>
+   Expected: Listing all decks with `list /ans` shows the entry for the new flashcard.
+1. Test case: `add question /ans answer`<br>
+   Expected: Listing all decks with `list /ans` shows the entry for the new flashcard.
+1. Test case: `add question/answer` followed by 'answer' when prompted<br>
+   Expected: Listing all decks with `list /ans` shows the entry for the new flashcard.
+1. Test case: `add /ans`<br>
+   Expected: No flashcard added to the deck. Error message shown.
+1. Test case: `add /ans answer`<br>
+   Expected: No flashcard added to the deck. Error message shown.
+   
+Deleting a flashcard:
+1. Prerequisite: In deck mode, listing all flashcards in current deck with `list` shows at least two flashcards.
+1. Test case: `delete 1` followed by `y` when prompted<br>
+   Expected: First flashcard deleted from the list.
+1. Test case: `delete 1` followed by `n` when prompted<br>
+   Expected: First flashcard not deleted from the list.
+1. Test case: `delete 1` followed by any input that is not 'y/n' surrounded with spaces when prompted<br>
+   Expected: First flashcard not deleted from the list. Error message shown.
+1. Test case: `delete 1 -y`<br>
+   Expected: First flashcard deleted from the list.
+1. Test case: `delete 0 -y`<br>
+   Expected: No flashcard deleted from the list. Error message shown.
+
+Updating a flashcard:
+1. Prerequisite: In deck mode with at least one flashcard with question 'test' and answer 'testing'
+1. Test case: `update 1` followed by 'question' and 'answer' when prompted<br>
+   Expected: Listing all decks with `list /ans` shows that the entry for the first flashcard is updated.
+1. Test case: `update 1` followed by ' ' and 'answer' when prompted<br>
+   Expected: Listing all decks with `list /ans` shows that the answer for the first flashcard is updated.
+1. Test case: `update 1` followed by 'question' and ' ' when prompted<br>
+   Expected: Listing all decks with `list /ans` shows that the question for the first flashcard is updated.
+1. Test case: `update 1` followed by ' ' and ' ' when prompted<br>
+   Expected: Listing all decks with `list /ans` shows that the question for the first flashcard is not updated.
+   
 Saving data to disk:
 1. After starting the program, the directory "data" should be created.
-   1. After program terminates, verify that the file "data/deckList" exists and contains the data supplied during
-   program execution.
+   1. After program terminates, verify that the file "data/deckList" exists and contains data that corresponds to
+   the commands supplied during program execution.
 1. During execution, the directory "log" should be created.
 1. If a pptx command is executed, the "pptx" directory should be created.
    1. After the command is executed, verfiy that "pptx/<file name>" exists for the deck that was converted to

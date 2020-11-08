@@ -215,8 +215,8 @@ public class UiTest {
         String question = "Old question";
         String answer = "Old answer";
         FlashCard existingCard = new FlashCard(question, answer);
-        String expectedOutput = existingCard.toString(false, 0) + System.lineSeparator()
-                + "New Answer: " + System.lineSeparator() + "  > ";
+        String expectedOutput = System.lineSeparator() + existingCard.toString(false, 0)
+                + System.lineSeparator() + "New Answer: " + System.lineSeparator() + "  > ";
         printUpdateAnswerLine(existingCard);
         assertEquals(expectedOutput, outContent.toString());
     }

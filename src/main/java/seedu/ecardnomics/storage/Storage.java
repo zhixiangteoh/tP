@@ -3,6 +3,7 @@ package seedu.ecardnomics.storage;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.parser.DeckParser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,8 +20,11 @@ public class Storage {
     public static final String DECK_INDEX_REGEX = "deck\\s\\|\\s\\d+";
     public static final String DECK_NAME_REGEX = "name\\s\\|\\s.+";
     public static final String TAGS_REGEX = "tags\\s\\|.+";
+    public static final String NO_TAGS_REGEX = "tags\\s\\|";
     public static final String QUESTION_REGEX = "Q\\s\\|\\s.+";
+    public static final String EMPTY_QUESTION_REGEX = "Q\\s\\|\\s+";
     public static final String ANSWER_REGEX = "A\\s\\|\\s.+";
+    public static final String EMPTY_ANSWER_REGEX = "A\\s\\|\\s+";
     public static final String DIVIDER_REGEX = "={10,}";
 
     public DeckList load(DeckList deckList) {
@@ -66,14 +70,17 @@ public class Storage {
                     }
                     deck.addTag(arrayOfTags);
                 }
-            } else {
+            } else if (!line.matches(NO_TAGS_REGEX)) {
                 continue;
             }
             while (scanner.hasNext()) {
                 line = scanner.nextLine();
                 String question = null;
-                if (line.matches(QUESTION_REGEX)) {
-                    question = line.substring(4);
+                if (line.matches(QUESTION_REGEX) && !line.matches(EMPTY_QUESTION_REGEX)) {
+                    question = line.substring(4).trim();
+                    if (DeckParser.containsNoAlphaNumerics(question)) {
+                        continue;
+                    }
                 } else if (line.matches(DIVIDER_REGEX)) {
                     break;
                 } else {
@@ -81,8 +88,11 @@ public class Storage {
                 }
                 line = scanner.nextLine();
                 String answer = null;
-                if (line.matches(ANSWER_REGEX)) {
-                    answer = line.substring(4);
+                if (line.matches(ANSWER_REGEX) && !line.matches(EMPTY_ANSWER_REGEX)) {
+                    answer = line.substring(4).trim();
+                    if (DeckParser.containsNoAlphaNumerics(answer)) {
+                        continue;
+                    }
                 } else if (line.matches(DIVIDER_REGEX)) {
                     break;
                 } else {
@@ -91,7 +101,9 @@ public class Storage {
                 FlashCard flashCard = new FlashCard(question, answer);
                 deck.add(flashCard);
             }
-            deckList.addDeck(deck);
+            if (!deckList.contains(deck)) {
+                deckList.addDeck(deck);
+            }
         }
         return deckList;
     }

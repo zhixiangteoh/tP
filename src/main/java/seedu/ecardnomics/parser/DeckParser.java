@@ -14,7 +14,7 @@ import seedu.ecardnomics.command.ExitCommand;
 import seedu.ecardnomics.command.VoidCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
-import seedu.ecardnomics.exceptions.EmptyInputException;
+import seedu.ecardnomics.exceptions.EmptyQnAException;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.InvalidListCommandException;
@@ -45,7 +45,7 @@ public class DeckParser extends Parser {
         boolean isFlashCardDeleted;
 
         if (arguments.contains("-y")) {
-            arguments = arguments.replaceAll("-y", "");
+            arguments = arguments.replaceAll(Ui.FORCE_YES_OPT, "");
             flashCardID = getIndex(arguments);
             isFlashCardDeleted = true;
         } else {
@@ -63,7 +63,7 @@ public class DeckParser extends Parser {
         return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
     }
 
-    private boolean containsNoAlphaNumerics(String field) {
+    public static boolean containsNoAlphaNumerics(String field) {
         String puncRemovedField = field.replaceAll(Ui.PUNC_REGEX, "");
         return puncRemovedField.isBlank();
     }
@@ -72,12 +72,12 @@ public class DeckParser extends Parser {
      * Verify that a String is contains meaningful contents.
      *
      * @param field String to be verified
-     * @throws EmptyInputException if string is empty after trim
+     * @throws EmptyQnAException if string is empty after trim
      */
-    private void verifyStringField(String field) throws EmptyInputException, NoAlphaNumericInputException {
+    private void verifyStringField(String field) throws EmptyQnAException, NoAlphaNumericInputException {
         if (field.trim().length() == 0) {
             logger.log(Level.WARNING, "User entered nothing or a series of blank spaces for field");
-            throw new EmptyInputException();
+            throw new EmptyQnAException();
         }
         if (containsNoAlphaNumerics(field.trim())) {
             logger.log(Level.WARNING, "User entered no alphanumeric characters as field!");
@@ -85,25 +85,10 @@ public class DeckParser extends Parser {
         }
     }
 
-    protected Command prepareFlashCard(String arguments) throws EmptyInputException, NoAlphaNumericInputException {
+    protected Command prepareFlashCard(String arguments) throws EmptyQnAException, NoAlphaNumericInputException {
         String[] questionAndAnswer = new String[2];
 
-        if (arguments.contains("/ans")) {
-            // Split by the first /ans only
-            questionAndAnswer = arguments.split("/ans", 2);
-            // Expect a qn and ans
-            if (questionAndAnswer.length != 2) {
-                throw new EmptyInputException();
-            }
-            verifyStringField(questionAndAnswer[0]);
-        } else if (!arguments.trim().isEmpty()) {
-            questionAndAnswer[0] = arguments.trim();
-            // Valid question provided but not answer
-            Ui.printAddFlashCardLine(deck);
-            Ui.printEnterAnswerLine();
-            questionAndAnswer[1] = Ui.readUserInput();
-            logger.log(Level.INFO, "Reading user input for answer");
-        } else {
+        if (arguments.isEmpty()) {
             // Ask for both question and answer
             Ui.printAddFlashCardLine(deck);
             Ui.printEnterQuestionLine();
@@ -111,6 +96,23 @@ public class DeckParser extends Parser {
             logger.log(Level.INFO, "Reading user input for question");
             verifyStringField(questionAndAnswer[0]);
 
+            Ui.printEnterAnswerLine();
+            questionAndAnswer[1] = Ui.readUserInput();
+            logger.log(Level.INFO, "Reading user input for answer");
+        } else if (arguments.contains(" /ans ")) {
+            // Split by the first /ans only
+            questionAndAnswer = arguments.split("/ans", 2);
+            // Expect a qn and ans
+            if (questionAndAnswer.length != 2) {
+                throw new EmptyQnAException();
+            }
+            verifyStringField(questionAndAnswer[0]);
+        } else if (arguments.trim().equals("/ans")) {
+            throw new EmptyQnAException();
+        } else {
+            questionAndAnswer[0] = arguments;
+            // Valid question provided but not answer
+            Ui.printAddFlashCardLine(deck);
             Ui.printEnterAnswerLine();
             questionAndAnswer[1] = Ui.readUserInput();
             logger.log(Level.INFO, "Reading user input for answer");
@@ -127,7 +129,7 @@ public class DeckParser extends Parser {
         Ui.printDashLines();
 
         logger.log(Level.INFO, "returning AddCommand object");
-        return new AddCommand(deck, questionAndAnswer[0], questionAndAnswer[1]);
+        return new AddCommand(deck, questionAndAnswer[0].trim(), questionAndAnswer[1].trim());
     }
 
     protected Command prepareUpdate(int flashCardID) {
