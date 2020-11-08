@@ -8,6 +8,7 @@ import seedu.ecardnomics.game.Game;
 import seedu.ecardnomics.powerpoint.ColorOption;
 import seedu.ecardnomics.storage.LogStorage;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 
@@ -92,7 +93,7 @@ public class Ui {
     private static final String GAME_EMPTY_DECK_LINE =
             EMPTY_DECK_LINE + " Please add some flash cards first.";
     private static final String INVALID_TAGS_LINE =
-            "You entered invalid tag(s)!";
+            "Tag %s is not in the deck already!";
     private static final String DECKS_HAVING_TAGS_LINE =
             "The decks having tags you are searching for:";
     private static final String NO_DECKS_WITH_TAGS_LINE =
@@ -353,7 +354,7 @@ public class Ui {
     public static void printNewDeck(Deck deck) {
         String tagsOfNewDeck = deck.getTagString();
         if (!tagsOfNewDeck.isEmpty()) {
-            tagsOfNewDeck = " | Tag(s): " + tagsOfNewDeck;
+            tagsOfNewDeck = " #Tag: " + tagsOfNewDeck;
         }
         printMessage(NEW_DECK_CREATED_LINE + deck.getName() + tagsOfNewDeck);
     }
@@ -511,7 +512,7 @@ public class Ui {
      * @param name    the name of the deck
      * @param newTags the tag(s) will be added to the deck
      */
-    public static void printNewTags(String name, String[] newTags) {
+    public static void printNewTags(String name, ArrayList<String> newTags) {
         String tagString = formStringOfTags(newTags);
         printMessage(String.format(NEW_TAGS_LINE, name, tagString));
     }
@@ -519,9 +520,9 @@ public class Ui {
     /**
      * Prints out warning about invalid tags provided.
      */
-    public static void printInvalidTagsLine() {
+    public static void printInvalidTagsLine(String tags) {
         logger.log(Level.WARNING, "User did not supply valid tags.");
-        printMessage(INVALID_TAGS_LINE);
+        printMessage(String.format((INVALID_TAGS_LINE), tags));
     }
 
     /**
@@ -530,7 +531,7 @@ public class Ui {
      * @param deckName the name of the deck having tags being removed
      * @param tags     the tags will be removed
      */
-    public static void printRemovedTagsQuestion(String deckName, String[] tags) {
+    public static void printRemovedTagsQuestion(String deckName, ArrayList<String> tags) {
         String removedTags = formStringOfTags(tags);
         System.out.print(String.format(REMOVED_TAGS_QUESTION_LINE, removedTags, deckName));
     }
@@ -541,7 +542,7 @@ public class Ui {
      * @param deckName the name of the deck having removed tags
      * @param tags     tags were removed
      */
-    public static void printTagsRemovedLine(String deckName, String[] tags) {
+    public static void printTagsRemovedLine(String deckName, ArrayList<String> tags) {
         String removedTags = formStringOfTags(tags);
         System.out.println(String.format(REMOVED_TAGS_LINE, removedTags, deckName));
     }
@@ -552,13 +553,13 @@ public class Ui {
      * @param tags tags to be formed to String
      * @return a String of tags
      */
-    public static String formStringOfTags(String[] tags) {
+    public static String formStringOfTags(ArrayList<String> tags) {
         String stringOfTags = "";
 
-        for (int i = 0; i < tags.length; i++) {
-            stringOfTags += tags[i];
-            if (i < tags.length - 1) {
-                stringOfTags += ", ";
+        for (int i = 0; i < tags.size(); i++) {
+            stringOfTags += tags.get(i);
+            if (i < tags.size() - 1) {
+                stringOfTags += " | ";
             }
         }
         return stringOfTags;
@@ -622,7 +623,7 @@ public class Ui {
      * @param deckName String representing the index of the deck of the tags
      * @return true if the removal is confirmed, otherwise false
      */
-    public static boolean getRemovedTagsConfirmation(String[] tags, String deckName) {
+    public static boolean getRemovedTagsConfirmation(ArrayList<String> tags, String deckName) {
         printDashLines();
         printRemovedTagsQuestion(deckName, tags);
         boolean isConfirmed = checkYorNResponse();

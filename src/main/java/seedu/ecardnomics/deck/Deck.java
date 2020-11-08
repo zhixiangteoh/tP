@@ -56,7 +56,7 @@ public class Deck {
         return tags;
     }
 
-    public void addTag(String[] newTags) {
+    public void addTag(ArrayList<String> newTags) {
         for (String tag: newTags) {
             if (!tags.contains(tag)) {
                 tags.add(tag);
@@ -64,7 +64,7 @@ public class Deck {
         }
     }
 
-    public void removeTag(String[] deletedTags) {
+    public void removeTag(ArrayList<String> deletedTags) {
         for (String tag: deletedTags) {
             tags.remove(tag);
         }

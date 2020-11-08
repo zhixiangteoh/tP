@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
@@ -61,12 +62,13 @@ public class Storage {
             line = scanner.nextLine();
             if (line.matches(TAGS_REGEX)) {
                 line = line.substring(line.indexOf("|") + 2).trim();
+                ArrayList<String> arrayOfTags = new ArrayList<>();
                 if (!line.isBlank()) {
                     String[] tags = line.split("\\|");
-                    for (int i = 0; i < tags.length; i++) {
-                        tags[i] = tags[i].trim();
+                    for (String tag: tags) {
+                        arrayOfTags.add(tag.trim());
                     }
-                    deck.addTag(tags);
+                    deck.addTag(arrayOfTags);
                 }
             } else if (!line.matches(NO_TAGS_REGEX)) {
                 continue;
