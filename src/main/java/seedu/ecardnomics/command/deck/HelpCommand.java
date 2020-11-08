@@ -26,7 +26,7 @@ public class HelpCommand extends DeckCommand {
             + "\n"
             + "Options:\n"
             + "  --version                               Show version.";
-            // --------------------------------------------------------------------------------
+    //         --------------------------------------------------------------------------------
 
     public HelpCommand() {
         super();

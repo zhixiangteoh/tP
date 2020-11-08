@@ -32,7 +32,7 @@ public class HelpCommand extends NormalCommand {
             + "\n"
             + "Options:\n"
             + "  --version                                    Show version.";
-            // --------------------------------------------------------------------------------
+    //         --------------------------------------------------------------------------------
 
     public HelpCommand() {
         super();
