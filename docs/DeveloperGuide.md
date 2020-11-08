@@ -245,7 +245,6 @@ The following are the Classes/ Enum of the third part package `org.apache.poi.xs
 * `XSLFTextParagraph` - Class representing a paragraph of text within a shape
 * `XSLFTextRun` - Class representing the properties of the text within a paragraph
 
-
 The 3 modes of Color Selection, `DEFAULT`, `COLOR_SCHEME` and `ORIGINAL_COLOR` are stored in the enum `ColorOption`.
 
 Each instance of `PowerPoint` has an element of the enum `ColorOption`, `colorOpt`, which decides which of the outputs 
@@ -254,8 +253,6 @@ to print back to the user. `colorOpt` takes on the different values depending on
 * `PowerPoint(deck)` - `DEFAULT`
 * `PowerPoint(deck, csIndex)` - `COLOR_SCHEME`
 * `PowerPoint(deck, bgColorString, txtColorString, bgColor, txtColor)` - `ORIGINAL_COLOR`
-
-
 
 ### Pretty Printing
 
@@ -323,7 +320,9 @@ eCardnomics' quintessential mode. Game Mode can be started from either Normal Mo
 
 Game Mode contains two main components: a storage component, **`GameStorage`**, and a logic component, **`GameEngine`**. The
  former handles all data structures used by Game Mode, and stores the original deck (`originalDeck`), question pool
-  (`deque`), and retest question pool (`retestStore`). The latter executes the main game loop (*`runGameLoop()`*), and
+  ([`deque`](#glossary)), and retest question pool (`retestStore`). The latter executes the main game loop
+   (*`runGameLoop
+  ()`*), and
    interacts with **`GameStorage`** on package-private basis; i.e., **`GameEngine`** and **`GameStorage`** have full mutual
     access as if they were a single class. This is one of the main intentional design decisions.
   
@@ -457,105 +456,139 @@ deck
 * *[Normal Mode](#command)* - A state of the program that allows the user to modify the list of decks.
 * *[Pretty Printing](#pretty-printing)* - Printing text output that span more than one line in a way that minimizes
 truncating words.
+* *[deque](#general-architecture)* - Pronounced "deck", short for "double-ended queue". In eCardnomics, *deque* is
+  implemented as an [`ArrayDeque`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayDeque.html) and functions as a stack of shuffled flash cards, from which questions are popped
+   off during Game Mode.
 
 ## Instructions for manual testing
+
+<!-- @@author LiewWS -->
 
 Starting the program:
 1. Download the `ecardnomics.jar` file and copy it into an empty folder where read, write and execute permissions
 are allowed.
-1. Run the command `java -jar ecardnomics.jar` in a command line terminal to start the program.
+2. Run the command `java -jar ecardnomics.jar` in a command line terminal to start the program.
 
 Creating a deck:
 1. Prerequisite: Listing all decks with `decks` does not show any entry 'test deck' or 'tag deck'.
-1. Test case: `create test deck`<br>
+2. Test case: `create test deck`<br>
    Expected: Listing all decks with `decks` shows the entry 'test deck'.
-1. Test case: `create test deck` after running the above test<br>
+3. Test case: `create test deck` after running the above test<br>
    Expected: Error message shown. Listing all decks with `decks` shows only one entry 'test deck'.
-1. Test case: `create tag deck /tag test`<br>
+4. Test case: `create tag deck /tag test`<br>
    Expected: Listing all decks with `decks` shows the entry 'tag deck' with tag 'test'.
    
 Deleting a deck:
 1. Prerequisite: Listing all decks with `decks` shows at least two decks.
-1. Test case: `delete 1` followed by `y` when prompted<br>
+2. Test case: `delete 1` followed by `y` when prompted<br>
    Expected: First deck deleted from the list.
-1. Test case: `delete 1` followed by `n` when prompted<br>
+3. Test case: `delete 1` followed by `n` when prompted<br>
    Expected: First deck not deleted from the list.
-1. Test case: `delete 1` followed by any input that is not 'y/n' surrounded with spaces when prompted<br>
+4. Test case: `delete 1` followed by any input that is not 'y/n' surrounded with spaces when prompted<br>
    Expected: First deck not deleted from the list. Error message shown.
-1. Test case: `delete 1 -y`<br>
+5. Test case: `delete 1 -y`<br>
    Expected: First deck deleted from the list.
-1. Test case: `delete 0 -y`<br>
+6. Test case: `delete 0 -y`<br>
    Expected: No deck deleted from the list. Error message shown.
    
 Tagging and untagging a deck:
 1. Prerequisite: Listing all decks with `decks` shows at least one deck.
-1. Test case: `tag 1 /tag testing` followed by `y` when prompted<br>
+2. Test case: `tag 1 /tag testing` followed by `y` when prompted<br>
    Expected: Listing all decks with `decks` shows the first entry with tag 'testing'.
-1. Test case: `tag 1 /tag testing` followed by `n` when prompted<br>
+3. Test case: `tag 1 /tag testing` followed by `n` when prompted<br>
    Expected: Listing all decks with `decks` shows the first entry without tag 'testing'.
-1. Test case: `untag 1 /tag testing` followed by `y` when prompted<br>
+4. Test case: `untag 1 /tag testing` followed by `y` when prompted<br>
    Expected: Listing all decks with `decks` shows the first entry without tag 'testing'.
-1. Test case: `tag 1 /tag`<br>
+5. Test case: `tag 1 /tag`<br>
    Expected: Error message shown.
-1. Test case: `untag 1 /tag`<br>
+6. Test case: `untag 1 /tag`<br>
    Expected: Error message shown.
 
 Searching a deck by tag:
 1. Prerequisite: There exists at least one deck with tag 'test'. There are no decks with tag 'LOL'.
-1. Test case: `search test`<br>
+2. Test case: `search test`<br>
    Expected: All decks tagged with 'test' together with their index numbers are shown.
-1. Test case: `search LOL`<br>
+3. Test case: `search LOL`<br>
    Expected: The search returns no results.
    
 Editing a deck:
 1. Prerequisite: There exists at least one deck.
-1. Test case: `edit 1`<br>
+2. Test case: `edit 1`<br>
    Expected: Program enters deck mode for the first deck.
-1. Test case: `edit -1`<br>
+3. Test case: `edit -1`<br>
    Expected: Program remains in normal mode. Error message shown.
    
 Adding a flashcard:
 1. Prerequisite: In deck mode.
-1. Test case: `add` followed by 'question' and 'answer' when prompted<br>
+2. Test case: `add` followed by 'question' and 'answer' when prompted<br>
    Expected: Listing all decks with `list /ans` shows the entry for the new flashcard.
-1. Test case: `add question /ans answer`<br>
+3. Test case: `add question /ans answer`<br>
    Expected: Listing all decks with `list /ans` shows the entry for the new flashcard.
-1. Test case: `add question/answer` followed by 'answer' when prompted<br>
+4. Test case: `add question/answer` followed by 'answer' when prompted<br>
    Expected: Listing all decks with `list /ans` shows the entry for the new flashcard.
-1. Test case: `add /ans`<br>
+5. Test case: `add /ans`<br>
    Expected: No flashcard added to the deck. Error message shown.
-1. Test case: `add /ans answer`<br>
+6. Test case: `add /ans answer`<br>
    Expected: No flashcard added to the deck. Error message shown.
    
 Deleting a flashcard:
 1. Prerequisite: In deck mode, listing all flashcards in current deck with `list` shows at least two flashcards.
-1. Test case: `delete 1` followed by `y` when prompted<br>
+2. Test case: `delete 1` followed by `y` when prompted<br>
    Expected: First flashcard deleted from the list.
-1. Test case: `delete 1` followed by `n` when prompted<br>
+3. Test case: `delete 1` followed by `n` when prompted<br>
    Expected: First flashcard not deleted from the list.
-1. Test case: `delete 1` followed by any input that is not 'y/n' surrounded with spaces when prompted<br>
+4. Test case: `delete 1` followed by any input that is not 'y/n' surrounded with spaces when prompted<br>
    Expected: First flashcard not deleted from the list. Error message shown.
-1. Test case: `delete 1 -y`<br>
+5. Test case: `delete 1 -y`<br>
    Expected: First flashcard deleted from the list.
-1. Test case: `delete 0 -y`<br>
+6. Test case: `delete 0 -y`<br>
    Expected: No flashcard deleted from the list. Error message shown.
 
 Updating a flashcard:
 1. Prerequisite: In deck mode with at least one flashcard with question 'test' and answer 'testing'
-1. Test case: `update 1` followed by 'question' and 'answer' when prompted<br>
+2. Test case: `update 1` followed by 'question' and 'answer' when prompted<br>
    Expected: Listing all decks with `list /ans` shows that the entry for the first flashcard is updated.
-1. Test case: `update 1` followed by ' ' and 'answer' when prompted<br>
+3. Test case: `update 1` followed by ' ' and 'answer' when prompted<br>
    Expected: Listing all decks with `list /ans` shows that the answer for the first flashcard is updated.
-1. Test case: `update 1` followed by 'question' and ' ' when prompted<br>
+4. Test case: `update 1` followed by 'question' and ' ' when prompted<br>
    Expected: Listing all decks with `list /ans` shows that the question for the first flashcard is updated.
-1. Test case: `update 1` followed by ' ' and ' ' when prompted<br>
+5. Test case: `update 1` followed by ' ' and ' ' when prompted<br>
    Expected: Listing all decks with `list /ans` shows that the question for the first flashcard is not updated.
-   
+
+<!-- @@author -->
+
+<!-- @@author zhixiangteoh -->
+
+Starting game mode:
+1. Prerequisite: In normal mode or deck mode with at least one deck with at least one flashcard
+2. Test case: In normal mode, `start 1`<br>
+   Expected: Starts game mode for deck at index 1.
+3. Test case: In deck mode, `start`<br>
+   Expected: Starts game mode for current deck.
+4. Test case: While in game mode and prompted for an attempt, simply `<enter>` with no attempt<br>
+   Expected: Answer for the question displayed and score 0.00.
+5. Test case: While in game mode and prompted for an attempt, enter `done` or `exit`<br>
+   Expected: `done` returns user to normal mode, `exit` exits the program.
+6. Test case: While in game mode and prompted for an attempt, enter any attempt<br>
+   Expected: Answer for the question displayed and some score displayed calculated based on matching words.
+7. Test case: While in game mode and prompted for an attempt, enter any attempt, followed by 'y' when next prompted
+, then subsequently enter 'n' for all y/n prompts<br>
+   Expected: All questions in the deck are exhausted before user re-encounters the flashcard for which they indicated
+    'y'.
+8. Test case: While in game mode, try to figure out the pattern for the appearance of flashcards<br>
+   Expected: There is no such pattern. The flashcards are always randomised, even for retest questions.
+    
+<!-- @@author -->
+
+<!-- @@author LiewWS-->
+
 Saving data to disk:
 1. After starting the program, the directory "data" should be created.
    1. After program terminates, verify that the file "data/deckList" exists and contains data that corresponds to
    the commands supplied during program execution.
-1. During execution, the directory "log" should be created.
-1. If a pptx command is executed, the "pptx" directory should be created.
+2. During execution, the directory "log" should be created.
+3. If a pptx command is executed, the "pptx" directory should be created.
    1. After the command is executed, verfiy that "pptx/<file name>" exists for the deck that was converted to
    PowerPoint format.
+
+<!-- @@author -->
