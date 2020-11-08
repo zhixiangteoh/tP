@@ -149,7 +149,7 @@ public class UiTest {
     void printNewTags_none_newTagsLine() {
         String expectedOutput = "------------------------------------------------------------"
                 + "--------------------" + System.lineSeparator()
-                + "The deck Pokemon has been tagged as: Anime, Unreal" + System.lineSeparator() + "--------------------"
+                + "The deck Pokemon has been tagged as: Anime | Unreal" + System.lineSeparator() + "--------------------"
                 + "------------------------------------------------------------" + System.lineSeparator();
         ArrayList<String> newTagsArray = new ArrayList<>();
         newTagsArray.add("Anime");
@@ -170,7 +170,7 @@ public class UiTest {
 
     @Test
     void printRemovedTagsQuestion_StringArrayOfTagsAndDeckName_question() {
-        String expectedOutput = "Do you want to remove the tag(s) Beginner, Year2 from Micro-Economics? [y/n] ";
+        String expectedOutput = "Do you want to remove the tag(s) Beginner | Year2 from Micro-Economics? [y/n] ";
         ArrayList<String> removedTagsArray = new ArrayList<>();
         removedTagsArray.add("Beginner");
         removedTagsArray.add("Year2");
@@ -180,9 +180,11 @@ public class UiTest {
 
     @Test
     void printTagsRemovedLine_removedTagsAndDeckName_confirmation() {
-        String expectedOutput = "The tag(s) Beginner, Year2 have been removed from the deck Micro-Economics."
+        String expectedOutput = "The tag(s) Beginner | Year2 have been removed from the deck Micro-Economics."
                 + System.lineSeparator();
-        String[] removedTagsArray = {"Beginner", "Year2"};
+        ArrayList<String> removedTagsArray = new ArrayList<>();
+        removedTagsArray.add("Beginner");
+        removedTagsArray.add("Year2");
         printTagsRemovedLine("Micro-Economics", removedTagsArray);
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -193,7 +195,7 @@ public class UiTest {
         arrayStringOfTags.add("Advanced");
         arrayStringOfTags.add("Year4");
         arrayStringOfTags.add("Finance");
-        String expectedOutput = "Advanced, Year4, Finance";
+        String expectedOutput = "Advanced | Year4 | Finance";
 
         String actualOutput = formStringOfTags(arrayStringOfTags);
         assertEquals(expectedOutput, actualOutput);
