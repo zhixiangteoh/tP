@@ -41,7 +41,29 @@ A | Using the "loop" notation.
 ================================================================================
 deck | 3
 name | Test Deck
-tags | 
-Q | Test Question
-A | Test Answer
+tags | TESTING | DECK | TAGS
+Q | TEST 1: Empty Answer
+A |
+Q | TEST 2: Empty Answer with whitespaces
+A |
+Q |
+A | TEST 3: Empty Question
+Q |
+A | TEST 4: Empty Question with whitespaces
+Q | TEST 5: Both question and answer empty
+A | Following QNA are empty.
+Q |
+A |
+Q | TEST 6: Non-alphanumeric question and answer
+A | ./!@$#*&#
+Q | ./*-+""
+A | TEST 7: Non-alphanumeric question and answer
+Q | CORRECT QUESTION
+A | CORRECT ANSWER
+================================================================================
+deck | 4
+name | Test Deck
+tags | Duplicate | Deck | Name | Test
+Q | TEST WHETHER EXISTING DECK NAME
+A | SHOULD BE NOT ALLOWED?
 ================================================================================

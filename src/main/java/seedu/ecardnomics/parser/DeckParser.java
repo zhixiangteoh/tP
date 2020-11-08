@@ -63,7 +63,7 @@ public class DeckParser extends Parser {
         return new DeleteCommand(deck, flashCardID, isFlashCardDeleted);
     }
 
-    private boolean containsNoAlphaNumerics(String field) {
+    public static boolean containsNoAlphaNumerics(String field) {
         String puncRemovedField = field.replaceAll(Ui.PUNC_REGEX, "");
         return puncRemovedField.isBlank();
     }
