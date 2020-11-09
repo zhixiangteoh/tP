@@ -45,7 +45,7 @@ The following are the enhancements I have implemented categorised by the version
         their mobile phones or test themselves outside of the CLI. 
     * This command can be called from both Normal mode (need to specify which deck to use) and Deck mode (do not 
         need to specify, automatically uses the current deck).
-    * The PowerPoint Slide is created using the `Apache POI API`.
+    * The PowerPoint Slide is created using the [`Apache POI API`](https://poi.apache.org/index.html).
   
     * Added [JUnit Test](https://github.com/AY2021S1-CS2113-T14-2/tp/commit/5c398c4b666efb7719c83f83513d797c8cbccdd6) 
         for these functionalities
@@ -56,12 +56,15 @@ The following are the enhancements I have implemented categorised by the version
         
 ##### v2.1
 * Powerpoint command choose text and background color
+
     ![Example of PowerPoint Slide](../images-ug/PPTX-Example.png)
+    
     *Example of PowerPoint Slide with steelblue background and silver text created using the `-cs` option*
     
     * Added two options to `pptx` command that allows user to choose their preferred background and text color for the 
         PowerPoint slides that are created. 
-        * The options use [`Color Factory API`](https://github.com/beryx/awt-color-factory) which converts a String that has the value of a valid string to a `Color` object.
+        * The options use [`Color Factory API`](https://github.com/beryx/awt-color-factory) which converts a
+            String that has the value of a valid string to a `Color` object.
         * The description of the option can be found in the [User Guide](../UserGuide.md#features---print-to-powerpoint).
         * The description of the implementation can be found in the [Developer Guide](../DeveloperGuide.md#print-to-powerpoint-slideshow)
         * Default *Color Schemes* `-cs` 
@@ -74,6 +77,8 @@ The following are the enhancements I have implemented categorised by the version
     * In each command, only either of the options can be used to select the colors so if both options are included 
         at the same time, there will be an exception thrown, `BothCsAndOcException`.
     * Any other options entered starting with `-` will trigger the exception, `InvalidOptionException`.
+    * In Deck Mode if any other arguments other than the 3 options are present, the exception, `InvalidPptxArgumentException`
+        will be thrown.
     
     * Added [JUnit Test](https://github.com/AY2021S1-CS2113-T14-2/tp/commit/1b123da1bad272b58964e89d6fefb2062b08d7d4) 
         for these functionalities
@@ -93,7 +98,7 @@ In the User Guide, I wrote the following sections
     * Added the `NumberTooBigException` and all the exceptions for `getCsIndex()` and `preparePptxIndex()`
 * [Print to PowerPoint SlideShow](../DeveloperGuide.md#print-to-powerpoint-slideshow)
     * Added the [sequence diagram](../images-dg/PPTX-Sequence-Diagram.png) and explanation on how the command works
-    * Added section for [Color Selection](../DeveloperGuide.md#color-selection)
+    * Added a section for [Color Selection](../DeveloperGuide.md#color-selection)
         * Includes [sequence diagram for the different options to select color](../images-dg/PPTX-Color-Options-Sequence-Diagram.png) 
         * Includes 3 sub-sections to explain what each of the option does
             * [Default](../DeveloperGuide.md#default)
@@ -102,6 +107,10 @@ In the User Guide, I wrote the following sections
             
         
 #### Contributions to team-based tasks :
+Set up Team Repository.
+
+Released version 2.0.
+
 PR Reviews:
 * [Review of PR 227](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/227) 
 
@@ -111,7 +120,7 @@ for `Storage` based on what I have done in my IP.
 * [Team mates code for Storage](https://github.com/AY2021S1-CS2113-T14-2/tp/blob/master/src/main/java/seedu/ecardnomics/storage/Storage.java)
 * [My code for IP storage](https://github.com/kaijiel24/ip/blob/master/src/main/java/duke/storage/Storage.java)
 
-Provided exception when getting index from user inputs and refactor them into `getIndex()` method to allow team mates to 
+Provided exception when getting index from user inputs and refactor them into `getIndex()` method to allow group mates to 
 use the method if their command require getting index from user inputs.
 * [Basic Exceptions](https://github.com/kaijiel24/tp/commit/d4d4f77821b3d2371d69aef55c12597af5b1f654)
 * [Number Too Big Exception](https://github.com/kaijiel24/tp/commit/0f689efb9ae14233ea0ba86315229f02dcba7736)

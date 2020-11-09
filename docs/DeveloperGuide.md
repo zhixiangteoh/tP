@@ -265,7 +265,6 @@ the respective constructor the assigns the respective value of `colorOpt`. Below
 
 ![PPTX Color Options Sequence Diagram](images-dg/PPTX-Color-Options-Sequence-Diagram.png)
 
-
 #### Default
 * Prints PowerPoint Slides with default white background and black text.
 * Instantiated using `PowerPointCommand(deck, deckList, isPptxCreated)` and `PowerPoint(deck)`.
@@ -278,6 +277,26 @@ the respective constructor the assigns the respective value of `colorOpt`. Below
 * Prints PowerPoint Slides with an Original Color combination that is chosen by the user.
 * Instantiated using `PowerPointCommand(deck, deckList, isPptxCreated, bgColorString, txtColorString, bgColor, txtColor)`
     and `PowerPoint(deck, bgColorString, txtColorString, bgColor, txtColor)`
+
+### Exceptions Thrown by Parsers for `pptx` command
+Normal Parser:
+* `getCsIndex()` - for `-cs` option
+    * There are exceptions thrown if the index is either not within the range [1,10], `CsIndexRangeException` or 
+        not in the correct format, `CsIndexFormatException`.
+
+* `preparePptxCommand()` - for the rest of the options
+    * There is an exception thrown, `ColorsNotAvailException` when the at least one of the colors chosen is not 
+        a valid color. (`-cs` option only)
+    * In each command, only either of the options can be used to select the colors so if both options are included 
+        at the same time, there will be an exception thrown, `BothCsAndOcException`.
+    * Any other options entered starting with `-` will trigger the exception, `InvalidOptionsException`.
+    
+Deck Parser:
+    * `checkForValidPptxArguments()` 
+        * If any other arguments other than the 3 options are present for `pptx` command in Deck mode, the exception, 
+            `InvalidPptxArgumentException` will be thrown.
+        * Just like `preparePptxCommand()` from `NormalParser`, the function also checks for invalid options and throw
+            `InvalidOptions` when there are any.
 
 ### Pretty Printing
 

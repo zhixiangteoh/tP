@@ -330,7 +330,7 @@ public class NormalParser extends Parser {
         if (arguments.contains(Ui.ORIGINAL_COLOR_OPT)) {
             String dashOrEnd = "";
 
-            Pattern pattern = Pattern.compile(Ui.ORIGINAL_COLORS_REGEX);
+            Pattern pattern = Pattern.compile(Ui.ORIGINAL_COLOR_REGEX);
             Matcher matcher = pattern.matcher(arguments);
 
 
@@ -349,7 +349,7 @@ public class NormalParser extends Parser {
             }
 
             colorOpt = ColorOption.ORGINAL_COLOR;
-            arguments = arguments.replaceAll(Ui.ORIGINAL_COLORS_REGEX, dashOrEnd).trim();
+            arguments = arguments.replaceAll(Ui.ORIGINAL_COLOR_REGEX, dashOrEnd).trim();
         }
 
         if (arguments.contains(Ui.COLOR_SCHEME_OPT)) {

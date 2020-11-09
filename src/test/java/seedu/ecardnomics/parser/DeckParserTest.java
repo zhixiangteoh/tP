@@ -23,6 +23,7 @@ import seedu.ecardnomics.exceptions.EmptyQnAException;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.InvalidOptionsException;
+import seedu.ecardnomics.exceptions.InvalidPptxArgumentException;
 import seedu.ecardnomics.exceptions.NoAlphaNumericInputException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -254,7 +255,7 @@ class DeckParserTest {
             deckParser.parseCommand("pptx", "-y 1");
             fail();
         } catch (Exception e) {
-            assertTrue(e instanceof IndexFormatException);
+            assertTrue(e instanceof InvalidPptxArgumentException);
         }
     }
 
@@ -265,6 +266,7 @@ class DeckParserTest {
             deckParser.parseCommand("pptx", "-y -cs 1 -oc black green");
             fail();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             assertTrue(e instanceof BothOcAndCsException);
         }
     }
@@ -287,6 +289,7 @@ class DeckParserTest {
             deckParser.parseCommand("pptx", "-y -ss 1");
             fail();
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             assertTrue(e instanceof InvalidOptionsException);
         }
     }
