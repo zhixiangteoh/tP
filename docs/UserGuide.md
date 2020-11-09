@@ -791,6 +791,9 @@ Updates the question and answer fields of a  specified flashcard in the deck. Th
 
 If a blank line is supplied as the new detail, then the detail is unchanged.
 
+If either the new question or new answer is specified without any alphanumeric characters, then both will be rejected
+amd the old question and old answer will be retained. 
+
 #### Examples
 
 Updating both the question and answer:
