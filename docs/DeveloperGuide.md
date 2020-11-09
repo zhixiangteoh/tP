@@ -209,7 +209,7 @@ are able to read data from the **`DeckList`**, **`Deck`** and **`FlashCard`** co
 **API**: [seedu/ecardnomics/storage](https://github.com/AY2021S1-CS2113-T14-2/tp/blob/master/src/main/java/seedu/ecardnomics/storage)
 
 Storage of this application uses basic `.txt` read and write functions.  
-Upon start of the program, the application checks whether there is a `./data` folder and creates one is there isn't.  
+Upon start of the program, the application checks whether there is a `./data` folder and creates one if there isn't.  
 Then, it reads from the storage file `deckList.txt` line by line to create:
 * new **`Deck`**
 * new **`FlashCard`**
@@ -230,7 +230,7 @@ current `FlashCards` and write them in a specific format in the text file in the
 
 How to read the diagram above:
 - The font colour of the methods correspond to the fill colour of the Exception classes that they throw; e.g
-., **`NormalParser`**s *`prepareNewDeck()`* method throws **`EmptyInputException`**
+., **`NormalParser`**'s *`prepareNewDeck()`* method throws **`EmptyInputException`**
 - Additionally, methods that throw more than one exception will have their colours corresponding to one of the
  exception classes' fill colours, with the other associations denoted by explicit textual annotation on the
   association arrows; e.g., **`NormalParser`**'s *`getIndex()`* and *`prepareDeck()`* methods additionally throw
@@ -242,19 +242,21 @@ How to read the diagram above:
 
 ### Print to PowerPoint SlideShow
 
-An additional feature targeted at students who wish to use add more style to their flash cards outside of the command 
-line option to allow keep things interesting when they are revising.
+An additional feature targeted at students who wish to add more style to their flash cards outside of the command 
+line option to keep things interesting when they are revising.
 
 The `PowerPointCommand` is parsed by `NormalParser` but the "Print to PowerPoint" command can be called from both Normal 
 and Deck Mode. 
 
-The following diagram shows how the `PowerPointCommand`'s `execute()` calls the `createNewPowerPoint()` method of `PowerPoint`.
-*`execute()`* first checks if the whether `isPptxCreated` is `true` and only creates the PowerPoint if so. This is necessary as 
-the user might have input the command `pptx` but when prompt for confirmation, they input `n` which means no, but the parser will 
-still output a `PowerPointCommand` except with the element `isPptxCreated` as `false` and thus, when executed, nothing happens.
+The following diagram shows how the `PowerPointCommand`'s *`execute()`* calls the `createNewPowerPoint()` method of
+ `PowerPoint`. *`execute()`* first checks if the whether `isPptxCreated` is `true` and only creates the PowerPoint if
+  so. This is necessary as the user might have input the command `pptx` but when prompted for confirmation, they input
+   `n` which means no, but the parser will still output a `PowerPointCommand` except with the element `isPptxCreated
+   ` as `false` and thus, when executed, nothing happens.
+
 ![PPTX Sequence Diagram](images-dg/PPTX-Sequence-Diagram.png)
 
-The `newIntroSlide()`, `newSlide()` and `exportSlide()` method of `PowerPoint` uses a third party library - 
+The *`newIntroSlide()`*, *`newSlide()`* and *`exportSlide()`* method of `PowerPoint` uses a third party library - 
 [Apache POI](https://poi.apache.org/index.html)
 to create new slides, populate them with the questions and answers from the deck and finally print them out to a new
  PowerPoint file in the `pptx` folder under the name `<deck name>.pptx`.
@@ -274,11 +276,11 @@ The following are the Classes/ Enum of the third party package `org.apache.poi.x
 The 3 modes of Color Selection, `DEFAULT`, `COLOR_SCHEME` and `ORIGINAL_COLOR` are stored in the enum `ColorOption`.
 
 The `java.awt.Color` class itself has no methods to generate colors based on a given string. Thus, I used the 
-[`ColorFactory API`](https://github.com/beryx/awt-color-factory) which has a public static method,`valueOf` which
+[`ColorFactory API`](https://github.com/beryx/awt-color-factory) which has a public static method, *`valueOf()`* which
 takes in a string and outputs a `Color` object if the String matches any of the available colors documented 
-[here](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html)
-This is done in the constructor of `PowerPoint` where `bgColor = ColorFactory.valueOf(bgColorString);` (same for `txtColor`)
-
+[here](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html).
+This is done in the constructor of `PowerPoint` where `bgColor = ColorFactory.valueOf(bgColorString)` (same for
+ `txtColor`).
 
 Each instance of `PowerPoint` has an element of the enum `ColorOption`, `colorOpt`, which decides which of the outputs 
 to print back to the user. `NormalParser`'s `preparePptxCommand` create a `PowerPointCommand` instance using different 
@@ -367,13 +369,13 @@ infinitely as it would never be able to fit the word on any line.
 Take note that infinite loops can still occur if *`prettyPrintFormatter()`* is called with offset >= `lineLength`
 
 ### Tags for grouping and searching decks
-The purpose of this feature is to provide a mean to group the decks based on their subjects
-and search for relevant decks related to one or more relevant subjects in a robust way. Each created deck will
+The purpose of this feature is to provide a means to group the decks based on their subjects
+and search for relevant decks related to one or more relevant subjects in a robust way. Each created deck will be
 tagged to their respective field.
 
 ![DG-Implementation-Features-TagArchitecture](./images-dg/Tag-feature.png?raw=true)
 
-The user can also modify the tags of the decks by using tag or untag command, and uses search by tag to find
+The user can also modify the tags of the decks by using `tag` or `untag` command, and use `search` by tag to find
 a group of decks he/she is interested in.
 
 ![DG-Implementation-Features-TagSequence](./images-dg/Tag.png?raw=true)
