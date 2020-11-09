@@ -1325,8 +1325,7 @@ Each deck of flashcards should be written in the following format:
 
 ```java
 ================================================================================
-deck | <deckIndex>
-name | <deckOfName>
+deck | <nameOfDeck>
 tags | <tags> | <moreTags> | <evenMoreTags>
 Q | <questionStatement>
 A | <answerStatement>

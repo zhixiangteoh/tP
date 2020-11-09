@@ -15,9 +15,14 @@ import seedu.ecardnomics.command.normal.StartCommand;
 import seedu.ecardnomics.deck.Deck;
 import seedu.ecardnomics.deck.DeckList;
 import seedu.ecardnomics.deck.FlashCard;
+import seedu.ecardnomics.exceptions.BothOcAndCsException;
+import seedu.ecardnomics.exceptions.ColorsNotAvailException;
+import seedu.ecardnomics.exceptions.CsIndexFormatException;
+import seedu.ecardnomics.exceptions.CsIndexRangeException;
 import seedu.ecardnomics.exceptions.EmptyQnAException;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
+import seedu.ecardnomics.exceptions.InvalidOptionsException;
 import seedu.ecardnomics.exceptions.NoAlphaNumericInputException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -222,6 +227,26 @@ class DeckParserTest {
     }
 
     @Test
+    void parseCommand_PptxCommandForceYesOriginalColor_success() {
+        try {
+            assertTrue(deckParser.parseCommand("pptx", "-oc blue green -y") instanceof PowerPointCommand);
+            assertTrue(deckParser.parseCommand("pptx", "-y -oc blue green") instanceof PowerPointCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
+    void parseCommand_PptxCommandForceYesColorScheme_success() {
+        try {
+            assertTrue(deckParser.parseCommand("pptx", "-cs 1 -y") instanceof PowerPointCommand);
+            assertTrue(deckParser.parseCommand("pptx", "-y -cs 1") instanceof PowerPointCommand);
+        } catch (Exception e) {
+            System.out.println(" error");
+        }
+    }
+
+    @Test
     void parseCommand_PptxCommandExtraArguments_exceptionThrown() {
         try {
             deckParser.parseCommand("pptx", "1");
@@ -230,6 +255,61 @@ class DeckParserTest {
             fail();
         } catch (Exception e) {
             assertTrue(e instanceof IndexFormatException);
+        }
+    }
+
+    @Test
+    void parseCommand_PptxCommandBothOcAndCs_exceptionThrown() {
+        try {
+            deckParser.parseCommand("pptx", "-y -oc green black -cs 1");
+            deckParser.parseCommand("pptx", "-y -cs 1 -oc black green");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof BothOcAndCsException);
+        }
+    }
+
+    @Test
+    void parseCommand_PptxCommandOriginalColorUnavailableColor_exceptionThrown() {
+        try {
+            deckParser.parseCommand("pptx", "-y -oc green block");
+            deckParser.parseCommand("pptx", "-y -oc block green");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof ColorsNotAvailException);
+        }
+    }
+
+    @Test
+    void parseCommand_PptxCommandInvalidOptions_exceptionThrown() {
+        try {
+            deckParser.parseCommand("pptx", "-y -cc green black");
+            deckParser.parseCommand("pptx", "-y -ss 1");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof InvalidOptionsException);
+        }
+    }
+
+    @Test
+    void parseCommand_PptxCommandCsIndexOutOfRange_exceptionThrown() {
+        try {
+            deckParser.parseCommand("pptx", "-y -cs 0");
+            deckParser.parseCommand("pptx", "-y -cs 11");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof CsIndexRangeException);
+        }
+    }
+
+    @Test
+    void parseCommand_PptxCommandCsIndexWrongFormat_exceptionThrown() {
+        try {
+            deckParser.parseCommand("pptx", "-y -cs -1");
+            deckParser.parseCommand("pptx", "-y -cs blue red");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e instanceof CsIndexFormatException);
         }
     }
 
