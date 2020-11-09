@@ -132,7 +132,7 @@ public class DeckParser extends Parser {
         return new AddCommand(deck, questionAndAnswer[0].trim(), questionAndAnswer[1].trim());
     }
 
-    protected Command prepareUpdate(int flashCardID) {
+    protected Command prepareUpdate(int flashCardID) throws EmptyQnAException, NoAlphaNumericInputException {
         String[] newQnA = new String[2];
         Ui.printUpdateQuestionLine(deck.get(flashCardID));
         newQnA[0] = Ui.readUserInput();
@@ -154,6 +154,9 @@ public class DeckParser extends Parser {
             newQnA[1] = deck.get(flashCardID).getAnswer();
             hasNewA = false;
         }
+        verifyStringField(newQnA[0]);
+        verifyStringField(newQnA[1]);
+
         assert newQnA[0].length() > 0 : "question field empty!";
         assert newQnA[1].length() > 0 : "answer field empty!";
         Ui.printDashLines();
