@@ -61,10 +61,9 @@ The following are the enhancements I have implemented categorised by the version
     
     * Added two options to `pptx` command that allows user to choose their preferred background and text color for the 
         PowerPoint slides that are created. 
-            * The options use [`Color Factory API`](https://github.com/beryx/awt-color-factory) which converts a String 
-                that has the value of a valid string to a `Color` object.
-            * The description of the option can be found in the [User Guide](../UserGuide.md#features---print-to-powerpoint)
-            * The description of the implementation can be found in the [Developer Guide](../DeveloperGuide.md#print-to-powerpoint-slideshow)
+        * The options use [`Color Factory API`](https://github.com/beryx/awt-color-factory) which converts a String that has the value of a valid string to a `Color` object.
+        * The description of the option can be found in the [User Guide](../UserGuide.md#features---print-to-powerpoint).
+        * The description of the implementation can be found in the [Developer Guide](../DeveloperGuide.md#print-to-powerpoint-slideshow)
         * Default *Color Schemes* `-cs` 
             * There are exceptions thrown if the index is either not within the range [1,10], `CsIndexRangeException` or 
                 not in the correct format, `CsIndexFormatException`.
