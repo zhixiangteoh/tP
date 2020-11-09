@@ -18,11 +18,15 @@ import seedu.ecardnomics.exceptions.EmptyQnAException;
 import seedu.ecardnomics.exceptions.FlashCardRangeException;
 import seedu.ecardnomics.exceptions.IndexFormatException;
 import seedu.ecardnomics.exceptions.InvalidListCommandException;
+import seedu.ecardnomics.exceptions.InvalidOptionsException;
+import seedu.ecardnomics.exceptions.InvalidPptxArgumentException;
 import seedu.ecardnomics.exceptions.NoAlphaNumericInputException;
 import seedu.ecardnomics.exceptions.NumberTooBigException;
 import seedu.ecardnomics.storage.LogStorage;
 
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Parser for commands supplied in Deck Mode.
@@ -172,6 +176,45 @@ public class DeckParser extends Parser {
         throw new InvalidListCommandException();
     }
 
+    protected void checkForValidPptxCommand(String arguments) throws Exception {
+        String validArg = arguments;
+
+        String dashOrEnd = "";
+        if (validArg.contains(Ui.ORIGINAL_COLOR_OPT)) {
+            Pattern p1 = Pattern.compile(Ui.ORIGINAL_COLOR_REGEX);
+            Matcher m1 = p1.matcher(arguments);
+            if (m1.find()) {
+                dashOrEnd = m1.group(3);
+            }
+            validArg = validArg.replaceAll(Ui.ORIGINAL_COLOR_REGEX, dashOrEnd);
+        }
+
+        if (validArg.contains(Ui.COLOR_SCHEME_OPT)) {
+            Pattern p2 = Pattern.compile(Ui.COLOR_SCHEME_REGEX);
+            Matcher m2 = p2.matcher(arguments);
+            if (m2.find()) {
+                dashOrEnd = m2.group(2);
+            }
+            validArg = validArg.replaceAll(Ui.COLOR_SCHEME_REGEX, dashOrEnd);
+        }
+
+        if (validArg.contains(Ui.FORCE_YES_OPT)) {
+            validArg = validArg.replaceAll(Ui.FORCE_YES_OPT, "");
+        }
+
+        Pattern p = Pattern.compile("-\\w+");
+        Matcher m = p.matcher(validArg);
+        if (m.find()) {
+            throw new InvalidOptionsException();
+        }
+
+        System.out.println(validArg);
+
+        if (!validArg.isBlank()) {
+            throw new InvalidPptxArgumentException();
+        }
+    }
+
     @Override
     protected int getIndex(String arguments) throws IndexFormatException,
             FlashCardRangeException, NumberTooBigException {
@@ -245,6 +288,7 @@ public class DeckParser extends Parser {
         // Create PowerPoint
         case Ui.PPTX:
             logger.log(Level.INFO, "Printing to PowerPoint");
+            checkForValidPptxCommand(arguments);
             return new NormalParser(Main.deckList).parseCommand(commandWord,
                     (deckList.getIndexOf(deck) + 1) + " " + arguments);
         default:
