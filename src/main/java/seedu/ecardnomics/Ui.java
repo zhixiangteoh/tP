@@ -183,6 +183,9 @@ public class Ui {
         printDashLines();
     }
 
+    /**
+     * Prints logo when user opens the program.
+     */
     public static void printLogo() {
         System.out.println(LOGO1);
         System.out.println(LOGO2);
@@ -259,13 +262,6 @@ public class Ui {
      */
     public static void printExitLine() {
         printMessage(BYE_LINE);
-    }
-
-    /**
-     * Displays the not recognised message.
-     */
-    public static void printNotRecognisedLine() {
-        printMessage(NOT_RECOGNISED_LINE);
     }
 
     /**
@@ -486,6 +482,11 @@ public class Ui {
         return checkYorNResponse();
     }
 
+    /**
+     * Displays question in the flashcard.
+     *
+     * @param question String representing the question
+     */
     public static void printGameQuestion(String question) {
         final String label = "Q: ";
         System.out.println(label + prettyPrintFormatter(question, label.length()));

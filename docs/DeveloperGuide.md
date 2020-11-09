@@ -95,12 +95,32 @@ and **`GameParser`** for printing the appropriate output when required.
 ### Logic
 
 #### Overall Logic
-![DG-Overall Logic UML](./images-dg/Logic-DG.png?raw=true "Overall Logic Diagram")
+This is an overview of interactions between objects in eCardnomics program.
+
+![DG-Overall Logic](./images-dg/Logic-DG-copy.png?raw=true "Overall Logic Diagram")
 
 1. The overall logic component consists of the **`Parser`** class and **`Command`** class.
 2. The **`Parser`** parses the user input and creates the respective **`Command`** object.
 3. This command will be executed by the **`Main`** class.
 4. The command execution then can affect the Model (e.g. creating a new deck)
+
+#### Parsers
+##### Overview
+![DG-Parser UML](./images-dg/DG-Parser-UML.png?raw=true "Parsers UML Class Diagram")
+
+There are three types of parsers: **`NormalParser`**, **`DeckParser`** and **`GameParser`**. They will be executed
+corresponding to the mode users are in. Users input in Normal Mode, Deck Mode or Game Mode will be parsed using the
+respective parser. All are children classes of abstract class Parser, where there are three abstract methods:
+* parse(String arguments) splits command word and arguments, passes them into parseCommand, and returns parseCommand
+ ouput which is a Command
+* parseCommand(String arguments) gets input from parse() method, creates the right command and returns Command object
+* getIndex(String arguments) returns a valid index of the deck or flashcard in the deck
+Theses three methods will be reused in the children classes based on the current mode.
+ 
+ Three Parsers will parse inputs from user and turns them to valid arguments for Command object creation.
+ NormalParser will return NormalCommand, DeckParser will return DeckCommand and GameParser will return GameCommand.
+ And all three can create everywhere Command such as ExitCommand.
+ 
 
 #### Commands
 
@@ -141,7 +161,7 @@ Notice that the same **`StartCommand`** class above is indicated as being in bot
    word being parsed as `start` will in turn call **`NormalParser`**'s *`parseCommand()`* method, supplementing it with
     **`DeckParser`**'s Deck class field object as the `arguments` String. 
 
-##### Command sequence
+##### Parser and Command sequence
 
 The **`Parser`** classes play important roles in execution of specific commands, e.g. **`CreateCommand`**, because
  they define methods that check and ensure the conformity of user input to the commands' expected input. Below is a
@@ -332,9 +352,9 @@ The purpose of this feature is to provide a mean to group the decks based on the
 and search for relevant decks related to one or more relevant subjects in a robust way. Each created deck will
 tagged to their respective field.
 
-![DG-Implementation-Features-TagArchitecture](./images-dg/TagFeature-UML.png?raw=true)
+![DG-Implementation-Features-TagArchitecture](./images-dg/Tag-feature.png?raw=true)
 
-The user can also modify to tags of the decks by using tag or untag command, and uses search by tag to find
+The user can also modify the tags of the decks by using tag or untag command, and uses search by tag to find
 a group of decks he/she is interested in.
 
 ![DG-Implementation-Features-TagSequence](./images-dg/Tag.png?raw=true)
@@ -479,9 +499,13 @@ Flashcard application that allows students to quickly create new flashcards and 
     pre-designed color schemes available.
 * *[Deck](#deck-model)* - A collection of flash cards that are related by a common topic.
 * *[DeckList](#deck-model)* - A collection of all the decks owned by the user.
+* *[Tag](#tags-for-grouping-and-searching-decks)* -An attribute of Deck that helps user to categorise all the available
+deck
 * *[Deck Mode](#commands)* - A state of the program that allows the user to make changes to the flashcards within the
     deck
 * *[Flashcard](#deck-model)* - An object that contains a non-empty question and a non-empty answer.
+* *[Deck Mode](#commands)* - A state of the program that allows the user to make changes to the flashcards within the
+deck
 * *[Game Mode](#commands)* - A state of the program used for testing if the user recalls the answer on flashcards.
 * *[Normal Mode](#command)* - A state of the program that allows the user to modify the list of decks.
 * *[Original Colors](#original-color)* - An option to select color for printing to PowerPoint by selecting two of the
