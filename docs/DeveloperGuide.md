@@ -94,7 +94,7 @@ and **`GameParser`** for printing the appropriate output when required.
 #### Overall Logic
 This is an overview of interactions between objects in eCardnomics program.
 
-![DG-Overall Logic UML](./images-dg/Logic-DG.png?raw=true "Overall Logic Diagram")
+![DG-Overall Logic](./images-dg/Logic-DG-copy.png?raw=true "Overall Logic Diagram")
 
 1. The overall logic component consists of the **`Parser`** class and **`Command`** class.
 2. The **`Parser`** parses the user input and creates the respective **`Command`** object.
