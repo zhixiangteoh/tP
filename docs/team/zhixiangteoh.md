@@ -14,7 +14,7 @@ The main goals of this application are to help students store and segment their 
 
 ### Code contributed
 
-Summary: [tP Code Dashboard](https://nus-cs2113-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=zhixiangteoh&sort=groupTitle&sortWithin=title&since=2020-09-27&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs~functional-code~test-code~other)
+Summary: [tP Code Dashboard](https://nus-cs2113-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=zhixiangteoh)
 
 In short, I did the following:
 
@@ -40,11 +40,11 @@ In v1.0, I split the work with Wayne in implementing the Deck Mode commands. Spe
 
 `DeleteCommand` required me to implement a `y/n` prompt method for the `Ui` class, to be used by `DeckParser`, which
  was later used by all commands in the application that utilise `y/n` prompts. [Example of the user-interface of the
-  `y/n` prompt](../UserGuide.md#examples-4).
+  `y/n` prompt](https://ay2021s1-cs2113-t14-2.github.io/tp/UserGuide.html#examples-4).
 
 In v2.0, I implemented the [Game Mode feature](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/94). For this, our
  team originally thought it would be just another command implemented as part of Normal Mode or Deck Mode, but I felt
-  it deserved its own mode. I created a separate package, [`game`](), and parser class `GameParser` for Game Mode
+  it deserved its own mode. I created a separate package, `game`, and parser class `GameParser` for Game Mode
   , with the `game` package abstracting away the entire Game Mode implementation from the rest of the application.
     
 So the resulting `game` package is structured as such:
