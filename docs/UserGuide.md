@@ -83,7 +83,7 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     + [Examples](#examples-21)
 - [FAQ](#faq)
   * [General](#general)
-  * [Storage](#Storage)
+  * [Storage](#storage)
   * [Deck Mode](#deck-mode)
   * [Game Mode](#game-mode)
 - [Command Summary](#command-summary)
