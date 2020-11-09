@@ -248,14 +248,15 @@ and Deck Mode.
 The following diagram shows how the `PowerPointCommand`'s `execute()` calls the `createNewPowerPoint()` method of `PowerPoint`.
 *`execute()`* first checks if the whether `isPptxCreated` is `true` and only creates the PowerPoint if so. This is necessary as 
 the user might have input the command `pptx` but when prompt for confirmation, they input `n` which means no, but the parser will 
-still output a **`PowerPointCommand`** except with the element `isPptxCreated` as `false` and thus, when executed, nothing happens.
+still output a `PowerPointCommand` except with the element `isPptxCreated` as `false` and thus, when executed, nothing happens.
 ![PPTX Sequence Diagram](images-dg/PPTX-Sequence-Diagram.png)
 
-The `newIntroSlide()`, `newSlide()` and `exportSlide()` method of `PowerPoint` uses a third party library - Apache POI 
-to create new slides, populate them with the questions and answers from the deck and finally print them out to a new PowerPoint
- file in the `pptx` folder under the name `<deck name>.pptx`.
+The `newIntroSlide()`, `newSlide()` and `exportSlide()` method of `PowerPoint` uses a third party library - 
+[Apache POI](https://poi.apache.org/index.html)
+to create new slides, populate them with the questions and answers from the deck and finally print them out to a new
+ PowerPoint file in the `pptx` folder under the name `<deck name>.pptx`.
  
-The following are the Classes/ Enum of the third part package `org.apache.poi.xslf.usermodel` which are used:
+The following are the Classes/ Enum of the third party package `org.apache.poi.xslf.usermodel` which are used:
 * `SlideLayout` - Enum representing the Slide Layouts available
 * `XMLSlideShow` - Class representing an entire Slide Show
 * `XSLFSlide` - Class representing a single Slide
@@ -265,14 +266,38 @@ The following are the Classes/ Enum of the third part package `org.apache.poi.xs
 * `XSLFTextParagraph` - Class representing a paragraph of text within a shape
 * `XSLFTextRun` - Class representing the properties of the text within a paragraph
 
+
+#### Color Selection  
 The 3 modes of Color Selection, `DEFAULT`, `COLOR_SCHEME` and `ORIGINAL_COLOR` are stored in the enum `ColorOption`.
 
+The `java.awt.Color` class itself has no methods to generate colors based on a given string. Thus, I used the 
+[`ColorFactory API`](https://github.com/beryx/awt-color-factory) which has a public static method,`valueOf` which
+takes in a string and outputs a `Color` object if the String matches any of the available colors documented 
+[here](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html)
+This is done in the constructor of `PowerPoint` where `bgColor = ColorFactory.valueOf(bgColorString);` (same for `txtColor`)
+
+
 Each instance of `PowerPoint` has an element of the enum `ColorOption`, `colorOpt`, which decides which of the outputs 
-to print back to the user. `colorOpt` takes on the different values depending on which constructor is used to create the 
-`PowerPoint` instance.
-* `PowerPoint(deck)` - `DEFAULT`
-* `PowerPoint(deck, csIndex)` - `COLOR_SCHEME`
-* `PowerPoint(deck, bgColorString, txtColorString, bgColor, txtColor)` - `ORIGINAL_COLOR`
+to print back to the user. `NormalParser`'s `preparePptxCommand` create a `PowerPointCommand` instance using different 
+constructors depending on the mode of Color Selection. The `PowerPointCommand` then creates a `PowerPoint` instance with 
+the respective constructor the assigns the respective value of `colorOpt`. Below are the `PowerPointCommand` and 
+`PowerPoint` constructors used in each mode.
+
+![PPTX Color Options Sequence Diagram](images-dg/PPTX-Color-Options-Sequence-Diagram.png)
+
+
+#### Default
+* Prints PowerPoint Slides with default white background and black text.
+* Instantiated using `PowerPointCommand(deck, deckList, isPptxCreated)` and `PowerPoint(deck)`.
+
+#### Color Scheme
+* Prints PowerPoint Slides with one of the 10 available color schemes that are pre-designed. 
+* Instantiated using`PowerPointCommand(deck, deckList, isPptxCreated, csIndex)` and `PowerPoint(deck, csIndex)` 
+
+#### Original Color 
+* Prints PowerPoint Slides with an Original Color combination that is chosen by the user.
+* Instantiated using `PowerPointCommand(deck, deckList, isPptxCreated, bgColorString, txtColorString, bgColor, txtColor)`
+    and `PowerPoint(deck, bgColorString, txtColorString, bgColor, txtColor)`
 
 ### Pretty Printing
 
@@ -466,21 +491,29 @@ Flashcard application that allows students to quickly create new flashcards and 
 * The program is not expected to guarantee that modifications to data file will be during execution will be retained.
 
 ## Glossary
-
+* *[Color Selection](#color-selection)* - The options available to select the color for printing to PowerPoint.
+* *[Color Schemes](#color-scheme)* - An option to select color for printing to PowerPoint by selecting one of the 
+    pre-designed color schemes available.
 * *[Deck](#deck-model)* - A collection of flash cards that are related by a common topic.
 * *[DeckList](#deck-model)* - A collection of all the decks owned by the user.
 * *[Tag](#tags-for-grouping-and-searching-decks)* -An attribute of Deck that helps user to categorise all the available
 deck
+* *[Deck Mode](#commands)* - A state of the program that allows the user to make changes to the flashcards within the
+    deck
 * *[Flashcard](#deck-model)* - An object that contains a non-empty question and a non-empty answer.
 * *[Deck Mode](#commands)* - A state of the program that allows the user to make changes to the flashcards within the
 deck
 * *[Game Mode](#commands)* - A state of the program used for testing if the user recalls the answer on flashcards.
 * *[Normal Mode](#command)* - A state of the program that allows the user to modify the list of decks.
+* *[Original Colors](#original-color)* - An option to select color for printing to PowerPoint by selecting two of the
+    available colors for background and text.
 * *[Pretty Printing](#pretty-printing)* - Printing text output that span more than one line in a way that minimizes
-truncating words.
+    truncating words.
+* *[Print to PowerPoint](#print-to-powerpoint-slideshow)* - Prints an entire deck to a PowerPoint slide (.pptx), using 
+    `pptx` command.
 * *[deque](#general-architecture)* - Pronounced "deck", short for "double-ended queue". In eCardnomics, *deque* is
-  implemented as an [`ArrayDeque`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayDeque.html) and functions as a stack of shuffled flash cards, from which questions are popped
-   off during Game Mode.
+  implemented as an [`ArrayDeque`](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayDeque.html) 
+  and functions as a stack of shuffled flash cards, from which questions are popped off during Game Mode.
 
 ## Instructions for manual testing
 
@@ -532,6 +565,35 @@ Searching a deck by tag:
    Expected: All decks tagged with 'test' together with their index numbers are shown.
 3. Test case: `search LOL`<br>
    Expected: The search returns no results.
+   
+<!-- @@author -->
+
+<!-- @@author kaijiel24 -->
+
+Printing a deck to PowerPoint:
+1. Prerequisite: There exist at least one deck and any PowerPoint with the 'deck name'.pptx is not in use.
+1. Test case: `pptx 1` followed by `y` when prompted <br>
+   Expected: A PowerPoint, 'deck name'.pptx is created with white background and black text.
+1. Test case: `pptx 1 -y` <br>
+   Expected: A PowerPoint, 'deck name'.pptx is created with white background and black text.
+1. Test case: `pptx 1 -y -cs 1` <br>
+   Expected: A PowerPoint, 'deck name'.pptx is created with steelblue background and silver text.
+1. Test case: `pptx 1 -y -oc black red` <br>
+   Expected: A PowerPoint, 'deck name'.pptx is created with black background and red text.
+1. Test case: `pptx 1 -y -cs black red` <br>
+   Expected: No PowerPoint is created. Error message shown.
+1. Test case: `pptx 1 -y -cs 11` <br>
+   Expected: No PowerPoint is created. Error message shown.
+1. Test case: `pptx 1 -y -oc block red` <br>
+   Expected: No PowerPoint is created. Error message shown.
+1. Test case: `pptx 1 -y -cs 1 -oc black red` <br>
+   Expected: No PowerPoint is created. Error message shown.
+1. Test case: `pptx 1 -y -cc 11` <br>
+   Expected: No PowerPoint is created. Error message shown.
+   
+<!-- @@author -->
+
+<!-- @@author LiewWS -->
    
 Editing a deck:
 1. Prerequisite: There exists at least one deck.

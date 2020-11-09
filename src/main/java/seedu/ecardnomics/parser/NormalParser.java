@@ -316,7 +316,7 @@ public class NormalParser extends Parser {
      * @return PowerPointCommand to be executed in the Main
      * @throws Exception when arguments (index and options) are not valid
      */
-    private PowerPointCommand preparePptxCommand(String arguments) throws Exception {
+    protected PowerPointCommand preparePptxCommand(String arguments) throws Exception {
         Color bgColor = null;
         Color txtColor = null;
         String bgColorString = "";
@@ -390,9 +390,6 @@ public class NormalParser extends Parser {
             throw new InvalidOptionsException();
         }
 
-        int deckID = getIndex(arguments);
-        Deck deck = deckList.getDeck(deckID);
-
         if (bothOCandCS) {
             throw new BothOcAndCsException();
         }
@@ -404,6 +401,9 @@ public class NormalParser extends Parser {
         if (colorSchemeInvalid) {
             throw csException;
         }
+
+        int deckID = getIndex(arguments);
+        Deck deck = deckList.getDeck(deckID);
 
         if (!isPptxCreated) {
             isPptxCreated = Ui.getPptxDeckConfirmation(deck.getName());
