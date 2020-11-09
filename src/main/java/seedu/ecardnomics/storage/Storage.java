@@ -17,8 +17,7 @@ public class Storage {
     public static final String FOLDER_PATH = "./data";
     public static final String DIVIDER =
             "================================================================================";
-    public static final String DECK_INDEX_REGEX = "deck\\s\\|\\s\\d+";
-    public static final String DECK_NAME_REGEX = "name\\s\\|\\s.+";
+    public static final String DECK_NAME_REGEX = "deck\\s\\|\\s.+";
     public static final String TAGS_REGEX = "tags\\s\\|.+";
     public static final String NO_TAGS_REGEX = "tags\\s\\|";
     public static final String QUESTION_REGEX = "Q\\s\\|\\s.+";
@@ -44,12 +43,6 @@ public class Storage {
         String line;
 
         while (scanner.hasNext()) {
-            line = scanner.nextLine();
-            if (line.matches(DECK_INDEX_REGEX)) {
-                int deckIndex = Integer.parseInt(line.substring(7));
-            } else {
-                continue;
-            }
             line = scanner.nextLine();
             String deckName = null;
             Deck deck = null;
@@ -115,9 +108,7 @@ public class Storage {
 
         for (int i = 0; i < deckList.size(); i++) {
             Deck deck = deckList.getDeck(i);
-            fw.write("deck | " + i);
-            fw.write(System.lineSeparator());
-            fw.write("name | " + deck.getName());
+            fw.write("deck | " + deck.getName());
             fw.write(System.lineSeparator());
             fw.write("tags | " + deck.getTagString());
             fw.write(System.lineSeparator());
