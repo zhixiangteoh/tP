@@ -112,16 +112,23 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
 ### Running the program
 
 Open your command line or terminal and navigate to the folder (e.g., `~/downloads`) where you downloaded the jar file
-. Then simply run the command `java -jar ecardnomics.jar`:
+. Before executing the jar file, create a new folder (e.g., `/ecardnomics`) and copy the jar file to the new folder
+. Terminal commands are given below; feel free to use them as appropriate. After doing this, simply run the command
+ `java -jar ecardnomics.jar`:
 
 ```batch
 $ cd ~/downloads
 $ ls 
 ecardnomics.jar
+$ mkdir ./ecardnomics
+$ mv ecardnomics.jar ./ecardnomics
+$ cd ./ecardnomics
+$ ls
+ecardnomics.jar
 $ java -jar ecardnomics.jar
 ```
 
-> Note: You can also run eCardnomics by double clicking the `ecardnomics.jar` file directly.
+> Note: The terminal commands don't include the `$` sign!
 
 ### Guide format
 
