@@ -92,12 +92,32 @@ and **`GameParser`** for printing the appropriate output when required.
 ### Logic
 
 #### Overall Logic
+This is an overview of interactions between objects in eCardnomics program.
+
 ![DG-Overall Logic UML](./images-dg/Logic-DG.png?raw=true "Overall Logic Diagram")
 
 1. The overall logic component consists of the **`Parser`** class and **`Command`** class.
 2. The **`Parser`** parses the user input and creates the respective **`Command`** object.
 3. This command will be executed by the **`Main`** class.
 4. The command execution then can affect the Model (e.g. creating a new deck)
+
+#### Parsers
+##### Overview
+![DG-Parser UML](./images-dg/DG-Parser-UML.png?raw=true "Parsers UML Class Diagram")
+
+There are three types of parsers: **`NormalParser`**, **`DeckParser`** and **`GameParser`**. They will be executed
+corresponding to the mode users are in. Users input in Normal Mode, Deck Mode or Game Mode will be parsed using the
+respective parser. All are children classes of abstract class Parser, where there are three abstract methods:
+* parse(String arguments) splits command word and arguments, passes them into parseCommand, and returns parseCommand
+ ouput which is a Command
+* parseCommand(String arguments) gets input from parse() method, creates the right command and returns Command object
+* getIndex(String arguments) returns a valid index of the deck or flashcard in the deck
+Theses three methods will be reused in the children classes based on the current mode.
+ 
+ Three Parsers will parse inputs from user and turns them to valid arguments for Command object creation.
+ NormalParser will create NormalCommand, DeckParser will create DeckCommand and GameParser will create GameCommand.
+ And all three can create everywher Command such as ExitCommand.
+ 
 
 #### Commands
 
@@ -449,9 +469,11 @@ Flashcard application that allows students to quickly create new flashcards and 
 
 * *[Deck](#deck-model)* - A collection of flash cards that are related by a common topic.
 * *[DeckList](#deck-model)* - A collection of all the decks owned by the user.
-* *[Deck Mode](#commands)* - A state of the program that allows the user to make changes to the flashcards within the
+* *[Tag](#tags-for-grouping-and-searching-decks)* -An attribute of Deck that helps user to categorise all the available
 deck
 * *[Flashcard](#deck-model)* - An object that contains a non-empty question and a non-empty answer.
+* *[Deck Mode](#commands)* - A state of the program that allows the user to make changes to the flashcards within the
+deck
 * *[Game Mode](#commands)* - A state of the program used for testing if the user recalls the answer on flashcards.
 * *[Normal Mode](#command)* - A state of the program that allows the user to modify the list of decks.
 * *[Pretty Printing](#pretty-printing)* - Printing text output that span more than one line in a way that minimizes

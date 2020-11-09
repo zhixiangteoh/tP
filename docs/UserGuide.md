@@ -331,8 +331,6 @@ decks
 //   Tags: Economics | EC1301
 //2. Macro-Economics
 //   Tags: Economics | EC1301
-//3. Object-oriented Programming
-//   Tags: Computer | Science | CS2113
 ```
 
 ```java
@@ -343,8 +341,6 @@ decks
 //   Tags: Economics | EC1301
 //2. Macro-Economics
 //   Tags: Economics | EC1301
-//3. Object-oriented Programming
-//   Tags: Computer | Science | CS2113
 ```
 
 ### Delete an existing deck: `delete`
