@@ -83,7 +83,7 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
     + [Examples](#examples-21)
 - [FAQ](#faq)
   * [General](#general)
-  * [Storage](#Storage)
+  * [Storage](#storage)
   * [Deck Mode](#deck-mode)
   * [Game Mode](#game-mode)
 - [Command Summary](#command-summary)
@@ -582,7 +582,7 @@ Displays the list of all commands in Deck Mode.
 ### Add a flashcard: `add`
 Adds a flashcard to the end of the current deck. The `add` command expects no initial arguments. Instructions and 
 format of card entry is displayed. Then, the user is prompted to specify the details of the flashcard to be added.
-Duplicate flashcards are allowed.
+Duplicate flashcards are allowed. Note that questions and answers must contain at least one alphanumeric character.
 
 #### Format
 ```java
@@ -598,7 +598,8 @@ Equivalent One-line format:
 >The `/ans` option, if supplied, must be separated from the question and answer by spaces.
 >
 >If `/ans` option is not supplied correctly, `<question description>` is stored and the user is prompted
->for the answer.
+>for the answer. This includes the case of 'add /ans <some text>' because the question must not be empty and we allow
+>'/ans' to be part of a question.
 
 #### Examples
 
@@ -789,6 +790,9 @@ Updates the question and answer fields of a  specified flashcard in the deck. Th
 > and answer of the flashcard.
 
 If a blank line is supplied as the new detail, then the detail is unchanged.
+
+If either the new question or new answer is specified without any alphanumeric characters, then both will be rejected
+amd the old question and old answer will be retained. 
 
 #### Examples
 
