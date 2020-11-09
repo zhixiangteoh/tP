@@ -109,6 +109,8 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
 
 > Java 11 and above is highly recommended, although eCardnomics might run on a lower version.
 
+<!-- @@author zhixiangteoh -->
+
 ### Running the program
 
 Open your command line or terminal and navigate to the folder (e.g., `~/downloads`) where you downloaded the jar file
@@ -129,6 +131,8 @@ $ java -jar ecardnomics.jar
 ```
 
 > Note: The terminal commands don't include the `$` sign!
+
+<!-- @@author -->
 
 ### Guide format
 
