@@ -228,14 +228,15 @@ and Deck Mode.
 The following diagram shows how the `PowerPointCommand`'s `execute()` calls the `createNewPowerPoint()` method of `PowerPoint`.
 *`execute()`* first checks if the whether `isPptxCreated` is `true` and only creates the PowerPoint if so. This is necessary as 
 the user might have input the command `pptx` but when prompt for confirmation, they input `n` which means no, but the parser will 
-still output a **`PowerPointCommand`** except with the element `isPptxCreated` as `false` and thus, when executed, nothing happens.
+still output a `PowerPointCommand` except with the element `isPptxCreated` as `false` and thus, when executed, nothing happens.
 ![PPTX Sequence Diagram](images-dg/PPTX-Sequence-Diagram.png)
 
-The `newIntroSlide()`, `newSlide()` and `exportSlide()` method of `PowerPoint` uses a third party library - Apache POI 
-to create new slides, populate them with the questions and answers from the deck and finally print them out to a new PowerPoint
- file in the `pptx` folder under the name `<deck name>.pptx`.
+The `newIntroSlide()`, `newSlide()` and `exportSlide()` method of `PowerPoint` uses a third party library - 
+[Apache POI](https://poi.apache.org/index.html)
+to create new slides, populate them with the questions and answers from the deck and finally print them out to a new
+ PowerPoint file in the `pptx` folder under the name `<deck name>.pptx`.
  
-The following are the Classes/ Enum of the third part package `org.apache.poi.xslf.usermodel` which are used:
+The following are the Classes/ Enum of the third party package `org.apache.poi.xslf.usermodel` which are used:
 * `SlideLayout` - Enum representing the Slide Layouts available
 * `XMLSlideShow` - Class representing an entire Slide Show
 * `XSLFSlide` - Class representing a single Slide
@@ -249,6 +250,13 @@ The following are the Classes/ Enum of the third part package `org.apache.poi.xs
 #### Color Selection  
 The 3 modes of Color Selection, `DEFAULT`, `COLOR_SCHEME` and `ORIGINAL_COLOR` are stored in the enum `ColorOption`.
 
+The `java.awt.Color` class itself has no methods to generate colors based on a given string. Thus, I used the 
+[`ColorFactory API`](https://github.com/beryx/awt-color-factory) which has a public static method,`valueOf` which
+takes in a string and outputs a `Color` object if the String matches any of the available colors documented 
+[here](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html)
+This is done in the constructor of `PowerPoint` where `bgColor = ColorFactory.valueOf(bgColorString);` (same for `txtColor`)
+
+
 Each instance of `PowerPoint` has an element of the enum `ColorOption`, `colorOpt`, which decides which of the outputs 
 to print back to the user. `NormalParser`'s `preparePptxCommand` create a `PowerPointCommand` instance using different 
 constructors depending on the mode of Color Selection. The `PowerPointCommand` then creates a `PowerPoint` instance with 
@@ -256,6 +264,7 @@ the respective constructor the assigns the respective value of `colorOpt`. Below
 `PowerPoint` constructors used in each mode.
 
 ![PPTX Color Options Sequence Diagram](images-dg/PPTX-Color-Options-Sequence-Diagram.png)
+
 
 #### Default
 * Prints PowerPoint Slides with default white background and black text.
