@@ -115,8 +115,8 @@ respective parser. All are children classes of abstract class Parser, where ther
 Theses three methods will be reused in the children classes based on the current mode.
  
  Three Parsers will parse inputs from user and turns them to valid arguments for Command object creation.
- NormalParser will create NormalCommand, DeckParser will create DeckCommand and GameParser will create GameCommand.
- And all three can create everywher Command such as ExitCommand.
+ NormalParser will return NormalCommand, DeckParser will return DeckCommand and GameParser will return GameCommand.
+ And all three can create everywhere Command such as ExitCommand.
  
 
 #### Commands
@@ -158,7 +158,7 @@ Notice that the same **`StartCommand`** class above is indicated as being in bot
    word being parsed as `start` will in turn call **`NormalParser`**'s *`parseCommand()`* method, supplementing it with
     **`DeckParser`**'s Deck class field object as the `arguments` String. 
 
-##### Command sequence
+##### Parser and Command sequence
 
 The **`Parser`** classes play important roles in execution of specific commands, e.g. **`CreateCommand`**, because
  they define methods that check and ensure the conformity of user input to the commands' expected input. Below is a
@@ -324,9 +324,9 @@ The purpose of this feature is to provide a mean to group the decks based on the
 and search for relevant decks related to one or more relevant subjects in a robust way. Each created deck will
 tagged to their respective field.
 
-![DG-Implementation-Features-TagArchitecture](./images-dg/TagFeature-UML.png?raw=true)
+![DG-Implementation-Features-TagArchitecture](./images-dg/Tag-feature.png?raw=true)
 
-The user can also modify to tags of the decks by using tag or untag command, and uses search by tag to find
+The user can also modify the tags of the decks by using tag or untag command, and uses search by tag to find
 a group of decks he/she is interested in.
 
 ![DG-Implementation-Features-TagSequence](./images-dg/Tag.png?raw=true)
