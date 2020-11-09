@@ -103,7 +103,7 @@ In the User Guide, I wrote the following sections
         
 #### Contributions to team-based tasks :
 PR Reviews:
-[Review of PR 227](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/227) 
+* [Review of PR 227](https://github.com/AY2021S1-CS2113-T14-2/tp/pull/227) 
 
 Helping teammates
 Explaining use of Regular Expressions to group mates to help them with reading and validating data from text file 
