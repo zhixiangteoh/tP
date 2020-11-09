@@ -11,4 +11,4 @@ eCardnomics is a **desktop flashcard application to quickly create, manage, and 
 Useful links:
 * [User Guide](https://ay2021s1-cs2113-t14-2.github.io/tp/UserGuide.html)
 * [Developer Guide](https://ay2021s1-cs2113-t14-2.github.io/tp/DeveloperGuide.html)
-* [About Us](AboutUs.md)
+* [About Us](docs/AboutUs.md)
