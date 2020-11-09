@@ -25,13 +25,20 @@ v1.0:
 * Deck Parser
 * Edit command to enter Deck mode from Normal mode
 * Exit command from both Normal and Deck mode
-* Done Edit command to return to Normal mode form Deck mode
+* Done Edit command to return to Normal mode from Deck mode
 * Getting index from user input to be used in commands which require an index (such as `delete`, `edit`,`tag`)
-* Handling Exceptions for user input index (such as number too big, index format error)
+    * Handling Exceptions for user input index 
+        * If the argument given is not a positive integer (-1, micro-economics, or random etc...), `IndexFormatException`
+            will be thrown.
+        * If the number given is too big such that it is greater than MAX_INT and cannot be stored in an integer variable,
+            `NumberTooBigException` will be thrown.
+        * If the number given is not within the range of number of decks/ flash cards (either 0 or greater than number
+            of decks/ flash cards), `DeckRangeException`/ `FlashCardRangeException` will be thrown.
 
 v2.0
 * Powerpoint command 
-    * This feature allows the user to print any deck to a PowerPoint Slide (.pptx file)
+    * This feature allows the user to print any deck to a PowerPoint Slide (.pptx file) within the pptx folder of the 
+        current working directory.
     * The target for this could be students who wish to use the flash cards they have created on other platforms such
         their mobile phones or test themselves outside of the CLI. 
     * This command can be called from both Normal mode (need to specify which deck to use) and Deck mode (do not 
@@ -43,6 +50,9 @@ v2.0
         
 v2.1
 * Powerpoint command choose text and background color
+    ![Example of PowerPoint Slide](../images-ug/PPTX-Example.png)
+    *Example of PowerPoint Slide with steelblue background and silver text created using the `-cs` option*
+    
     * Added two options to `pptx` command that allows user to choose their preferred background and text color for the 
         PowerPoint slides that are created. 
         * Default *Color Schemes* `-cs` 
@@ -54,10 +64,11 @@ v2.1
             * The format for the option is `-cs  <index of color scheme>`
             * There are exceptions thrown if the index is either not within the range [1,10], `CsIndexRangeException` or 
                 not in the correct format, `CsIndexFormatException`.
-        * *Original Color* selection 
+        * *Original Color* selection `-oc`
             * If the user has a specific color combination preference, this option allows provides the flexibility to 
                 create a truly unique PowerPoint slide.
-            * There are up to 148 different colours to choose from which can be found at this [site](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html#ALICEBLUE)
+            * There are up to 148 different colours to choose from which can be found at this 
+                [site](https://www.javadoc.io/doc/org.beryx/awt-color-factory/1.0.1/org.beryx.awt.color/org/beryx/awt/color/ColorFactory.html#ALICEBLUE)
             * The format for this option is `-oc bg color> <txt color>`
             * There is an exception thrown, `ColorsNotAvailException` when the at least one of the colors chosen is not 
                 a valid color.
