@@ -69,15 +69,6 @@ public class DeckList {
     }
 
     /**
-     * Returns the ArrayList of all decks available in the deck list.
-     *
-     * @return an ArrayList
-     */
-    public ArrayList<Deck> getAllDecks() {
-        return deckList;
-    }
-
-    /**
      * Returns the names of all decks in the deck list in ArrayList.
      *
      * @return ArrayList
@@ -103,6 +94,27 @@ public class DeckList {
     }
 
     /**
+     * Returns a deck name with its tag.
+     *
+     * @param index the index of that deck
+     * @return a String including of the deck name and tags.
+     */
+    public String getNameWithTags(int index) {
+        String nameWithTags = "";
+        String offset = "";
+        while (offset.length() <= (index / 10 + 2)) {
+            offset += " ";
+        }
+        nameWithTags += (index + 1) + ". " + deckList.get(index).getName();
+        if (deckList.get(index).getTag().size() !=  0) {
+            nameWithTags += "\n";
+            nameWithTags += offset + "Tags: " + deckList.get(index).getTagString();
+        }
+
+        return nameWithTags;
+    }
+
+    /**
      * Returns a string including index and name, tag of all the deck available.
      *
      * @return A String representing index, name and tag
@@ -120,18 +132,4 @@ public class DeckList {
         return output;
     }
 
-    public String getNameWithTags(int index) {
-        String nameWithTags = "";
-        String offset = "";
-        while (offset.length() <= (index / 10 + 2)) {
-            offset += " ";
-        }
-        nameWithTags += (index + 1) + ". " + deckList.get(index).getName();
-        if (deckList.get(index).getTag().size() !=  0) {
-            nameWithTags += "\n";
-            nameWithTags += offset + "Tags: " + deckList.get(index).getTagString();
-        }
-
-        return nameWithTags;
-    }
 }

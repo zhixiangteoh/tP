@@ -199,6 +199,12 @@ public class NormalParser extends Parser {
         return new UntagCommand(deckList, deckID, uniqueTags, isYes);
     }
 
+    /**
+     * Returns an array list of unique values.
+     *
+     * @param tags a String array of tags
+     * @return a unique array list
+     */
     private ArrayList<String> getUniqueValues(String[] tags) {
         ArrayList<String> uniqueTags = new ArrayList<>();
         for (String tag: tags) {
@@ -237,6 +243,13 @@ public class NormalParser extends Parser {
         }
     }
 
+    /**
+     * Prepare a CreateCommand with tag argument.
+     *
+     * @param arguments input from user after command word
+     * @return a create command
+     * @throws Exception if input is empty or if duplicate name presents
+     */
     private Deck prepareNewDeckWithTags(String arguments) throws Exception {
         assert (arguments.contains("/tag ")) : "User did enter tag label.";
         String[] nameAndTags = arguments.split("/tag ", 2);
@@ -408,6 +421,13 @@ public class NormalParser extends Parser {
         return new PowerPointCommand(deckList, deck, isPptxCreated);
     }
 
+    /**
+     * Gets input from users and prepares a search command.
+     *
+     * @param arguments input from users after command word
+     * @return a search command
+     * @throws EmptyInputException if input is empty
+     */
     private Command prepareSearchCommand(String arguments) throws EmptyInputException {
         logger.log(Level.INFO, "Logging method prepareSearchCommand() in NormalParser.");
 
