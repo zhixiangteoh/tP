@@ -279,7 +279,7 @@ for students trying to study. We illustrate the problem with the following examp
 ```
 This is a long question (or maybe answer) field. Suppose tha
 t our console is 60 characters wide, we see that the word "t
-hat" was truncated i the first line and again in the second
+hat" was truncated in the first line and again in the second
 line.
 ```
 In this section, we define the following terms:
@@ -463,7 +463,7 @@ Flashcard application that allows students to quickly create new flashcards and 
 
 ## Glossary
 * *[Color Selection](#color-selection)* - The options available to select the color for printing to PowerPoint.
-* *[Color Schemes](#color-scheme)* - An option to select color for printing to PowerPoint by selecting on of the 
+* *[Color Schemes](#color-scheme)* - An option to select color for printing to PowerPoint by selecting one of the 
     pre-designed color schemes available.
 * *[Deck](#deck-model)* - A collection of flash cards that are related by a common topic.
 * *[DeckList](#deck-model)* - A collection of all the decks owned by the user.
@@ -472,7 +472,7 @@ Flashcard application that allows students to quickly create new flashcards and 
 * *[Flashcard](#deck-model)* - An object that contains a non-empty question and a non-empty answer.
 * *[Game Mode](#commands)* - A state of the program used for testing if the user recalls the answer on flashcards.
 * *[Normal Mode](#command)* - A state of the program that allows the user to modify the list of decks.
-* *[Original Colors](#original-color)* - An option to select color for printing to PowrePoint by selecting two of the
+* *[Original Colors](#original-color)* - An option to select color for printing to PowerPoint by selecting two of the
     available colors for background and text.
 * *[Pretty Printing](#pretty-printing)* - Printing text output that span more than one line in a way that minimizes
     truncating words.
